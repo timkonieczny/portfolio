@@ -2,6 +2,7 @@
 import { MeshObject } from "./MeshObject.js"
 import { BoxMesh } from "./BoxMesh.js"
 import { OctagonalPrismMesh } from "./OctagonalPrismMesh.js"
+import { Camera } from "./Camera.js";
 window.addEventListener("load", async () => {
     let { mat4, vec3 } = glMatrix;
 
@@ -35,22 +36,31 @@ window.addEventListener("load", async () => {
         }
 
         const responses = await Promise.all([loadFile("vertex.glsl"), loadFile("fragment.glsl")])
+        
+        const position = vec3.create()
+        vec3.set(position, 0, 0, -8)
+        const lookAt = vec3.create()
+        vec3.set(lookAt, 0, 0, 0)
+        const up = vec3.create()
+        vec3.set(up, 0, 1, 0)
 
-        const viewMatrix = mat4.create()
-        mat4.lookAt(viewMatrix, [0, 0, -8], [0, 0, 0], [0, 1, 0])
-        const projMatrix = mat4.create()
+        const camera = new Camera(position, lookAt, up)
+        // const viewMatrix = mat4.create()
+        // mat4.lookAt(viewMatrix, [0, 0, -8], [0, 0, 0], [0, 1, 0])
+        // const projMatrix = mat4.create()
+        const cube = new MeshObject(gl, new BoxMesh(), responses[0], responses[1], camera)
+
         const resize = () => {
             console.log("resizing")
             canvas.width = canvas.clientWidth * window.devicePixelRatio
             canvas.height = canvas.clientHeight * window.devicePixelRatio
             gl.viewport(0, 0, canvas.width, canvas.height)
-            mat4.perspective(projMatrix, glMatrix.toRadians(45), canvas.width / canvas.height, 0.1, 1000.0)
+            mat4.perspective(camera.projMatrix, glMatrix.toRadians(45), canvas.width / canvas.height, 0.1, 1000.0)
             // gl.uniformMatrix4fv(matProjUniformLocation, gl.FALSE, projMatrix)
-            cube.resize(gl, projMatrix)
+            cube.resize(gl, camera.projMatrix)
         }
         window.addEventListener("resize", resize)
         // const cube = new MeshObject(gl, boxVertices, boxIndices, boxColors, responses[0], responses[1], viewMatrix)
-        const cube = new MeshObject(gl, new BoxMesh(), responses[0], responses[1], viewMatrix)
         resize()
 
         const loop = function () {
@@ -68,4 +78,5 @@ window.addEventListener("load", async () => {
     }
 })
 
-// TODO: add lighting in next tutorial http://www.kamaron.me/webgl-tutorial/02-rotating-cube
+// TODO: light object
+// TODO: camera object

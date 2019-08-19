@@ -6,13 +6,13 @@ class MeshObject {
         /** @type {Mesh} */ mesh,
         /** @type {string} */ vertexShaderSource,
         /** @type {string} */ fragmentShaderSource,
-        /** @type {glMatrix.mat4} */ viewMatrix) {
+        /** @type {glMatrix.mat4} */ camera) {
 
         let { mat4, mat3 } = glMatrix;
 
         this.program = gl.createProgram();
         this.indices = mesh.indices
-        this.viewMatrix = viewMatrix
+        // this.viewMatrix = viewMatrix
 
         const initShader = (
             /** @type {string} */ shaderSource,
@@ -74,10 +74,10 @@ class MeshObject {
         this.normalMatrix = mat3.create();
         mat4.identity(this.normalMatrix)
         gl.uniformMatrix4fv(this.matWorldUniformLocation, gl.FALSE, this.worldMatrix)
-        gl.uniformMatrix4fv(this.matViewUniformLocation, gl.FALSE, this.viewMatrix)
+        gl.uniformMatrix4fv(this.matViewUniformLocation, gl.FALSE, camera.viewMatrix)
         gl.uniformMatrix3fv(this.matNormUniformLocation, gl.FALSE, this.normalMatrix)
         gl.uniform3f(this.lightPosUniformLocation, 10, 10, -10)
-        gl.uniform3f(this.viewPosUniformLocation, 0, 0, -8)
+        gl.uniform3f(this.viewPosUniformLocation, camera.position[0], camera.position[1], camera.position[2])
     }
 
     update() {
