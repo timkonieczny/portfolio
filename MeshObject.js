@@ -1,5 +1,6 @@
 import { Mesh } from "./Mesh.js"
 import { Light } from "./Light.js"
+import { mat4, mat3, vec3} from "./toji-gl-matrix-d6156a5/src/index.js"
 
 class MeshObject {
     constructor(
@@ -7,10 +8,10 @@ class MeshObject {
         /** @type {Mesh} */ mesh,
         /** @type {string} */ vertexShaderSource,
         /** @type {string} */ fragmentShaderSource,
-        /** @type {glMatrix.mat4} */ camera,
+        /** @type {mat4} */ camera,
         /** @type {Light} */ light) {
 
-        let { mat4, mat3 } = glMatrix;
+        // let { mat4, mat3 } = glMatrix;
 
         this.program = gl.createProgram();
         this.indices = mesh.indices
@@ -85,7 +86,7 @@ class MeshObject {
     update() {
         // TODO: add isDirty workflow for updating / rendering
 
-        let { mat4, mat3, vec3 } = glMatrix;
+        // let { mat4, mat3, vec3 } = glMatrix;
 
         let yRotationMatrix, identityMatrix, xRotationMatrix;
         identityMatrix = mat4.create()

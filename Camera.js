@@ -1,9 +1,10 @@
+import { mat4, vec3} from "./toji-gl-matrix-d6156a5/src/index.js"
 class Camera {
     constructor(
         /** @type {glMatrix.vec3} */ position, 
         /** @type {glMatrix.vec3} */lookAt, 
         /** @type {glMatrix.vec3} */up) {
-        let { mat4, vec3} = glMatrix;
+        // let { mat4, vec3} = glMatrix;
         
         this.projMatrix = mat4.create()
 
@@ -17,7 +18,7 @@ class Camera {
     }
 
     resize(width, height) {
-        let { mat4 } = glMatrix;
+        // let { mat4 } = glMatrix;
         mat4.perspective(this.projMatrix, glMatrix.toRadians(45), width, height, 0.1, 1000.0)
     }
 

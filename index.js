@@ -4,10 +4,14 @@ import { BoxMesh } from "./BoxMesh.js"
 import { OctagonalPrismMesh } from "./OctagonalPrismMesh.js"
 import { Camera } from "./Camera.js";
 import { Light } from "./Light.js";
+import { mat4, vec3} from "./toji-gl-matrix-d6156a5/src/index.js"
 window.addEventListener("load", async () => {
-    let { mat4, vec3 } = glMatrix;
+    // let { mat4, vec3 } = glMatrix;
 
-    glMatrix.toRadians = deg => { return deg / 180 * Math.PI }
+    console.log("hello")
+
+    // TODO: replace with glmatrix
+    const toRadians = deg => { return deg / 180 * Math.PI }
 
     const canvas = document.getElementById("canvas")
     const gl = canvas.getContext("experimental-webgl")
@@ -60,7 +64,7 @@ window.addEventListener("load", async () => {
             canvas.width = canvas.clientWidth * window.devicePixelRatio
             canvas.height = canvas.clientHeight * window.devicePixelRatio
             gl.viewport(0, 0, canvas.width, canvas.height)
-            mat4.perspective(camera.projMatrix, glMatrix.toRadians(45), canvas.width / canvas.height, 0.1, 1000.0)
+            mat4.perspective(camera.projMatrix, toRadians(45), canvas.width / canvas.height, 0.1, 1000.0)
             // gl.uniformMatrix4fv(matProjUniformLocation, gl.FALSE, projMatrix)
             cube.resize(gl, camera.projMatrix)
         }
