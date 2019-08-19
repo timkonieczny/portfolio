@@ -8,7 +8,7 @@ window.addEventListener("load", async () => {
     glMatrix.toRadians = deg => { return deg / 180 * Math.PI }
 
     const canvas = document.getElementById("canvas")
-    const gl = canvas.getContext("webgl")
+    const gl = canvas.getContext("experimental-webgl")
 
     gl.clearColor(0.75, 0.85, 0.8, 1.0)
     gl.enable(gl.DEPTH_TEST)
