@@ -1,4 +1,5 @@
 import { Mesh } from "./Mesh.js"
+import { Light } from "./Light.js"
 
 class MeshObject {
     constructor(
@@ -6,7 +7,8 @@ class MeshObject {
         /** @type {Mesh} */ mesh,
         /** @type {string} */ vertexShaderSource,
         /** @type {string} */ fragmentShaderSource,
-        /** @type {glMatrix.mat4} */ camera) {
+        /** @type {glMatrix.mat4} */ camera,
+        /** @type {Light} */ light) {
 
         let { mat4, mat3 } = glMatrix;
 
@@ -76,11 +78,13 @@ class MeshObject {
         gl.uniformMatrix4fv(this.matWorldUniformLocation, gl.FALSE, this.worldMatrix)
         gl.uniformMatrix4fv(this.matViewUniformLocation, gl.FALSE, camera.viewMatrix)
         gl.uniformMatrix3fv(this.matNormUniformLocation, gl.FALSE, this.normalMatrix)
-        gl.uniform3f(this.lightPosUniformLocation, 10, 10, -10)
+        gl.uniform3f(this.lightPosUniformLocation, light.position[0], light.position[1], light.position[2])
         gl.uniform3f(this.viewPosUniformLocation, camera.position[0], camera.position[1], camera.position[2])
     }
 
     update() {
+        // TODO: add isDirty workflow for updating / rendering
+
         let { mat4, mat3, vec3 } = glMatrix;
 
         let yRotationMatrix, identityMatrix, xRotationMatrix;
@@ -93,7 +97,7 @@ class MeshObject {
 
 
 
-        angle = 0;
+        // angle = 0;
         mat4.rotate(yRotationMatrix, identityMatrix, angle, [0, 1, 0])
         mat4.rotate(xRotationMatrix, identityMatrix, angle, [1, 0, 0])
         let translationMatrix = mat4.create();

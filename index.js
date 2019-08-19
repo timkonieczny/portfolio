@@ -3,6 +3,7 @@ import { MeshObject } from "./MeshObject.js"
 import { BoxMesh } from "./BoxMesh.js"
 import { OctagonalPrismMesh } from "./OctagonalPrismMesh.js"
 import { Camera } from "./Camera.js";
+import { Light } from "./Light.js";
 window.addEventListener("load", async () => {
     let { mat4, vec3 } = glMatrix;
 
@@ -48,7 +49,11 @@ window.addEventListener("load", async () => {
         // const viewMatrix = mat4.create()
         // mat4.lookAt(viewMatrix, [0, 0, -8], [0, 0, 0], [0, 1, 0])
         // const projMatrix = mat4.create()
-        const cube = new MeshObject(gl, new BoxMesh(), responses[0], responses[1], camera)
+        const lightPosition = vec3.create()
+        vec3.set(lightPosition, 10, 10, -10)
+        const light = new Light(lightPosition)
+        console.log(light)
+        const cube = new MeshObject(gl, new BoxMesh(), responses[0], responses[1], camera, light)
 
         const resize = () => {
             console.log("resizing")
