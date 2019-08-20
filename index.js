@@ -79,6 +79,3 @@ window.addEventListener("load", async () => {
         console.error(responses)
     }
 })
-
-// TODO: light object
-// TODO: camera object

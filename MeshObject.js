@@ -114,8 +114,9 @@ class MeshObject {
         let normalMatrix3 = mat4.create()
         // mat4.mul(normalMatrix2, translationMatrix, yRotationMatrix)
         // mat4.mul(this.normalMatrix, normalMatrix2, xRotationMatrix)
-
-        mat3.fromMat4(this.normalMatrix, mat4.transpose(normalMatrix3, mat4.invert(normalMatrix2, this.worldMatrix)))
+        mat4.invert(normalMatrix2, this.worldMatrix)
+        mat4.transpose(normalMatrix3, normalMatrix2)
+        mat3.fromMat4(this.normalMatrix, normalMatrix3)
 
 
         // fragNormal = mat3(transpose(inverse(mWorld))) * vertNormal;
