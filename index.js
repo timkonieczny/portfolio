@@ -3,6 +3,7 @@ import { OctagonalPrismMesh } from "./OctagonalPrismMesh.js"
 import { Camera } from "./Camera.js";
 import { Light } from "./Light.js";
 import { mat4, vec3, glMatrix } from "./toji-gl-matrix-d6156a5/src/index.js"
+import { Mesh } from "./Mesh.js";
 window.addEventListener("load", async () => {
     const canvas = document.getElementById("canvas")
     const gl = canvas.getContext("experimental-webgl")
@@ -48,8 +49,19 @@ window.addEventListener("load", async () => {
         vec3.set(lightPosition, 10, 10, -10)
         const light = new Light(lightPosition)
         // const cube = new MeshObject(gl, new BoxMesh(), responses[0], responses[1], camera, light)
+        const cylinderGeometry1 = new OctagonalPrismMesh()
+        const identity = mat4.create() // TODO: is identity?
+        const matrix1 = mat4.create()
+        mat4.translate(matrix1, identity, [2, 0, 0])
+        cylinderGeometry1.applyMatrix(matrix1)
+        const cylinderGeometry2 = new OctagonalPrismMesh()
+        mat4.translate(matrix1, identity, [-2, 0, 0])
+        cylinderGeometry2.applyMatrix(matrix1)
+        const twoCylinderGeometry = Mesh.mergeGeometries(cylinderGeometry1, cylinderGeometry2)
+        const twoCylinders = new MeshObject(gl, twoCylinderGeometry, responses[0], responses[1], camera, light)
 
-        const cylinder = new MeshObject(gl, new OctagonalPrismMesh(), responses[0], responses[1], camera, light)
+
+        // const cylinder = new MeshObject(gl, new OctagonalPrismMesh(), responses[0], responses[1], camera, light)
 
         const resize = () => {
             canvas.width = canvas.clientWidth * window.devicePixelRatio
@@ -58,19 +70,22 @@ window.addEventListener("load", async () => {
             mat4.perspective(camera.projMatrix, glMatrix.toRadian(45), canvas.width / canvas.height, 0.1, 1000.0)
             // gl.uniformMatrix4fv(matProjUniformLocation, gl.FALSE, projMatrix)
             // cube.resize(gl, camera.projMatrix)
-            cylinder.resize(gl, camera.projMatrix)
+            // cylinder.resize(gl, camera.projMatrix)
+            twoCylinders.resize(gl, camera.projMatrix)
         }
         window.addEventListener("resize", resize)
         // const cube = new MeshObject(gl, boxVertices, boxIndices, boxColors, responses[0], responses[1], viewMatrix)
         resize()
 
         const loop = function () {
-            cylinder.update()
+            // cylinder.update()
+            twoCylinders.update()
 
             gl.clearColor(0.75, 0.85, 0.8, 1.0)
             gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT)
             // cube.render(gl)
-            cylinder.render(gl)
+            // cylinder.render(gl)
+            twoCylinders.render(gl)
 
             requestAnimationFrame(loop)
         }

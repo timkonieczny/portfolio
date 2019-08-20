@@ -11,6 +11,8 @@ class MeshObject {
         /** @type {mat4} */ camera,
         /** @type {Light} */ light) {
 
+        console.log(mesh)
+
         this.program = gl.createProgram();
         this.indices = mesh.indices
 
@@ -107,8 +109,8 @@ class MeshObject {
         // mat4.mul(translationMatrix, identityMatrix, translationMatrix)
 
         let worldMatrix2 = mat4.create()
-        mat4.mul(worldMatrix2, translationMatrix, yRotationMatrix)
-        mat4.mul(this.worldMatrix, worldMatrix2, xRotationMatrix)
+        // mat4.mul(worldMatrix2, translationMatrix, yRotationMatrix)
+        mat4.mul(this.worldMatrix, translationMatrix, xRotationMatrix)
 
         let normalMatrix2 = mat4.create()
         let normalMatrix3 = mat4.create()
