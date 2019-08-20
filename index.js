@@ -1,16 +1,11 @@
-// import { boxVertices, boxIndices, boxColors, hexCylVertices, hexCylIndices } from "./geometry.js"
 import { MeshObject } from "./MeshObject.js"
 import { BoxMesh } from "./BoxMesh.js"
+import { Sphere } from "./Sphere.js"
 import { OctagonalPrismMesh } from "./OctagonalPrismMesh.js"
 import { Camera } from "./Camera.js";
 import { Light } from "./Light.js";
-import { mat4, vec3} from "./toji-gl-matrix-d6156a5/src/index.js"
+import { mat4, vec3, glMatrix } from "./toji-gl-matrix-d6156a5/src/index.js"
 window.addEventListener("load", async () => {
-    // let { mat4, vec3 } = glMatrix;
-
-    console.log("hello")
-
-    // TODO: replace with glmatrix
     const toRadians = deg => { return deg / 180 * Math.PI }
 
     const canvas = document.getElementById("canvas")
@@ -41,7 +36,7 @@ window.addEventListener("load", async () => {
         }
 
         const responses = await Promise.all([loadFile("vertex.glsl"), loadFile("fragment.glsl")])
-        
+
         const position = vec3.create()
         vec3.set(position, 0, 0, -8)
         const lookAt = vec3.create()
@@ -57,27 +52,31 @@ window.addEventListener("load", async () => {
         vec3.set(lightPosition, 10, 10, -10)
         const light = new Light(lightPosition)
         console.log(light)
-        const cube = new MeshObject(gl, new BoxMesh(), responses[0], responses[1], camera, light)
+        // const cube = new MeshObject(gl, new BoxMesh(), responses[0], responses[1], camera, light)
+
+        const cylinder = new MeshObject(gl, new OctagonalPrismMesh(), responses[0], responses[1], camera, light)
 
         const resize = () => {
             console.log("resizing")
             canvas.width = canvas.clientWidth * window.devicePixelRatio
             canvas.height = canvas.clientHeight * window.devicePixelRatio
             gl.viewport(0, 0, canvas.width, canvas.height)
-            mat4.perspective(camera.projMatrix, toRadians(45), canvas.width / canvas.height, 0.1, 1000.0)
+            mat4.perspective(camera.projMatrix, glMatrix.toRadian(45), canvas.width / canvas.height, 0.1, 1000.0)
             // gl.uniformMatrix4fv(matProjUniformLocation, gl.FALSE, projMatrix)
-            cube.resize(gl, camera.projMatrix)
+            // cube.resize(gl, camera.projMatrix)
+            cylinder.resize(gl, camera.projMatrix)
         }
         window.addEventListener("resize", resize)
         // const cube = new MeshObject(gl, boxVertices, boxIndices, boxColors, responses[0], responses[1], viewMatrix)
         resize()
 
         const loop = function () {
-            cube.update()
+            cylinder.update()
 
             gl.clearColor(0.75, 0.85, 0.8, 1.0)
             gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT)
-            cube.render(gl)
+            // cube.render(gl)
+            cylinder.render(gl)
 
             requestAnimationFrame(loop)
         }

@@ -10,9 +10,7 @@ class MeshObject {
         /** @type {string} */ fragmentShaderSource,
         /** @type {mat4} */ camera,
         /** @type {Light} */ light) {
-
-        // let { mat4, mat3 } = glMatrix;
-
+            
         this.program = gl.createProgram();
         this.indices = mesh.indices
         // this.viewMatrix = viewMatrix
