@@ -1,6 +1,6 @@
 import { Mesh } from "./Mesh.js"
 import { Light } from "./Light.js"
-import { mat4, mat3, vec3} from "./toji-gl-matrix-d6156a5/src/index.js"
+import { mat4, mat3, vec3 } from "./toji-gl-matrix-d6156a5/src/index.js"
 
 class MeshObject {
     constructor(
@@ -10,10 +10,9 @@ class MeshObject {
         /** @type {string} */ fragmentShaderSource,
         /** @type {mat4} */ camera,
         /** @type {Light} */ light) {
-            
+
         this.program = gl.createProgram();
         this.indices = mesh.indices
-        // this.viewMatrix = viewMatrix
 
         const initShader = (
             /** @type {string} */ shaderSource,
@@ -110,7 +109,7 @@ class MeshObject {
         let worldMatrix2 = mat4.create()
         mat4.mul(worldMatrix2, translationMatrix, yRotationMatrix)
         mat4.mul(this.worldMatrix, worldMatrix2, xRotationMatrix)
-        
+
         let normalMatrix2 = mat4.create()
         let normalMatrix3 = mat4.create()
         // mat4.mul(normalMatrix2, translationMatrix, yRotationMatrix)

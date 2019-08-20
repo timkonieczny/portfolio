@@ -1,13 +1,9 @@
 import { MeshObject } from "./MeshObject.js"
-import { BoxMesh } from "./BoxMesh.js"
-import { Sphere } from "./Sphere.js"
 import { OctagonalPrismMesh } from "./OctagonalPrismMesh.js"
 import { Camera } from "./Camera.js";
 import { Light } from "./Light.js";
 import { mat4, vec3, glMatrix } from "./toji-gl-matrix-d6156a5/src/index.js"
 window.addEventListener("load", async () => {
-    const toRadians = deg => { return deg / 180 * Math.PI }
-
     const canvas = document.getElementById("canvas")
     const gl = canvas.getContext("experimental-webgl")
 
@@ -51,13 +47,11 @@ window.addEventListener("load", async () => {
         const lightPosition = vec3.create()
         vec3.set(lightPosition, 10, 10, -10)
         const light = new Light(lightPosition)
-        console.log(light)
         // const cube = new MeshObject(gl, new BoxMesh(), responses[0], responses[1], camera, light)
 
         const cylinder = new MeshObject(gl, new OctagonalPrismMesh(), responses[0], responses[1], camera, light)
 
         const resize = () => {
-            console.log("resizing")
             canvas.width = canvas.clientWidth * window.devicePixelRatio
             canvas.height = canvas.clientHeight * window.devicePixelRatio
             gl.viewport(0, 0, canvas.width, canvas.height)
