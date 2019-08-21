@@ -41,28 +41,32 @@ class MeshObject {
             return
         }
 
-        const initBuffer = (
-            /** @type {Number} */ type,
-            /** @type {TypedArray} */ array,
-            /** @type {string} */ shaderAttribName) => {
-            const buffer = gl.createBuffer()
-            gl.bindBuffer(type, buffer)
-            const typedArray = type === gl.ARRAY_BUFFER ? new Float32Array(array) : new Uint32Array(array)
-            gl.bufferData(type, typedArray, gl.STATIC_DRAW)
-            if (type == gl.ARRAY_BUFFER) {
-                const attribLocation = gl.getAttribLocation(this.program, shaderAttribName)
-                gl.enableVertexAttribArray(attribLocation)
-                return { buffer: buffer, attribLocation: attribLocation }
-            }
-            return
-        }
+        const buffer2 = gl.createBuffer()
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffer2)
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint32Array(this.indices), gl.STATIC_DRAW)
 
-        // TODO: interlace buffers
-        this.vertex = initBuffer(gl.ARRAY_BUFFER, mesh.vertices, "vertPosition")
-        this.color = initBuffer(gl.ARRAY_BUFFER, mesh.colors, "vertColor")
-        this.normal = initBuffer(gl.ARRAY_BUFFER, mesh.normals, "vertNormal")
-        this.center = initBuffer(gl.ARRAY_BUFFER, mesh.centers, "vertCenter")
-        initBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indices)
+
+        const buffer = gl.createBuffer()
+        gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
+        const typedArray = new Float32Array(mesh.interleavedArray)
+        gl.bufferData(gl.ARRAY_BUFFER, typedArray, gl.STATIC_DRAW)
+        const attribLocationPosition = gl.getAttribLocation(this.program, "vertPosition")
+        const attribLocationColor = gl.getAttribLocation(this.program, "vertColor")
+        const attribLocationNormal = gl.getAttribLocation(this.program, "vertNormal")
+        const attribLocationCenter = gl.getAttribLocation(this.program, "vertCenter")
+        gl.enableVertexAttribArray(attribLocationPosition)
+        gl.enableVertexAttribArray(attribLocationColor)
+        gl.enableVertexAttribArray(attribLocationNormal)
+        gl.enableVertexAttribArray(attribLocationCenter)
+        this.interleaved = { 
+            buffer: buffer, 
+            attribLocation: {
+                position: attribLocationPosition,
+                color: attribLocationColor,
+                normal: attribLocationNormal,
+                center: attribLocationCenter
+            }
+        }
 
 
         gl.useProgram(this.program)
@@ -110,15 +114,13 @@ class MeshObject {
         gl.clearColor(0.2, 0.2, 0.2, 1.0)
         gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT)
 
-        const passAttribute = (gl, data, type) => {
-            gl.bindBuffer(gl.ARRAY_BUFFER, data.buffer)
-            gl.vertexAttribPointer(data.attribLocation, 3, type, gl.FALSE, 0, 0)
-        }
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.interleaved.buffer)
+        const bytesPerElement = 4
+        gl.vertexAttribPointer(this.interleaved.attribLocation.position, 3, gl.FLOAT, gl.FALSE, bytesPerElement * 12, bytesPerElement * 0)
+        gl.vertexAttribPointer(this.interleaved.attribLocation.normal, 3, gl.FLOAT, gl.FALSE, bytesPerElement * 12, bytesPerElement * 3)
+        gl.vertexAttribPointer(this.interleaved.attribLocation.center, 3, gl.FLOAT, gl.FALSE, bytesPerElement * 12, bytesPerElement * 6)
+        gl.vertexAttribPointer(this.interleaved.attribLocation.color, 3, gl.FLOAT, gl.FALSE, bytesPerElement * 12, bytesPerElement * 9)
 
-        passAttribute(gl, this.vertex, gl.FLOAT)
-        passAttribute(gl, this.color, gl.FLOAT)
-        passAttribute(gl, this.normal, gl.FLOAT)
-        passAttribute(gl, this.center, gl.FLOAT)
 
         gl.getExtension('OES_element_index_uint');  // TODO: not possible / necessary with experimental-webgl and webgl2
         gl.drawElements(gl.TRIANGLES, this.indices.length, gl.UNSIGNED_INT, 0)

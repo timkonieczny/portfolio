@@ -77,7 +77,7 @@ window.addEventListener("load", async () => {
             }
         }
         console.info("[grid generation] merging geometries")
-        const hexGridGeometry = Mesh.mergeGeometries(...cylinders)
+        const hexGridGeometry = Mesh.mergeGeometriesInterleaved(...cylinders)
         console.info("[grid generation] creating MeshObject")
         const hexGrid = new MeshObject(gl, hexGridGeometry, ...responses, camera, light)
 
@@ -86,7 +86,9 @@ window.addEventListener("load", async () => {
             hexGridGeometry.normals.length + " normals.\n\t" +
             hexGridGeometry.centers.length + " centers.\n\t" +
             hexGridGeometry.colors.length + " colors.\n\t" +
-            hexGridGeometry.indices.length + " indices.")
+            hexGridGeometry.indices.length + " indices.\n\t" +
+            hexGridGeometry.interleavedArray.length + " elements in interleaved array.")
+            
 
         const resize = () => {
             canvas.width = canvas.clientWidth * window.devicePixelRatio

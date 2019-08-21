@@ -66,6 +66,31 @@ class Mesh {
         })
         return output
     }
+
+    static mergeGeometriesInterleaved(...geometries) {
+        const interleavedArray = []
+        const output = new Mesh()
+        output.centers = [] // TODO: remove centers from Mesh and move it to OctagonalPrismMesh. Override this function.
+        geometries.forEach(geometry => {
+            for(let i = 0; i < geometry.vertices.length; i+=3){
+                interleavedArray.push(
+                    geometry.vertices[i], geometry.vertices[i+1], geometry.vertices[i+2],
+                    geometry.normals[i], geometry.normals[i+1], geometry.normals[i+2], 
+                    geometry.centers[i], geometry.centers[i+1], geometry.centers[i+2],
+                    geometry.colors[i], geometry.colors[i+1], geometry.colors[i+2])
+            }
+            const newIndices = geometry.indices.map(index => {
+                return index + output.vertices.length / 3
+            })
+            output.indices.push(...newIndices)
+            output.vertices.push(...geometry.vertices)
+            output.normals.push(...geometry.normals)
+            output.colors.push(...geometry.colors)
+            output.centers.push(...geometry.centers)
+        })
+        output.interleavedArray = interleavedArray
+        return output
+    }
 }
 
 export { Mesh }
