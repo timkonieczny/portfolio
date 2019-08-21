@@ -20,6 +20,12 @@ class Mesh {
             this.vertices[i+1] = outputVector[1]
             this.vertices[i+2] = outputVector[2]
             
+            vec3.set(vector, this.centers[i], this.centers[i+1], this.centers[i+2])
+            vec3.transformMat4(outputVector, vector, matrix)
+            this.centers[i] = outputVector[0]
+            this.centers[i+1] = outputVector[1]
+            this.centers[i+2] = outputVector[2]
+            
             vec3.set(vector, this.normals[i], this.normals[i+1], this.normals[i+2])
             vec3.transformMat3(outputVector, vector, matrix3)
             this.normals[i] = outputVector[0]
@@ -47,13 +53,16 @@ class Mesh {
 
     static mergeGeometries(...geometries){
         const output = new Mesh()
+        output.centers = [] // TODO: remove centers from Mesh and move it to OctagonalPrismMesh. Override this function.
         geometries.forEach(geometry => {
-            output.indices = output.indices.concat(geometry.indices.map(index => {
+            const newIndices = geometry.indices.map(index => {
                 return index + output.vertices.length / 3
-            }))
-            output.vertices = output.vertices.concat(geometry.vertices)
-            output.normals = output.normals.concat(geometry.normals)
-            output.colors = output.colors.concat(geometry.colors)
+            })
+            output.indices.push(...newIndices)
+            output.vertices.push(...geometry.vertices)
+            output.normals.push(...geometry.normals)
+            output.colors.push(...geometry.colors)
+            output.centers.push(...geometry.centers)
         })
         return output
     }

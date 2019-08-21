@@ -5,14 +5,17 @@ import { Light } from "./Light.js";
 import { mat4, vec3, glMatrix } from "./toji-gl-matrix-d6156a5/src/index.js"
 import { Mesh } from "./Mesh.js";
 window.addEventListener("load", async () => {
+    // TODO: WebGL compatibility: use webgl2, fall back to webgl, fall back to experimental-webgl
     const canvas = document.getElementById("canvas")
-    const gl = canvas.getContext("experimental-webgl")
+    const gl = canvas.getContext("webgl")
+    // const gl = canvas.getContext("webgl2")
+    console.info(gl.getParameter(gl.VERSION))
 
     gl.clearColor(0.75, 0.85, 0.8, 1.0)
     gl.enable(gl.DEPTH_TEST)
     gl.enable(gl.CULL_FACE)
     gl.frontFace(gl.CCW)
-    gl.cullFace(gl.BACK) // // Create shaders //
+    gl.cullFace(gl.BACK)
 
     try {
         const loadFile = url => {
@@ -42,51 +45,58 @@ window.addEventListener("load", async () => {
         vec3.set(up, 0, 1, 0)
 
         const camera = new Camera(position, lookAt, up)
-        // const viewMatrix = mat4.create()
-        // mat4.lookAt(viewMatrix, [0, 0, -8], [0, 0, 0], [0, 1, 0])
-        // const projMatrix = mat4.create()
         const lightPosition = vec3.create()
         vec3.set(lightPosition, 10, 10, -10)
         const light = new Light(lightPosition)
-        // const cube = new MeshObject(gl, new BoxMesh(), responses[0], responses[1], camera, light)
-        const cylinderGeometry1 = new OctagonalPrismMesh()
-        const identity = mat4.create() // TODO: is identity?
-        const matrix1 = mat4.create()
-        mat4.translate(matrix1, identity, [2, 0, 0])
-        cylinderGeometry1.applyMatrix(matrix1)
-        const cylinderGeometry2 = new OctagonalPrismMesh()
-        mat4.translate(matrix1, identity, [-2, 0, 0])
-        cylinderGeometry2.applyMatrix(matrix1)
-        const twoCylinderGeometry = Mesh.mergeGeometries(cylinderGeometry1, cylinderGeometry2)
-        const twoCylinders = new MeshObject(gl, twoCylinderGeometry, responses[0], responses[1], camera, light)
 
+        // TODO: add gaps between elements
+        console.log("[grid generation] start")
+        const xDim = Math.sin(1 / 6 * Math.PI * 2)
+        const zDim = 1
+        const zHeight = Math.cos(1 / 6 * Math.PI * 2)
+        const columns = 100
+        const rows = 100
+        const cylinders = []
+        const identity = mat4.create()
+        const matrix = mat4.create()
+        for(let i = 0; i < rows; i++){
+            const zShift = zHeight - zDim*2 * rows/2 + zDim + i * (zDim - zHeight + zDim)
+            const xShiftOffset = (i % 2) * xDim
+            for(let j = 0; j < columns; j++){
+                const geometry = new OctagonalPrismMesh()
+                const xShift = -xDim * 2 * columns /2 + xDim + j * 2 * xDim + xShiftOffset
+                mat4.translate(matrix, identity, [xShift, 0, zShift])
+                geometry.applyMatrix(matrix)
+                cylinders.push(geometry)
+            }
+        }
+        console.info("[grid generation] merging geometries")
+        const hexGridGeometry = Mesh.mergeGeometries(...cylinders)
+        console.info("[grid generation] creating MeshObject")
+        const hexGrid = new MeshObject(gl, hexGridGeometry, ...responses, camera, light)
 
-        // const cylinder = new MeshObject(gl, new OctagonalPrismMesh(), responses[0], responses[1], camera, light)
+        console.info("[grid generation] done.\n\t" + 
+            hexGridGeometry.vertices.length + " vertices.\n\t" + 
+            hexGridGeometry.normals.length + " normals.\n\t" + 
+            hexGridGeometry.centers.length + " centers.\n\t" +
+            hexGridGeometry.colors.length + " colors.\n\t" +
+            hexGridGeometry.indices.length + " indices.")
 
         const resize = () => {
             canvas.width = canvas.clientWidth * window.devicePixelRatio
             canvas.height = canvas.clientHeight * window.devicePixelRatio
             gl.viewport(0, 0, canvas.width, canvas.height)
             mat4.perspective(camera.projMatrix, glMatrix.toRadian(45), canvas.width / canvas.height, 0.1, 1000.0)
-            // gl.uniformMatrix4fv(matProjUniformLocation, gl.FALSE, projMatrix)
-            // cube.resize(gl, camera.projMatrix)
-            // cylinder.resize(gl, camera.projMatrix)
-            twoCylinders.resize(gl, camera.projMatrix)
+            hexGrid.resize(gl, camera.projMatrix)
         }
         window.addEventListener("resize", resize)
-        // const cube = new MeshObject(gl, boxVertices, boxIndices, boxColors, responses[0], responses[1], viewMatrix)
         resize()
 
         const loop = function () {
-            // cylinder.update()
-            twoCylinders.update()
-
             gl.clearColor(0.75, 0.85, 0.8, 1.0)
             gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT)
-            // cube.render(gl)
-            // cylinder.render(gl)
-            twoCylinders.render(gl)
-
+            hexGrid.update()    // TODO: move update script out of MeshObject
+            hexGrid.render(gl)
             requestAnimationFrame(loop)
         }
         requestAnimationFrame(loop)
