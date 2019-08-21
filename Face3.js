@@ -9,8 +9,6 @@ class Face3 extends Face {
         super(a, b, c)
         this.vertices = [...a, ...b, ...c]
         this.indices = [0, 1, 2]
-        // let normal = vec3.create()
-        // vec3.cross(normal, a, b)
         this.normals = [...this.normal, ...this.normal, ...this.normal]
         this.colors = [...color, ...color, ...color]
     }

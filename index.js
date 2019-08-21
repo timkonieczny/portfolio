@@ -62,12 +62,12 @@ window.addEventListener("load", async () => {
         const matrix = mat4.create()
         const xGap = .4
         const zGap = .4
-        for(let i = 0; i < rows; i++){
-            const zShiftCenterOffset = zHeight - zDim*2 * rows/2 + zDim;
+        for (let i = 0; i < rows; i++) {
+            const zShiftCenterOffset = zHeight - zDim * 2 * rows / 2 + zDim;
             const zShift = zShiftCenterOffset + i * (zDim - zHeight + zDim + zGap)
-            const xShiftOffset = (i % 2) * (xDim + xGap/2)
-            const xShiftCenterOffset = -xDim * 2 * columns /2 + xDim
-            for(let j = 0; j < columns; j++){
+            const xShiftOffset = (i % 2) * (xDim + xGap / 2)
+            const xShiftCenterOffset = -xDim * 2 * columns / 2 + xDim
+            for (let j = 0; j < columns; j++) {
                 const geometry = new OctagonalPrismMesh()
                 const xShift = xShiftCenterOffset + xShiftOffset + j * (2 * xDim + xGap)
                 mat4.translate(matrix, identity, [xShift, 0, zShift])
@@ -81,9 +81,9 @@ window.addEventListener("load", async () => {
         console.info("[grid generation] creating MeshObject")
         const hexGrid = new MeshObject(gl, hexGridGeometry, ...responses, camera, light)
 
-        console.info("[grid generation] done.\n\t" + 
-            hexGridGeometry.vertices.length + " vertices.\n\t" + 
-            hexGridGeometry.normals.length + " normals.\n\t" + 
+        console.info("[grid generation] done.\n\t" +
+            hexGridGeometry.vertices.length + " vertices.\n\t" +
+            hexGridGeometry.normals.length + " normals.\n\t" +
             hexGridGeometry.centers.length + " centers.\n\t" +
             hexGridGeometry.colors.length + " colors.\n\t" +
             hexGridGeometry.indices.length + " indices.")

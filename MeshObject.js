@@ -112,7 +112,7 @@ class MeshObject {
 
         const passAttribute = (gl, data, type) => {
             gl.bindBuffer(gl.ARRAY_BUFFER, data.buffer)
-            gl.vertexAttribPointer(data.attribLocation, 3, type, gl.FALSE, 0, 0)    
+            gl.vertexAttribPointer(data.attribLocation, 3, type, gl.FALSE, 0, 0)
         }
 
         passAttribute(gl, this.vertex, gl.FLOAT)

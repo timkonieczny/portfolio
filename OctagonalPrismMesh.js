@@ -43,7 +43,7 @@ class OctagonalPrismMesh extends Mesh {
         const geometry = this.makeGeometry(top, bottom, ...sides)
 
         this.centers = []
-        for(let i = 0; i < geometry.vertices.length; i+=3)
+        for (let i = 0; i < geometry.vertices.length; i += 3)
             this.centers.push(0, 0, 0)
 
         this.vertices = geometry.vertices

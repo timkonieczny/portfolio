@@ -1,4 +1,4 @@
-import { mat4, vec3 } from "./toji-gl-matrix-d6156a5/src/index.js"
+import { mat4 } from "./toji-gl-matrix-d6156a5/src/index.js"
 class Camera {
     constructor(
         /** @type {glMatrix.vec3} */ position,
