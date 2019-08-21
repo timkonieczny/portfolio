@@ -89,7 +89,7 @@ class MeshObject {
         const translationVector = vec3.create()
         vec3.set(translationVector, 0, -2, 0)
         mat4.translate(this.worldMatrix, identityMatrix, translationVector)
-        
+
         let normalMatrix2 = mat4.create()
         let normalMatrix3 = mat4.create()
         mat4.invert(normalMatrix2, this.worldMatrix)
@@ -101,54 +101,23 @@ class MeshObject {
         gl.useProgram(this.program)
         gl.uniformMatrix4fv(this.matWorldUniformLocation, gl.FALSE, this.worldMatrix)
         gl.uniformMatrix3fv(this.matNormUniformLocation, gl.FALSE, this.normalMatrix)
-        
-        let time = Date.now()*0.001
-        time = time % (Math.PI*2)
+
+        let time = Date.now() * 0.001
+        time = time % (Math.PI * 2)
         gl.uniform1f(this.timeUniformLocation, time)
 
         gl.clearColor(0.75, 0.85, 0.8, 1.0)
         gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT)
 
-        // TODO: abstraction
-        gl.bindBuffer(gl.ARRAY_BUFFER, this.vertex.buffer)
-        // console.log(this.positionAttribLocation)
-        gl.vertexAttribPointer(this.vertex.attribLocation, // Attribute location
-            3, // Number of elements per attribute
-            gl.FLOAT, // Type of elements
-            gl.FALSE,
-            0, // Size of an individual vertex
-            0 // Offset from the beginning of a single vertex to this attribute
-        )
+        const passAttribute = (gl, data, type) => {
+            gl.bindBuffer(gl.ARRAY_BUFFER, data.buffer)
+            gl.vertexAttribPointer(data.attribLocation, 3, type, gl.FALSE, 0, 0)    
+        }
 
-        gl.bindBuffer(gl.ARRAY_BUFFER, this.color.buffer)
-        // console.log(this.colorAttribLocation)
-        gl.vertexAttribPointer(this.color.attribLocation, // Attribute location
-            3, // Number of elements per attribute
-            gl.UNSIGNED_BYTE, // Type of elements
-            gl.TRUE,
-            0, // Size of an individual vertex
-            0 // Offset from the beginning of a single vertex to this attribute
-        )
-
-        gl.bindBuffer(gl.ARRAY_BUFFER, this.normal.buffer)
-        // console.log(this.colorAttribLocation)
-        gl.vertexAttribPointer(this.normal.attribLocation, // Attribute location
-            3, // Number of elements per attribute
-            gl.FLOAT, // Type of elements
-            gl.FALSE,
-            0, // Size of an individual vertex
-            0 // Offset from the beginning of a single vertex to this attribute
-        )
-
-        gl.bindBuffer(gl.ARRAY_BUFFER, this.center.buffer)
-        // console.log(this.colorAttribLocation)
-        gl.vertexAttribPointer(this.center.attribLocation, // Attribute location
-            3, // Number of elements per attribute
-            gl.FLOAT, // Type of elements
-            gl.FALSE,
-            0, // Size of an individual vertex
-            0 // Offset from the beginning of a single vertex to this attribute
-        )
+        passAttribute(gl, this.vertex, gl.FLOAT)
+        passAttribute(gl, this.color, gl.UNSIGNED_BYTE)
+        passAttribute(gl, this.normal, gl.FLOAT)
+        passAttribute(gl, this.center, gl.FLOAT)
 
         gl.getExtension('OES_element_index_uint');  // TODO: not possible / necessary with experimental-webgl and webgl2
         gl.drawElements(gl.TRIANGLES, this.indices.length, gl.UNSIGNED_INT, 0)
