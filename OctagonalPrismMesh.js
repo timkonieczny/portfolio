@@ -13,7 +13,7 @@ class OctagonalPrismMesh extends Mesh {
         const c = vec3.create()
         const d = vec3.create()
         const color = vec3.create()
-        vec3.set(color, 1, 0, 0)
+        vec3.set(color, 0.2, 0.2, 0.2)
 
         for (let i = 0; i < 6; i++) {
             vec3.set(a, Math.sin(i * 1 / 6 * Math.PI * 2), -1, Math.cos(i * 1 / 6 * Math.PI * 2))

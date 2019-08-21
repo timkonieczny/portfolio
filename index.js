@@ -38,7 +38,8 @@ window.addEventListener("load", async () => {
         const responses = await Promise.all([loadFile("vertex.glsl"), loadFile("fragment.glsl")])
 
         const position = vec3.create()
-        vec3.set(position, 0, 0, -8)
+        vec3.set(position, 30, 50, 60)
+        // vec3.set(position, 0, 50, 1)
         const lookAt = vec3.create()
         vec3.set(lookAt, 0, 0, 0)
         const up = vec3.create()
@@ -59,13 +60,18 @@ window.addEventListener("load", async () => {
         const cylinders = []
         const identity = mat4.create()
         const matrix = mat4.create()
+        const xGap = .4
+        const zGap = .4
         for(let i = 0; i < rows; i++){
-            const zShift = zHeight - zDim*2 * rows/2 + zDim + i * (zDim - zHeight + zDim)
-            const xShiftOffset = (i % 2) * xDim
+            const zShiftCenterOffset = zHeight - zDim*2 * rows/2 + zDim;
+            const zShift = zShiftCenterOffset + i * (zDim - zHeight + zDim + zGap)
+            const xShiftOffset = (i % 2) * (xDim + xGap/2)
+            const xShiftCenterOffset = -xDim * 2 * columns /2 + xDim
             for(let j = 0; j < columns; j++){
                 const geometry = new OctagonalPrismMesh()
-                const xShift = -xDim * 2 * columns /2 + xDim + j * 2 * xDim + xShiftOffset
+                const xShift = xShiftCenterOffset + xShiftOffset + j * (2 * xDim + xGap)
                 mat4.translate(matrix, identity, [xShift, 0, zShift])
+                mat4.scale(matrix, matrix, [1, 3, 1])
                 geometry.applyMatrix(matrix)
                 cylinders.push(geometry)
             }

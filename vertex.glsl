@@ -22,6 +22,7 @@ void main() {
 
     fragPos = (mWorld * vec4(vertPosition, 1.0)).xyz;
     vec3 position = vertPosition;
-    position.y = position.y + sin(time + vertCenter.x) - 1.0;    // TODO: add animation in z direction      
+    position.y = position.y + sin(time + vertCenter.x * 0.5) - 1.0;
+    position.y = position.y + cos(time + vertCenter.z * 0.3) - 1.0;
     gl_Position = mProj * mView * mWorld * vec4(position, 1.0);
 }

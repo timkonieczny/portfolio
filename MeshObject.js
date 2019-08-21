@@ -47,7 +47,8 @@ class MeshObject {
             /** @type {string} */ shaderAttribName) => {
             const buffer = gl.createBuffer()
             gl.bindBuffer(type, buffer)
-            gl.bufferData(type, array, gl.STATIC_DRAW)
+            const typedArray = type === gl.ARRAY_BUFFER ? new Float32Array(array) : new Uint32Array(array)
+            gl.bufferData(type, typedArray, gl.STATIC_DRAW)
             if (type == gl.ARRAY_BUFFER) {
                 const attribLocation = gl.getAttribLocation(this.program, shaderAttribName)
                 gl.enableVertexAttribArray(attribLocation)
@@ -57,11 +58,11 @@ class MeshObject {
         }
 
         // TODO: interlace buffers
-        this.vertex = initBuffer(gl.ARRAY_BUFFER, new Float32Array(mesh.vertices), "vertPosition")
-        this.color = initBuffer(gl.ARRAY_BUFFER, new Uint8Array(mesh.colors), "vertColor")
-        this.normal = initBuffer(gl.ARRAY_BUFFER, new Float32Array(mesh.normals), "vertNormal")
-        this.center = initBuffer(gl.ARRAY_BUFFER, new Float32Array(mesh.centers), "vertCenter")
-        initBuffer(gl.ELEMENT_ARRAY_BUFFER, new Uint32Array(this.indices))
+        this.vertex = initBuffer(gl.ARRAY_BUFFER, mesh.vertices, "vertPosition")
+        this.color = initBuffer(gl.ARRAY_BUFFER, mesh.colors, "vertColor")
+        this.normal = initBuffer(gl.ARRAY_BUFFER, mesh.normals, "vertNormal")
+        this.center = initBuffer(gl.ARRAY_BUFFER, mesh.centers, "vertCenter")
+        initBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indices)
 
 
         gl.useProgram(this.program)
@@ -106,7 +107,7 @@ class MeshObject {
         time = time % (Math.PI * 2)
         gl.uniform1f(this.timeUniformLocation, time)
 
-        gl.clearColor(0.75, 0.85, 0.8, 1.0)
+        gl.clearColor(0.2, 0.2, 0.2, 1.0)
         gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT)
 
         const passAttribute = (gl, data, type) => {
@@ -115,7 +116,7 @@ class MeshObject {
         }
 
         passAttribute(gl, this.vertex, gl.FLOAT)
-        passAttribute(gl, this.color, gl.UNSIGNED_BYTE)
+        passAttribute(gl, this.color, gl.FLOAT)
         passAttribute(gl, this.normal, gl.FLOAT)
         passAttribute(gl, this.center, gl.FLOAT)
 
