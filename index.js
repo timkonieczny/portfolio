@@ -31,11 +31,11 @@ window.addEventListener("load", async () => {
     if (ext) info += "\nUnmasked WebGL vendor:\t" + gl.getParameter(ext.UNMASKED_VENDOR_WEBGL) + "\nUnmasked renderer:\t\t" + gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)
     console.info(info)
 
-    gl.clearColor(0.75, 0.85, 0.8, 1.0)
     gl.enable(gl.DEPTH_TEST)
     gl.enable(gl.CULL_FACE)
     gl.frontFace(gl.CCW)
     gl.cullFace(gl.BACK)
+    gl.clearColor(0.2, 0.2, 0.2, 1.0)
 
     try {
         const loadFile = url => {
@@ -116,7 +116,6 @@ window.addEventListener("load", async () => {
         resize()
 
         const loop = function () {
-            gl.clearColor(0.75, 0.85, 0.8, 1.0)
             gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT)
             hexGrid.update()    // TODO: move update script out of MeshObject
             hexGrid.render(gl)

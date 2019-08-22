@@ -109,7 +109,6 @@ class MeshObject {
         time = time % (Math.PI * 2)
         gl.uniform1f(this.timeUniformLocation, time)
 
-        gl.clearColor(0.2, 0.2, 0.2, 1.0)
         gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT)
 
         gl.bindBuffer(gl.ARRAY_BUFFER, this.interleaved.buffer)

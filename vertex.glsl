@@ -20,7 +20,12 @@ void main() {
     vNormal = uNormal * aNormal;
     vPosition = (uWorld * vec4(aPosition, 1.0)).xyz;
     vec3 position = aPosition;
-    position.y = position.y + sin(uTime + aCenter.x * 0.5) - 1.0;
-    position.y = position.y + cos(uTime + aCenter.z * 0.3) - 1.0;
+    float waveLengthX = 0.1;
+    float waveLengthZ = 0.1;
+    float waveHeightX = 2.0;
+    float waveHeightZ = 2.0;
+
+    position.y = position.y + sin(uTime + aCenter.x * waveLengthX) * waveHeightX - waveHeightX;
+    position.y = position.y + cos(uTime + aCenter.z * waveLengthZ) * waveHeightZ - waveHeightZ;
     gl_Position = uProjection * uView * uWorld * vec4(position, 1.0);
 }

@@ -23,9 +23,10 @@ void main() {
     vec3 diffuse = diff * lightColor;
 
     // specular component
+    float shininess = 32.0;
     vec3 viewDir = normalize(-position);
     vec3 reflectDir = reflect(-lightDir, norm);  
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32.0);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), shininess);
     vec3 specular = specularStrength * spec * lightColor;  
 
     vec3 result = (ambient + diffuse + specular) * vColor;
