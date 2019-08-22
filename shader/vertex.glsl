@@ -29,3 +29,10 @@ void main() {
     position.y = position.y + cos(uTime + aCenter.z * waveLengthZ) * waveHeightZ - waveHeightZ;
     gl_Position = uProjection * uView * uWorld * vec4(position, 1.0);
 }
+
+/* TODO: special events
+ * add float attribute that specifies y position on special event
+ * pass start time as uniform and calculate elapsed time (use this uniform also to trigger the special event)
+ * use elapsed time to interpolate between aPosition.y * wave and special event y position
+ * use elapsed time to also interpolate wave to 0 (or small factor)
+ */

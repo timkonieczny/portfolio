@@ -1,4 +1,4 @@
-import { vec3, mat4, mat3 } from "./toji-gl-matrix-d6156a5/src/index.js";
+import { vec3, mat4, mat3 } from "../lib/toji-gl-matrix-d6156a5/src/index.js";
 
 class Mesh {
     constructor() {
@@ -13,7 +13,7 @@ class Mesh {
         const matrix3 = mat3.create()
         mat3.fromMat4(matrix3, matrix)
         const outputVector = vec3.create()
-        for(let i = 0; i < this.interleavedArray.length; i+=12){
+        for (let i = 0; i < this.interleavedArray.length; i += 12) {
             // vertices
             vec3.set(vector,
                 this.interleavedArray[i],
@@ -33,7 +33,7 @@ class Mesh {
             this.interleavedArray[i + 3] = outputVector[0]
             this.interleavedArray[i + 4] = outputVector[1]
             this.interleavedArray[i + 5] = outputVector[2]
-            
+
             // centers
             vec3.set(vector,
                 this.interleavedArray[i + 6],

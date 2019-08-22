@@ -1,32 +1,32 @@
-import { MeshObject } from "./MeshObject.js"
-import { OctagonalPrismMesh } from "./OctagonalPrismMesh.js"
-import { Camera } from "./Camera.js";
-import { Light } from "./Light.js";
-import { mat4, vec3, glMatrix } from "./toji-gl-matrix-d6156a5/src/index.js"
-import { Mesh } from "./Mesh.js";
+import { MeshObject } from "./renderer/MeshObject.js"
+import { OctagonalPrismMesh } from "./renderer/OctagonalPrismMesh.js"
+import { Camera } from "./renderer/Camera.js";
+import { Light } from "./renderer/Light.js";
+import { mat4, vec3, glMatrix } from "./lib/toji-gl-matrix-d6156a5/src/index.js"
+import { Mesh } from "./renderer/Mesh.js";
 window.addEventListener("load", async () => {
     const canvas = document.getElementById("canvas")
     let gl = canvas.getContext("webgl2")
-    if(!gl){
+    if (!gl) {
         gl = canvas.getContext("webgl")
-        if(gl && !gl.getExtension("OES_element_index_uint")){
+        if (gl && !gl.getExtension("OES_element_index_uint")) {
             console.error("Your browser doesn't support the OES_element_index_uint extension")
             return
         }
     }
-    if(!gl){
+    if (!gl) {
         gl = canvas.getContext("experimental-webgl")
-        if(gl && !gl.getExtension("OES_element_index_uint")){
+        if (gl && !gl.getExtension("OES_element_index_uint")) {
             console.error("Your browser doesn't support the OES_element_index_uint extension")
             return
         }
     }
-    if(!gl){
+    if (!gl) {
         console.error("Your browser doesn't support WebGL")
         return
     }
 
-    let info ="WebGL version:\t\t\t" + gl.getParameter(gl.VERSION) + "\nGLSL version:\t\t\t" + gl.getParameter(gl.SHADING_LANGUAGE_VERSION) + "\nWebGL Vendor:\t\t\t" + gl.getParameter(gl.VENDOR)
+    let info = "WebGL version:\t\t\t" + gl.getParameter(gl.VERSION) + "\nGLSL version:\t\t\t" + gl.getParameter(gl.SHADING_LANGUAGE_VERSION) + "\nWebGL Vendor:\t\t\t" + gl.getParameter(gl.VENDOR)
     const ext = gl.getExtension("WEBGL_debug_renderer_info");
     if (ext) info += "\nUnmasked WebGL vendor:\t" + gl.getParameter(ext.UNMASKED_VENDOR_WEBGL) + "\nUnmasked renderer:\t\t" + gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)
     console.info(info)
@@ -55,7 +55,7 @@ window.addEventListener("load", async () => {
             })
         }
 
-        const responses = await Promise.all([loadFile("vertex.glsl"), loadFile("fragment.glsl")])
+        const responses = await Promise.all([loadFile("shader/vertex.glsl"), loadFile("shader/fragment.glsl")])
 
         const position = vec3.create()
         vec3.set(position, 30, 50, 60)
@@ -103,7 +103,7 @@ window.addEventListener("load", async () => {
         console.info("[grid generation] done.\n\t" +
             hexGridGeometry.indices.length + " indices.\n\t" +
             hexGridGeometry.interleavedArray.length + " elements in interleaved array.")
-            
+
 
         const resize = () => {
             canvas.width = canvas.clientWidth * window.devicePixelRatio
@@ -115,10 +115,11 @@ window.addEventListener("load", async () => {
         window.addEventListener("resize", resize)
         resize()
 
-        const loop = function () {
+        const loop = function (time) {
+            // console.log(time)
             gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT)
             hexGrid.update()    // TODO: move update script out of MeshObject
-            hexGrid.render(gl)
+            hexGrid.render(gl, time)
             requestAnimationFrame(loop)
         }
         requestAnimationFrame(loop)

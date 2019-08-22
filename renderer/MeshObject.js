@@ -1,6 +1,6 @@
 import { Mesh } from "./Mesh.js"
 import { Light } from "./Light.js"
-import { mat4, mat3, vec3 } from "./toji-gl-matrix-d6156a5/src/index.js"
+import { mat4, mat3, vec3 } from "../lib/toji-gl-matrix-d6156a5/src/index.js"
 
 class MeshObject {
     constructor(
@@ -58,8 +58,8 @@ class MeshObject {
         gl.enableVertexAttribArray(attribLocationColor)
         gl.enableVertexAttribArray(attribLocationNormal)
         gl.enableVertexAttribArray(attribLocationCenter)
-        this.interleaved = { 
-            buffer: buffer, 
+        this.interleaved = {
+            buffer: buffer,
             attribLocation: {
                 position: attribLocationPosition,
                 color: attribLocationColor,
@@ -100,14 +100,11 @@ class MeshObject {
         mat3.fromMat4(this.normalMatrix, normalMatrix3)
     }
 
-    render(/** @type {WebGLRenderingContext} */ gl) {
+    render(/** @type {WebGLRenderingContext} */ gl, /** @type {Number} */ time) {
         gl.useProgram(this.program)
         gl.uniformMatrix4fv(this.matWorldUniformLocation, gl.FALSE, this.worldMatrix)
         gl.uniformMatrix3fv(this.matNormUniformLocation, gl.FALSE, this.normalMatrix)
-
-        let time = Date.now() * 0.001
-        time = time % (Math.PI * 2)
-        gl.uniform1f(this.timeUniformLocation, time)
+        gl.uniform1f(this.timeUniformLocation, time * 0.001)
 
         gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT)
 
