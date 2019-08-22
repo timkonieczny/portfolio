@@ -7,12 +7,15 @@ class Face4 extends Face {
         /** @type {vec3} */ b,
         /** @type {vec3} */ c,
         /** @type {vec3} */ d,
-        /** @type {vec3} */ color) {
+        /** @type {vec3} */ color,
+        /** @type {vec3} */ center) {
         super(a, b, c)
-        this.vertices = [...a, ...b, ...c, ...d]
         this.indices = [0, 1, 2, 2, 3, 0]
-        this.normals = [...this.normal, ...this.normal, ...this.normal, ...this.normal]
-        this.colors = [...color, ...color, ...color, ...color]
+        this.interleavedArray.push(
+            ...a, ...this.normal, ...center, ...color,
+            ...b, ...this.normal, ...center, ...color,
+            ...c, ...this.normal, ...center, ...color,
+            ...d, ...this.normal, ...center, ...color)
     }
 }
 export { Face4 }

@@ -123,7 +123,6 @@ class MeshObject {
 
 
         gl.drawElements(gl.TRIANGLES, this.indices.length, gl.UNSIGNED_INT, 0)
-        // gl.drawElements(gl.TRIANGLES, this.indices.length, gl.UNSIGNED_SHORT, 0) // use this with experimental-webgl
     }
 
     resize(gl, projMatrix) {

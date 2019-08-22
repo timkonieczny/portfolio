@@ -12,6 +12,7 @@ class Face {
         vec3.sub(ac, c, a)
         this.normal = vec3.create()
         vec3.cross(this.normal, ab, ac)
+        this.interleavedArray = []
     }
 }
 

@@ -8,85 +8,53 @@ class Mesh {
         this.colors = []
     }
 
-    applyMatrix( /** @type {mat4} */ matrix) {
+    applyMatrix(/** @type {mat4} */ matrix) {
         const vector = vec3.create()
         const matrix3 = mat3.create()
         mat3.fromMat4(matrix3, matrix)
         const outputVector = vec3.create()
-        for (let i = 0; i < this.vertices.length; i += 3) {
-            vec3.set(vector, this.vertices[i], this.vertices[i + 1], this.vertices[i + 2])
+        for(let i = 0; i < this.interleavedArray.length; i+=12){
+            // vertices
+            vec3.set(vector,
+                this.interleavedArray[i],
+                this.interleavedArray[i + 1],
+                this.interleavedArray[i + 2])
             vec3.transformMat4(outputVector, vector, matrix)
-            this.vertices[i] = outputVector[0]
-            this.vertices[i + 1] = outputVector[1]
-            this.vertices[i + 2] = outputVector[2]
+            this.interleavedArray[i] = outputVector[0]
+            this.interleavedArray[i + 1] = outputVector[1]
+            this.interleavedArray[i + 2] = outputVector[2]
 
-            vec3.set(vector, this.centers[i], this.centers[i + 1], this.centers[i + 2])
-            vec3.transformMat4(outputVector, vector, matrix)
-            this.centers[i] = outputVector[0]
-            this.centers[i + 1] = outputVector[1]
-            this.centers[i + 2] = outputVector[2]
-
-            vec3.set(vector, this.normals[i], this.normals[i + 1], this.normals[i + 2])
+            // normals
+            vec3.set(vector,
+                this.interleavedArray[i + 3],
+                this.interleavedArray[i + 4],
+                this.interleavedArray[i + 5])
             vec3.transformMat3(outputVector, vector, matrix3)
-            this.normals[i] = outputVector[0]
-            this.normals[i + 1] = outputVector[1]
-            this.normals[i + 2] = outputVector[2]
+            this.interleavedArray[i + 3] = outputVector[0]
+            this.interleavedArray[i + 4] = outputVector[1]
+            this.interleavedArray[i + 5] = outputVector[2]
+            
+            // centers
+            vec3.set(vector,
+                this.interleavedArray[i + 6],
+                this.interleavedArray[i + 7],
+                this.interleavedArray[i + 8])
+            vec3.transformMat4(outputVector, vector, matrix)
+            this.interleavedArray[i + 6] = outputVector[0]
+            this.interleavedArray[i + 7] = outputVector[1]
+            this.interleavedArray[i + 8] = outputVector[2]
         }
     }
 
-    makeGeometry(...faces) {
-        let vertices = []
-        let indices = []
-        let normals = []
-        let colors = []
-
-        faces.forEach(face => {
-            indices = indices.concat(face.indices.map(index => {
-                return index + vertices.length / 3
-            }))
-            vertices = vertices.concat(face.vertices)
-            normals = normals.concat(face.normals)
-            colors = colors.concat(face.colors)
-        })
-        return { vertices: vertices, indices: indices, normals: normals, colors: colors }
-    }
-
     static mergeGeometries(...geometries) {
-        const output = new Mesh()
-        output.centers = [] // TODO: remove centers from Mesh and move it to OctagonalPrismMesh. Override this function.
-        geometries.forEach(geometry => {
-            const newIndices = geometry.indices.map(index => {
-                return index + output.vertices.length / 3
-            })
-            output.indices.push(...newIndices)
-            output.vertices.push(...geometry.vertices)
-            output.normals.push(...geometry.normals)
-            output.colors.push(...geometry.colors)
-            output.centers.push(...geometry.centers)
-        })
-        return output
-    }
-
-    static mergeGeometriesInterleaved(...geometries) {
         const interleavedArray = []
         const output = new Mesh()
-        output.centers = [] // TODO: remove centers from Mesh and move it to OctagonalPrismMesh. Override this function.
         geometries.forEach(geometry => {
-            for(let i = 0; i < geometry.vertices.length; i+=3){
-                interleavedArray.push(
-                    geometry.vertices[i], geometry.vertices[i+1], geometry.vertices[i+2],
-                    geometry.normals[i], geometry.normals[i+1], geometry.normals[i+2], 
-                    geometry.centers[i], geometry.centers[i+1], geometry.centers[i+2],
-                    geometry.colors[i], geometry.colors[i+1], geometry.colors[i+2])
-            }
             const newIndices = geometry.indices.map(index => {
-                return index + output.vertices.length / 3
+                return index + interleavedArray.length / 12
             })
             output.indices.push(...newIndices)
-            output.vertices.push(...geometry.vertices)
-            output.normals.push(...geometry.normals)
-            output.colors.push(...geometry.colors)
-            output.centers.push(...geometry.centers)
+            interleavedArray.push(...geometry.interleavedArray)
         })
         output.interleavedArray = interleavedArray
         return output

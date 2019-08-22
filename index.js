@@ -70,7 +70,6 @@ window.addEventListener("load", async () => {
         vec3.set(lightPosition, 10, 10, -10)
         const light = new Light(lightPosition)
 
-        // TODO: add gaps between elements
         console.log("[grid generation] start")
         const xDim = Math.sin(1 / 6 * Math.PI * 2)
         const zDim = 1
@@ -97,15 +96,11 @@ window.addEventListener("load", async () => {
             }
         }
         console.info("[grid generation] merging geometries")
-        const hexGridGeometry = Mesh.mergeGeometriesInterleaved(...cylinders)
+        const hexGridGeometry = Mesh.mergeGeometries(...cylinders)
         console.info("[grid generation] creating MeshObject")
         const hexGrid = new MeshObject(gl, hexGridGeometry, ...responses, camera, light)
 
         console.info("[grid generation] done.\n\t" +
-            hexGridGeometry.vertices.length + " vertices.\n\t" +
-            hexGridGeometry.normals.length + " normals.\n\t" +
-            hexGridGeometry.centers.length + " centers.\n\t" +
-            hexGridGeometry.colors.length + " colors.\n\t" +
             hexGridGeometry.indices.length + " indices.\n\t" +
             hexGridGeometry.interleavedArray.length + " elements in interleaved array.")
             
