@@ -74,7 +74,6 @@ class MeshObject {
         this.matViewUniformLocation = gl.getUniformLocation(this.program, "uView")
         this.matProjUniformLocation = gl.getUniformLocation(this.program, "uProjection")
         this.matNormUniformLocation = gl.getUniformLocation(this.program, "uNormal")
-        this.viewPosUniformLocation = gl.getUniformLocation(this.program, "uViewPosition")
         this.lightPosUniformLocation = gl.getUniformLocation(this.program, "uLightPosition")
         this.timeUniformLocation = gl.getUniformLocation(this.program, "uTime")
         this.worldMatrix = mat4.create();
@@ -85,7 +84,6 @@ class MeshObject {
         gl.uniformMatrix4fv(this.matViewUniformLocation, gl.FALSE, camera.viewMatrix)
         gl.uniformMatrix3fv(this.matNormUniformLocation, gl.FALSE, this.normalMatrix)
         gl.uniform3f(this.lightPosUniformLocation, light.position[0], light.position[1], light.position[2])
-        gl.uniform3f(this.viewPosUniformLocation, camera.position[0], camera.position[1], camera.position[2])
     }
 
     update() {

@@ -8,6 +8,7 @@ attribute vec3 aCenter;
 varying vec3 vColor;
 varying vec3 vNormal;
 varying vec3 vPosition;
+varying mat4 vView;
 uniform mat4 uWorld;
 uniform mat4 uView;
 uniform mat4 uProjection;
@@ -17,7 +18,6 @@ uniform float uTime;
 void main() {
     vColor = aColor;
     vNormal = uNormal * aNormal;
-
     vPosition = (uWorld * vec4(aPosition, 1.0)).xyz;
     vec3 position = aPosition;
     position.y = position.y + sin(uTime + aCenter.x * 0.5) - 1.0;
