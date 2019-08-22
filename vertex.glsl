@@ -1,28 +1,26 @@
 #version 100
 precision mediump float;
 
-attribute vec3 vertPosition;
-attribute vec3 vertColor;
-attribute vec3 vertNormal;
-attribute vec3 vertCenter;
-varying vec3 fragColor;
-varying vec3 fragNormal;
-varying vec3 fragPos;
-uniform mat4 mWorld;
-uniform mat4 mView;
-uniform mat4 mProj;
-
-uniform mat3 mNorm;
-
-uniform float time;
+attribute vec3 aPosition;
+attribute vec3 aColor;
+attribute vec3 aNormal;
+attribute vec3 aCenter;
+varying vec3 vColor;
+varying vec3 vNormal;
+varying vec3 vPosition;
+uniform mat4 uWorld;
+uniform mat4 uView;
+uniform mat4 uProjection;
+uniform mat3 uNormal;
+uniform float uTime;
 
 void main() {
-    fragColor = vertColor;
-    fragNormal = mNorm * vertNormal;
+    vColor = aColor;
+    vNormal = uNormal * aNormal;
 
-    fragPos = (mWorld * vec4(vertPosition, 1.0)).xyz;
-    vec3 position = vertPosition;
-    position.y = position.y + sin(time + vertCenter.x * 0.5) - 1.0;
-    position.y = position.y + cos(time + vertCenter.z * 0.3) - 1.0;
-    gl_Position = mProj * mView * mWorld * vec4(position, 1.0);
+    vPosition = (uWorld * vec4(aPosition, 1.0)).xyz;
+    vec3 position = aPosition;
+    position.y = position.y + sin(uTime + aCenter.x * 0.5) - 1.0;
+    position.y = position.y + cos(uTime + aCenter.z * 0.3) - 1.0;
+    gl_Position = uProjection * uView * uWorld * vec4(position, 1.0);
 }
