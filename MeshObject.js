@@ -122,7 +122,6 @@ class MeshObject {
         gl.vertexAttribPointer(this.interleaved.attribLocation.color, 3, gl.FLOAT, gl.FALSE, bytesPerElement * 12, bytesPerElement * 9)
 
 
-        gl.getExtension('OES_element_index_uint');  // TODO: not possible / necessary with experimental-webgl and webgl2
         gl.drawElements(gl.TRIANGLES, this.indices.length, gl.UNSIGNED_INT, 0)
         // gl.drawElements(gl.TRIANGLES, this.indices.length, gl.UNSIGNED_SHORT, 0) // use this with experimental-webgl
     }

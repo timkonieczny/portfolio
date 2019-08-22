@@ -5,11 +5,31 @@ import { Light } from "./Light.js";
 import { mat4, vec3, glMatrix } from "./toji-gl-matrix-d6156a5/src/index.js"
 import { Mesh } from "./Mesh.js";
 window.addEventListener("load", async () => {
-    // TODO: WebGL compatibility: use webgl2, fall back to webgl, fall back to experimental-webgl
     const canvas = document.getElementById("canvas")
-    const gl = canvas.getContext("webgl")
-    // const gl = canvas.getContext("webgl2")
-    console.info(gl.getParameter(gl.VERSION))
+    let gl = canvas.getContext("webgl2")
+    if(!gl){
+        gl = canvas.getContext("webgl")
+        if(gl && !gl.getExtension("OES_element_index_uint")){
+            console.error("Your browser doesn't support the OES_element_index_uint extension")
+            return
+        }
+    }
+    if(!gl){
+        gl = canvas.getContext("experimental-webgl")
+        if(gl && !gl.getExtension("OES_element_index_uint")){
+            console.error("Your browser doesn't support the OES_element_index_uint extension")
+            return
+        }
+    }
+    if(!gl){
+        console.error("Your browser doesn't support WebGL")
+        return
+    }
+
+    let info ="WebGL version:\t\t\t" + gl.getParameter(gl.VERSION) + "\nGLSL version:\t\t\t" + gl.getParameter(gl.SHADING_LANGUAGE_VERSION) + "\nWebGL Vendor:\t\t\t" + gl.getParameter(gl.VENDOR)
+    const ext = gl.getExtension("WEBGL_debug_renderer_info");
+    if (ext) info += "\nUnmasked WebGL vendor:\t" + gl.getParameter(ext.UNMASKED_VENDOR_WEBGL) + "\nUnmasked renderer:\t\t" + gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)
+    console.info(info)
 
     gl.clearColor(0.75, 0.85, 0.8, 1.0)
     gl.enable(gl.DEPTH_TEST)
