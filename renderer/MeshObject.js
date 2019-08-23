@@ -54,12 +54,14 @@ class MeshObject {
         const attribLocationColor = gl.getAttribLocation(this.program, "aColor")
         const attribLocationNormal = gl.getAttribLocation(this.program, "aNormal")
         const attribLocationCenter = gl.getAttribLocation(this.program, "aCenter")
-        const attribLocationSpecialY = gl.getAttribLocation(this.program, "aSpecialY")
+        const attribLocationSpecialY0 = gl.getAttribLocation(this.program, "aSpecialY0")
+        const attribLocationSpecialY1 = gl.getAttribLocation(this.program, "aSpecialY1")
         gl.enableVertexAttribArray(attribLocationPosition)
         gl.enableVertexAttribArray(attribLocationColor)
         gl.enableVertexAttribArray(attribLocationNormal)
         gl.enableVertexAttribArray(attribLocationCenter)
-        gl.enableVertexAttribArray(attribLocationSpecialY)
+        gl.enableVertexAttribArray(attribLocationSpecialY0)
+        gl.enableVertexAttribArray(attribLocationSpecialY1)
         this.interleaved = {
             buffer: buffer,
             attribLocation: {
@@ -67,9 +69,10 @@ class MeshObject {
                 color: attribLocationColor,
                 normal: attribLocationNormal,
                 center: attribLocationCenter,
-                specialY: attribLocationSpecialY
+                specialY0: attribLocationSpecialY0,
+                specialY1: attribLocationSpecialY1
             },
-            numberOfElements: 9,
+            numberOfElements: 14,
             bytesPerElement: 4
         }
 
@@ -81,7 +84,8 @@ class MeshObject {
         this.matNormUniformLocation = gl.getUniformLocation(this.program, "uNormal")
         this.lightPosUniformLocation = gl.getUniformLocation(this.program, "uLightPosition")
         this.timeUniformLocation = gl.getUniformLocation(this.program, "uTime")
-        this.specialTimeUniformLocation = gl.getUniformLocation(this.program, "uSpecialTime")
+        this.specialTime0UniformLocation = gl.getUniformLocation(this.program, "uSpecialTime0")
+        this.specialTime1UniformLocation = gl.getUniformLocation(this.program, "uSpecialTime1")
         this.worldMatrix = mat4.create();
         mat4.identity(this.worldMatrix)
         this.normalMatrix = mat3.create();
@@ -92,45 +96,85 @@ class MeshObject {
         gl.uniform3f(this.lightPosUniformLocation, light.position[0], light.position[1], light.position[2])
 
         this.animation = {
-            hover: [{
-                interpolationTime: 0,
-                interpolator: 0,
-                transitionDuration: 500,
-                isIncreasing: false,
-                isDecreasing: false,
-                isHighest: false,
-                tslf: null,
-                update: function(time) {
-                    if (this.tslf == null) this.tslf = time
-                    this.tslf = time - this.tslf
-                    
-                    if (this.isIncreasing) {
-                        this.interpolationTime += this.tslf
-                        this.interpolator = (-Math.cos((this.interpolationTime) / this.transitionDuration * Math.PI) + 1) / 2
+            hover: [
+                {
+                    interpolationTime: 0,
+                    interpolator: 0,
+                    transitionDuration: 500,
+                    isIncreasing: false,
+                    isDecreasing: false,
+                    isHighest: false,
+                    tslf: null,
+                    update: function (time) {
+                        if (this.tslf == null) this.tslf = time
+                        this.tslf = time - this.tslf
 
-                        if (this.interpolationTime >= this.transitionDuration) {
+                        if (this.isIncreasing) {
+                            this.interpolationTime += this.tslf
+                            this.interpolator = (-Math.cos((this.interpolationTime) / this.transitionDuration * Math.PI) + 1) / 2
+
+                            if (this.interpolationTime >= this.transitionDuration) {
+                                this.interpolator = 1
+                                this.isIncreasing = false
+                                this.isHighest = true
+                                this.interpolationTime = this.transitionDuration
+                            }
+                        } else if (this.isDecreasing) {
+                            this.isHighest = false
+                            this.interpolationTime -= this.tslf
+                            this.interpolator = (-Math.cos((this.interpolationTime) / this.transitionDuration * Math.PI) + 1) / 2
+                            if (this.interpolationTime <= 0) {
+                                this.interpolator = 0
+                                this.isDecreasing = false
+                                this.interpolationTime = 0
+                            }
+                        } else if (this.isHighest) {
                             this.interpolator = 1
-                            this.isIncreasing = false
-                            this.isHighest = true
-                            this.interpolationTime = this.transitionDuration
-                        }
-                    } else if (this.isDecreasing) {
-                        this.isHighest = false
-                        this.interpolationTime -= this.tslf
-                        this.interpolator = (-Math.cos((this.interpolationTime) / this.transitionDuration * Math.PI) + 1) / 2
-                        if (this.interpolationTime <= 0) {
+                        } else {
                             this.interpolator = 0
-                            this.isDecreasing = false
-                            this.interpolationTime = 0
                         }
-                    } else if (this.isHighest) {
-                        this.interpolator = 1
-                    } else {
-                        this.interpolator = 0
+                        this.tslf = time
                     }
-                    this.tslf = time
-                }
-            }]
+                },
+                {
+                    interpolationTime: 0,
+                    interpolator: 0,
+                    transitionDuration: 500,
+                    isIncreasing: false,
+                    isDecreasing: false,
+                    isHighest: false,
+                    tslf: null,
+                    update: function (time) {
+                        if (this.tslf == null) this.tslf = time
+                        this.tslf = time - this.tslf
+
+                        if (this.isIncreasing) {
+                            this.interpolationTime += this.tslf
+                            this.interpolator = (-Math.cos((this.interpolationTime) / this.transitionDuration * Math.PI) + 1) / 2
+
+                            if (this.interpolationTime >= this.transitionDuration) {
+                                this.interpolator = 1
+                                this.isIncreasing = false
+                                this.isHighest = true
+                                this.interpolationTime = this.transitionDuration
+                            }
+                        } else if (this.isDecreasing) {
+                            this.isHighest = false
+                            this.interpolationTime -= this.tslf
+                            this.interpolator = (-Math.cos((this.interpolationTime) / this.transitionDuration * Math.PI) + 1) / 2
+                            if (this.interpolationTime <= 0) {
+                                this.interpolator = 0
+                                this.isDecreasing = false
+                                this.interpolationTime = 0
+                            }
+                        } else if (this.isHighest) {
+                            this.interpolator = 1
+                        } else {
+                            this.interpolator = 0
+                        }
+                        this.tslf = time
+                    }
+                }]
         }
     }
 
@@ -152,24 +196,24 @@ class MeshObject {
         /** @type {WebGLRenderingContext} */ gl,
         /** @type {Number} */ time) {
 
-        this.animation.hover[0].update(time)
+        this.animation.hover.forEach(hoverAnimation => { hoverAnimation.update(time) })
 
         gl.useProgram(this.program)
         gl.uniformMatrix4fv(this.matWorldUniformLocation, gl.FALSE, this.worldMatrix)
         gl.uniformMatrix3fv(this.matNormUniformLocation, gl.FALSE, this.normalMatrix)
         gl.uniform1f(this.timeUniformLocation, time * 0.001)
-        gl.uniform1f(this.specialTimeUniformLocation, this.animation.hover[0].interpolator)
+        gl.uniform1f(this.specialTime0UniformLocation, this.animation.hover[0].interpolator)
+        gl.uniform1f(this.specialTime1UniformLocation, this.animation.hover[1].interpolator)
 
         gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT)
 
         gl.bindBuffer(gl.ARRAY_BUFFER, this.interleaved.buffer)
-        const bytesPerElement = 4
-        const numberOfElements = 13
-        gl.vertexAttribPointer(this.interleaved.attribLocation.position, 3, gl.FLOAT, gl.FALSE, bytesPerElement * numberOfElements, bytesPerElement * 0)
-        gl.vertexAttribPointer(this.interleaved.attribLocation.normal, 3, gl.FLOAT, gl.FALSE, bytesPerElement * numberOfElements, bytesPerElement * 3)
-        gl.vertexAttribPointer(this.interleaved.attribLocation.center, 3, gl.FLOAT, gl.FALSE, bytesPerElement * numberOfElements, bytesPerElement * 6)
-        gl.vertexAttribPointer(this.interleaved.attribLocation.color, 3, gl.FLOAT, gl.FALSE, bytesPerElement * numberOfElements, bytesPerElement * 9)
-        gl.vertexAttribPointer(this.interleaved.attribLocation.specialY, 1, gl.FLOAT, gl.FALSE, bytesPerElement * numberOfElements, bytesPerElement * 12)
+        gl.vertexAttribPointer(this.interleaved.attribLocation.position, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 0)
+        gl.vertexAttribPointer(this.interleaved.attribLocation.normal, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 3)
+        gl.vertexAttribPointer(this.interleaved.attribLocation.center, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 6)
+        gl.vertexAttribPointer(this.interleaved.attribLocation.color, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 9)
+        gl.vertexAttribPointer(this.interleaved.attribLocation.specialY0, 1, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 12)
+        gl.vertexAttribPointer(this.interleaved.attribLocation.specialY1, 1, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 13)
 
         gl.drawElements(gl.TRIANGLES, this.indices.length, gl.UNSIGNED_INT, 0)
     }
@@ -178,14 +222,14 @@ class MeshObject {
         gl.uniformMatrix4fv(this.matProjUniformLocation, gl.FALSE, projMatrix)
     }
 
-    startSpecialEvent() {
-        this.animation.hover[0].isIncreasing = true
-        this.animation.hover[0].isDecreasing = false
+    startSpecialEvent(item) {
+        this.animation.hover[item].isIncreasing = true
+        this.animation.hover[item].isDecreasing = false
     }
 
-    endSpecialEvent() {
-        this.animation.hover[0].isDecreasing = true
-        this.animation.hover[0].isIncreasing = false
+    endSpecialEvent(item) {
+        this.animation.hover[item].isDecreasing = true
+        this.animation.hover[item].isIncreasing = false
     }
 
 }

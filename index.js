@@ -124,12 +124,11 @@ window.addEventListener("load", async () => {
         }
 
         Array.from(document.getElementsByClassName("hoverable")).forEach(element => {
-            element.addEventListener("mouseenter", (event)=>{
-                console.log(event.target.id)
-                hexGrid.startSpecialEvent()
+            element.addEventListener("mouseenter", (event) => {
+                hexGrid.startSpecialEvent(parseInt(event.target.dataset.id))
             })
-            element.addEventListener("mouseleave", (event)=>{
-                hexGrid.endSpecialEvent()
+            element.addEventListener("mouseleave", (event) => {
+                hexGrid.endSpecialEvent(parseInt(event.target.dataset.id))
             })
         })
 

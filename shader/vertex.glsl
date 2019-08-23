@@ -5,7 +5,8 @@ attribute vec3 aPosition;
 attribute vec3 aColor;
 attribute vec3 aNormal;
 attribute vec3 aCenter;
-attribute float aSpecialY;
+attribute float aSpecialY0;
+attribute float aSpecialY1;
 varying vec3 vColor;
 varying vec3 vNormal;
 varying vec3 vPosition;
@@ -15,7 +16,8 @@ uniform mat4 uView;
 uniform mat4 uProjection;
 uniform mat3 uNormal;
 uniform float uTime;
-uniform float uSpecialTime;
+uniform float uSpecialTime0;
+uniform float uSpecialTime1;
 
 void main() {
     vColor = aColor;
@@ -31,14 +33,8 @@ void main() {
     position.y = position.y
         + sin(uTime + aCenter.x * waveLengthX) * waveHeightX - waveHeightX
         + cos(uTime + aCenter.z * waveLengthZ) * waveHeightZ - waveHeightZ
-        + uSpecialTime * aSpecialY * 20.0;
+        + uSpecialTime0 * aSpecialY0 * 20.0
+        + uSpecialTime1 * aSpecialY1 * 20.0;
 
     gl_Position = uProjection * uView * uWorld * vec4(position, 1.0);
 }
-
-/* TODO: special events
- * add float attribute that specifies y position on special event
- * pass start time as uniform and calculate elapsed time (use this uniform also to trigger the special event)
- * use elapsed time to interpolate between aPosition.y * wave and special event y position
- * use elapsed time to also interpolate wave to 0 (or small factor)
- */

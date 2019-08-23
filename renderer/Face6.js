@@ -11,16 +11,18 @@ class Face6 extends Face {
         /** @type {vec3} */ f,
         /** @type {vec3} */ color,
         /** @type {vec3} */ center,
-        /** @type {Number} */ specialY) {
+        /** @type {Number} */ specialY0,
+        /** @type {Number} */ specialY1
+    ) {
         super(a, b, c)
         this.indices = [0, 1, 2, 2, 3, 4, 4, 5, 0, 0, 2, 4]
         this.interleavedArray.push(
-            ...a, ...this.normal, ...center, ...color, specialY,
-            ...b, ...this.normal, ...center, ...color, specialY,
-            ...c, ...this.normal, ...center, ...color, specialY,
-            ...d, ...this.normal, ...center, ...color, specialY,
-            ...e, ...this.normal, ...center, ...color, specialY,
-            ...f, ...this.normal, ...center, ...color, specialY)
+            ...a, ...this.normal, ...center, ...color, specialY0, specialY1,
+            ...b, ...this.normal, ...center, ...color, specialY0, specialY1,
+            ...c, ...this.normal, ...center, ...color, specialY0, specialY1,
+            ...d, ...this.normal, ...center, ...color, specialY0, specialY1,
+            ...e, ...this.normal, ...center, ...color, specialY0, specialY1,
+            ...f, ...this.normal, ...center, ...color, specialY0, specialY1)
     }
 }
 export { Face6 }
