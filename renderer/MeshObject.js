@@ -91,10 +91,47 @@ class MeshObject {
         gl.uniformMatrix3fv(this.matNormUniformLocation, gl.FALSE, this.normalMatrix)
         gl.uniform3f(this.lightPosUniformLocation, light.position[0], light.position[1], light.position[2])
 
-        this.specialTime = 0
-        this.isStartingEvent = false
-        this.isEndingEvent = false
-        this.isEventOn = false
+        this.animation = {
+            hover: [{
+                interpolationTime: 0,
+                interpolator: 0,
+                transitionDuration: 500,
+                isIncreasing: false,
+                isDecreasing: false,
+                isHighest: false,
+                tslf: null,
+                update: function(time) {
+                    if (this.tslf == null) this.tslf = time
+                    this.tslf = time - this.tslf
+                    
+                    if (this.isIncreasing) {
+                        this.interpolationTime += this.tslf
+                        this.interpolator = (-Math.cos((this.interpolationTime) / this.transitionDuration * Math.PI) + 1) / 2
+
+                        if (this.interpolationTime >= this.transitionDuration) {
+                            this.interpolator = 1
+                            this.isIncreasing = false
+                            this.isHighest = true
+                            this.interpolationTime = this.transitionDuration
+                        }
+                    } else if (this.isDecreasing) {
+                        this.isHighest = false
+                        this.interpolationTime -= this.tslf
+                        this.interpolator = (-Math.cos((this.interpolationTime) / this.transitionDuration * Math.PI) + 1) / 2
+                        if (this.interpolationTime <= 0) {
+                            this.interpolator = 0
+                            this.isDecreasing = false
+                            this.interpolationTime = 0
+                        }
+                    } else if (this.isHighest) {
+                        this.interpolator = 1
+                    } else {
+                        this.interpolator = 0
+                    }
+                    this.tslf = time
+                }
+            }]
+        }
     }
 
     update() {
@@ -115,42 +152,13 @@ class MeshObject {
         /** @type {WebGLRenderingContext} */ gl,
         /** @type {Number} */ time) {
 
-        if (this.tslf == undefined) this.tslf = time
-        this.tslf = time - this.tslf
-
-        let specialTimeShader = 0
-        const transition = 500
-
-        if (this.isStartingEvent) {
-            this.specialTime += this.tslf
-            specialTimeShader = (-Math.cos((this.specialTime) / transition * Math.PI) + 1) / 2
-
-            if (this.specialTime >= transition) {
-                specialTimeShader = 1
-                this.isStartingEvent = false
-                this.isEventOn = true
-                this.specialTime = transition
-            }
-        } else if (this.isEndingEvent) {
-            this.isEventOn = false
-            this.specialTime -= this.tslf
-            specialTimeShader = (-Math.cos((this.specialTime) / transition * Math.PI) + 1) / 2
-            if (this.specialTime <= 0) {
-                specialTimeShader = 0
-                this.isEndingEvent = false
-                this.specialTime = 0
-            }
-        } else if (this.isEventOn) {
-            specialTimeShader = 1
-        } else {
-            specialTimeShader = 0
-        }
+        this.animation.hover[0].update(time)
 
         gl.useProgram(this.program)
         gl.uniformMatrix4fv(this.matWorldUniformLocation, gl.FALSE, this.worldMatrix)
         gl.uniformMatrix3fv(this.matNormUniformLocation, gl.FALSE, this.normalMatrix)
         gl.uniform1f(this.timeUniformLocation, time * 0.001)
-        gl.uniform1f(this.specialTimeUniformLocation, specialTimeShader)
+        gl.uniform1f(this.specialTimeUniformLocation, this.animation.hover[0].interpolator)
 
         gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT)
 
@@ -164,7 +172,6 @@ class MeshObject {
         gl.vertexAttribPointer(this.interleaved.attribLocation.specialY, 1, gl.FLOAT, gl.FALSE, bytesPerElement * numberOfElements, bytesPerElement * 12)
 
         gl.drawElements(gl.TRIANGLES, this.indices.length, gl.UNSIGNED_INT, 0)
-        this.tslf = time
     }
 
     resize(gl, projMatrix) {
@@ -172,13 +179,13 @@ class MeshObject {
     }
 
     startSpecialEvent() {
-        this.isStartingEvent = true
-        this.isEndingEvent = false
+        this.animation.hover[0].isIncreasing = true
+        this.animation.hover[0].isDecreasing = false
     }
 
     endSpecialEvent() {
-        this.isEndingEvent = true
-        this.isStartingEvent = false
+        this.animation.hover[0].isDecreasing = true
+        this.animation.hover[0].isIncreasing = false
     }
 
 }

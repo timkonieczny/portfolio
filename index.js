@@ -123,12 +123,22 @@ window.addEventListener("load", async () => {
             requestAnimationFrame(loop)
         }
 
-        document.getElementById("menuItem1").addEventListener("mouseenter", () => {
-            hexGrid.startSpecialEvent()
+        Array.from(document.getElementsByClassName("hoverable")).forEach(element => {
+            element.addEventListener("mouseenter", (event)=>{
+                console.log(event.target.id)
+                hexGrid.startSpecialEvent()
+            })
+            element.addEventListener("mouseleave", (event)=>{
+                hexGrid.endSpecialEvent()
+            })
         })
-        document.getElementById("menuItem1").addEventListener("mouseleave", () => {
-            hexGrid.endSpecialEvent()
-        })
+
+        // document.getElementById("menuItem1").addEventListener("mouseenter", () => {
+        //     hexGrid.startSpecialEvent()
+        // })
+        // document.getElementById("menuItem1").addEventListener("mouseleave", () => {
+        //     hexGrid.endSpecialEvent()
+        // })
 
         requestAnimationFrame(loop)
     } catch (responses) {
