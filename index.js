@@ -4,9 +4,10 @@ import { Camera } from "./renderer/Camera.js";
 import { Light } from "./renderer/Light.js";
 import { mat4, vec3, glMatrix } from "./lib/toji-gl-matrix-d6156a5/src/index.js"
 import { Mesh } from "./renderer/Mesh.js";
+
 window.addEventListener("load", async () => {
     const canvas = document.getElementById("canvas")
-    let gl = canvas.getContext("webgl2")
+    let gl = canvas.getContext("webgl2")    // TODO: try using WebGL2 with extension
     if (!gl) {
         gl = canvas.getContext("webgl")
         if (gl && !gl.getExtension("OES_element_index_uint")) {

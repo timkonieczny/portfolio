@@ -5,6 +5,7 @@ attribute vec3 aPosition;
 attribute vec3 aColor;
 attribute vec3 aNormal;
 attribute vec3 aCenter;
+attribute float aSpecialY;
 varying vec3 vColor;
 varying vec3 vNormal;
 varying vec3 vPosition;
@@ -14,6 +15,7 @@ uniform mat4 uView;
 uniform mat4 uProjection;
 uniform mat3 uNormal;
 uniform float uTime;
+uniform float uSpecialTime;
 
 void main() {
     vColor = aColor;
@@ -25,8 +27,12 @@ void main() {
     float waveHeightX = 2.0;
     float waveHeightZ = 2.0;
 
-    position.y = position.y + sin(uTime + aCenter.x * waveLengthX) * waveHeightX - waveHeightX;
-    position.y = position.y + cos(uTime + aCenter.z * waveLengthZ) * waveHeightZ - waveHeightZ;
+    // TODO: throw in one statement
+    position.y = position.y
+        + sin(uTime + aCenter.x * waveLengthX) * waveHeightX - waveHeightX
+        + cos(uTime + aCenter.z * waveLengthZ) * waveHeightZ - waveHeightZ
+        + uSpecialTime * aSpecialY * 20.0;
+
     gl_Position = uProjection * uView * uWorld * vec4(position, 1.0);
 }
 

@@ -54,18 +54,23 @@ class MeshObject {
         const attribLocationColor = gl.getAttribLocation(this.program, "aColor")
         const attribLocationNormal = gl.getAttribLocation(this.program, "aNormal")
         const attribLocationCenter = gl.getAttribLocation(this.program, "aCenter")
+        const attribLocationSpecialY = gl.getAttribLocation(this.program, "aSpecialY")
         gl.enableVertexAttribArray(attribLocationPosition)
         gl.enableVertexAttribArray(attribLocationColor)
         gl.enableVertexAttribArray(attribLocationNormal)
         gl.enableVertexAttribArray(attribLocationCenter)
+        gl.enableVertexAttribArray(attribLocationSpecialY)
         this.interleaved = {
             buffer: buffer,
             attribLocation: {
                 position: attribLocationPosition,
                 color: attribLocationColor,
                 normal: attribLocationNormal,
-                center: attribLocationCenter
-            }
+                center: attribLocationCenter,
+                specialY: attribLocationSpecialY
+            },
+            numberOfElements: 9,
+            bytesPerElement: 4
         }
 
 
@@ -76,6 +81,7 @@ class MeshObject {
         this.matNormUniformLocation = gl.getUniformLocation(this.program, "uNormal")
         this.lightPosUniformLocation = gl.getUniformLocation(this.program, "uLightPosition")
         this.timeUniformLocation = gl.getUniformLocation(this.program, "uTime")
+        this.specialTimeUniformLocation = gl.getUniformLocation(this.program, "uSpecialTime")
         this.worldMatrix = mat4.create();
         mat4.identity(this.worldMatrix)
         this.normalMatrix = mat3.create();
@@ -84,6 +90,8 @@ class MeshObject {
         gl.uniformMatrix4fv(this.matViewUniformLocation, gl.FALSE, camera.viewMatrix)
         gl.uniformMatrix3fv(this.matNormUniformLocation, gl.FALSE, this.normalMatrix)
         gl.uniform3f(this.lightPosUniformLocation, light.position[0], light.position[1], light.position[2])
+
+        this.specialTime = 0
     }
 
     update() {
@@ -100,23 +108,56 @@ class MeshObject {
         mat3.fromMat4(this.normalMatrix, normalMatrix3)
     }
 
-    render(/** @type {WebGLRenderingContext} */ gl, /** @type {Number} */ time) {
+    render(
+        /** @type {WebGLRenderingContext} */ gl,
+        /** @type {Number} */ time) {
+
+        if (this.tslf == undefined) this.tslf = time
+        this.tslf = time - this.tslf
+
+        const totalDuration = 3000
+        this.specialTime += this.tslf
+        if (this.specialTime > totalDuration)
+            this.specialTime = 0
+
+        let specialTimeShader = 0
+        const firstPhaseEndPoint = 1000
+        const secondPhaseEndPoint = 1500
+        const thirdPhaseEndPoint = 2500
+        const fourthPhaseEndPoint = totalDuration
+        const firstPhaseDuration = firstPhaseEndPoint
+        const secondPhaseDuration = secondPhaseEndPoint - firstPhaseEndPoint
+        const thirdPhaseDuration = fourthPhaseEndPoint - thirdPhaseEndPoint
+        const fourthPhaseDuration = totalDuration - thirdPhaseEndPoint
+        if (this.specialTime > firstPhaseEndPoint && this.specialTime < secondPhaseEndPoint)
+            // second phase
+            specialTimeShader = (Math.cos(-Math.PI + (this.specialTime - firstPhaseEndPoint) / secondPhaseDuration * Math.PI) + 1) / 2
+        else if (this.specialTime >= secondPhaseEndPoint && this.specialTime < thirdPhaseEndPoint)
+            // third phase
+            specialTimeShader = 1
+        else if (this.specialTime >= thirdPhaseEndPoint)
+            // fourth phase
+            specialTimeShader = (Math.cos((this.specialTime - thirdPhaseEndPoint) / fourthPhaseDuration * Math.PI) + 1) / 2
+            
         gl.useProgram(this.program)
         gl.uniformMatrix4fv(this.matWorldUniformLocation, gl.FALSE, this.worldMatrix)
         gl.uniformMatrix3fv(this.matNormUniformLocation, gl.FALSE, this.normalMatrix)
         gl.uniform1f(this.timeUniformLocation, time * 0.001)
+        gl.uniform1f(this.specialTimeUniformLocation, specialTimeShader)
 
         gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT)
 
         gl.bindBuffer(gl.ARRAY_BUFFER, this.interleaved.buffer)
         const bytesPerElement = 4
-        gl.vertexAttribPointer(this.interleaved.attribLocation.position, 3, gl.FLOAT, gl.FALSE, bytesPerElement * 12, bytesPerElement * 0)
-        gl.vertexAttribPointer(this.interleaved.attribLocation.normal, 3, gl.FLOAT, gl.FALSE, bytesPerElement * 12, bytesPerElement * 3)
-        gl.vertexAttribPointer(this.interleaved.attribLocation.center, 3, gl.FLOAT, gl.FALSE, bytesPerElement * 12, bytesPerElement * 6)
-        gl.vertexAttribPointer(this.interleaved.attribLocation.color, 3, gl.FLOAT, gl.FALSE, bytesPerElement * 12, bytesPerElement * 9)
-
+        const numberOfElements = 13
+        gl.vertexAttribPointer(this.interleaved.attribLocation.position, 3, gl.FLOAT, gl.FALSE, bytesPerElement * numberOfElements, bytesPerElement * 0)
+        gl.vertexAttribPointer(this.interleaved.attribLocation.normal, 3, gl.FLOAT, gl.FALSE, bytesPerElement * numberOfElements, bytesPerElement * 3)
+        gl.vertexAttribPointer(this.interleaved.attribLocation.center, 3, gl.FLOAT, gl.FALSE, bytesPerElement * numberOfElements, bytesPerElement * 6)
+        gl.vertexAttribPointer(this.interleaved.attribLocation.color, 3, gl.FLOAT, gl.FALSE, bytesPerElement * numberOfElements, bytesPerElement * 9)
+        gl.vertexAttribPointer(this.interleaved.attribLocation.specialY, 1, gl.FLOAT, gl.FALSE, bytesPerElement * numberOfElements, bytesPerElement * 12)
 
         gl.drawElements(gl.TRIANGLES, this.indices.length, gl.UNSIGNED_INT, 0)
+        this.tslf = time
     }
 
     resize(gl, projMatrix) {

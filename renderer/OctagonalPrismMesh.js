@@ -17,12 +17,14 @@ class OctagonalPrismMesh extends Mesh {
         const center = vec3.create()
         vec3.set(center, 0, 0, 0)
 
+        const specialY = Math.random()
+
         for (let i = 0; i < 6; i++) {
             vec3.set(a, Math.sin(i * 1 / 6 * Math.PI * 2), -1, Math.cos(i * 1 / 6 * Math.PI * 2))
             vec3.set(b, Math.sin((i + 1) * 1 / 6 * Math.PI * 2), -1, Math.cos((i + 1) * 1 / 6 * Math.PI * 2))
             vec3.set(c, Math.sin((i + 1) * 1 / 6 * Math.PI * 2), 1, Math.cos((i + 1) * 1 / 6 * Math.PI * 2))
             vec3.set(d, Math.sin(i * 1 / 6 * Math.PI * 2), 1, Math.cos(i * 1 / 6 * Math.PI * 2))
-            sides.push(new Face4(a, b, c, d, color, center))
+            sides.push(new Face4(a, b, c, d, color, center, specialY))
         }
         const topVertices = []
         const bottomVertices = []
@@ -34,8 +36,8 @@ class OctagonalPrismMesh extends Mesh {
             vec3.set(vertex, Math.sin(i * 1 / 6 * Math.PI * 2), -1, Math.cos(i * 1 / 6 * Math.PI * 2))
             bottomVertices.push(vertex)
         }
-        const top = new Face6(...topVertices, color, center)
-        const bottom = new Face6(...bottomVertices.reverse(), color, center)
+        const top = new Face6(...topVertices, color, center, specialY)
+        const bottom = new Face6(...bottomVertices.reverse(), color, center, specialY)
 
         const geometry = Mesh.mergeGeometries(top, bottom, ...sides)
         this.indices = geometry.indices
