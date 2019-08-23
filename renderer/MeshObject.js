@@ -92,6 +92,9 @@ class MeshObject {
         gl.uniform3f(this.lightPosUniformLocation, light.position[0], light.position[1], light.position[2])
 
         this.specialTime = 0
+        this.isStartingEvent = false
+        this.isEndingEvent = false
+        this.isEventOn = false
     }
 
     update() {
@@ -115,30 +118,34 @@ class MeshObject {
         if (this.tslf == undefined) this.tslf = time
         this.tslf = time - this.tslf
 
-        const totalDuration = 3000
-        this.specialTime += this.tslf
-        if (this.specialTime > totalDuration)
-            this.specialTime = 0
-
         let specialTimeShader = 0
-        const firstPhaseEndPoint = 1000
-        const secondPhaseEndPoint = 1500
-        const thirdPhaseEndPoint = 2500
-        const fourthPhaseEndPoint = totalDuration
-        const firstPhaseDuration = firstPhaseEndPoint
-        const secondPhaseDuration = secondPhaseEndPoint - firstPhaseEndPoint
-        const thirdPhaseDuration = fourthPhaseEndPoint - thirdPhaseEndPoint
-        const fourthPhaseDuration = totalDuration - thirdPhaseEndPoint
-        if (this.specialTime > firstPhaseEndPoint && this.specialTime < secondPhaseEndPoint)
-            // second phase
-            specialTimeShader = (Math.cos(-Math.PI + (this.specialTime - firstPhaseEndPoint) / secondPhaseDuration * Math.PI) + 1) / 2
-        else if (this.specialTime >= secondPhaseEndPoint && this.specialTime < thirdPhaseEndPoint)
-            // third phase
+        const transition = 500
+
+        if (this.isStartingEvent) {
+            this.specialTime += this.tslf
+            specialTimeShader = (-Math.cos((this.specialTime) / transition * Math.PI) + 1) / 2
+
+            if (this.specialTime >= transition) {
+                specialTimeShader = 1
+                this.isStartingEvent = false
+                this.isEventOn = true
+                this.specialTime = transition
+            }
+        } else if (this.isEndingEvent) {
+            this.isEventOn = false
+            this.specialTime -= this.tslf
+            specialTimeShader = (-Math.cos((this.specialTime) / transition * Math.PI) + 1) / 2
+            if (this.specialTime <= 0) {
+                specialTimeShader = 0
+                this.isEndingEvent = false
+                this.specialTime = 0
+            }
+        } else if (this.isEventOn) {
             specialTimeShader = 1
-        else if (this.specialTime >= thirdPhaseEndPoint)
-            // fourth phase
-            specialTimeShader = (Math.cos((this.specialTime - thirdPhaseEndPoint) / fourthPhaseDuration * Math.PI) + 1) / 2
-            
+        } else {
+            specialTimeShader = 0
+        }
+
         gl.useProgram(this.program)
         gl.uniformMatrix4fv(this.matWorldUniformLocation, gl.FALSE, this.worldMatrix)
         gl.uniformMatrix3fv(this.matNormUniformLocation, gl.FALSE, this.normalMatrix)
@@ -162,6 +169,16 @@ class MeshObject {
 
     resize(gl, projMatrix) {
         gl.uniformMatrix4fv(this.matProjUniformLocation, gl.FALSE, projMatrix)
+    }
+
+    startSpecialEvent() {
+        this.isStartingEvent = true
+        this.isEndingEvent = false
+    }
+
+    endSpecialEvent() {
+        this.isEndingEvent = true
+        this.isStartingEvent = false
     }
 
 }

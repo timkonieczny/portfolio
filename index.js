@@ -117,12 +117,19 @@ window.addEventListener("load", async () => {
         resize()
 
         const loop = function (time) {
-            // console.log(time)
             gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT)
             hexGrid.update()    // TODO: move update script out of MeshObject
             hexGrid.render(gl, time)
             requestAnimationFrame(loop)
         }
+
+        document.getElementById("menuItem1").addEventListener("mouseenter", () => {
+            hexGrid.startSpecialEvent()
+        })
+        document.getElementById("menuItem1").addEventListener("mouseleave", () => {
+            hexGrid.endSpecialEvent()
+        })
+
         requestAnimationFrame(loop)
     } catch (responses) {
         console.error(responses)
