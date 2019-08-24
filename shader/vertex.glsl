@@ -7,6 +7,7 @@ attribute vec3 aNormal;
 attribute vec3 aCenter;
 attribute float aSpecialY0;
 attribute float aSpecialY1;
+attribute vec3 aStartPosition;
 varying vec3 vColor;
 varying vec3 vNormal;
 varying vec3 vPosition;
@@ -29,12 +30,15 @@ void main() {
     float waveHeightX = 2.0;
     float waveHeightZ = 2.0;
 
-    // TODO: throw in one statement
     position.y = position.y
         + sin(uTime + aCenter.x * waveLengthX) * waveHeightX - waveHeightX
         + cos(uTime + aCenter.z * waveLengthZ) * waveHeightZ - waveHeightZ
         + uSpecialTime0 * aSpecialY0 * 20.0
         + uSpecialTime1 * aSpecialY1 * 20.0;
+    position.x = (1.0 - uSpecialTime0) * position.x
+        + uSpecialTime0 * aStartPosition.x;
+    position.z = (1.0 - uSpecialTime0) * position.z
+        + uSpecialTime0 * aStartPosition.z; // TODO: vPosition to this for correct lighting
 
     gl_Position = uProjection * uView * uWorld * vec4(position, 1.0);
 }

@@ -13,7 +13,7 @@ class Mesh {
         const matrix3 = mat3.create()
         mat3.fromMat4(matrix3, matrix)
         const outputVector = vec3.create()
-        for (let i = 0; i < this.interleavedArray.length; i += 14) {
+        for (let i = 0; i < this.interleavedArray.length; i += 17) {
             // vertices
             vec3.set(vector,
                 this.interleavedArray[i],
@@ -51,7 +51,7 @@ class Mesh {
         const output = new Mesh()
         geometries.forEach(geometry => {
             const newIndices = geometry.indices.map(index => {
-                return index + interleavedArray.length / 14
+                return index + interleavedArray.length / 17
             })
             output.indices.push(...newIndices)
             interleavedArray.push(...geometry.interleavedArray)

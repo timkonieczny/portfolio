@@ -56,12 +56,14 @@ class MeshObject {
         const attribLocationCenter = gl.getAttribLocation(this.program, "aCenter")
         const attribLocationSpecialY0 = gl.getAttribLocation(this.program, "aSpecialY0")
         const attribLocationSpecialY1 = gl.getAttribLocation(this.program, "aSpecialY1")
+        const attribLocationStartPosition = gl.getAttribLocation(this.program, "aStartPosition")
         gl.enableVertexAttribArray(attribLocationPosition)
         gl.enableVertexAttribArray(attribLocationColor)
         gl.enableVertexAttribArray(attribLocationNormal)
         gl.enableVertexAttribArray(attribLocationCenter)
         gl.enableVertexAttribArray(attribLocationSpecialY0)
         gl.enableVertexAttribArray(attribLocationSpecialY1)
+        gl.enableVertexAttribArray(attribLocationStartPosition)
         this.interleaved = {
             buffer: buffer,
             attribLocation: {
@@ -70,9 +72,10 @@ class MeshObject {
                 normal: attribLocationNormal,
                 center: attribLocationCenter,
                 specialY0: attribLocationSpecialY0,
-                specialY1: attribLocationSpecialY1
+                specialY1: attribLocationSpecialY1,
+                startPosition: attribLocationStartPosition
             },
-            numberOfElements: 14,
+            numberOfElements: 17,
             bytesPerElement: 4
         }
 
@@ -100,12 +103,12 @@ class MeshObject {
                 {
                     interpolationTime: 0,
                     interpolator: 0,
-                    transitionDuration: 500,
+                    transitionDuration: 2000,
                     isIncreasing: false,
                     isDecreasing: false,
                     isHighest: false,
                     tslf: null,
-                    update: function (time) {
+                    update(time) {
                         if (this.tslf == null) this.tslf = time
                         this.tslf = time - this.tslf
 
@@ -139,7 +142,7 @@ class MeshObject {
                 {
                     interpolationTime: 0,
                     interpolator: 0,
-                    transitionDuration: 500,
+                    transitionDuration: 2000,
                     isIncreasing: false,
                     isDecreasing: false,
                     isHighest: false,
@@ -214,7 +217,8 @@ class MeshObject {
         gl.vertexAttribPointer(this.interleaved.attribLocation.color, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 9)
         gl.vertexAttribPointer(this.interleaved.attribLocation.specialY0, 1, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 12)
         gl.vertexAttribPointer(this.interleaved.attribLocation.specialY1, 1, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 13)
-
+        gl.vertexAttribPointer(this.interleaved.attribLocation.startPosition, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 14)
+        // TODO: startposition: y component unnecessary
         gl.drawElements(gl.TRIANGLES, this.indices.length, gl.UNSIGNED_INT, 0)
     }
 

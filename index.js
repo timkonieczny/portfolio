@@ -7,7 +7,7 @@ import { Mesh } from "./renderer/Mesh.js";
 
 window.addEventListener("load", async () => {
     const canvas = document.getElementById("canvas")
-    let gl = canvas.getContext("webgl2")    // TODO: try using WebGL2 with extension
+    let gl = canvas.getContext("webgl2")
     if (!gl) {
         gl = canvas.getContext("webgl")
         if (gl && !gl.getExtension("OES_element_index_uint")) {
@@ -88,11 +88,10 @@ window.addEventListener("load", async () => {
             const xShiftOffset = (i % 2) * (xDim + xGap / 2)
             const xShiftCenterOffset = -xDim * 2 * columns / 2 + xDim
             for (let j = 0; j < columns; j++) {
-                const geometry = new OctagonalPrismMesh()
                 const xShift = xShiftCenterOffset + xShiftOffset + j * (2 * xDim + xGap)
                 mat4.translate(matrix, identity, [xShift, 0, zShift])
                 mat4.scale(matrix, matrix, [1, 3, 1])
-                geometry.applyMatrix(matrix)
+                const geometry = new OctagonalPrismMesh(matrix)
                 cylinders.push(geometry)
             }
         }
@@ -131,13 +130,6 @@ window.addEventListener("load", async () => {
                 hexGrid.endSpecialEvent(parseInt(event.target.dataset.id))
             })
         })
-
-        // document.getElementById("menuItem1").addEventListener("mouseenter", () => {
-        //     hexGrid.startSpecialEvent()
-        // })
-        // document.getElementById("menuItem1").addEventListener("mouseleave", () => {
-        //     hexGrid.endSpecialEvent()
-        // })
 
         requestAnimationFrame(loop)
     } catch (responses) {
