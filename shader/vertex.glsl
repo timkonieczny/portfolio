@@ -1,5 +1,5 @@
 #version 100
-precision mediump float;
+precision highp float;
 
 attribute vec3 aPosition;
 attribute vec3 aColor;
@@ -17,8 +17,9 @@ uniform mat4 uView;
 uniform mat4 uProjection;
 uniform mat3 uNormal;
 uniform float uTime;
-uniform float uSpecialTime0;
-uniform float uSpecialTime1;
+uniform float uInterpolator0;
+uniform float uInterpolator1;
+uniform float uInterpolator2;
 
 void main() {
     vec3 position = aPosition;
@@ -27,15 +28,16 @@ void main() {
     float waveHeightX = 2.0;
     float waveHeightZ = 2.0;
 
-    position.y +=
+    position.y = position.y + uInterpolator2 * (
         sin(uTime + aCenter.x * waveLengthX) * waveHeightX - waveHeightX
         + cos(uTime + aCenter.z * waveLengthZ) * waveHeightZ - waveHeightZ
-        + uSpecialTime0 * aSpecialY0 * 20.0
-        + uSpecialTime1 * aSpecialY1 * 20.0;
-    position.x = (1.0 - uSpecialTime0) * position.x
-        + uSpecialTime0 * aStartPosition.x;
-    position.z = (1.0 - uSpecialTime0) * position.z
-        + uSpecialTime0 * aStartPosition.z;
+        + uInterpolator0 * aSpecialY0 * 20.0
+        + uInterpolator1 * aSpecialY1 * 20.0);
+
+    position.x = (1.0 - uInterpolator2) * aStartPosition.x
+        + uInterpolator2 * aPosition.x;
+    position.z = (1.0 - uInterpolator2) * aStartPosition.z
+        + uInterpolator2 * aPosition.z;
 
     vColor = aColor;
     vNormal = uNormal * aNormal;

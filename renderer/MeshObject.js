@@ -87,8 +87,9 @@ class MeshObject {
         this.matNormUniformLocation = gl.getUniformLocation(this.program, "uNormal")
         this.lightPosUniformLocation = gl.getUniformLocation(this.program, "uLightPosition")
         this.timeUniformLocation = gl.getUniformLocation(this.program, "uTime")
-        this.specialTime0UniformLocation = gl.getUniformLocation(this.program, "uSpecialTime0")
-        this.specialTime1UniformLocation = gl.getUniformLocation(this.program, "uSpecialTime1")
+        this.interpolator0UniformLocation = gl.getUniformLocation(this.program, "uInterpolator0")
+        this.interpolator1UniformLocation = gl.getUniformLocation(this.program, "uInterpolator1")
+        this.interpolator2UniformLocation = gl.getUniformLocation(this.program, "uInterpolator2")
         this.worldMatrix = mat4.create();
         mat4.identity(this.worldMatrix)
         this.normalMatrix = mat3.create();
@@ -147,7 +148,7 @@ class MeshObject {
                     isDecreasing: false,
                     isHighest: false,
                     tslf: null,
-                    update: function (time) {
+                    update(time) {
                         if (this.tslf == null) this.tslf = time
                         this.tslf = time - this.tslf
 
@@ -177,7 +178,26 @@ class MeshObject {
                         }
                         this.tslf = time
                     }
-                }]
+                }
+            ],
+            start: {
+                interpolationTime: 0,
+                interpolator: 0,
+                transitionDuration: 2000,
+                isIncreasing: false,
+                isDecreasing: false,
+                isHighest: false,
+                tslf: null,
+                update(time) {
+                    if (this.tslf == null) this.tslf = time
+
+                    this.tslf = time - this.tslf
+                    this.interpolationTime = Math.min(this.interpolationTime + this.tslf, this.transitionDuration)
+                    this.interpolator = (-Math.cos(this.interpolationTime / this.transitionDuration * Math.PI) + 1) / 2, 1
+
+                    this.tslf = time
+                }
+            }
         }
     }
 
@@ -200,13 +220,16 @@ class MeshObject {
         /** @type {Number} */ time) {
 
         this.animation.hover.forEach(hoverAnimation => { hoverAnimation.update(time) })
+        this.animation.start.update(time)
+        console.log(this.animation.start.interpolator)
 
         gl.useProgram(this.program)
         gl.uniformMatrix4fv(this.matWorldUniformLocation, gl.FALSE, this.worldMatrix)
         gl.uniformMatrix3fv(this.matNormUniformLocation, gl.FALSE, this.normalMatrix)
         gl.uniform1f(this.timeUniformLocation, time * 0.001)
-        gl.uniform1f(this.specialTime0UniformLocation, this.animation.hover[0].interpolator)
-        gl.uniform1f(this.specialTime1UniformLocation, this.animation.hover[1].interpolator)
+        gl.uniform1f(this.interpolator0UniformLocation, this.animation.hover[0].interpolator)
+        gl.uniform1f(this.interpolator1UniformLocation, this.animation.hover[1].interpolator)
+        gl.uniform1f(this.interpolator2UniformLocation, this.animation.start.interpolator)
 
         gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT)
 
@@ -219,6 +242,7 @@ class MeshObject {
         gl.vertexAttribPointer(this.interleaved.attribLocation.specialY1, 1, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 13)
         gl.vertexAttribPointer(this.interleaved.attribLocation.startPosition, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 14)
         // TODO: startposition: y component unnecessary
+
         gl.drawElements(gl.TRIANGLES, this.indices.length, gl.UNSIGNED_INT, 0)
     }
 

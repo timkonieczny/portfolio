@@ -31,6 +31,26 @@ window.addEventListener("load", async () => {
     const ext = gl.getExtension("WEBGL_debug_renderer_info");
     if (ext) info += "\nUnmasked WebGL vendor:\t" + gl.getParameter(ext.UNMASKED_VENDOR_WEBGL) + "\nUnmasked renderer:\t\t" + gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)
     console.info(info)
+    console.log(gl.getShaderPrecisionFormat(gl.VERTEX_SHADER, gl.HIGH_FLOAT))
+    //desktop
+    // {rangeMin: 127, rangeMax: 127, precision: 23}
+    // {rangeMin: 127, rangeMax: 127, precision: 23}
+    // {rangeMin: 127, rangeMax: 127, precision: 23}
+    
+    //mobile
+    // {rangeMin: 15, rangeMax: 15, precision: 10}
+    // {rangeMin: 15, rangeMax: 15, precision: 10}
+    // {rangeMin: 127, rangeMax: 127, precision: 23}
+
+    // PERFORMANCE
+    // TODO: Performance: test how desktop and mobile compare with gl.getShaderPrecisionFormat. What precision do I need?
+    // TODO: Use unsigned short for indices. Range: 0..65,535. (byte is too small)
+    // TODO: Eliminate / shrink unnecessary uniforms and attributes
+    // TODO: Compare Gourand and Phong shading
+    // TODO: Implement an FPS counter http://mrdoob.github.io/stats.js/
+    // TODO: Eliminate unnecessary calles. E.g. gl.useProgram() and gl.bindBuffer
+    // TODO: Add isDirty() workflow and only update dirty uniforms
+
 
     gl.enable(gl.DEPTH_TEST)
     gl.enable(gl.CULL_FACE)

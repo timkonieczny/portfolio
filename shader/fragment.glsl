@@ -1,5 +1,5 @@
 #version 100
-precision mediump float;
+precision highp float;
 
 varying vec3 vColor;
 varying vec3 vNormal;
