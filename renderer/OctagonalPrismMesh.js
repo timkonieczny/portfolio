@@ -99,7 +99,7 @@ class OctagonalPrismMesh extends Mesh {
             specialY1,
             bottomStartPosition2)
 
-        const geometry = Mesh.mergeGeometries(top, bottom, ...sides)
+        const geometry = this.mergeGeometries(top, bottom, ...sides)
 
         this.indices = geometry.indices
         this.interleavedArray = geometry.interleavedArray

@@ -30,7 +30,6 @@ class HoverAnimation extends Animation {
         } else {
             this.interpolator = 0
         }
-        // this.tslf = time
     }
 }
 
