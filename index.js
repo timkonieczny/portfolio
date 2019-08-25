@@ -43,6 +43,8 @@ window.addEventListener("load", async () => {
     // {rangeMin: 15, rangeMax: 15, precision: 10}
     // {rangeMin: 127, rangeMax: 127, precision: 23}
 
+    // TODO: fps library missing from repo
+
     // PERFORMANCE
     // TODO: Performance: test how desktop and mobile compare with gl.getShaderPrecisionFormat. What precision do I need?
     // TODO: Use unsigned short for indices. Range: 0..65,535. (byte is too small)
