@@ -198,19 +198,16 @@ class MeshObject {
                 }
             ],
             start: {
-                interpolationTime: 0,
+                interpolationTime: -2000,
                 interpolator: 0,
                 transitionDuration: 2000,
-                isIncreasing: false,
-                isDecreasing: false,
-                isHighest: false,
                 tslf: null,
                 update(time) {
                     if (this.tslf == null) this.tslf = time
 
                     this.tslf = time - this.tslf
                     this.interpolationTime = Math.min(this.interpolationTime + this.tslf, this.transitionDuration)
-                    this.interpolator = (-Math.cos(this.interpolationTime / this.transitionDuration * Math.PI) + 1) / 2, 1
+                    this.interpolator = (-Math.cos(Math.max(this.interpolationTime, 0) / this.transitionDuration * Math.PI) + 1) / 2, 1
 
                     this.tslf = time
                 }
