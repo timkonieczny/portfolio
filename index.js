@@ -43,8 +43,6 @@ window.addEventListener("load", async () => {
     // {rangeMin: 15, rangeMax: 15, precision: 10}
     // {rangeMin: 127, rangeMax: 127, precision: 23}
 
-    // TODO: fps library missing from repo
-
     // PERFORMANCE
     // TODO: Performance: test how desktop and mobile compare with gl.getShaderPrecisionFormat. What precision do I need?
     // TODO: Use unsigned short for indices. Range: 0..65,535. (byte is too small)
@@ -87,10 +85,9 @@ window.addEventListener("load", async () => {
         const responses = await Promise.all([loadFile("shader/vertex.glsl"), loadFile("shader/fragment.glsl")])
 
         const position = vec3.create()
-        vec3.set(position, 30, 50, 60)
-        // vec3.set(position, 0, 50, 1)
+        vec3.set(position, 0, 65, 75)
         const lookAt = vec3.create()
-        vec3.set(lookAt, 0, 0, 0)
+        vec3.set(lookAt, 0, 0, 20)
         const up = vec3.create()
         vec3.set(up, 0, 1, 0)
 
@@ -100,29 +97,52 @@ window.addEventListener("load", async () => {
         const light = new Light(lightPosition)
 
         console.log("[grid generation] start")
-        const xDim = Math.sin(1 / 6 * Math.PI * 2)
-        const zDim = 1
-        const zHeight = Math.cos(1 / 6 * Math.PI * 2)
-        const columns = 50
-        const rows = 50
+
         const cylinders = []
-        const identity = mat4.create()
-        const matrix = mat4.create()
-        const xGap = .4
-        const zGap = .4
-        for (let i = 0; i < rows; i++) {
-            const zShiftCenterOffset = zHeight - zDim * 2 * rows / 2 + zDim;
-            const zShift = zShiftCenterOffset + i * (zDim - zHeight + zDim + zGap)
-            const xShiftOffset = (i % 2) * (xDim + xGap / 2)
-            const xShiftCenterOffset = -xDim * 2 * columns / 2 + xDim
-            for (let j = 0; j < columns; j++) {
-                const xShift = xShiftCenterOffset + xShiftOffset + j * (2 * xDim + xGap)
-                mat4.translate(matrix, identity, [xShift, 0, zShift])
-                mat4.scale(matrix, matrix, [1, 3, 1])
-                const geometry = new OctagonalPrismMesh(matrix)
-                cylinders.push(geometry)
+        
+        const makeRing = (level, gap) =>{
+            const identity = mat4.create()
+            const pi2 = Math.PI * 2
+            const edgeDiameter = Math.sqrt(3)
+            for (let i = 0; i < 6; i++) {
+                let vertex1 = vec3.create()
+                let vertex2 = vec3.create()
+                let betweenVector = vec3.create()
+    
+                vec3.set(vertex1,
+                    level * (edgeDiameter * gap) * Math.sin(i / 6 * pi2 + 1 / 12 * pi2),
+                    0,
+                    level * (edgeDiameter * gap) * Math.cos(i / 6 * pi2 + 1 / 12 * pi2))
+    
+                vec3.set(vertex2,
+                    level * (edgeDiameter * gap) * Math.sin((i + 1) / 6 * pi2 + 1 / 12 * pi2),
+                    0,
+                    level * (edgeDiameter * gap) * Math.cos((i + 1) / 6 * pi2 + 1 / 12 * pi2))
+    
+                vec3.sub(betweenVector, vertex2, vertex1)
+    
+                let interpolator = vec3.create()
+                let position = vec3.create()
+                for (let j = 0; j < level; j++) {
+                    vec3.scale(interpolator, betweenVector, j / level)
+                    vec3.add(position, vertex1, interpolator)
+    
+                    let matrix3 = mat4.create()
+                    mat4.translate(matrix3, identity, position)
+                    cylinders.push(new OctagonalPrismMesh(matrix3))
+                }
             }
         }
+
+        const makeGrid = (rings, gap) =>{
+            // center
+            cylinders.push(new OctagonalPrismMesh(mat4.create()))
+            for(let i = 1; i <= rings; i++)
+                makeRing(i, gap)
+        }
+
+        makeGrid(30, 1.1)
+
         console.info("[grid generation] merging geometries")
         const hexGridGeometry = Mesh.mergeGeometries(...cylinders)
         console.info("[grid generation] creating MeshObject")
