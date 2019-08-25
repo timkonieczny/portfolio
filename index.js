@@ -45,11 +45,9 @@ window.addEventListener("load", async () => {
 
     // PERFORMANCE
     // TODO: Performance: test how desktop and mobile compare with gl.getShaderPrecisionFormat. What precision do I need?
-    // TODO: Use unsigned short for indices. Range: 0..65,535. (byte is too small)
     // TODO: Eliminate / shrink unnecessary uniforms and attributes
     // TODO: Compare Gourand and Phong shading
-    // TODO: Eliminate unnecessary calles. E.g. gl.useProgram() and gl.bindBuffer
-    // TODO: Add isDirty() workflow and only update dirty uniforms
+    // TODO: Eliminate unnecessary calls. E.g. gl.useProgram() and gl.bindBuffer
 
     const stats = new Stats()
     stats.showPanel(0)
@@ -99,8 +97,8 @@ window.addEventListener("load", async () => {
         console.log("[grid generation] start")
 
         const cylinders = []
-        
-        const makeRing = (level, gap, scaleY) =>{
+
+        const makeRing = (level, gap, scaleY) => {
             const identity = mat4.create()
             const pi2 = Math.PI * 2
             const edgeDiameter = Math.sqrt(3)
@@ -108,25 +106,25 @@ window.addEventListener("load", async () => {
                 let vertex1 = vec3.create()
                 let vertex2 = vec3.create()
                 let betweenVector = vec3.create()
-    
+
                 vec3.set(vertex1,
                     level * (edgeDiameter * gap) * Math.sin(i / 6 * pi2 + 1 / 12 * pi2),
                     0,
                     level * (edgeDiameter * gap) * Math.cos(i / 6 * pi2 + 1 / 12 * pi2))
-    
+
                 vec3.set(vertex2,
                     level * (edgeDiameter * gap) * Math.sin((i + 1) / 6 * pi2 + 1 / 12 * pi2),
                     0,
                     level * (edgeDiameter * gap) * Math.cos((i + 1) / 6 * pi2 + 1 / 12 * pi2))
-    
+
                 vec3.sub(betweenVector, vertex2, vertex1)
-    
+
                 let interpolator = vec3.create()
                 let position = vec3.create()
                 for (let j = 0; j < level; j++) {
                     vec3.scale(interpolator, betweenVector, j / level)
                     vec3.add(position, vertex1, interpolator)
-    
+
                     let matrix = mat4.create()
                     let scaleVector = vec3.create()
                     vec3.set(scaleVector, 1, scaleY, 1)
@@ -137,7 +135,7 @@ window.addEventListener("load", async () => {
             }
         }
 
-        const makeGrid = (rings, gap, scaleY) =>{
+        const makeGrid = (rings, gap, scaleY) => {
             // center
             const matrix = mat4.create()
             const vector = vec3.create()
@@ -145,7 +143,7 @@ window.addEventListener("load", async () => {
             mat4.scale(matrix, matrix, vector)
             cylinders.push(new OctagonalPrismMesh(matrix))
             // rings
-            for(let i = 1; i <= rings; i++)
+            for (let i = 1; i <= rings; i++)
                 makeRing(i, gap, scaleY)
         }
 

@@ -1,6 +1,11 @@
 import { Mesh } from "./Mesh.js"
 import { Light } from "./Light.js"
 import { mat4, mat3, vec3 } from "../lib/toji-gl-matrix-d6156a5/src/index.js"
+import { UniformManager } from "./UniformManager.js";
+import { UniformFloat } from "./UniformFloat.js";
+import { UniformMatrix4f } from "./UniformMatrix4f.js";
+import { UniformMatrix3f } from "./UniformMatrix3f.js";
+import { Uniform3f } from "./Uniform3f.js";
 
 class MeshObject {
     constructor(
@@ -45,7 +50,6 @@ class MeshObject {
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffer2)
         gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint32Array(this.indices), gl.STATIC_DRAW)
 
-
         const buffer = gl.createBuffer()
         gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
         const typedArray = new Float32Array(mesh.interleavedArray)
@@ -79,25 +83,28 @@ class MeshObject {
             bytesPerElement: 4
         }
 
-
         gl.useProgram(this.program)
-        this.matWorldUniformLocation = gl.getUniformLocation(this.program, "uWorld")
-        this.matViewUniformLocation = gl.getUniformLocation(this.program, "uView")
-        this.matProjUniformLocation = gl.getUniformLocation(this.program, "uProjection")
-        this.matNormUniformLocation = gl.getUniformLocation(this.program, "uNormal")
-        this.lightPosUniformLocation = gl.getUniformLocation(this.program, "uLightPosition")
-        this.timeUniformLocation = gl.getUniformLocation(this.program, "uTime")
-        this.interpolator0UniformLocation = gl.getUniformLocation(this.program, "uInterpolator0")
-        this.interpolator1UniformLocation = gl.getUniformLocation(this.program, "uInterpolator1")
-        this.interpolator2UniformLocation = gl.getUniformLocation(this.program, "uInterpolator2")
+        this.uniformManager = new UniformManager(gl, this.program);
+        this.timeUniform = new UniformFloat("uTime", this.uniformManager)
+        this.interpolator0Uniform = new UniformFloat("uInterpolator0", this.uniformManager)
+        this.interpolator1Uniform = new UniformFloat("uInterpolator1", this.uniformManager)
+        this.interpolator2Uniform = new UniformFloat("uInterpolator2", this.uniformManager)
+        this.matWorldUniform = new UniformMatrix4f("uWorld", this.uniformManager)
+        this.matViewUniform = new UniformMatrix4f("uView", this.uniformManager)
+        this.matProjUniform = new UniformMatrix4f("uProjection", this.uniformManager)
+        this.matNormUniform = new UniformMatrix3f("uNormal", this.uniformManager)
+        this.lightPosUniform = new Uniform3f("uLightPosition", this.uniformManager)
+
         this.worldMatrix = mat4.create();
         mat4.identity(this.worldMatrix)
         this.normalMatrix = mat3.create();
         mat4.identity(this.normalMatrix)
-        gl.uniformMatrix4fv(this.matWorldUniformLocation, gl.FALSE, this.worldMatrix)
-        gl.uniformMatrix4fv(this.matViewUniformLocation, gl.FALSE, camera.viewMatrix)
-        gl.uniformMatrix3fv(this.matNormUniformLocation, gl.FALSE, this.normalMatrix)
-        gl.uniform3f(this.lightPosUniformLocation, light.position[0], light.position[1], light.position[2])
+        this.matNormUniform.update(this.normalMatrix)
+        this.lightPosUniform.update(light.position)
+
+
+        this.matWorldUniform.update(this.worldMatrix)
+        this.matViewUniform.update(camera.viewMatrix)
 
         this.animation = {
             hover: [
@@ -202,7 +209,6 @@ class MeshObject {
     }
 
     update() {
-        // TODO: add isDirty workflow for updating / rendering
         const identityMatrix = mat4.create()
         const translationVector = vec3.create()
         vec3.set(translationVector, 0, -2, 0)
@@ -223,12 +229,14 @@ class MeshObject {
         this.animation.start.update(time)
 
         gl.useProgram(this.program)
-        gl.uniformMatrix4fv(this.matWorldUniformLocation, gl.FALSE, this.worldMatrix)
-        gl.uniformMatrix3fv(this.matNormUniformLocation, gl.FALSE, this.normalMatrix)
-        gl.uniform1f(this.timeUniformLocation, time * 0.001)
-        gl.uniform1f(this.interpolator0UniformLocation, this.animation.hover[0].interpolator)
-        gl.uniform1f(this.interpolator1UniformLocation, this.animation.hover[1].interpolator)
-        gl.uniform1f(this.interpolator2UniformLocation, this.animation.start.interpolator)
+        this.matWorldUniform.update(this.worldMatrix)
+        this.matNormUniform.update(this.normalMatrix)
+        this.timeUniform.update(time * 0.001)
+        this.interpolator0Uniform.update(this.animation.hover[0].interpolator)
+        this.interpolator1Uniform.update(this.animation.hover[1].interpolator)
+        this.interpolator2Uniform.update(this.animation.start.interpolator)
+
+        this.uniformManager.sendDirtyUniformsToShader()
 
         gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT)
 
@@ -246,7 +254,7 @@ class MeshObject {
     }
 
     resize(gl, projMatrix) {
-        gl.uniformMatrix4fv(this.matProjUniformLocation, gl.FALSE, projMatrix)
+        this.matProjUniform.update(projMatrix)
     }
 
     startSpecialEvent(item) {

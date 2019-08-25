@@ -31,14 +31,14 @@ class OctagonalPrismMesh extends Mesh {
         const y1 = 1
         for (let i = 0; i < 6; i++) {
 
-            let  x0 = Math.sin(i * 1 / 6 * Math.PI * 2)
-            let  x1 = Math.sin((i + 1) * 1 / 6 * Math.PI * 2)
-            let  z0 = Math.cos(i * 1 / 6 * Math.PI * 2)
-            let  z1 = Math.cos((i + 1) * 1 / 6 * Math.PI * 2)
+            let x0 = Math.sin(i * 1 / 6 * Math.PI * 2)
+            let x1 = Math.sin((i + 1) * 1 / 6 * Math.PI * 2)
+            let z0 = Math.cos(i * 1 / 6 * Math.PI * 2)
+            let z1 = Math.cos((i + 1) * 1 / 6 * Math.PI * 2)
 
             vec3.set(startPositionA, x0, y0, z0)
             vec3.transformMat4(a, startPositionA, matrix)
-            
+
             vec3.set(startPositionB, x1, y0, z1)
             vec3.transformMat4(b, startPositionB, matrix)
 

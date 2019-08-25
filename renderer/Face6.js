@@ -22,7 +22,7 @@ class Face6 extends Face {
             ...b, ...this.normal, ...center, ...color, specialY0, specialY1, startPositions[1][0], startPositions[1][1], startPositions[1][2],
             ...c, ...this.normal, ...center, ...color, specialY0, specialY1, startPositions[2][0], startPositions[2][1], startPositions[2][2],
             ...d, ...this.normal, ...center, ...color, specialY0, specialY1, startPositions[3][0], startPositions[3][1], startPositions[3][2],
-            ...e, ...this.normal, ...center, ...color, specialY0, specialY1, startPositions[4][0], startPositions[4][1], startPositions[4][2], 
+            ...e, ...this.normal, ...center, ...color, specialY0, specialY1, startPositions[4][0], startPositions[4][1], startPositions[4][2],
             ...f, ...this.normal, ...center, ...color, specialY0, specialY1, startPositions[5][0], startPositions[5][1], startPositions[5][2])
     }
 }
