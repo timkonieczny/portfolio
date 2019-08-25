@@ -47,7 +47,6 @@ window.addEventListener("load", async () => {
     // TODO: Performance: test how desktop and mobile compare with gl.getShaderPrecisionFormat. What precision do I need?
     // TODO: Eliminate / shrink unnecessary uniforms and attributes
     // TODO: Compare Gourand and Phong shading
-    // TODO: Eliminate unnecessary calls. E.g. gl.useProgram() and gl.bindBuffer
 
     const stats = new Stats()
     stats.showPanel(0)
@@ -164,16 +163,15 @@ window.addEventListener("load", async () => {
             canvas.height = canvas.clientHeight * window.devicePixelRatio
             gl.viewport(0, 0, canvas.width, canvas.height)
             mat4.perspective(camera.projMatrix, glMatrix.toRadian(45), canvas.width / canvas.height, 0.1, 1000.0)
-            hexGrid.resize(gl, camera.projMatrix)
+            hexGrid.resize(camera.projMatrix)
         }
         window.addEventListener("resize", resize)
         resize()
 
         const loop = function (time) {
             stats.begin();
-            gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT)
-            hexGrid.update()    // TODO: move update script out of MeshObject
-            hexGrid.render(gl, time)
+            hexGrid.update(time)    // TODO: move update script out of MeshObject
+            hexGrid.render(gl)
             stats.end();
             requestAnimationFrame(loop)
         }

@@ -45,14 +45,15 @@ class MeshObject {
             console.error("ERROR validating program!", gl.getProgramInfoLog(this.program))
             return
         }
+        gl.useProgram(this.program)
 
         const buffer2 = gl.createBuffer()
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffer2)
         gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint32Array(this.indices), gl.STATIC_DRAW)
 
         const buffer = gl.createBuffer()
-        gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
         const typedArray = new Float32Array(mesh.interleavedArray)
+        gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
         gl.bufferData(gl.ARRAY_BUFFER, typedArray, gl.STATIC_DRAW)
         const attribLocationPosition = gl.getAttribLocation(this.program, "aPosition")
         const attribLocationColor = gl.getAttribLocation(this.program, "aColor")
@@ -83,7 +84,6 @@ class MeshObject {
             bytesPerElement: 4
         }
 
-        gl.useProgram(this.program)
         this.uniformManager = new UniformManager(gl, this.program);
         this.timeUniform = new UniformFloat("uTime", this.uniformManager)
         this.interpolator0Uniform = new UniformFloat("uInterpolator0", this.uniformManager)
@@ -105,6 +105,16 @@ class MeshObject {
 
         this.matWorldUniform.update(this.worldMatrix)
         this.matViewUniform.update(camera.viewMatrix)
+
+        // gl.bindBuffer(gl.ARRAY_BUFFER, this.interleaved.buffer)
+        gl.vertexAttribPointer(this.interleaved.attribLocation.position, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 0)
+        gl.vertexAttribPointer(this.interleaved.attribLocation.normal, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 3)
+        gl.vertexAttribPointer(this.interleaved.attribLocation.center, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 6)
+        gl.vertexAttribPointer(this.interleaved.attribLocation.color, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 9)
+        gl.vertexAttribPointer(this.interleaved.attribLocation.specialY0, 1, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 12)
+        gl.vertexAttribPointer(this.interleaved.attribLocation.specialY1, 1, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 13)
+        gl.vertexAttribPointer(this.interleaved.attribLocation.startPosition, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 14)
+        // TODO: startposition: y component unnecessary
 
         this.animation = {
             hover: [
@@ -208,7 +218,7 @@ class MeshObject {
         }
     }
 
-    update() {
+    update(/** @type {Number} */ time) {
         const identityMatrix = mat4.create()
         const translationVector = vec3.create()
         vec3.set(translationVector, 0, -2, 0)
@@ -219,41 +229,25 @@ class MeshObject {
         mat4.invert(normalMatrix2, this.worldMatrix)
         mat4.transpose(normalMatrix3, normalMatrix2)
         mat3.fromMat4(this.normalMatrix, normalMatrix3)
-    }
-
-    render(
-        /** @type {WebGLRenderingContext} */ gl,
-        /** @type {Number} */ time) {
 
         this.animation.hover.forEach(hoverAnimation => { hoverAnimation.update(time) })
         this.animation.start.update(time)
 
-        gl.useProgram(this.program)
         this.matWorldUniform.update(this.worldMatrix)
         this.matNormUniform.update(this.normalMatrix)
         this.timeUniform.update(time * 0.001)
         this.interpolator0Uniform.update(this.animation.hover[0].interpolator)
         this.interpolator1Uniform.update(this.animation.hover[1].interpolator)
         this.interpolator2Uniform.update(this.animation.start.interpolator)
+    }
 
+    render(/** @type {WebGLRenderingContext} */ gl) {
         this.uniformManager.sendDirtyUniformsToShader()
-
         gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT)
-
-        gl.bindBuffer(gl.ARRAY_BUFFER, this.interleaved.buffer)
-        gl.vertexAttribPointer(this.interleaved.attribLocation.position, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 0)
-        gl.vertexAttribPointer(this.interleaved.attribLocation.normal, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 3)
-        gl.vertexAttribPointer(this.interleaved.attribLocation.center, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 6)
-        gl.vertexAttribPointer(this.interleaved.attribLocation.color, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 9)
-        gl.vertexAttribPointer(this.interleaved.attribLocation.specialY0, 1, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 12)
-        gl.vertexAttribPointer(this.interleaved.attribLocation.specialY1, 1, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 13)
-        gl.vertexAttribPointer(this.interleaved.attribLocation.startPosition, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 14)
-        // TODO: startposition: y component unnecessary
-
         gl.drawElements(gl.TRIANGLES, this.indices.length, gl.UNSIGNED_INT, 0)
     }
 
-    resize(gl, projMatrix) {
+    resize(projMatrix) {
         this.matProjUniform.update(projMatrix)
     }
 
