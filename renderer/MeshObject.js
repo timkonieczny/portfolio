@@ -104,7 +104,7 @@ class MeshObject {
                 {
                     interpolationTime: 0,
                     interpolator: 0,
-                    transitionDuration: 2000,
+                    transitionDuration: 500,
                     isIncreasing: false,
                     isDecreasing: false,
                     isHighest: false,
@@ -143,7 +143,7 @@ class MeshObject {
                 {
                     interpolationTime: 0,
                     interpolator: 0,
-                    transitionDuration: 2000,
+                    transitionDuration: 500,
                     isIncreasing: false,
                     isDecreasing: false,
                     isHighest: false,
@@ -221,7 +221,6 @@ class MeshObject {
 
         this.animation.hover.forEach(hoverAnimation => { hoverAnimation.update(time) })
         this.animation.start.update(time)
-        console.log(this.animation.start.interpolator)
 
         gl.useProgram(this.program)
         gl.uniformMatrix4fv(this.matWorldUniformLocation, gl.FALSE, this.worldMatrix)

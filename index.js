@@ -3,7 +3,8 @@ import { OctagonalPrismMesh } from "./renderer/OctagonalPrismMesh.js"
 import { Camera } from "./renderer/Camera.js";
 import { Light } from "./renderer/Light.js";
 import { mat4, vec3, glMatrix } from "./lib/toji-gl-matrix-d6156a5/src/index.js"
-import { Mesh } from "./renderer/Mesh.js";
+import { Mesh } from "./renderer/Mesh.js"
+import Stats from "./lib/stats.js/src/Stats.js"
 
 window.addEventListener("load", async () => {
     const canvas = document.getElementById("canvas")
@@ -36,7 +37,7 @@ window.addEventListener("load", async () => {
     // {rangeMin: 127, rangeMax: 127, precision: 23}
     // {rangeMin: 127, rangeMax: 127, precision: 23}
     // {rangeMin: 127, rangeMax: 127, precision: 23}
-    
+
     //mobile
     // {rangeMin: 15, rangeMax: 15, precision: 10}
     // {rangeMin: 15, rangeMax: 15, precision: 10}
@@ -47,9 +48,14 @@ window.addEventListener("load", async () => {
     // TODO: Use unsigned short for indices. Range: 0..65,535. (byte is too small)
     // TODO: Eliminate / shrink unnecessary uniforms and attributes
     // TODO: Compare Gourand and Phong shading
-    // TODO: Implement an FPS counter http://mrdoob.github.io/stats.js/
     // TODO: Eliminate unnecessary calles. E.g. gl.useProgram() and gl.bindBuffer
     // TODO: Add isDirty() workflow and only update dirty uniforms
+
+    const stats = new Stats()
+    stats.showPanel(0)
+    stats.dom.style.left = ""
+    stats.dom.style.right = "80px"
+    document.body.appendChild(stats.dom)
 
 
     gl.enable(gl.DEPTH_TEST)
@@ -136,9 +142,11 @@ window.addEventListener("load", async () => {
         resize()
 
         const loop = function (time) {
+            stats.begin();
             gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT)
             hexGrid.update()    // TODO: move update script out of MeshObject
             hexGrid.render(gl, time)
+            stats.end();
             requestAnimationFrame(loop)
         }
 
