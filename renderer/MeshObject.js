@@ -6,6 +6,8 @@ import { UniformFloat } from "./UniformFloat.js";
 import { UniformMatrix4f } from "./UniformMatrix4f.js";
 import { UniformMatrix3f } from "./UniformMatrix3f.js";
 import { Uniform3f } from "./Uniform3f.js";
+import { HoverAnimation } from "./HoverAnimation.js";
+import { StartAnimation } from "./StartAnimation.js";
 
 class MeshObject {
     constructor(
@@ -106,7 +108,6 @@ class MeshObject {
         this.matWorldUniform.update(this.worldMatrix)
         this.matViewUniform.update(camera.viewMatrix)
 
-        // gl.bindBuffer(gl.ARRAY_BUFFER, this.interleaved.buffer)
         gl.vertexAttribPointer(this.interleaved.attribLocation.position, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 0)
         gl.vertexAttribPointer(this.interleaved.attribLocation.normal, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 3)
         gl.vertexAttribPointer(this.interleaved.attribLocation.center, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 6)
@@ -118,100 +119,10 @@ class MeshObject {
 
         this.animation = {
             hover: [
-                {
-                    interpolationTime: 0,
-                    interpolator: 0,
-                    transitionDuration: 500,
-                    isIncreasing: false,
-                    isDecreasing: false,
-                    isHighest: false,
-                    tslf: null,
-                    update(time) {
-                        if (this.tslf == null) this.tslf = time
-                        this.tslf = time - this.tslf
-
-                        if (this.isIncreasing) {
-                            this.interpolationTime += this.tslf
-                            this.interpolator = (-Math.cos((this.interpolationTime) / this.transitionDuration * Math.PI) + 1) / 2
-
-                            if (this.interpolationTime >= this.transitionDuration) {
-                                this.interpolator = 1
-                                this.isIncreasing = false
-                                this.isHighest = true
-                                this.interpolationTime = this.transitionDuration
-                            }
-                        } else if (this.isDecreasing) {
-                            this.isHighest = false
-                            this.interpolationTime -= this.tslf
-                            this.interpolator = (-Math.cos((this.interpolationTime) / this.transitionDuration * Math.PI) + 1) / 2
-                            if (this.interpolationTime <= 0) {
-                                this.interpolator = 0
-                                this.isDecreasing = false
-                                this.interpolationTime = 0
-                            }
-                        } else if (this.isHighest) {
-                            this.interpolator = 1
-                        } else {
-                            this.interpolator = 0
-                        }
-                        this.tslf = time
-                    }
-                },
-                {
-                    interpolationTime: 0,
-                    interpolator: 0,
-                    transitionDuration: 500,
-                    isIncreasing: false,
-                    isDecreasing: false,
-                    isHighest: false,
-                    tslf: null,
-                    update(time) {
-                        if (this.tslf == null) this.tslf = time
-                        this.tslf = time - this.tslf
-
-                        if (this.isIncreasing) {
-                            this.interpolationTime += this.tslf
-                            this.interpolator = (-Math.cos((this.interpolationTime) / this.transitionDuration * Math.PI) + 1) / 2
-
-                            if (this.interpolationTime >= this.transitionDuration) {
-                                this.interpolator = 1
-                                this.isIncreasing = false
-                                this.isHighest = true
-                                this.interpolationTime = this.transitionDuration
-                            }
-                        } else if (this.isDecreasing) {
-                            this.isHighest = false
-                            this.interpolationTime -= this.tslf
-                            this.interpolator = (-Math.cos((this.interpolationTime) / this.transitionDuration * Math.PI) + 1) / 2
-                            if (this.interpolationTime <= 0) {
-                                this.interpolator = 0
-                                this.isDecreasing = false
-                                this.interpolationTime = 0
-                            }
-                        } else if (this.isHighest) {
-                            this.interpolator = 1
-                        } else {
-                            this.interpolator = 0
-                        }
-                        this.tslf = time
-                    }
-                }
+                new HoverAnimation(),
+                new HoverAnimation()
             ],
-            start: {
-                interpolationTime: -2000,
-                interpolator: 0,
-                transitionDuration: 2000,
-                tslf: null,
-                update(time) {
-                    if (this.tslf == null) this.tslf = time
-
-                    this.tslf = time - this.tslf
-                    this.interpolationTime = Math.min(this.interpolationTime + this.tslf, this.transitionDuration)
-                    this.interpolator = (-Math.cos(Math.max(this.interpolationTime, 0) / this.transitionDuration * Math.PI) + 1) / 2, 1
-
-                    this.tslf = time
-                }
-            }
+            start: new StartAnimation()
         }
     }
 
