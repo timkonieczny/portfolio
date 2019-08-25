@@ -100,7 +100,7 @@ window.addEventListener("load", async () => {
 
         const cylinders = []
         
-        const makeRing = (level, gap) =>{
+        const makeRing = (level, gap, scaleY) =>{
             const identity = mat4.create()
             const pi2 = Math.PI * 2
             const edgeDiameter = Math.sqrt(3)
@@ -127,21 +127,29 @@ window.addEventListener("load", async () => {
                     vec3.scale(interpolator, betweenVector, j / level)
                     vec3.add(position, vertex1, interpolator)
     
-                    let matrix3 = mat4.create()
-                    mat4.translate(matrix3, identity, position)
-                    cylinders.push(new OctagonalPrismMesh(matrix3))
+                    let matrix = mat4.create()
+                    let scaleVector = vec3.create()
+                    vec3.set(scaleVector, 1, scaleY, 1)
+                    mat4.translate(matrix, identity, position)
+                    mat4.scale(matrix, matrix, scaleVector)
+                    cylinders.push(new OctagonalPrismMesh(matrix))
                 }
             }
         }
 
-        const makeGrid = (rings, gap) =>{
+        const makeGrid = (rings, gap, scaleY) =>{
             // center
-            cylinders.push(new OctagonalPrismMesh(mat4.create()))
+            const matrix = mat4.create()
+            const vector = vec3.create()
+            vec3.set(vector, 1, scaleY, 1)
+            mat4.scale(matrix, matrix, vector)
+            cylinders.push(new OctagonalPrismMesh(matrix))
+            // rings
             for(let i = 1; i <= rings; i++)
-                makeRing(i, gap)
+                makeRing(i, gap, scaleY)
         }
 
-        makeGrid(30, 1.1)
+        makeGrid(30, 1.1, 2)
 
         console.info("[grid generation] merging geometries")
         const hexGridGeometry = Mesh.mergeGeometries(...cylinders)
