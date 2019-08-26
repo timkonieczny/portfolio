@@ -16,7 +16,7 @@ class Camera {
     }
 
     resize(width, height) {
-        mat4.perspective(this.projMatrix, glMatrix.toRadians(45), width, height, 0.1, 1000.0)
+        mat4.perspective(this.projMatrix, glMatrix.toRadians(45), width, height, 0.1, 100.0)
     }
 
 }
