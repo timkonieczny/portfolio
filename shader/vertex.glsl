@@ -12,6 +12,7 @@ varying vec3 vColor;
 varying vec3 vNormal;
 varying vec3 vPosition;
 varying mat4 vView;
+varying vec3 vAmbient;
 uniform mat4 uWorld;
 uniform mat4 uView;
 uniform mat4 uProjection;
@@ -40,8 +41,15 @@ void main() {
         + uInterpolator2 * aPosition.z;
 
     vColor = aColor;
-    vNormal = uNormal * aNormal;
+    // vNormal = uNormal * aNormal;
     vPosition = (uWorld * vec4(position, 1.0)).xyz;
+
+    vNormal = normalize(mat3(uView) * uNormal * aNormal);
+
+    // ambient component
+    float ambientStrength = 0.1;
+    vec3 lightColor = vec3(1.0, 1.0, 1.0);
+    vAmbient = ambientStrength * lightColor;
 
     gl_Position = uProjection * uView * uWorld * vec4(position, 1.0);
 }
