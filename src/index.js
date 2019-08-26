@@ -7,6 +7,9 @@ import { HexagonGrid } from "./renderer/HexagonGrid.js";
 import { HoverAnimation } from "./renderer/HoverAnimation.js";
 import { StartAnimation } from "./renderer/StartAnimation.js";
 import { UniformManager } from "./renderer/UniformManager.js";
+import vertexShaderSource from "./shader/vertex.glsl"
+import fragmentShaderSource from "./shader/fragment.glsl"
+import './index.css';
 
 window.addEventListener("load", async () => {
     const canvas = document.getElementById("canvas")
@@ -81,14 +84,17 @@ window.addEventListener("load", async () => {
             })
         }
 
-        const responses = await Promise.all([loadFile("shader/vertex.glsl"), loadFile("shader/fragment.glsl")])
+        // const responses = await Promise.all([loadFile("shader/vertex.glsl"), loadFile("shader/fragment.glsl")])
         
         const program = gl.createProgram()
         const uniformManager = new UniformManager(gl, program)
         const lightPosition = vec3.create()
         vec3.set(lightPosition, 10, 10, -10)
         const light = new Light(lightPosition)
-        const hexGrid = new MeshObject(gl, new HexagonGrid(), ...responses, light, uniformManager)
+
+        console.log(vertexShaderSource)
+        const hexGrid = new MeshObject(gl, new HexagonGrid(), vertexShaderSource, fragmentShaderSource, light, uniformManager)
+        // const hexGrid = new MeshObject(gl, new HexagonGrid(), ...responses, light, uniformManager)
 
         const position = vec3.create()
         vec3.set(position, 0, 65, 75)

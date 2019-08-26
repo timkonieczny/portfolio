@@ -1,5 +1,7 @@
-lib/toji-gl-matrix-d6156a5/*
-!lib/toji-gl-matrix-d6156a5/src/
-lib/stats.js/*
-!lib/stats.js/src/
-.vscode/
+src/lib/toji-gl-matrix-d6156a5/*
+!src/lib/toji-gl-matrix-d6156a5/src/
+src/lib/stats.js/*
+!src/lib/stats.js/src/
+node_modules
+dist
+.vscode
