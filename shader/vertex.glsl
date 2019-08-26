@@ -13,6 +13,7 @@ varying vec3 vNormal;
 varying vec3 vPosition;
 varying mat4 vView;
 varying vec3 vAmbient;
+varying vec3 vLightPosition;
 uniform mat4 uWorld;
 uniform mat4 uView;
 uniform mat4 uProjection;
@@ -21,6 +22,7 @@ uniform float uTime;
 uniform float uInterpolator0;
 uniform float uInterpolator1;
 uniform float uInterpolator2;
+uniform vec3 uLightPosition;
 
 void main() {
     vec3 position = aPosition;
@@ -41,10 +43,9 @@ void main() {
         + uInterpolator2 * aPosition.z;
 
     vColor = aColor;
-    // vNormal = uNormal * aNormal;
-    vPosition = (uWorld * vec4(position, 1.0)).xyz;
-
+    vPosition = (uView * vec4((uWorld * vec4(position, 1.0)).xyz, 1.0)).xyz;
     vNormal = normalize(mat3(uView) * uNormal * aNormal);
+    vLightPosition = (uView * vec4(uLightPosition, 1.0)).xyz;
 
     // ambient component
     float ambientStrength = 0.1;
