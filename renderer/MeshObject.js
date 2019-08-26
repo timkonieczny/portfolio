@@ -6,8 +6,6 @@ import { UniformFloat } from "./UniformFloat.js";
 import { UniformMatrix4f } from "./UniformMatrix4f.js";
 import { UniformMatrix3f } from "./UniformMatrix3f.js";
 import { Uniform3f } from "./Uniform3f.js";
-import { HoverAnimation } from "./HoverAnimation.js";
-import { StartAnimation } from "./StartAnimation.js";
 
 class MeshObject {
     constructor(
@@ -97,15 +95,7 @@ class MeshObject {
         this.matNormUniform = new UniformMatrix3f("uNormal", this.uniformManager)
         this.lightPosUniform = new Uniform3f("uLightPosition", this.uniformManager)
 
-        this.worldMatrix = mat4.create();
-        mat4.identity(this.worldMatrix)
-        this.normalMatrix = mat3.create();
-        mat4.identity(this.normalMatrix)
-        this.matNormUniform.update(this.normalMatrix)
         this.lightPosUniform.update(light.position)
-
-
-        this.matWorldUniform.update(this.worldMatrix)
         this.matViewUniform.update(camera.viewMatrix)
 
         gl.vertexAttribPointer(this.interleaved.attribLocation.position, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 0)
@@ -116,37 +106,6 @@ class MeshObject {
         gl.vertexAttribPointer(this.interleaved.attribLocation.specialY1, 1, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 13)
         gl.vertexAttribPointer(this.interleaved.attribLocation.startPosition, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 14)
         // TODO: startposition: y component unnecessary
-
-        this.animation = {
-            hover: [
-                new HoverAnimation(),
-                new HoverAnimation()
-            ],
-            start: new StartAnimation()
-        }
-    }
-
-    update(/** @type {Number} */ time) {
-        const identityMatrix = mat4.create()
-        const translationVector = vec3.create()
-        vec3.set(translationVector, 0, -2, 0)
-        mat4.translate(this.worldMatrix, identityMatrix, translationVector)
-
-        let normalMatrix2 = mat4.create()
-        let normalMatrix3 = mat4.create()
-        mat4.invert(normalMatrix2, this.worldMatrix)
-        mat4.transpose(normalMatrix3, normalMatrix2)
-        mat3.fromMat4(this.normalMatrix, normalMatrix3)
-
-        this.animation.hover.forEach(hoverAnimation => { hoverAnimation.update(time) })
-        this.animation.start.update(time)
-
-        this.matWorldUniform.update(this.worldMatrix)
-        this.matNormUniform.update(this.normalMatrix)
-        this.timeUniform.update(time * 0.001)
-        this.interpolator0Uniform.update(this.animation.hover[0].interpolator)
-        this.interpolator1Uniform.update(this.animation.hover[1].interpolator)
-        this.interpolator2Uniform.update(this.animation.start.interpolator)
     }
 
     render(/** @type {WebGLRenderingContext} */ gl) {

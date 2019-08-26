@@ -1,9 +1,11 @@
 import { MeshObject } from "./renderer/MeshObject.js"
 import { Camera } from "./renderer/Camera.js";
 import { Light } from "./renderer/Light.js";
-import { mat4, vec3, glMatrix } from "./lib/toji-gl-matrix-d6156a5/src/index.js"
+import { mat4, mat3, vec3, glMatrix } from "./lib/toji-gl-matrix-d6156a5/src/index.js"
 import Stats from "./lib/stats.js/src/Stats.js"
 import { HexagonGrid } from "./renderer/HexagonGrid.js";
+import { HoverAnimation } from "./renderer/HoverAnimation.js";
+import { StartAnimation } from "./renderer/StartAnimation.js";
 
 window.addEventListener("load", async () => {
     const canvas = document.getElementById("canvas")
@@ -94,6 +96,39 @@ window.addEventListener("load", async () => {
 
         const hexGrid = new MeshObject(gl, new HexagonGrid(), ...responses, camera, light)
 
+        const animation = {
+            hover: [
+                new HoverAnimation(),
+                new HoverAnimation()
+            ],
+            start: new StartAnimation()
+        }
+
+        hexGrid.update = time => {
+            let worldMatrix = mat4.create()
+            const identityMatrix = mat4.create()
+            const translationVector = vec3.create()
+            vec3.set(translationVector, 0, -2, 0)
+            mat4.translate(worldMatrix, identityMatrix, translationVector)
+
+            let normalMatrix = mat3.create()
+            let normalMatrix2 = mat4.create()
+            let normalMatrix3 = mat4.create()
+            mat4.invert(normalMatrix2, worldMatrix)
+            mat4.transpose(normalMatrix3, normalMatrix2)
+            mat3.fromMat4(normalMatrix, normalMatrix3)
+
+            animation.hover.forEach(hoverAnimation => { hoverAnimation.update(time) })
+            animation.start.update(time)
+
+            hexGrid.matWorldUniform.update(worldMatrix)
+            hexGrid.matNormUniform.update(normalMatrix)
+            hexGrid.timeUniform.update(time * 0.001)
+            hexGrid.interpolator0Uniform.update(animation.hover[0].interpolator)
+            hexGrid.interpolator1Uniform.update(animation.hover[1].interpolator)
+            hexGrid.interpolator2Uniform.update(animation.start.interpolator)
+        }
+
         const resize = () => {
             canvas.width = canvas.clientWidth * window.devicePixelRatio
             canvas.height = canvas.clientHeight * window.devicePixelRatio
@@ -106,7 +141,7 @@ window.addEventListener("load", async () => {
 
         const loop = function (time) {
             stats.begin();
-            hexGrid.update(time)    // TODO: move update script out of MeshObject
+            hexGrid.update(time)
             hexGrid.render(gl)
             stats.end();
             requestAnimationFrame(loop)
