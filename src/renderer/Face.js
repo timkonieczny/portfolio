@@ -1,4 +1,4 @@
-import { vec3 } from "../lib/toji-gl-matrix-d6156a5/src/index.js";
+import { vec3 } from "gl-matrix";
 
 class Face {
     constructor(

@@ -1,21 +1,28 @@
 {
-  "name": "portfolio-webpack-babel",
-  "version": "1.0.0",
-  "description": "",
-  "private": true,
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "css-loader": "^3.2.0",
-    "style-loader": "^1.0.0",
-    "webpack": "^4.39.2",
-    "webpack-cli": "^3.3.7",
-    "webpack-glsl-loader": "^1.0.1"
-  },
-  "dependencies": {}
+    "name": "portfolio",
+    "version": "1.0.0",
+    "description": "A WebGL scene",
+    "private": true,
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "webpack"
+    },
+    "keywords": [],
+    "author": "Tim Konieczny",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/timkonieczny/portfolio"
+    },
+    "license": "ISC",
+    "devDependencies": {
+        "css-loader": "^3.2.0",
+        "style-loader": "^1.0.0",
+        "webpack": "^4.39.2",
+        "webpack-cli": "^3.3.7",
+        "webpack-glsl-loader": "^1.0.1"
+    },
+    "dependencies": {
+        "gl-matrix": "^3.1.0",
+        "stats-js": "^1.0.1"
+    }
 }

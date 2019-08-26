@@ -1,5 +1,5 @@
 import { Mesh } from "./Mesh.js"
-import { vec3, mat4 } from "../lib/toji-gl-matrix-d6156a5/src/index.js";
+import { vec3, mat4 } from "gl-matrix";
 import { Face4 } from "./Face4.js"
 import { Face6 } from "./Face6.js"
 

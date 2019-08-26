@@ -1,6 +1,6 @@
 import { Mesh } from "./Mesh.js"
 import { Light } from "./Light.js"
-import { mat4, mat3, vec3 } from "../lib/toji-gl-matrix-d6156a5/src/index.js"
+import { mat4, mat3, vec3 } from "gl-matrix"
 import { UniformManager } from "./UniformManager.js";
 import { UniformFloat } from "./UniformFloat.js";
 import { UniformMatrix4f } from "./UniformMatrix4f.js";
@@ -15,7 +15,7 @@ class MeshObject {
         /** @type {string} */ fragmentShaderSource,
         /** @type {Light} */ light,
         /** @type {UniformManager} */ uniformManager) {
-            
+
         // this.program = gl.createProgram();
         this.indices = mesh.indices
         this.uniformManager = uniformManager

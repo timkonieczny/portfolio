@@ -1,6 +1,6 @@
 import { Mesh } from "./Mesh.js";
 import { OctagonalPrismMesh } from "./OctagonalPrismMesh.js"
-import { mat4, vec3 } from "../lib/toji-gl-matrix-d6156a5/src/index.js"
+import { mat4, vec3 } from "gl-matrix"
 
 class HexagonGrid extends Mesh {
     constructor() {

@@ -1,5 +1,5 @@
 import { Uniform } from "./Uniform.js";
-import { mat4 } from "../lib/toji-gl-matrix-d6156a5/src/index.js";
+import { mat4 } from "gl-matrix";
 
 class UniformMatrix4f extends Uniform {
     constructor(shaderString, manager) {

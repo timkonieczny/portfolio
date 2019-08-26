@@ -1,4 +1,4 @@
-import { mat4 } from "../lib/toji-gl-matrix-d6156a5/src/index.js"
+import { mat4 } from "gl-matrix"
 import { UniformMatrix4f } from "./UniformMatrix4f.js";
 import { UniformManager } from "./UniformManager.js";
 
@@ -24,7 +24,7 @@ class Camera {
         mat4.perspective(this.projMatrix, glMatrix.toRadians(45), width, height, 0.1, 100.0)
     }
 
-    update(position, lookAt, up){
+    update(position, lookAt, up) {
         mat4.lookAt(this.viewMatrix, position, lookAt, up)
         this.matViewUniform.update(this.viewMatrix)
     }

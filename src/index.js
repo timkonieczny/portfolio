@@ -1,15 +1,15 @@
 import { MeshObject } from "./renderer/MeshObject.js"
 import { Camera } from "./renderer/Camera.js";
 import { Light } from "./renderer/Light.js";
-import { mat4, mat3, vec3, glMatrix } from "./lib/toji-gl-matrix-d6156a5/src/index.js"
-import Stats from "./lib/stats.js/src/Stats.js"
+import { mat4, mat3, vec3, glMatrix } from "gl-matrix"
+import Stats from "stats-js"
 import { HexagonGrid } from "./renderer/HexagonGrid.js";
 import { HoverAnimation } from "./renderer/HoverAnimation.js";
 import { StartAnimation } from "./renderer/StartAnimation.js";
 import { UniformManager } from "./renderer/UniformManager.js";
 import vertexShaderSource from "./shader/vertex.glsl"
 import fragmentShaderSource from "./shader/fragment.glsl"
-import './index.css';
+import "./index.css";
 
 window.addEventListener("load", async () => {
     const canvas = document.getElementById("canvas")
@@ -85,7 +85,7 @@ window.addEventListener("load", async () => {
         }
 
         // const responses = await Promise.all([loadFile("shader/vertex.glsl"), loadFile("shader/fragment.glsl")])
-        
+
         const program = gl.createProgram()
         const uniformManager = new UniformManager(gl, program)
         const lightPosition = vec3.create()
@@ -169,7 +169,7 @@ window.addEventListener("load", async () => {
             animation.hover[item].isIncreasing = true
             animation.hover[item].isDecreasing = false
         }
-    
+
         const endSpecialEvent = (item) => {
             animation.hover[item].isDecreasing = true
             animation.hover[item].isIncreasing = false
