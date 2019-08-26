@@ -11,7 +11,7 @@ import vertexShaderSource from "./shader/vertex.glsl"
 import fragmentShaderSource from "./shader/fragment.glsl"
 import "./index.css";
 
-window.addEventListener("load", async () => {
+window.addEventListener("load", () => {
     const canvas = document.getElementById("canvas")
     let gl = canvas.getContext("webgl2")
     if (!gl) {
@@ -67,22 +67,22 @@ window.addEventListener("load", async () => {
     gl.clearColor(0.2, 0.2, 0.2, 1.0)
 
     try {
-        const loadFile = url => {
-            return new Promise(function (resolve, reject) {
-                const request = new XMLHttpRequest()
-                request.open("GET", url)
-                request.addEventListener("load", () => {
-                    if (request.status == 200)
-                        resolve(request.response)
-                    else
-                        reject(Error(request.statusText))
-                })
-                request.addEventListener("error", () => {
-                    reject(Error("Network Error"))
-                })
-                request.send()
-            })
-        }
+        // const loadFile = url => {
+        //     return new Promise(function (resolve, reject) {
+        //         const request = new XMLHttpRequest()
+        //         request.open("GET", url)
+        //         request.addEventListener("load", () => {
+        //             if (request.status == 200)
+        //                 resolve(request.response)
+        //             else
+        //                 reject(Error(request.statusText))
+        //         })
+        //         request.addEventListener("error", () => {
+        //             reject(Error("Network Error"))
+        //         })
+        //         request.send()
+        //     })
+        // }
 
         // const responses = await Promise.all([loadFile("shader/vertex.glsl"), loadFile("shader/fragment.glsl")])
 

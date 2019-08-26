@@ -19,6 +19,11 @@ module.exports = {
             {
                 test: /\.glsl$/,
                 loader: "webpack-glsl-loader"
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: "babel-loader"
             }
         ]
     }
