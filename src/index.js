@@ -33,31 +33,45 @@ window.addEventListener("load", () => {
         return
     }
 
+    const floatPrecisionVertexHigh = gl.getShaderPrecisionFormat(gl.VERTEX_SHADER, gl.HIGH_FLOAT).precision
+    const floatPrecisionFragmentHigh = gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.HIGH_FLOAT).precision
+    const floatPrecisionVertexMedium = gl.getShaderPrecisionFormat(gl.VERTEX_SHADER, gl.MEDIUM_FLOAT).precision
+    const floatPrecisionFragmentMedium = gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.MEDIUM_FLOAT).precision
+    const floatPrecisionVertexLow = gl.getShaderPrecisionFormat(gl.VERTEX_SHADER, gl.LOW_FLOAT).precision
+    const floatPrecisionFragmentLow = gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.LOW_FLOAT).precision
+
     const ext = gl.getExtension("WEBGL_debug_renderer_info");
-    let info = 
-        "WebGL version:\t\t\t" + gl.getParameter(gl.VERSION) + 
-        "\nGLSL version:\t\t\t" + gl.getParameter(gl.SHADING_LANGUAGE_VERSION) + 
+    let info =
+        "WebGL version:\t\t\t" + gl.getParameter(gl.VERSION) +
+        "\nGLSL version:\t\t\t" + gl.getParameter(gl.SHADING_LANGUAGE_VERSION) +
         "\nWebGL Vendor:\t\t\t" + gl.getParameter(gl.VENDOR) +
-        "\nhighp float precision:\t\t" + gl.getShaderPrecisionFormat(gl.VERTEX_SHADER, gl.HIGH_FLOAT).precision +
-        "\nmdiump float precision:\t\t" + gl.getShaderPrecisionFormat(gl.VERTEX_SHADER, gl.MEDIUM_FLOAT).precision +
-        "\nlowp float precision:\t\t" + gl.getShaderPrecisionFormat(gl.VERTEX_SHADER, gl.LOW_FLOAT).precision
-    if (ext) info += 
-        "\nUnmasked WebGL vendor:\t\t" + gl.getParameter(ext.UNMASKED_VENDOR_WEBGL) + 
+        "\nhighp float precision:\t\tvertex: " + floatPrecisionVertexHigh +
+        "\tfragment: " + floatPrecisionFragmentHigh +
+        "\nmdiump float precision:\t\tvertex: " + floatPrecisionVertexMedium +
+        "\tfragment: " + floatPrecisionFragmentMedium +
+        "\nlowp float precision:\t\tvertex: " + floatPrecisionVertexLow +
+        "\tfragment: " + floatPrecisionFragmentLow
+    if (ext) info +=
+        "\nUnmasked WebGL vendor:\t\t" + gl.getParameter(ext.UNMASKED_VENDOR_WEBGL) +
         "\nUnmasked renderer:\t\t" + gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)
     console.info(info)
-    
-    //desktop
-    // {rangeMin: 127, rangeMax: 127, precision: 23}
-    // {rangeMin: 127, rangeMax: 127, precision: 23}
-    // {rangeMin: 127, rangeMax: 127, precision: 23}
 
-    //mobile
-    // {rangeMin: 15, rangeMax: 15, precision: 10}
-    // {rangeMin: 15, rangeMax: 15, precision: 10}
-    // {rangeMin: 127, rangeMax: 127, precision: 23}
+    if (floatPrecisionVertexHigh != floatPrecisionVertexMedium != floatPrecisionVertexLow) {
+        if (floatPrecisionVertexLow >= 23) {
+            vertexShaderSource.replace("precision highp float;", "precision lowp float;")
+        } else if (floatPrecisionVertexMedium >= 23) {
+            vertexShaderSource.replace("precision highp float;", "precision mediump float;")
+        }
+    }
+    if (floatPrecisionFragmentHigh != floatPrecisionFragmentMedium != floatPrecisionFragmentLow) {
+        if (floatPrecisionFragmentLow >= 23) {
+            fragmentShaderSource.replace("precision highp float;", "precision lowp float;")
+        } else if (floatPrecisionFragmentMedium >= 23) {
+            fragmentShaderSource.replace("precision highp float;", "precision mediump float;")
+        }
+    }
 
     // PERFORMANCE
-    // TODO: Performance: test how desktop and mobile compare with gl.getShaderPrecisionFormat. What precision do I need?
     // TODO: Eliminate / shrink unnecessary uniforms and attributes
     // TODO: Compare Gourand and Phong shading
 
