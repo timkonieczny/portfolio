@@ -6,6 +6,7 @@ import Stats from "./lib/stats.js/src/Stats.js"
 import { HexagonGrid } from "./renderer/HexagonGrid.js";
 import { HoverAnimation } from "./renderer/HoverAnimation.js";
 import { StartAnimation } from "./renderer/StartAnimation.js";
+import { UniformManager } from "./renderer/UniformManager.js";
 
 window.addEventListener("load", async () => {
     const canvas = document.getElementById("canvas")
@@ -81,6 +82,13 @@ window.addEventListener("load", async () => {
         }
 
         const responses = await Promise.all([loadFile("shader/vertex.glsl"), loadFile("shader/fragment.glsl")])
+        
+        const program = gl.createProgram()
+        const uniformManager = new UniformManager(gl, program)
+        const lightPosition = vec3.create()
+        vec3.set(lightPosition, 10, 10, -10)
+        const light = new Light(lightPosition)
+        const hexGrid = new MeshObject(gl, new HexagonGrid(), ...responses, light, uniformManager)
 
         const position = vec3.create()
         vec3.set(position, 0, 65, 75)
@@ -89,12 +97,8 @@ window.addEventListener("load", async () => {
         const up = vec3.create()
         vec3.set(up, 0, 1, 0)
 
-        const camera = new Camera(position, lookAt, up)
-        const lightPosition = vec3.create()
-        vec3.set(lightPosition, 10, 10, -10)
-        const light = new Light(lightPosition)
+        const camera = new Camera(position, lookAt, up, uniformManager)
 
-        const hexGrid = new MeshObject(gl, new HexagonGrid(), ...responses, camera, light)
 
         const animation = {
             hover: [
@@ -121,6 +125,14 @@ window.addEventListener("load", async () => {
             animation.hover.forEach(hoverAnimation => { hoverAnimation.update(time) })
             animation.start.update(time)
 
+            let position = vec3.create()
+            let lookAt = vec3.create()
+            let up = vec3.create()
+            vec3.set(position, animation.hover[0].interpolator * 20, 65 - animation.hover[0].interpolator * 20, 75 - animation.hover[0].interpolator * 20)
+            vec3.set(lookAt, 0, 0, 20)
+            vec3.set(up, 0, 1, 0)
+
+            camera.update(position, lookAt, up)
             hexGrid.matWorldUniform.update(worldMatrix)
             hexGrid.matNormUniform.update(normalMatrix)
             hexGrid.timeUniform.update(time * 0.001)
@@ -147,12 +159,22 @@ window.addEventListener("load", async () => {
             requestAnimationFrame(loop)
         }
 
+        const startSpecialEvent = (item) => {
+            animation.hover[item].isIncreasing = true
+            animation.hover[item].isDecreasing = false
+        }
+    
+        const endSpecialEvent = (item) => {
+            animation.hover[item].isDecreasing = true
+            animation.hover[item].isIncreasing = false
+        }
+
         Array.from(document.getElementsByClassName("hoverable")).forEach(element => {
             element.addEventListener("mouseenter", (event) => {
-                hexGrid.startSpecialEvent(parseInt(event.target.dataset.id))
+                startSpecialEvent(parseInt(event.target.dataset.id))
             })
             element.addEventListener("mouseleave", (event) => {
-                hexGrid.endSpecialEvent(parseInt(event.target.dataset.id))
+                endSpecialEvent(parseInt(event.target.dataset.id))
             })
         })
 

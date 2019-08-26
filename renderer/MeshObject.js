@@ -13,11 +13,12 @@ class MeshObject {
         /** @type {Mesh} */ mesh,
         /** @type {string} */ vertexShaderSource,
         /** @type {string} */ fragmentShaderSource,
-        /** @type {mat4} */ camera,
-        /** @type {Light} */ light) {
-
-        this.program = gl.createProgram();
+        /** @type {Light} */ light,
+        /** @type {UniformManager} */ uniformManager) {
+            
+        // this.program = gl.createProgram();
         this.indices = mesh.indices
+        this.uniformManager = uniformManager
 
         const initShader = (
             /** @type {string} */ shaderSource,
@@ -29,23 +30,23 @@ class MeshObject {
                 console.error("ERROR compiling fragment shader!", gl.getShaderInfoLog(shader))
                 return
             }
-            gl.attachShader(this.program, shader)
+            gl.attachShader(this.uniformManager.program, shader)
         }
 
         initShader(fragmentShaderSource, gl.FRAGMENT_SHADER)
         initShader(vertexShaderSource, gl.VERTEX_SHADER)
 
-        gl.linkProgram(this.program)
-        if (!gl.getProgramParameter(this.program, gl.LINK_STATUS)) {
-            console.error("ERROR linking program!", gl.getProgramInfoLog(this.program))
+        gl.linkProgram(this.uniformManager.program)
+        if (!gl.getProgramParameter(this.uniformManager.program, gl.LINK_STATUS)) {
+            console.error("ERROR linking program!", gl.getProgramInfoLog(this.uniformManager.program))
             return
         }
-        gl.validateProgram(this.program)
-        if (!gl.getProgramParameter(this.program, gl.VALIDATE_STATUS)) {
-            console.error("ERROR validating program!", gl.getProgramInfoLog(this.program))
+        gl.validateProgram(this.uniformManager.program)
+        if (!gl.getProgramParameter(this.uniformManager.program, gl.VALIDATE_STATUS)) {
+            console.error("ERROR validating program!", gl.getProgramInfoLog(this.uniformManager.program))
             return
         }
-        gl.useProgram(this.program)
+        gl.useProgram(this.uniformManager.program)
 
         const buffer2 = gl.createBuffer()
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffer2)
@@ -55,13 +56,13 @@ class MeshObject {
         const typedArray = new Float32Array(mesh.interleavedArray)
         gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
         gl.bufferData(gl.ARRAY_BUFFER, typedArray, gl.STATIC_DRAW)
-        const attribLocationPosition = gl.getAttribLocation(this.program, "aPosition")
-        const attribLocationColor = gl.getAttribLocation(this.program, "aColor")
-        const attribLocationNormal = gl.getAttribLocation(this.program, "aNormal")
-        const attribLocationCenter = gl.getAttribLocation(this.program, "aCenter")
-        const attribLocationSpecialY0 = gl.getAttribLocation(this.program, "aSpecialY0")
-        const attribLocationSpecialY1 = gl.getAttribLocation(this.program, "aSpecialY1")
-        const attribLocationStartPosition = gl.getAttribLocation(this.program, "aStartPosition")
+        const attribLocationPosition = gl.getAttribLocation(this.uniformManager.program, "aPosition")
+        const attribLocationColor = gl.getAttribLocation(this.uniformManager.program, "aColor")
+        const attribLocationNormal = gl.getAttribLocation(this.uniformManager.program, "aNormal")
+        const attribLocationCenter = gl.getAttribLocation(this.uniformManager.program, "aCenter")
+        const attribLocationSpecialY0 = gl.getAttribLocation(this.uniformManager.program, "aSpecialY0")
+        const attribLocationSpecialY1 = gl.getAttribLocation(this.uniformManager.program, "aSpecialY1")
+        const attribLocationStartPosition = gl.getAttribLocation(this.uniformManager.program, "aStartPosition")
         gl.enableVertexAttribArray(attribLocationPosition)
         gl.enableVertexAttribArray(attribLocationColor)
         gl.enableVertexAttribArray(attribLocationNormal)
@@ -84,19 +85,18 @@ class MeshObject {
             bytesPerElement: 4
         }
 
-        this.uniformManager = new UniformManager(gl, this.program);
         this.timeUniform = new UniformFloat("uTime", this.uniformManager)
         this.interpolator0Uniform = new UniformFloat("uInterpolator0", this.uniformManager)
         this.interpolator1Uniform = new UniformFloat("uInterpolator1", this.uniformManager)
         this.interpolator2Uniform = new UniformFloat("uInterpolator2", this.uniformManager)
         this.matWorldUniform = new UniformMatrix4f("uWorld", this.uniformManager)
-        this.matViewUniform = new UniformMatrix4f("uView", this.uniformManager)
+        // this.matViewUniform = new UniformMatrix4f("uView", this.uniformManager)
         this.matProjUniform = new UniformMatrix4f("uProjection", this.uniformManager)
         this.matNormUniform = new UniformMatrix3f("uNormal", this.uniformManager)
         this.lightPosUniform = new Uniform3f("uLightPosition", this.uniformManager)
 
         this.lightPosUniform.update(light.position)
-        this.matViewUniform.update(camera.viewMatrix)
+        // this.matViewUniform.update(camera.viewMatrix)
 
         gl.vertexAttribPointer(this.interleaved.attribLocation.position, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 0)
         gl.vertexAttribPointer(this.interleaved.attribLocation.normal, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 3)
@@ -116,16 +116,6 @@ class MeshObject {
 
     resize(projMatrix) {
         this.matProjUniform.update(projMatrix)
-    }
-
-    startSpecialEvent(item) {
-        this.animation.hover[item].isIncreasing = true
-        this.animation.hover[item].isDecreasing = false
-    }
-
-    endSpecialEvent(item) {
-        this.animation.hover[item].isDecreasing = true
-        this.animation.hover[item].isIncreasing = false
     }
 
 }
