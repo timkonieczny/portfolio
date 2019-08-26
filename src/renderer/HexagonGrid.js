@@ -6,7 +6,7 @@ class HexagonGrid extends Mesh {
     constructor() {
         super()
 
-        console.log("[grid generation] start")
+        console.info("[grid generation] start")
 
         const cylinders = []
 

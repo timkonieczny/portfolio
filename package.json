@@ -5,7 +5,8 @@
     "private": true,
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "webpack"
+        "build": "webpack",
+        "start:dev": "webpack-dev-server"
     },
     "keywords": [],
     "author": "Tim Konieczny",
@@ -22,6 +23,7 @@
         "style-loader": "^1.0.0",
         "webpack": "^4.39.2",
         "webpack-cli": "^3.3.7",
+        "webpack-dev-server": "^3.8.0",
         "webpack-glsl-loader": "^1.0.1"
     },
     "dependencies": {

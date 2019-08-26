@@ -33,11 +33,19 @@ window.addEventListener("load", () => {
         return
     }
 
-    let info = "WebGL version:\t\t\t" + gl.getParameter(gl.VERSION) + "\nGLSL version:\t\t\t" + gl.getParameter(gl.SHADING_LANGUAGE_VERSION) + "\nWebGL Vendor:\t\t\t" + gl.getParameter(gl.VENDOR)
     const ext = gl.getExtension("WEBGL_debug_renderer_info");
-    if (ext) info += "\nUnmasked WebGL vendor:\t" + gl.getParameter(ext.UNMASKED_VENDOR_WEBGL) + "\nUnmasked renderer:\t\t" + gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)
+    let info = 
+        "WebGL version:\t\t\t" + gl.getParameter(gl.VERSION) + 
+        "\nGLSL version:\t\t\t" + gl.getParameter(gl.SHADING_LANGUAGE_VERSION) + 
+        "\nWebGL Vendor:\t\t\t" + gl.getParameter(gl.VENDOR) +
+        "\nhighp float precision:\t\t" + gl.getShaderPrecisionFormat(gl.VERTEX_SHADER, gl.HIGH_FLOAT).precision +
+        "\nmdiump float precision:\t\t" + gl.getShaderPrecisionFormat(gl.VERTEX_SHADER, gl.MEDIUM_FLOAT).precision +
+        "\nlowp float precision:\t\t" + gl.getShaderPrecisionFormat(gl.VERTEX_SHADER, gl.LOW_FLOAT).precision
+    if (ext) info += 
+        "\nUnmasked WebGL vendor:\t\t" + gl.getParameter(ext.UNMASKED_VENDOR_WEBGL) + 
+        "\nUnmasked renderer:\t\t" + gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)
     console.info(info)
-    console.log(gl.getShaderPrecisionFormat(gl.VERTEX_SHADER, gl.HIGH_FLOAT))
+    
     //desktop
     // {rangeMin: 127, rangeMax: 127, precision: 23}
     // {rangeMin: 127, rangeMax: 127, precision: 23}
@@ -66,126 +74,101 @@ window.addEventListener("load", () => {
     gl.cullFace(gl.BACK)
     gl.clearColor(0.2, 0.2, 0.2, 1.0)
 
-    try {
-        // const loadFile = url => {
-        //     return new Promise(function (resolve, reject) {
-        //         const request = new XMLHttpRequest()
-        //         request.open("GET", url)
-        //         request.addEventListener("load", () => {
-        //             if (request.status == 200)
-        //                 resolve(request.response)
-        //             else
-        //                 reject(Error(request.statusText))
-        //         })
-        //         request.addEventListener("error", () => {
-        //             reject(Error("Network Error"))
-        //         })
-        //         request.send()
-        //     })
-        // }
+    const program = gl.createProgram()
+    const uniformManager = new UniformManager(gl, program)
+    const lightPosition = vec3.create()
+    vec3.set(lightPosition, 10, 10, -10)
+    const light = new Light(lightPosition)
 
-        // const responses = await Promise.all([loadFile("shader/vertex.glsl"), loadFile("shader/fragment.glsl")])
+    const hexGrid = new MeshObject(gl, new HexagonGrid(), vertexShaderSource, fragmentShaderSource, light, uniformManager)
 
-        const program = gl.createProgram()
-        const uniformManager = new UniformManager(gl, program)
-        const lightPosition = vec3.create()
-        vec3.set(lightPosition, 10, 10, -10)
-        const light = new Light(lightPosition)
+    const position = vec3.create()
+    vec3.set(position, 0, 65, 75)
+    const lookAt = vec3.create()
+    vec3.set(lookAt, 0, 0, 20)
+    const up = vec3.create()
+    vec3.set(up, 0, 1, 0)
 
-        console.log(vertexShaderSource)
-        const hexGrid = new MeshObject(gl, new HexagonGrid(), vertexShaderSource, fragmentShaderSource, light, uniformManager)
-        // const hexGrid = new MeshObject(gl, new HexagonGrid(), ...responses, light, uniformManager)
+    const camera = new Camera(position, lookAt, up, uniformManager)
 
-        const position = vec3.create()
-        vec3.set(position, 0, 65, 75)
-        const lookAt = vec3.create()
+
+    const animation = {
+        hover: [
+            new HoverAnimation(),
+            new HoverAnimation()
+        ],
+        start: new StartAnimation()
+    }
+
+    hexGrid.update = time => {
+        let worldMatrix = mat4.create()
+        const identityMatrix = mat4.create()
+        const translationVector = vec3.create()
+        vec3.set(translationVector, 0, -2, 0)
+        mat4.translate(worldMatrix, identityMatrix, translationVector)
+
+        let normalMatrix = mat3.create()
+        let normalMatrix2 = mat4.create()
+        let normalMatrix3 = mat4.create()
+        mat4.invert(normalMatrix2, worldMatrix)
+        mat4.transpose(normalMatrix3, normalMatrix2)
+        mat3.fromMat4(normalMatrix, normalMatrix3)
+
+        animation.hover.forEach(hoverAnimation => { hoverAnimation.update(time) })
+        animation.start.update(time)
+
+        let position = vec3.create()
+        let lookAt = vec3.create()
+        let up = vec3.create()
+        vec3.set(position, animation.hover[0].interpolator * 20, 65 - animation.hover[0].interpolator * 20, 75 - animation.hover[0].interpolator * 20)
         vec3.set(lookAt, 0, 0, 20)
-        const up = vec3.create()
         vec3.set(up, 0, 1, 0)
 
-        const camera = new Camera(position, lookAt, up, uniformManager)
-
-
-        const animation = {
-            hover: [
-                new HoverAnimation(),
-                new HoverAnimation()
-            ],
-            start: new StartAnimation()
-        }
-
-        hexGrid.update = time => {
-            let worldMatrix = mat4.create()
-            const identityMatrix = mat4.create()
-            const translationVector = vec3.create()
-            vec3.set(translationVector, 0, -2, 0)
-            mat4.translate(worldMatrix, identityMatrix, translationVector)
-
-            let normalMatrix = mat3.create()
-            let normalMatrix2 = mat4.create()
-            let normalMatrix3 = mat4.create()
-            mat4.invert(normalMatrix2, worldMatrix)
-            mat4.transpose(normalMatrix3, normalMatrix2)
-            mat3.fromMat4(normalMatrix, normalMatrix3)
-
-            animation.hover.forEach(hoverAnimation => { hoverAnimation.update(time) })
-            animation.start.update(time)
-
-            let position = vec3.create()
-            let lookAt = vec3.create()
-            let up = vec3.create()
-            vec3.set(position, animation.hover[0].interpolator * 20, 65 - animation.hover[0].interpolator * 20, 75 - animation.hover[0].interpolator * 20)
-            vec3.set(lookAt, 0, 0, 20)
-            vec3.set(up, 0, 1, 0)
-
-            camera.update(position, lookAt, up)
-            hexGrid.matWorldUniform.update(worldMatrix)
-            hexGrid.matNormUniform.update(normalMatrix)
-            hexGrid.timeUniform.update(time * 0.001)
-            hexGrid.interpolator0Uniform.update(animation.hover[0].interpolator)
-            hexGrid.interpolator1Uniform.update(animation.hover[1].interpolator)
-            hexGrid.interpolator2Uniform.update(animation.start.interpolator)
-        }
-
-        const resize = () => {
-            canvas.width = canvas.clientWidth * window.devicePixelRatio
-            canvas.height = canvas.clientHeight * window.devicePixelRatio
-            gl.viewport(0, 0, canvas.width, canvas.height)
-            mat4.perspective(camera.projMatrix, glMatrix.toRadian(45), canvas.width / canvas.height, 0.1, 1000.0)
-            hexGrid.resize(camera.projMatrix)
-        }
-        window.addEventListener("resize", resize)
-        resize()
-
-        const loop = function (time) {
-            stats.begin();
-            hexGrid.update(time)
-            hexGrid.render(gl)
-            stats.end();
-            requestAnimationFrame(loop)
-        }
-
-        const startSpecialEvent = (item) => {
-            animation.hover[item].isIncreasing = true
-            animation.hover[item].isDecreasing = false
-        }
-
-        const endSpecialEvent = (item) => {
-            animation.hover[item].isDecreasing = true
-            animation.hover[item].isIncreasing = false
-        }
-
-        Array.from(document.getElementsByClassName("hoverable")).forEach(element => {
-            element.addEventListener("mouseenter", (event) => {
-                startSpecialEvent(parseInt(event.target.dataset.id))
-            })
-            element.addEventListener("mouseleave", (event) => {
-                endSpecialEvent(parseInt(event.target.dataset.id))
-            })
-        })
-
-        requestAnimationFrame(loop)
-    } catch (responses) {
-        console.error(responses)
+        camera.update(position, lookAt, up)
+        hexGrid.matWorldUniform.update(worldMatrix)
+        hexGrid.matNormUniform.update(normalMatrix)
+        hexGrid.timeUniform.update(time * 0.001)
+        hexGrid.interpolator0Uniform.update(animation.hover[0].interpolator)
+        hexGrid.interpolator1Uniform.update(animation.hover[1].interpolator)
+        hexGrid.interpolator2Uniform.update(animation.start.interpolator)
     }
+
+    const resize = () => {
+        canvas.width = canvas.clientWidth * window.devicePixelRatio
+        canvas.height = canvas.clientHeight * window.devicePixelRatio
+        gl.viewport(0, 0, canvas.width, canvas.height)
+        mat4.perspective(camera.projMatrix, glMatrix.toRadian(45), canvas.width / canvas.height, 0.1, 1000.0)
+        hexGrid.resize(camera.projMatrix)
+    }
+    window.addEventListener("resize", resize)
+    resize()
+
+    const loop = function (time) {
+        stats.begin();
+        hexGrid.update(time)
+        hexGrid.render(gl)
+        stats.end();
+        requestAnimationFrame(loop)
+    }
+
+    const startSpecialEvent = (item) => {
+        animation.hover[item].isIncreasing = true
+        animation.hover[item].isDecreasing = false
+    }
+
+    const endSpecialEvent = (item) => {
+        animation.hover[item].isDecreasing = true
+        animation.hover[item].isIncreasing = false
+    }
+
+    Array.from(document.getElementsByClassName("hoverable")).forEach(element => {
+        element.addEventListener("mouseenter", (event) => {
+            startSpecialEvent(parseInt(event.target.dataset.id))
+        })
+        element.addEventListener("mouseleave", (event) => {
+            endSpecialEvent(parseInt(event.target.dataset.id))
+        })
+    })
+
+    requestAnimationFrame(loop)
 })
