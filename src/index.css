@@ -9,9 +9,34 @@ canvas {
     position: fixed;
 }
 
-div {
+#test {
     position: fixed;
     z-index: 1;
     cursor: pointer;
     color: white;
+}
+
+#wrapper{
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+    justify-content: center;
+    align-items: center;
+}
+
+#inner-wrapper{
+    color: white;
+    width: 40vw;
+    height: 40vw;
+    background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 300 300" xmlns:xlink="http://www.w3.org/1999/xlink"><polygon class="hex" points="300,150 225,280 75,280 0,150 75,20 225,20"></polygon></svg>');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
