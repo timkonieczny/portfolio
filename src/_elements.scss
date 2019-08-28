@@ -1,0 +1,31 @@
+$color-accent: #00b0cf;
+$font-main: "Montserrat", sans-serif;
+
+button {
+    border: 0.2em solid $color-accent;
+    color: $color-accent;
+    background: transparent;
+    padding: 1em 2em;
+    border-radius: 0.5em;
+    text-transform: uppercase;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    margin: 2em 0;
+    &:hover {
+        color: #ffffff;
+        background: $color-accent;
+    }
+    i {
+        margin: 0 0.5em 0 0;
+    }
+}
+
+textarea,
+input {
+    color: #ffffff;
+    background: rgba(100, 100, 100, 0.3);
+    border: 0.2em solid white;
+    border-radius: 0.5em;
+    display: block;
+    font-family: "Montserrat", sans-serif;
+}

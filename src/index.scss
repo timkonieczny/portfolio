@@ -1,0 +1,81 @@
+@import "elements";
+
+body,
+html,
+canvas {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    font-family: "Montserrat", sans-serif;
+    color: white;
+    background: black;
+}
+
+canvas {
+    position: fixed;
+}
+
+#wrapper {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 80%;
+    z-index: 2;
+    justify-content: center;
+    padding: 0 10%;
+}
+
+#subtitle {
+    margin: 1em 0;
+    span {
+        margin: 0 2em 0 0;
+    }
+}
+
+button#linkedin {
+    margin: 0 0 0 1em;
+}
+
+a {
+    text-decoration: underline;
+}
+
+#message-wrapper {
+    visibility: hidden;
+    form {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        #send-button i {
+            font-size: 2em;
+        }
+        textarea {
+            padding: 1em;
+            resize: none;
+            height: 8em;
+        }
+        span {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            input {
+                width: 38%;
+                padding: 1em;
+            }
+        }
+        #input-subject {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 1em;
+        }
+    }
+    form > * {
+        margin: 0 0 1em 0;
+    }
+    #back-arrow {
+        font-size: 1.5em;
+    }
+}

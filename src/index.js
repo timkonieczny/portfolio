@@ -9,7 +9,7 @@ import { StartAnimation } from "./renderer/StartAnimation.js";
 import { UniformManager } from "./renderer/UniformManager.js";
 import vertexShaderSource from "./shader/vertex.glsl"
 import fragmentShaderSource from "./shader/fragment.glsl"
-import "./index.css";
+import "./index.scss";
 import "@fortawesome/fontawesome-free/css/all.css";
 
 window.addEventListener("load", () => {
