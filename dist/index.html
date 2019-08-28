@@ -1,13 +1,34 @@
 <!DOCTYPE html>
 <script src="bundle.js"></script>
+<!-- TODO: move fonts to resources -->
+<link
+    href="https://fonts.googleapis.com/css?family=Didact+Gothic|Lexend+Exa|Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+    rel="stylesheet">
 <canvas id="canvas"></canvas>
-<div id="test">
-    <a id="menuItem1" class="hoverable" data-id="0">hover me</a>
-    <a id="menuItem2" class="hoverable" data-id="1">hover me</a>
-</div>
 <div id="wrapper">
-    <div id="inner-wrapper">
-            <p>hello.</p>
-            <h1>I'm Tim.</h1>
+    <div id="headline-wrapper">
+        <h1>hello,</br>
+            I'm Tim,</br>
+            Freelance Developer.</br>
+        </h1>
+        <p id="subtitle"><span>The Web</span><span>3D</span><span>Android</span></p>
+        <div>
+            <button id="contact-button" class="hoverable" data-id="0">get in touch</button>
+            <button id="linkedin" class="hoverable" data-id="1"><i class="fab fa-linkedin-in"></i> connect on LinkedIn</button>
+        </div>
+        <a class="hoverable" data-id="1">learn more</a>
+    </div>
+    <div id="message-wrapper">
+        <a id="back-arrow"><i class="fas fa-long-arrow-alt-left"></i></a>
+        <h2>Let's have a chat</h2>
+        <form>
+            <span>
+                <input placeholder="Name"/>
+                <input placeholder="Email"/>
+            </span>
+            <input id="input-subject" placeholder="Subject"/>
+            <textarea placeholder="Message"></textarea>
+            <button id="send-button"><i class="fas fa-paper-plane"></i></button>
+        </form>
     </div>
 </div>

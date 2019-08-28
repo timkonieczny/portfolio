@@ -3,9 +3,10 @@ import { OctagonalPrismMesh } from "./OctagonalPrismMesh.js"
 import { mat4, vec3 } from "gl-matrix"
 
 class HexagonGrid extends Mesh {
-    constructor() {
+    constructor(rings, gap, scaleY) {
         super()
 
+        let time = Date.now()
         console.info("[grid generation] start")
 
         const cylinders = []
@@ -59,10 +60,14 @@ class HexagonGrid extends Mesh {
                 makeRing(i, gap, scaleY)
         }
 
-        makeGrid(30, 1.1, 2)
+        console.info("[grid generation] creating elements")
+        makeGrid(rings, gap, scaleY)
+        console.info("[grid generation] creating elements done ("+(Date.now() - time)+"ms)")
+        time = Date.now()
 
         console.info("[grid generation] merging geometries")
         const hexGridGeometry = this.mergeGeometries(...cylinders)
+        console.info("[grid generation] merging geometries done ("+(Date.now() - time)+"ms)")
 
         this.indices = hexGridGeometry.indices
         this.interleavedArray = hexGridGeometry.interleavedArray

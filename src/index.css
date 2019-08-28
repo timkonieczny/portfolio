@@ -2,7 +2,10 @@ body, html, canvas {
     width: 100%;
     height: 100%;
     margin: 0;
-    overflow: hidden
+    overflow: hidden;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    background: black;
 }
 
 canvas {
@@ -16,27 +19,105 @@ canvas {
     color: white;
 }
 
-#wrapper{
+#wrapper {
     position: absolute;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     height: 100%;
-    width: 100%;
+    width: 80%;
     z-index: 2;
     justify-content: center;
-    align-items: center;
+    padding: 0 10%;
 }
 
-#inner-wrapper{
-    color: white;
-    width: 40vw;
-    height: 40vw;
-    background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 300 300" xmlns:xlink="http://www.w3.org/1999/xlink"><polygon class="hex" points="300,150 225,280 75,280 0,150 75,20 225,20"></polygon></svg>');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: 100%;
-    text-align: center;
+#subtitle span {
+    margin: 0 2em 0 0
+}
+
+#subtitle {
+    margin: 1em 0;
+}
+
+button {
+    border: .2em solid #00b0cf;
+    color: #00b0cf;
+    background: transparent;
+    padding: 1em 2em;
+    border-radius: .5em;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    margin: 2em 0;
+}
+
+button:hover {
+    color: #ffffff;
+    background: #00b0cf;
+}
+
+button i {
+    margin: 0 0.5em 0 0;
+}
+
+button#linkedin {
+    margin: 0 0 0 1em;
+}
+
+a {
+    text-decoration: underline;
+}
+
+#message-wrapper {
+    visibility: hidden;
+}
+
+#message-wrapper textarea, #message-wrapper input {
+    color: #ffffff;
+    background: rgba(100, 100, 100, 0.3);
+    border: .2em solid white;
+    border-radius: .5em;
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#message-wrapper form {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    width: 50%;
+}
+
+#message-wrapper form>* {
+    margin: 0 0 1em 0;
+}
+
+#message-wrapper textarea {
+    padding: 1em;
+    resize: none;
+    height: 8em;
+}
+
+#message-wrapper span {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#message-wrapper span input {
+    width: 38%;
+    padding: 1em;
+}
+
+#input-subject {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1em;
+}
+
+#back-arrow {
+    font-size: 1.5em;
+}
+
+#send-button i{
+    font-size: 2em;
 }

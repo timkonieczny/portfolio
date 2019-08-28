@@ -10,6 +10,7 @@ import { UniformManager } from "./renderer/UniformManager.js";
 import vertexShaderSource from "./shader/vertex.glsl"
 import fragmentShaderSource from "./shader/fragment.glsl"
 import "./index.css";
+import "@fortawesome/fontawesome-free/css/all.css";
 
 window.addEventListener("load", () => {
     const canvas = document.getElementById("canvas")
@@ -94,7 +95,8 @@ window.addEventListener("load", () => {
     vec3.set(lightPosition, 10, 10, -10)
     const light = new Light(lightPosition)
 
-    const hexGrid = new MeshObject(gl, new HexagonGrid(), vertexShaderSource, fragmentShaderSource, light, uniformManager)
+    const hexGrid = new MeshObject(gl, new HexagonGrid(30, 1.1, 2), vertexShaderSource, fragmentShaderSource, light, uniformManager)
+    // const hexGrid = {};
 
     const position = vec3.create()
     vec3.set(position, 0, 65, 75)
@@ -174,6 +176,20 @@ window.addEventListener("load", () => {
         animation.hover[item].isDecreasing = true
         animation.hover[item].isIncreasing = false
     }
+
+    document.getElementById("contact-button").addEventListener("click", () =>{
+        document.getElementById("headline-wrapper").style.visibility = "hidden"
+        document.getElementById("headline-wrapper").style.height = "0"
+        document.getElementById("message-wrapper").style.visibility = "visible"
+        document.getElementById("message-wrapper").style.height = ""
+    })
+
+    document.getElementById("back-arrow").addEventListener("click", () =>{
+        document.getElementById("headline-wrapper").style.visibility = "visible"
+        document.getElementById("headline-wrapper").style.height = ""
+        document.getElementById("message-wrapper").style.visibility = "hidden"
+        document.getElementById("message-wrapper").style.height = "0"
+    })
 
     Array.from(document.getElementsByClassName("hoverable")).forEach(element => {
         element.addEventListener("mouseenter", (event) => {
