@@ -27,23 +27,22 @@ canvas {
     padding: 0 10%;
 }
 
-#subtitle {
-    margin: 1em 0;
-    span {
-        margin: 0 2em 0 0;
+#headline-wrapper {
+    #subtitle {
+        margin: 1em 0;
+        span {
+            margin: 0 2em 0 0;
+        }
     }
-}
-
-button#linkedin {
-    margin: 0 0 0 1em;
-}
-
-a {
-    text-decoration: underline;
+    button#linkedin {
+        margin: 0 0 0 1em;
+    }
 }
 
 #message-wrapper {
     visibility: hidden;
+    // display: none;
+    height: 0;
     form {
         display: flex;
         flex-direction: column;

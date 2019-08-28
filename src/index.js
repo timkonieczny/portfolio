@@ -177,18 +177,25 @@ window.addEventListener("load", () => {
         animation.hover[item].isIncreasing = false
     }
 
+    let headlineWrapper = null, messageWrapper = null;
     document.getElementById("contact-button").addEventListener("click", () =>{
-        document.getElementById("headline-wrapper").style.visibility = "hidden"
-        document.getElementById("headline-wrapper").style.height = "0"
-        document.getElementById("message-wrapper").style.visibility = "visible"
-        document.getElementById("message-wrapper").style.height = ""
+        if(!headlineWrapper) headlineWrapper = document.getElementById("headline-wrapper")
+        if(!messageWrapper) messageWrapper = document.getElementById("message-wrapper")
+        console.log(headlineWrapper)
+        console.log(messageWrapper)
+        headlineWrapper.style.display = "none"
+        // document.getElementById("headline-wrapper").style.height = "0"
+        messageWrapper.style.display = "block"
+        messageWrapper.style.visibility = "visible"
+        messageWrapper.style.height = "auto"
+        // document.getElementById("message-wrapper").style.height = ""
     })
 
     document.getElementById("back-arrow").addEventListener("click", () =>{
-        document.getElementById("headline-wrapper").style.visibility = "visible"
-        document.getElementById("headline-wrapper").style.height = ""
-        document.getElementById("message-wrapper").style.visibility = "hidden"
-        document.getElementById("message-wrapper").style.height = "0"
+        headlineWrapper.style.display = "block"
+        // document.getElementById("headline-wrapper").style.height = ""
+        messageWrapper.style.display = "none"
+        // document.getElementById("message-wrapper").style.height = "0"
     })
 
     Array.from(document.getElementsByClassName("hoverable")).forEach(element => {
