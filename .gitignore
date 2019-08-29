@@ -1,5 +1,3 @@
 node_modules
 dist/*
-!dist/index.html
 .vscode
-server/credentials.php

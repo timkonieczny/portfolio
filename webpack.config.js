@@ -1,7 +1,8 @@
 const path = require("path");
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-    entry: "./src/index.js",
+    entry: "./src/js/index.js",
     mode: "development",
     output: {
         filename: "bundle.js",
@@ -44,10 +45,21 @@ module.exports = {
                 use: [
                     'svg-loader'
                 ]
+            },
+            {
+                test: /\.php$/,
+                use: [
+                    'file-loader'
+                ]
             }
         ]
     },
     devServer: {
         contentBase: path.join(__dirname, 'dist')
-    }
+    },
+    plugins: [
+        new CopyPlugin([
+          { from: 'src/index.html', to: 'index.html' }
+        ]),
+      ],
 };

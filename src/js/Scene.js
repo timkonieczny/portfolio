@@ -7,8 +7,8 @@ import { StartAnimation } from "./renderer/StartAnimation.js";
 import { UniformManager } from "./renderer/UniformManager.js";
 import { mat4, mat3, vec3, glMatrix } from "gl-matrix"
 import Stats from "stats-js"
-import vertexShaderSource from "./shader/vertex.glsl"
-import fragmentShaderSource from "./shader/fragment.glsl"
+import vertexShaderSource from "../glsl/vertex.glsl"
+import fragmentShaderSource from "../glsl/fragment.glsl"
 
 class Scene{
     constructor(canvas){

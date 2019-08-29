@@ -1,5 +1,6 @@
 import { Scene } from "./Scene.js"
-import "./index.scss"
+import mail from "../php/mail.php"
+import "../scss/index.scss"
 import "@fortawesome/fontawesome-free/css/all.css"
 
 window.addEventListener("load", () => {
@@ -59,6 +60,7 @@ window.addEventListener("load", () => {
 
     document.querySelector("#message-wrapper form").addEventListener("submit", (event) => {
         event.preventDefault()
+        console.log(mail)
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
@@ -66,7 +68,7 @@ window.addEventListener("load", () => {
                 // TODO: show confirmation
             }
         };
-        xhttp.open("POST", "mail.php");
+        xhttp.open("POST", mail);
 
         xhttp.send(new FormData(document.querySelector("#message-wrapper form")));
     })
