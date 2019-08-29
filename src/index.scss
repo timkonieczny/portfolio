@@ -34,6 +34,15 @@ canvas {
             margin: 0 2em 0 0;
         }
     }
+    #about-button {
+        display: inline-flex;
+        flex-direction: row;
+        align-items: center;
+        i {
+            font-size: 1.5em;
+            margin: 0 0.5em 0 0.5em;
+        }
+    }
 }
 
 #message-wrapper {

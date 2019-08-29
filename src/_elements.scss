@@ -10,8 +10,10 @@ button {
     text-transform: uppercase;
     font-family: "Montserrat", sans-serif;
     font-weight: 700;
+    font-size: 0.8em;
     margin: 2em 0;
     transition: background-color 0.5s, color 0.5s;
+    letter-spacing: 0.1em;
     &:hover {
         color: #ffffff;
         background-color: $color-accent;
@@ -32,7 +34,23 @@ input {
 }
 
 a {
-    text-decoration: underline;
+    text-transform: uppercase;
+    color: $color-accent;
+    font-size: 0.8em;
+    font-weight: 700;
+    transition: background-color 0.5s, color 0.5s;
+    letter-spacing: 0.1em;
+    &:hover {
+        color: #ffffff;
+    }
+}
+
+b {
+    font-weight: 600;
+}
+
+p {
+    font-weight: 200;
 }
 
 .back-arrow {

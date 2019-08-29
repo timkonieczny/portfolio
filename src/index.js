@@ -179,7 +179,7 @@ window.addEventListener("load", () => {
 
     let headlineWrapper = null, messageWrapper = null, aboutWrapper = null;
 
-    const initDOMElements = ()=>{
+    const initDOMElements = () => {
         if (!headlineWrapper) headlineWrapper = document.getElementById("headline-wrapper")
         if (!messageWrapper) messageWrapper = document.getElementById("message-wrapper")
         if (!aboutWrapper) aboutWrapper = document.getElementById("about-wrapper")
@@ -189,9 +189,9 @@ window.addEventListener("load", () => {
         element.addEventListener("click", () => {
             initDOMElements()
             headlineWrapper.style.display = "none"
-            
+
             aboutWrapper.style.display = "none"
-            
+
             messageWrapper.style.display = "block"
             messageWrapper.style.visibility = "visible"
             messageWrapper.style.height = "auto"
@@ -203,7 +203,7 @@ window.addEventListener("load", () => {
         headlineWrapper.style.display = "none"
 
         messageWrapper.style.display = "none"
-        
+
         aboutWrapper.style.display = "block"
         aboutWrapper.style.visibility = "visible"
         aboutWrapper.style.height = "auto"
