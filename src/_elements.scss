@@ -11,7 +11,7 @@ button {
     font-family: "Montserrat", sans-serif;
     font-weight: 700;
     margin: 2em 0;
-    transition: background-color .5s, color .5s;
+    transition: background-color 0.5s, color 0.5s;
     &:hover {
         color: #ffffff;
         background-color: $color-accent;
@@ -33,4 +33,14 @@ input {
 
 a {
     text-decoration: underline;
+}
+
+.back-arrow {
+    font-size: 1.5em;
+}
+
+.contact-buttons {
+    .linkedin {
+        margin: 0 0 0 1em;
+    }
 }

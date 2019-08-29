@@ -7,29 +7,58 @@
 <canvas id="canvas"></canvas>
 <div id="wrapper">
 
-        <div id="headline-wrapper">
-            <h1>hello,</br>
+    <div id="headline-wrapper">
+        <h1>hello,</br>
             I'm Tim,</br>
             Freelance Developer.</br>
         </h1>
         <p id="subtitle"><span>The Web</span><span>3D</span><span>Android</span></p>
-        <div>
-            <button id="contact-button" class="hoverable" data-id="0">get in touch</button>
-            <button id="linkedin" class="hoverable" data-id="1"><i class="fab fa-linkedin-in"></i> connect on LinkedIn</button>
+        <div class="contact-buttons">
+            <button class="contact-button hoverable" data-id="0">get in touch</button>
+            <button class="linkedin hoverable" data-id="1"><i class="fab fa-linkedin-in"></i> connect on
+                LinkedIn</button>
         </div>
-        <a class="hoverable" data-id="1">learn more</a>
+        <a class="hoverable" id="about-button" data-id="1">learn more</a>
     </div>
     <div id="message-wrapper">
-        <a id="back-arrow"><i class="fas fa-long-arrow-alt-left"></i></a>
+        <a class="back-arrow"><i class="fas fa-long-arrow-alt-left"></i></a>
         <h2>Let's have a chat</h2>
         <form>
             <span>
-                <input placeholder="Name"/>
-                <input placeholder="Email"/>
+                <input placeholder="Name" />
+                <input placeholder="Email" />
             </span>
-            <input id="input-subject" placeholder="Subject"/>
+            <input id="input-subject" placeholder="Subject" />
             <textarea placeholder="Message"></textarea>
             <button id="send-button"><i class="fas fa-paper-plane"></i></button>
         </form>
+    </div>
+    <div id="about-wrapper">
+        <a class="back-arrow"><i class="fas fa-long-arrow-alt-left"></i></a>
+        <h2>Tim Konieczny</h2>
+        <p>
+            My main areas of expertise are font end development, computer graphics and digital experiences.
+        </p>
+        <p>
+            I specialize in small and medium web applications in React / Redux and HTML / CSS, and in creating
+            compelling user experiences through animations and transitions.
+        </p>
+        <p>
+            Also, I’m passionate about all things 3D, and love working with WebGL / three.js, shaders and Virtual
+            Reality tech like WebXR.
+        </p>
+        <p>
+            I also have experience building native Android apps, including UI-driven- and computer graphics applications
+            (OpenGL ES).
+        </p>
+        <p>
+            I’m always excited to tackle interesting projects and collaborate with great people. Sounds good? Let’s have
+            a chat!
+        </p>
+        <div class="contact-buttons">
+            <button class="contact-button hoverable" data-id="0">get in touch</button>
+            <button class="linkedin hoverable" data-id="1"><i class="fab fa-linkedin-in"></i> connect on
+                LinkedIn</button>
+        </div>
     </div>
 </div>

@@ -34,9 +34,6 @@ canvas {
             margin: 0 2em 0 0;
         }
     }
-    button#linkedin {
-        margin: 0 0 0 1em;
-    }
 }
 
 #message-wrapper {
@@ -74,7 +71,9 @@ canvas {
     form > * {
         margin: 0 0 1em 0;
     }
-    #back-arrow {
-        font-size: 1.5em;
-    }
+}
+
+#about-wrapper {
+    visibility: hidden;
+    height: 0;
 }

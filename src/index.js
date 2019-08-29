@@ -177,25 +177,44 @@ window.addEventListener("load", () => {
         animation.hover[item].isIncreasing = false
     }
 
-    let headlineWrapper = null, messageWrapper = null;
-    document.getElementById("contact-button").addEventListener("click", () =>{
-        if(!headlineWrapper) headlineWrapper = document.getElementById("headline-wrapper")
-        if(!messageWrapper) messageWrapper = document.getElementById("message-wrapper")
-        console.log(headlineWrapper)
-        console.log(messageWrapper)
-        headlineWrapper.style.display = "none"
-        // document.getElementById("headline-wrapper").style.height = "0"
-        messageWrapper.style.display = "block"
-        messageWrapper.style.visibility = "visible"
-        messageWrapper.style.height = "auto"
-        // document.getElementById("message-wrapper").style.height = ""
+    let headlineWrapper = null, messageWrapper = null, aboutWrapper = null;
+
+    const initDOMElements = ()=>{
+        if (!headlineWrapper) headlineWrapper = document.getElementById("headline-wrapper")
+        if (!messageWrapper) messageWrapper = document.getElementById("message-wrapper")
+        if (!aboutWrapper) aboutWrapper = document.getElementById("about-wrapper")
+    }
+
+    Array.from(document.getElementsByClassName("contact-button")).forEach(element => {
+        element.addEventListener("click", () => {
+            initDOMElements()
+            headlineWrapper.style.display = "none"
+            
+            aboutWrapper.style.display = "none"
+            
+            messageWrapper.style.display = "block"
+            messageWrapper.style.visibility = "visible"
+            messageWrapper.style.height = "auto"
+        })
     })
 
-    document.getElementById("back-arrow").addEventListener("click", () =>{
-        headlineWrapper.style.display = "block"
-        // document.getElementById("headline-wrapper").style.height = ""
+    document.querySelector("#about-button").addEventListener("click", () => {
+        initDOMElements()
+        headlineWrapper.style.display = "none"
+
         messageWrapper.style.display = "none"
-        // document.getElementById("message-wrapper").style.height = "0"
+        
+        aboutWrapper.style.display = "block"
+        aboutWrapper.style.visibility = "visible"
+        aboutWrapper.style.height = "auto"
+    })
+
+    Array.from(document.getElementsByClassName("back-arrow")).forEach(element => {
+        element.addEventListener("click", () => {
+            headlineWrapper.style.display = "block"
+            messageWrapper.style.display = "none"
+            aboutWrapper.style.display = "none"
+        })
     })
 
     Array.from(document.getElementsByClassName("hoverable")).forEach(element => {
