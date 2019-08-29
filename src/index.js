@@ -1,6 +1,6 @@
 import { Scene } from "./Scene.js"
-import "./index.scss";
-import "@fortawesome/fontawesome-free/css/all.css";
+import "./index.scss"
+import "@fortawesome/fontawesome-free/css/all.css"
 
 window.addEventListener("load", () => {
     const canvas = document.getElementById("canvas")
@@ -55,5 +55,19 @@ window.addEventListener("load", () => {
         element.addEventListener("mouseleave", (event) => {
             scene.endSpecialEvent(parseInt(event.target.dataset.id))
         })
+    })
+
+    document.querySelector("#message-wrapper form").addEventListener("submit", (event) => {
+        event.preventDefault()
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(xhttp.responseText)
+                // TODO: show confirmation
+            }
+        };
+        xhttp.open("POST", "mail.php");
+
+        xhttp.send(new FormData(document.querySelector("#message-wrapper form")));
     })
 })
