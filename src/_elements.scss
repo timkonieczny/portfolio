@@ -62,3 +62,12 @@ p {
         margin: 0 0 0 1em;
     }
 }
+
+.section-wrapper {
+    position: absolute;
+    left: 10%;
+    width: 70%;
+    opacity: 0;
+    visibility: hidden;
+    transition: left 0.5s, opacity 0.5s, visibility 0.5s;
+}

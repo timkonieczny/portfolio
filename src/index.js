@@ -177,43 +177,44 @@ window.addEventListener("load", () => {
         animation.hover[item].isIncreasing = false
     }
 
-    let headlineWrapper = null, messageWrapper = null, aboutWrapper = null;
-
-    const initDOMElements = () => {
-        if (!headlineWrapper) headlineWrapper = document.getElementById("headline-wrapper")
-        if (!messageWrapper) messageWrapper = document.getElementById("message-wrapper")
-        if (!aboutWrapper) aboutWrapper = document.getElementById("about-wrapper")
-    }
+    const headlineWrapper = document.getElementById("headline-wrapper")
+    const messageWrapper = document.getElementById("message-wrapper")
+    const aboutWrapper = document.getElementById("about-wrapper")
+    let activeWrapper = headlineWrapper;
+    const distanceToLeft = activeWrapper.getBoundingClientRect().left
+    const width = activeWrapper.clientWidth
+    // TODO: resize?
 
     Array.from(document.getElementsByClassName("contact-button")).forEach(element => {
         element.addEventListener("click", () => {
-            initDOMElements()
-            headlineWrapper.style.display = "none"
-
-            aboutWrapper.style.display = "none"
-
-            messageWrapper.style.display = "block"
-            messageWrapper.style.visibility = "visible"
-            messageWrapper.style.height = "auto"
+            moveWrappers(messageWrapper)
         })
     })
 
     document.querySelector("#about-button").addEventListener("click", () => {
-        initDOMElements()
-        headlineWrapper.style.display = "none"
-
-        messageWrapper.style.display = "none"
-
-        aboutWrapper.style.display = "block"
-        aboutWrapper.style.visibility = "visible"
-        aboutWrapper.style.height = "auto"
+        moveWrappers(aboutWrapper)
     })
+
+    const moveWrappers = (newActiveWrapper) => {
+        const goHome = newActiveWrapper === headlineWrapper
+        if (goHome)
+            activeWrapper.style.left = (distanceToLeft + width) + "px"
+        else
+            activeWrapper.style.left = (distanceToLeft - width) + "px"
+        activeWrapper.style.opacity = 0
+        activeWrapper.style.visibility = "hidden"
+        activeWrapper = newActiveWrapper;
+        activeWrapper.style.left = distanceToLeft + "px"
+        activeWrapper.style.opacity = 1
+        activeWrapper.style.visibility = "visible"
+
+        if (goHome)
+            aboutWrapper.style.left = (distanceToLeft + width) + "px"
+    }
 
     Array.from(document.getElementsByClassName("back-arrow")).forEach(element => {
         element.addEventListener("click", () => {
-            headlineWrapper.style.display = "block"
-            messageWrapper.style.display = "none"
-            aboutWrapper.style.display = "none"
+            moveWrappers(headlineWrapper)
         })
     })
 
