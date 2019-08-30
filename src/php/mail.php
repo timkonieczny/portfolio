@@ -23,11 +23,11 @@ if ($email) {
     // sanitize body
     $body = str_replace("\n.", "\n..", $body);
 
-    if (mail($to, $subject, $body, "From: $name <$email>")) {
-        echo "true";
+    if (@mail($to, $subject, $body, "From: $name <$email>")) {
+        http_response_code (200); 
     } else {
-        echo "false";
+        http_response_code (500);
     }
 } else {
-    echo "false";
+    http_response_code (400); 
 }

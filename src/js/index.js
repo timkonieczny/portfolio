@@ -63,8 +63,18 @@ window.addEventListener("load", () => {
         console.log(mail)
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                console.log(xhttp.responseText)
+            if (this.readyState == 4) {
+                switch(this.status){
+                    case 200:
+                        console.log("all good. message sent")
+                        break
+                    case 400:
+                        console.log("you entered an invalid email")
+                        break
+                    case 500:
+                        console.log("the server is not working")
+                        break
+                }
                 // TODO: show confirmation
             }
         };
