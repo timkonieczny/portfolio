@@ -42,6 +42,7 @@ module.exports = {
             },
             {
                 test: /\.svg$/,
+                exclude: /credentials.php/,
                 use: [
                     'svg-loader'
                 ]
@@ -59,7 +60,8 @@ module.exports = {
     },
     plugins: [
         new CopyPlugin([
-          { from: 'src/index.html', to: 'index.html' }
+          { from: 'src/index.html', to: 'index.html' },
+          { from: 'src/php/credentials.php', to: 'credentials.php' },
         ]),
       ],
 };
