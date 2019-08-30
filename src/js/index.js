@@ -68,7 +68,7 @@ window.addEventListener("load", () => {
                 // TODO: show confirmation
             }
         };
-        xhttp.open("POST", mail);
+        xhttp.open("POST", "http://localhost:3000/dist/" + mail);
 
         xhttp.send(new FormData(document.querySelector("#message-wrapper form")));
     })
