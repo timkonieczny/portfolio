@@ -56,12 +56,13 @@ module.exports = {
         ]
     },
     devServer: {
-        contentBase: path.join(__dirname, 'dist')
+        contentBase: path.join(__dirname, 'dist'),
+        host: '0.0.0.0'
     },
     plugins: [
         new CopyPlugin([
-          { from: 'src/index.html', to: 'index.html' },
-          { from: 'src/php/credentials.php', to: 'credentials.php' },
+            { from: 'src/index.html', to: 'index.html' },
+            { from: 'src/php/credentials.php', to: 'credentials.php' },
         ]),
-      ],
+    ],
 };

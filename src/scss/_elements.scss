@@ -2,6 +2,7 @@
 
 $color-accent: #00b0cf;
 $font-main: "Montserrat", sans-serif;
+$l: "screen and (max-width : 425px)";
 
 button {
     border: 0.2em solid $color-accent;
@@ -13,15 +14,18 @@ button {
     font-family: "Montserrat", sans-serif;
     font-weight: 700;
     font-size: 0.8em;
-    margin: 2em 0;
     transition: background-color 0.5s, color 0.5s;
     letter-spacing: 0.1em;
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
         color: #ffffff;
         background-color: $color-accent;
     }
     i {
         margin: 0 0.5em 0 0;
+    }
+    @media #{$l} {
+        padding: 1em;
     }
 }
 
@@ -60,16 +64,30 @@ p {
 }
 
 .contact-buttons {
-    .linkedin {
-        margin: 0 0 0 1em;
+    padding: 1em 0;
+    .contact-button {
+        margin-right: 1em;
+        @media #{$l} {
+            margin-right: 0;
+        }
+    }
+    button {
+        margin: 1em 0;
+    }
+    @media #{$l} {
+        display: flex;
+        flex-direction: column;
+        padding: 0 0 1em 0;
     }
 }
 
 .section-wrapper {
     position: absolute;
     left: 10%;
-    width: 70%;
+    width: 80%;
     opacity: 0;
     visibility: hidden;
     transition: left 0.5s, opacity 0.5s, visibility 0.5s;
+    max-width: 520px;
+    max-height: 90%;
 }

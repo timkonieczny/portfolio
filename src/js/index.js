@@ -4,25 +4,19 @@ import "../scss/index.scss"
 import "@fortawesome/fontawesome-free/css/all.css"
 
 window.addEventListener("load", () => {
+
+    let distanceToLeft, width;
     const canvas = document.getElementById("canvas")
 
     const headlineWrapper = document.getElementById("headline-wrapper")
     const messageWrapper = document.getElementById("message-wrapper")
     const aboutWrapper = document.getElementById("about-wrapper")
     let activeWrapper = headlineWrapper;
-    const distanceToLeft = activeWrapper.getBoundingClientRect().left
-    const width = activeWrapper.clientWidth
-    // TODO: resize?
 
-    Array.from(document.getElementsByClassName("contact-button")).forEach(element => {
-        element.addEventListener("click", () => {
-            moveWrappers(messageWrapper)
-        })
-    })
-
-    document.querySelector("#about-button").addEventListener("click", () => {
-        moveWrappers(aboutWrapper)
-    })
+    const resize = _ => {
+        distanceToLeft = activeWrapper.getBoundingClientRect().left
+        width = activeWrapper.clientWidth
+    }
 
     const moveWrappers = (newActiveWrapper) => {
         const goHome = newActiveWrapper === headlineWrapper
@@ -40,6 +34,21 @@ window.addEventListener("load", () => {
         if (goHome)
             aboutWrapper.style.left = (distanceToLeft + width) + "px"
     }
+
+    window.addEventListener("resize", resize)
+
+    resize()
+
+    Array.from(document.getElementsByClassName("contact-button")).forEach(element => {
+        element.addEventListener("click", () => {
+            moveWrappers(messageWrapper)
+        })
+    })
+
+    document.querySelector("#about-button").addEventListener("click", () => {
+        moveWrappers(aboutWrapper)
+    })
+
 
     Array.from(document.getElementsByClassName("back-arrow")).forEach(element => {
         element.addEventListener("click", () => {
@@ -66,7 +75,7 @@ window.addEventListener("load", () => {
         event.preventDefault()
 
         // anti spam timetrap
-        if(isFormDisabled || Date.now() - timetrapStart < 3000){
+        if (isFormDisabled || Date.now() - timetrapStart < 3000) {
             isFormDisabled = true
             return
         }
