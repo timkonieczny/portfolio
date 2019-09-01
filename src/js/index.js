@@ -58,28 +58,33 @@ window.addEventListener("load", () => {
         })
     })
 
-    document.querySelector("#message-wrapper form").addEventListener("submit", (event) => {
+    const messageForm = document.querySelector("#message-wrapper form")
+
+    messageForm.addEventListener("submit", (event) => {
         event.preventDefault()
-        console.log(mail)
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
+        const request = new XMLHttpRequest();
+        request.onreadystatechange = function () {
+
+            messageForm.classList.add("sent")
+
             if (this.readyState == 4) {
-                switch(this.status){
+                switch (this.status) {
                     case 200:
-                        console.log("all good. message sent")
+                        document.querySelector("#message-success").style.display = "flex"
                         break
                     case 400:
-                        console.log("you entered an invalid email")
+                        document.querySelector("#message-client-error").style.display = "flex"
                         break
                     case 500:
-                        console.log("the server is not working")
+                        document.querySelector("#message-server-error").style.display = "flex"
                         break
                 }
-                // TODO: show confirmation
             }
-        };
-        xhttp.open("POST", "http://localhost:3000/dist/" + mail);
 
-        xhttp.send(new FormData(document.querySelector("#message-wrapper form")));
+            document.querySelector("#message-confirmation").classList.add("show")
+        };
+        request.open("POST", "http://localhost:3000/dist/" + mail);
+
+        request.send(new FormData(document.querySelector("#message-wrapper form")));
     })
 })

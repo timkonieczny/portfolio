@@ -50,39 +50,118 @@ canvas {
 
 #message-wrapper {
     left: 80%;
-    form {
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    #message-form-wrapper {
         display: flex;
         flex-direction: column;
-        width: 50%;
-        #send-button i {
-            font-size: 2em;
-        }
-        textarea {
-            padding: 1em;
-            resize: none;
-            height: 8em;
-        }
-        span {
-            width: 100%;
+        flex: 1;
+        form {
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
+            flex: 1;
             justify-content: space-between;
-            input {
-                width: 38%;
-                padding: 1em;
+            &.sent {
+                animation: send 1s forwards;
+                height: 0;
+                flex: 0;
+                visibility: hidden;
+                transition: height 0s, flex 0s, visibility 0s;
+                transition-delay: 1s;
+            }
+
+            .field-wrapper {
+                height: 15%;
+                display: flex;
+                flex-direction: column;
+                textarea,
+                input,
+                button {
+                    padding: 1em;
+                    height: 100%;
+                    margin: 0;
+                    box-sizing: border-box;
+                }
+                button {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                }
+                button i {
+                    font-size: 2em;
+                }
+                textarea {
+                    resize: none;
+                }
+                span {
+                    height: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    input {
+                        width: 47%;
+                    }
+                }
+            }
+            #textarea-wrapper {
+                height: 45%;
             }
         }
-        #input-subject {
-            width: 100%;
-            box-sizing: border-box;
-            padding: 1em;
+        #message-confirmation {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            height: 0;
+            &.show {
+                visibility: visible;
+                opacity: 1;
+                height: 100%;
+                transition: opacity 1s, visibility 0s, height 0s;
+                transition-delay: 1s;
+            }
+            #message-success,
+            #message-server-error,
+            #message-client-error {
+                display: none;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                height: 100%;
+                padding: 10%;
+                text-align: center;
+                line-height: 1.5em;
+                i {
+                    font-size: 4em;
+                }
+                h3,
+                p {
+                    margin: 0;
+                }
+            }
         }
-    }
-    form > * {
-        margin: 0 0 1em 0;
     }
 }
 
 #about-wrapper {
     left: 80%;
+}
+
+@keyframes send {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(0, 0) scale(1.1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(0, -100%) scale(1.1);
+        opacity: 0;
+    }
 }
