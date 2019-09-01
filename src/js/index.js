@@ -13,6 +13,13 @@ window.addEventListener("load", () => {
     const aboutWrapper = document.getElementById("about-wrapper")
     let activeWrapper = headlineWrapper;
 
+    const messageForm = document.querySelector("#message-wrapper form")
+    const timetrapStart = Date.now()
+    let isFormDisabled = false
+
+    const scene = new Scene(canvas)
+
+
     const resize = _ => {
         distanceToLeft = activeWrapper.getBoundingClientRect().left
         width = activeWrapper.clientWidth
@@ -56,7 +63,6 @@ window.addEventListener("load", () => {
         })
     })
 
-    const scene = new Scene(canvas)
 
     Array.from(document.getElementsByClassName("hoverable")).forEach(element => {
         element.addEventListener("mouseenter", (event) => {
@@ -67,9 +73,7 @@ window.addEventListener("load", () => {
         })
     })
 
-    const messageForm = document.querySelector("#message-wrapper form")
-    const timetrapStart = Date.now()
-    let isFormDisabled = false
+    
 
     messageForm.addEventListener("submit", (event) => {
         event.preventDefault()
@@ -108,4 +112,8 @@ window.addEventListener("load", () => {
 
         request.send(new FormData(document.querySelector("#message-wrapper form")));
     })
+
+    // document.getElementById("preloader").style.opacity = 0;
+    document.getElementById("preloader").style.visibility = "hidden";
+    document.getElementById("preloader").style.animation = "preloader 1s forwards";
 })

@@ -91,3 +91,25 @@ p {
     max-width: 520px;
     max-height: 90%;
 }
+
+#preloader{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 3;
+    background-color: black;
+    opacity: 1;
+    transition: visibility 0s;
+    transition-delay: 1s;
+}
+
+@keyframes preloader {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
