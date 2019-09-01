@@ -59,9 +59,18 @@ window.addEventListener("load", () => {
     })
 
     const messageForm = document.querySelector("#message-wrapper form")
+    const timetrapStart = Date.now()
+    let isFormDisabled = false
 
     messageForm.addEventListener("submit", (event) => {
         event.preventDefault()
+
+        // anti spam timetrap
+        if(isFormDisabled || Date.now() - timetrapStart < 10000){
+            isFormDisabled = true
+            return
+        }
+
         const request = new XMLHttpRequest();
         request.onreadystatechange = function () {
 
