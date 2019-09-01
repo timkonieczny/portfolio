@@ -66,7 +66,7 @@ window.addEventListener("load", () => {
         event.preventDefault()
 
         // anti spam timetrap
-        if(isFormDisabled || Date.now() - timetrapStart < 10000){
+        if(isFormDisabled || Date.now() - timetrapStart < 3000){
             isFormDisabled = true
             return
         }
