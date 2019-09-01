@@ -4,9 +4,15 @@ include 'credentials.php';
 $to = $email;
 $subject = $_POST["subject"];
 $body = $_POST["message"];
-$email = $_POST["email"];
+$email = $_POST["emailaddress"];
 $name = $_POST["name"];
-// TODO: Honeypot fields
+
+// Check honeypot fields
+$isSpam = !empty($_POST["phone"]) || !empty($_POST["website"]) || !empty($_POST["email"]);
+if($isSpam){
+    http_response_code(400);
+    die();
+}
 
 // sanitize email
 $email = str_replace(array("\r", "\n"), '', $email);

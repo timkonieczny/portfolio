@@ -78,6 +78,9 @@ window.addEventListener("load", () => {
                     case 500:
                         document.querySelector("#message-server-error").style.display = "flex"
                         break
+                    default:
+                        document.querySelector("#message-unknown-error").style.display = "flex"
+                        break
                 }
             }
 

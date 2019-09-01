@@ -24,20 +24,23 @@
             <form>
                 <div class="field-wrapper">
                     <span>
-                        <input placeholder="Name" name="name" />
-                        <input placeholder="Email" name="email" type="email" />
+                        <input placeholder="Name" name="name" tabindex="1" autocomplete="on" />
+                        <input placeholder="Email" name="emailaddress" type="email" tabindex="2" autocomplete="on" />
                     </span>
                 </div>
                 <div class="field-wrapper">
-                    <input id="input-subject" placeholder="Subject" name="subject" />
+                    <input id="input-subject" placeholder="Subject" name="subject" autocomplete="off" tabindex="3" />
                 </div>
                 <div class="field-wrapper" id="textarea-wrapper">
-                    <textarea placeholder="Message" name="message"></textarea>
+                    <textarea placeholder="Message" name="message" autocomplete="off" tabindex="4"></textarea>
 
                 </div>
                 <div class="field-wrapper">
-                    <button id="send-button" type="submit"><i class="fas fa-paper-plane"></i></button>
+                    <button id="send-button" type="submit" tabindex="5"><i class="fas fa-paper-plane"></i></button>
                 </div>
+                <input class="honey" placeholder="Phone" name="phone" tabindex="-1" autocomplete="no" type="tel" />
+                <input class="honey" placeholder="Website" name="website" tabindex="-1" autocomplete="no" type="url" />
+                <input class="honey" placeholder="Email" name="email" tabindex="-1" autocomplete="no" type="email" />
             </form>
             <div id="message-confirmation">
                 <div id="message-success">
@@ -55,6 +58,11 @@
                     <i class="fas fa-redo-alt"></i>
                     <h3>400 (Internal Server Error)</h3>
                     <p>Uh. Oh. Something went wrong.</br>Please try again later.</br>Sorry for the inconvenience.</p>
+                </div>
+                <div id="message-unknown-error">
+                    <i class="fas fa-redo-alt"></i>
+                    <h3>Uh. Oh. Something went wrong.</h3>
+                    <p>Please try again later.</br>Sorry for the inconvenience.</p>
                 </div>
             </div>
         </div>

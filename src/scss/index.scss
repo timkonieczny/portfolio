@@ -108,6 +108,15 @@ canvas {
             #textarea-wrapper {
                 height: 45%;
             }
+            input.honey {
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: -1;
+                height: 0;
+                width: 0;
+                border: 0;
+            }
         }
         #message-confirmation {
             display: flex;
@@ -126,7 +135,8 @@ canvas {
             }
             #message-success,
             #message-server-error,
-            #message-client-error {
+            #message-client-error,
+            #message-unknown-error {
                 display: none;
                 flex-direction: column;
                 justify-content: space-between;

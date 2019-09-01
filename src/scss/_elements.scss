@@ -16,7 +16,7 @@ button {
     margin: 2em 0;
     transition: background-color 0.5s, color 0.5s;
     letter-spacing: 0.1em;
-    &:hover {
+    &:hover, &:focus {
         color: #ffffff;
         background-color: $color-accent;
     }
