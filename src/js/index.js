@@ -6,76 +6,70 @@ import "@fortawesome/fontawesome-free/css/all.css"
 window.addEventListener("load", () => {
 
     let distanceToLeft, width;
-    const canvas = document.getElementById("canvas")
+    const canvas = document.querySelector("#canvas")
 
-    const headlineWrapper = document.getElementById("headline-wrapper")
-    const messageWrapper = document.getElementById("message-wrapper")
-    const aboutWrapper = document.getElementById("about-wrapper")
-    let activeWrapper = headlineWrapper;
+    const wrappers = {
+        headline: document.querySelector("#headline-wrapper"),
+        contact: document.querySelector("#message-wrapper"),
+        learnmore: document.querySelector("#about-wrapper"),
+        active: document.querySelector("#headline-wrapper")
+    }
 
     const messageForm = document.querySelector("#message-wrapper form")
     const timetrapStart = Date.now()
     let isFormDisabled = false
 
-    const scene = new Scene(canvas)
+    const scene = new Scene(canvas) // TODO: scene.init()
 
 
-    const resize = _ => {
-        distanceToLeft = activeWrapper.getBoundingClientRect().left
-        width = activeWrapper.clientWidth
-    }
-
-    const moveWrappers = (newActiveWrapper) => {
-        const goHome = newActiveWrapper === headlineWrapper
+    const moveWrappers = newActiveWrapper => {
+        const goHome = newActiveWrapper === wrappers.headline
         if (goHome)
-            activeWrapper.style.left = (distanceToLeft + width) + "px"
+            wrappers.active.style.left = (distanceToLeft + width) + "px"
         else
-            activeWrapper.style.left = (distanceToLeft - width) + "px"
-        activeWrapper.style.opacity = 0
-        activeWrapper.style.visibility = "hidden"
-        activeWrapper = newActiveWrapper;
-        activeWrapper.style.left = distanceToLeft + "px"
-        activeWrapper.style.opacity = 1
-        activeWrapper.style.visibility = "visible"
+            wrappers.active.style.left = (distanceToLeft - width) + "px"
+        wrappers.active.style.opacity = 0
+        wrappers.active.style.visibility = "hidden"
+        wrappers.active = newActiveWrapper;
+        wrappers.active.style.left = distanceToLeft + "px"
+        wrappers.active.style.opacity = 1
+        wrappers.active.style.visibility = "visible"
 
         if (goHome)
-            aboutWrapper.style.left = (distanceToLeft + width) + "px"
+            wrappers.learnmore.style.left = (distanceToLeft + width) + "px"
     }
 
-    window.addEventListener("resize", resize)
+    const onResize = _ => {
+        distanceToLeft = wrappers.active.getBoundingClientRect().left
+        width = wrappers.active.clientWidth
+    }
 
-    resize()
+    const onButtonClick = event => {
+        if (event.currentTarget.dataset.animation != "linkedin")
+            moveWrappers(wrappers[event.currentTarget.dataset.animation])
+        scene.startAnimation(event.currentTarget.dataset.animation, "click")
+        event.currentTarget.removeEventListener("mouseleave", onHoverableMouseexit)
+        event.currentTarget.removeEventListener("mouseenter", onHoverableMouseenter)
+    }
 
-    Array.from(document.getElementsByClassName("contact-button")).forEach(element => {
-        element.addEventListener("click", () => {
-            moveWrappers(messageWrapper)
+    const onBackArrowClick = _ => {
+        moveWrappers(wrappers.headline)
+        scene.endAllAnimations()
+        Array.from(document.querySelectorAll(".animated")).forEach(element => {
+            element.addEventListener("mouseenter", onHoverableMouseenter)
+            element.addEventListener("mouseleave", onHoverableMouseexit)
         })
-    })
+    }
 
-    document.querySelector("#about-button").addEventListener("click", () => {
-        moveWrappers(aboutWrapper)
-    })
+    const onHoverableMouseenter = event => {
+        scene.startAnimation(event.currentTarget.dataset.animation, "hover")
+    }
 
+    const onHoverableMouseexit = event => {
+        scene.endAnimation(event.currentTarget.dataset.animation, "hover")
+    }
 
-    Array.from(document.getElementsByClassName("back-arrow")).forEach(element => {
-        element.addEventListener("click", () => {
-            moveWrappers(headlineWrapper)
-        })
-    })
-
-
-    Array.from(document.getElementsByClassName("hoverable")).forEach(element => {
-        element.addEventListener("mouseenter", (event) => {
-            scene.startSpecialEvent(event.target.dataset.animation)
-        })
-        element.addEventListener("mouseleave", (event) => {
-            scene.endSpecialEvent(event.target.dataset.animation)
-        })
-    })
-
-
-
-    messageForm.addEventListener("submit", (event) => {
+    const onMessageFormSubmit = event => {
         event.preventDefault()
 
         // anti spam timetrap
@@ -111,9 +105,26 @@ window.addEventListener("load", () => {
         request.open("POST", "http://localhost:3000/dist/" + mail);
 
         request.send(new FormData(document.querySelector("#message-wrapper form")));
+    }
+
+
+    window.addEventListener("resize", onResize)
+    messageForm.addEventListener("submit", onMessageFormSubmit)
+
+    Array.from(document.querySelectorAll("#headline-wrapper .animated")).forEach(element => {
+        element.addEventListener("click", onButtonClick)
     })
 
-    // document.getElementById("preloader").style.opacity = 0;
-    document.getElementById("preloader").style.visibility = "hidden";
-    document.getElementById("preloader").style.animation = "preloader 1s forwards";
+    Array.from(document.querySelectorAll(".back-arrow")).forEach(element => {
+        element.addEventListener("click", onBackArrowClick)
+    })
+
+    Array.from(document.querySelectorAll(".animated")).forEach(element => {
+        element.addEventListener("mouseenter", onHoverableMouseenter)
+        element.addEventListener("mouseleave", onHoverableMouseexit)
+    })
+
+    onResize()
+    document.querySelector("#preloader").style.visibility = "hidden";
+    document.querySelector("#preloader").style.animation = "preloader 1s forwards";
 })

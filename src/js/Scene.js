@@ -129,15 +129,15 @@ class Scene {
         this.animation = {
             contact: {
                 hover: new InterpolatorInOut(500, contactHoverPosition, contactHoverLookAt, contactHoverUp),
-                click: new InterpolatorInOut(500, contactHoverPosition, contactHoverLookAt, contactHoverUp) // TODO: click
+                click: new InterpolatorInOut(500, null, null, null) // TODO: click
             },
             linkedin: {
                 hover: new InterpolatorInOut(500, linkedinHoverPosition, linkedinHoverLookAt, linkedinHoverUp),
-                click: new InterpolatorInOut(500, linkedinHoverPosition, linkedinHoverLookAt, linkedinHoverUp)
+                click: new InterpolatorInOut(500, null, null, null)
             },
             learnmore: {
                 hover: new InterpolatorInOut(500, learnmoreHoverPosition, learnmoreHoverLookAt, learnmoreHoverUp),
-                click: new InterpolatorInOut(500, learnmoreHoverPosition, learnmoreHoverLookAt, learnmoreHoverUp)
+                click: new InterpolatorInOut(500, null, null, null)
             },
             start: new InterpolatorIn(2000, 2000)
         }
@@ -215,15 +215,23 @@ class Scene {
         requestAnimationFrame(loop)
     }
 
-    startSpecialEvent(type) {
-        console.log(type)
-        this.animation[type].hover.isDecreasing = false
-        this.animation[type].hover.isIncreasing = true
+    startAnimation(name, type) {
+        this.animation[name][type].isDecreasing = false
+        this.animation[name][type].isIncreasing = true
     }
 
-    endSpecialEvent(type) {
-        this.animation[type].hover.isDecreasing = true
-        this.animation[type].hover.isIncreasing = false
+    endAnimation(name, type) {
+        this.animation[name][type].isDecreasing = true
+        this.animation[name][type].isIncreasing = false
+    }
+
+    endAllAnimations() {
+        Object.keys(this.animation).forEach(name => {
+            Object.keys(this.animation[name]).forEach(type => {
+                if (name != "start")
+                    this.endAnimation(name, type)
+            }, this)
+        }, this)
     }
 }
 
