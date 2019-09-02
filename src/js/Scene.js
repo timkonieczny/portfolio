@@ -2,16 +2,16 @@ import { MeshObject } from "./renderer/MeshObject.js"
 import { Camera } from "./renderer/Camera.js";
 import { Light } from "./renderer/Light.js";
 import { HexagonGrid } from "./renderer/HexagonGrid.js";
-import { HoverAnimation } from "./renderer/HoverAnimation.js";
-import { StartAnimation } from "./renderer/StartAnimation.js";
+import { InterpolatorInOut } from "./renderer/InterpolatorInOut.js";
+import { InterpolatorIn } from "./renderer/InterpolatorIn.js";
 import { UniformManager } from "./renderer/UniformManager.js";
 import { mat4, mat3, vec3, glMatrix } from "gl-matrix"
 import Stats from "stats-js"
 import vertexShaderSource from "../glsl/vertex.glsl"
 import fragmentShaderSource from "../glsl/fragment.glsl"
 
-class Scene{
-    constructor(canvas){
+class Scene {
+    constructor(canvas) {
         let gl = canvas.getContext("webgl2")
         if (!gl) {
             gl = canvas.getContext("webgl")
@@ -94,7 +94,6 @@ class Scene{
         const light = new Light(lightPosition)
 
         const hexGrid = new MeshObject(gl, new HexagonGrid(30, 1.1, 2), vertexShaderSource, fragmentShaderSource, light, uniformManager)
-        // const hexGrid = {};
 
         const position = vec3.create()
         vec3.set(position, 0, 65, 75)
@@ -105,13 +104,42 @@ class Scene{
 
         const camera = new Camera(position, lookAt, up, uniformManager)
 
+        const contactHoverPosition = vec3.create()
+        vec3.set(contactHoverPosition, 20, 20, 20)
+        const contactHoverLookAt = vec3.create()
+        vec3.set(contactHoverLookAt, 0, 0, 20)
+        const contactHoverUp = vec3.create()
+        vec3.set(contactHoverUp, 0, 1, 0)
+
+        const linkedinHoverPosition = vec3.create()
+        vec3.set(linkedinHoverPosition, -20, 20, 20)
+        const linkedinHoverLookAt = vec3.create()
+        vec3.set(linkedinHoverLookAt, 0, 0, 20)
+        const linkedinHoverUp = vec3.create()
+        vec3.set(linkedinHoverUp, 0, 1, 0)
+
+        const learnmoreHoverPosition = vec3.create()
+        vec3.set(learnmoreHoverPosition, 20, 40, 20)
+        const learnmoreHoverLookAt = vec3.create()
+        vec3.set(learnmoreHoverLookAt, 0, 0, 20)
+        const learnmoreHoverUp = vec3.create()
+        vec3.set(learnmoreHoverUp, 0, 1, 0)
+
 
         this.animation = {
-            hover: [
-                new HoverAnimation(),
-                new HoverAnimation()
-            ],
-            start: new StartAnimation()
+            contact: {
+                hover: new InterpolatorInOut(500, contactHoverPosition, contactHoverLookAt, contactHoverUp),
+                click: new InterpolatorInOut(500, contactHoverPosition, contactHoverLookAt, contactHoverUp) // TODO: click
+            },
+            linkedin: {
+                hover: new InterpolatorInOut(500, linkedinHoverPosition, linkedinHoverLookAt, linkedinHoverUp),
+                click: new InterpolatorInOut(500, linkedinHoverPosition, linkedinHoverLookAt, linkedinHoverUp)
+            },
+            learnmore: {
+                hover: new InterpolatorInOut(500, learnmoreHoverPosition, learnmoreHoverLookAt, learnmoreHoverUp),
+                click: new InterpolatorInOut(500, learnmoreHoverPosition, learnmoreHoverLookAt, learnmoreHoverUp)
+            },
+            start: new InterpolatorIn(2000, 2000)
         }
 
         hexGrid.update = time => {
@@ -128,22 +156,41 @@ class Scene{
             mat4.transpose(normalMatrix3, normalMatrix2)
             mat3.fromMat4(normalMatrix, normalMatrix3)
 
-            this.animation.hover.forEach(hoverAnimation => { hoverAnimation.update(time) })
+            this.animation.contact.hover.update(time)
+            this.animation.contact.click.update(time)
+            this.animation.linkedin.hover.update(time)
+            this.animation.linkedin.click.update(time)
+            this.animation.learnmore.hover.update(time)
+            this.animation.learnmore.click.update(time)
             this.animation.start.update(time)
 
-            let position = vec3.create()
-            let lookAt = vec3.create()
-            let up = vec3.create()
-            vec3.set(position, this.animation.hover[0].interpolator * 20, 65 - this.animation.hover[0].interpolator * 20, 75 - this.animation.hover[0].interpolator * 20)
-            vec3.set(lookAt, 0, 0, 20)
-            vec3.set(up, 0, 1, 0)
+            let contactParams = this.animation.contact.hover.getInterpolatedDeltaCameraParameters(camera)
+            let linkedinParams = this.animation.linkedin.hover.getInterpolatedDeltaCameraParameters(camera)
+            let learnmoreParams = this.animation.learnmore.hover.getInterpolatedDeltaCameraParameters(camera)
 
-            camera.update(position, lookAt, up)
+            let accumulatedPosition = vec3.create()
+            let accumulatedLookAt = vec3.create()
+            let accumulatedUp = vec3.create()
+
+            vec3.add(accumulatedPosition, contactParams.position, linkedinParams.position)
+            vec3.add(accumulatedPosition, accumulatedPosition, learnmoreParams.position)
+            vec3.add(accumulatedPosition, accumulatedPosition, camera.originalPosition)
+
+            vec3.add(accumulatedLookAt, contactParams.lookAt, linkedinParams.lookAt)
+            vec3.add(accumulatedLookAt, accumulatedLookAt, learnmoreParams.lookAt)
+            vec3.add(accumulatedLookAt, accumulatedLookAt, camera.originalLookAt)
+
+            vec3.add(accumulatedUp, contactParams.up, linkedinParams.up)
+            vec3.add(accumulatedUp, accumulatedUp, learnmoreParams.up)
+            vec3.add(accumulatedUp, accumulatedUp, camera.originalUp)
+
+            camera.update(accumulatedPosition, accumulatedLookAt, accumulatedUp)
             hexGrid.matWorldUniform.update(worldMatrix)
             hexGrid.matNormUniform.update(normalMatrix)
             hexGrid.timeUniform.update(time * 0.001)
-            hexGrid.interpolator0Uniform.update(this.animation.hover[0].interpolator)
-            hexGrid.interpolator1Uniform.update(this.animation.hover[1].interpolator)
+            hexGrid.interpolator0Uniform.update(this.animation.contact.click.interpolator)
+            hexGrid.interpolator1Uniform.update(this.animation.linkedin.click.interpolator)
+            // TODO: learnmore uniform
             hexGrid.interpolator2Uniform.update(this.animation.start.interpolator)
         }
 
@@ -168,15 +215,16 @@ class Scene{
         requestAnimationFrame(loop)
     }
 
-    startSpecialEvent(item){   // TODO: make accesible from outside
-        this.animation.hover[item].isIncreasing = true
-        this.animation.hover[item].isDecreasing = false
+    startSpecialEvent(type) {
+        console.log(type)
+        this.animation[type].hover.isDecreasing = false
+        this.animation[type].hover.isIncreasing = true
     }
 
-    endSpecialEvent(item){
-        this.animation.hover[item].isDecreasing = true
-        this.animation.hover[item].isIncreasing = false
+    endSpecialEvent(type) {
+        this.animation[type].hover.isDecreasing = true
+        this.animation[type].hover.isIncreasing = false
     }
 }
 
-export {Scene}
+export { Scene }

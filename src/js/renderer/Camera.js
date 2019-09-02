@@ -13,7 +13,9 @@ class Camera {
 
         this.viewMatrix = mat4.create()
 
-        this.position = position
+        this.originalPosition = position
+        this.originalLookAt = lookAt
+        this.originalUp = up
         this.uniformManager = uniformManager
 
         this.matViewUniform = new UniformMatrix4f("uView", uniformManager)

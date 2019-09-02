@@ -66,14 +66,14 @@ window.addEventListener("load", () => {
 
     Array.from(document.getElementsByClassName("hoverable")).forEach(element => {
         element.addEventListener("mouseenter", (event) => {
-            scene.startSpecialEvent(parseInt(event.target.dataset.id))
+            scene.startSpecialEvent(event.target.dataset.animation)
         })
         element.addEventListener("mouseleave", (event) => {
-            scene.endSpecialEvent(parseInt(event.target.dataset.id))
+            scene.endSpecialEvent(event.target.dataset.animation)
         })
     })
 
-    
+
 
     messageForm.addEventListener("submit", (event) => {
         event.preventDefault()

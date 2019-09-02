@@ -1,10 +1,9 @@
-import { Animation } from "./Animation.js"
+import { Interpolator } from "./Interpolator.js"
 
-class StartAnimation extends Animation {
-    constructor() {
-        super()
-        this.interpolationTime = -2000
-        this.transitionDuration = 2000
+class InterpolatorIn extends Interpolator {
+    constructor(duration, delay) {
+        super(duration)
+        this.interpolationTime = -delay
     }
 
     update(time) {
@@ -14,4 +13,4 @@ class StartAnimation extends Animation {
     }
 }
 
-export { StartAnimation }
+export { InterpolatorIn }
