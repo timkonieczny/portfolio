@@ -9,9 +9,11 @@ import { mat4, mat3, vec3, glMatrix } from "gl-matrix"
 import Stats from "stats-js"
 import vertexShaderSource from "../glsl/vertex.glsl"
 import fragmentShaderSource from "../glsl/fragment.glsl"
+import Worker from './renderer/HexagonGrid.worker.js'
+// TODO: implement worker
 
 class Scene {
-    constructor(canvas) {
+    constructor(canvas, callback) {
         let gl = canvas.getContext("webgl2")
         if (!gl) {
             gl = canvas.getContext("webgl")
@@ -93,16 +95,12 @@ class Scene {
         vec3.set(lightPosition, 10, 10, -10)
         const light = new Light(lightPosition)
 
-        const hexGrid = new MeshObject(gl, new HexagonGrid(30, 1.1, 2), vertexShaderSource, fragmentShaderSource, light, uniformManager)
-
         const position = vec3.create()
         vec3.set(position, 0, 65, 75)
         const lookAt = vec3.create()
         vec3.set(lookAt, 0, 0, 20)
         const up = vec3.create()
         vec3.set(up, 0, 1, 0)
-
-        const camera = new Camera(position, lookAt, up, uniformManager)
 
         const contactHoverPosition = vec3.create()
         vec3.set(contactHoverPosition, 20, 20, 20)
@@ -142,77 +140,98 @@ class Scene {
             start: new InterpolatorIn(2000, 2000)
         }
 
-        hexGrid.update = time => {
-            let worldMatrix = mat4.create()
-            const identityMatrix = mat4.create()
-            const translationVector = vec3.create()
-            vec3.set(translationVector, 0, -2, 0)
-            mat4.translate(worldMatrix, identityMatrix, translationVector)
+        const worker = new Worker();
 
-            let normalMatrix = mat3.create()
-            let normalMatrix2 = mat4.create()
-            let normalMatrix3 = mat4.create()
-            mat4.invert(normalMatrix2, worldMatrix)
-            mat4.transpose(normalMatrix3, normalMatrix2)
-            mat3.fromMat4(normalMatrix, normalMatrix3)
+        worker.addEventListener("message", event => {
+            switch (event.data.type) {
+                case "geometry":
+                    const hexGrid = new MeshObject(gl, event.data.data, vertexShaderSource, fragmentShaderSource, light, uniformManager)
 
-            this.animation.contact.hover.update(time)
-            this.animation.contact.click.update(time)
-            this.animation.linkedin.hover.update(time)
-            this.animation.linkedin.click.update(time)
-            this.animation.learnmore.hover.update(time)
-            this.animation.learnmore.click.update(time)
-            this.animation.start.update(time)
+                    const camera = new Camera(position, lookAt, up, uniformManager)
 
-            let contactParams = this.animation.contact.hover.getInterpolatedDeltaCameraParameters(camera)
-            let linkedinParams = this.animation.linkedin.hover.getInterpolatedDeltaCameraParameters(camera)
-            let learnmoreParams = this.animation.learnmore.hover.getInterpolatedDeltaCameraParameters(camera)
+                    hexGrid.update = time => {
+                        let worldMatrix = mat4.create()
+                        const identityMatrix = mat4.create()
+                        const translationVector = vec3.create()
+                        vec3.set(translationVector, 0, -2, 0)
+                        mat4.translate(worldMatrix, identityMatrix, translationVector)
 
-            let accumulatedPosition = vec3.create()
-            let accumulatedLookAt = vec3.create()
-            let accumulatedUp = vec3.create()
+                        let normalMatrix = mat3.create()
+                        let normalMatrix2 = mat4.create()
+                        let normalMatrix3 = mat4.create()
+                        mat4.invert(normalMatrix2, worldMatrix)
+                        mat4.transpose(normalMatrix3, normalMatrix2)
+                        mat3.fromMat4(normalMatrix, normalMatrix3)
 
-            vec3.add(accumulatedPosition, contactParams.position, linkedinParams.position)
-            vec3.add(accumulatedPosition, accumulatedPosition, learnmoreParams.position)
-            vec3.add(accumulatedPosition, accumulatedPosition, camera.originalPosition)
+                        this.animation.contact.hover.update(time)
+                        this.animation.contact.click.update(time)
+                        this.animation.linkedin.hover.update(time)
+                        this.animation.linkedin.click.update(time)
+                        this.animation.learnmore.hover.update(time)
+                        this.animation.learnmore.click.update(time)
+                        this.animation.start.update(time)
 
-            vec3.add(accumulatedLookAt, contactParams.lookAt, linkedinParams.lookAt)
-            vec3.add(accumulatedLookAt, accumulatedLookAt, learnmoreParams.lookAt)
-            vec3.add(accumulatedLookAt, accumulatedLookAt, camera.originalLookAt)
+                        let contactParams = this.animation.contact.hover.getInterpolatedDeltaCameraParameters(camera)
+                        let linkedinParams = this.animation.linkedin.hover.getInterpolatedDeltaCameraParameters(camera)
+                        let learnmoreParams = this.animation.learnmore.hover.getInterpolatedDeltaCameraParameters(camera)
 
-            vec3.add(accumulatedUp, contactParams.up, linkedinParams.up)
-            vec3.add(accumulatedUp, accumulatedUp, learnmoreParams.up)
-            vec3.add(accumulatedUp, accumulatedUp, camera.originalUp)
+                        let accumulatedPosition = vec3.create()
+                        let accumulatedLookAt = vec3.create()
+                        let accumulatedUp = vec3.create()
 
-            camera.update(accumulatedPosition, accumulatedLookAt, accumulatedUp)
-            hexGrid.matWorldUniform.update(worldMatrix)
-            hexGrid.matNormUniform.update(normalMatrix)
-            hexGrid.timeUniform.update(time * 0.001)
-            hexGrid.interpolator0Uniform.update(this.animation.contact.click.interpolator)
-            hexGrid.interpolator1Uniform.update(this.animation.linkedin.click.interpolator)
-            // TODO: learnmore uniform
-            hexGrid.interpolator2Uniform.update(this.animation.start.interpolator)
-        }
+                        vec3.add(accumulatedPosition, contactParams.position, linkedinParams.position)
+                        vec3.add(accumulatedPosition, accumulatedPosition, learnmoreParams.position)
+                        vec3.add(accumulatedPosition, accumulatedPosition, camera.originalPosition)
 
-        const resize = () => {
-            canvas.width = canvas.clientWidth * window.devicePixelRatio
-            canvas.height = canvas.clientHeight * window.devicePixelRatio
-            gl.viewport(0, 0, canvas.width, canvas.height)
-            mat4.perspective(camera.projMatrix, glMatrix.toRadian(45), canvas.width / canvas.height, 0.1, 1000.0)
-            hexGrid.resize(camera.projMatrix)
-        }
-        window.addEventListener("resize", resize)
-        resize()
+                        vec3.add(accumulatedLookAt, contactParams.lookAt, linkedinParams.lookAt)
+                        vec3.add(accumulatedLookAt, accumulatedLookAt, learnmoreParams.lookAt)
+                        vec3.add(accumulatedLookAt, accumulatedLookAt, camera.originalLookAt)
 
-        const loop = function (time) {
-            stats.begin();
-            hexGrid.update(time)
-            hexGrid.render(gl)
-            stats.end();
-            requestAnimationFrame(loop)
-        }
+                        vec3.add(accumulatedUp, contactParams.up, linkedinParams.up)
+                        vec3.add(accumulatedUp, accumulatedUp, learnmoreParams.up)
+                        vec3.add(accumulatedUp, accumulatedUp, camera.originalUp)
 
-        requestAnimationFrame(loop)
+                        camera.update(accumulatedPosition, accumulatedLookAt, accumulatedUp)
+                        hexGrid.matWorldUniform.update(worldMatrix)
+                        hexGrid.matNormUniform.update(normalMatrix)
+                        hexGrid.timeUniform.update(time * 0.001)
+                        hexGrid.interpolator0Uniform.update(this.animation.contact.click.interpolator)
+                        hexGrid.interpolator1Uniform.update(this.animation.linkedin.click.interpolator)
+                        // TODO: learnmore uniform
+                        hexGrid.interpolator2Uniform.update(this.animation.start.interpolator)
+                    }
+
+                    const resize = () => {
+                        canvas.width = canvas.clientWidth * window.devicePixelRatio
+                        canvas.height = canvas.clientHeight * window.devicePixelRatio
+                        gl.viewport(0, 0, canvas.width, canvas.height)
+                        mat4.perspective(camera.projMatrix, glMatrix.toRadian(45), canvas.width / canvas.height, 0.1, 1000.0)
+                        hexGrid.resize(camera.projMatrix)
+                    }
+                    window.addEventListener("resize", resize)
+                    resize()
+
+                    const loop = function (time) {
+                        stats.begin();
+                        hexGrid.update(time)
+                        hexGrid.render(gl)
+                        stats.end();
+                        requestAnimationFrame(loop)
+                    }
+
+                    requestAnimationFrame(loop)
+                    break
+                case "progress":
+                    callback(event.data.data)
+                    console.log(event.data.data)
+                    // console.log(event.data.data)
+                    break
+            }
+        })
+    }
+
+    initialize() {
+
     }
 
     startAnimation(name, type) {

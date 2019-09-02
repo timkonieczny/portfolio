@@ -3,7 +3,7 @@ import { OctagonalPrismMesh } from "./OctagonalPrismMesh.js"
 import { mat4, vec3 } from "gl-matrix"
 
 class HexagonGrid extends Mesh {
-    constructor(rings, gap, scaleY) {
+    constructor(rings, gap, scaleY, callback) {
         super()
 
         let time = Date.now()
@@ -42,7 +42,8 @@ class HexagonGrid extends Mesh {
                     const progressPercentage = Math.floor(++progressCurrentElement / progressTotalElements * 100)
                     if (progressPercentage >= progressLastPercentage + 5) {
                         progressLastPercentage = progressPercentage
-                        console.info("[grid generation] " + progressPercentage + "%")
+                        callback(progressPercentage)
+                        // console.info("[grid generation] " + progressPercentage + "%")
                     }
                     vec3.scale(interpolator, betweenVector, j / level)
                     vec3.add(position, vertex1, interpolator)

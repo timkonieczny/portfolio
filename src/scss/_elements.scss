@@ -103,6 +103,16 @@ p {
     opacity: 1;
     transition: visibility 0s;
     transition-delay: 1s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    #progress-bar{
+        // width: 40%;
+        height: .2em;
+        background: $color-accent;
+        transition: width .2s;
+    }
 }
 
 @keyframes preloader {

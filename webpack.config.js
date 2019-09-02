@@ -52,6 +52,10 @@ module.exports = {
                 use: [
                     'file-loader'
                 ]
+            },
+            {
+                test: /\.worker\.js$/,
+                use: { loader: 'worker-loader' }
             }
         ]
     },

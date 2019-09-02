@@ -19,7 +19,11 @@ window.addEventListener("load", () => {
     const timetrapStart = Date.now()
     let isFormDisabled = false
 
-    const scene = new Scene(canvas) // TODO: scene.init()
+    const callback = progress =>{
+        document.querySelector("#progress-bar").style.width = progress+"%"
+    }
+
+    const scene = new Scene(canvas, callback) // TODO: scene.init()
 
 
     const moveWrappers = newActiveWrapper => {
@@ -124,7 +128,8 @@ window.addEventListener("load", () => {
         element.addEventListener("mouseleave", onHoverableMouseexit)
     })
 
-    onResize()
+    onResize()  // TODO: combine 3d and preloader. probably good idea to split up scene
+    console.log("removing")
     document.querySelector("#preloader").style.visibility = "hidden";
     document.querySelector("#preloader").style.animation = "preloader 1s forwards";
 })
