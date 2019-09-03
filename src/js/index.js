@@ -53,7 +53,7 @@ window.addEventListener("load", async _ => {
         wrappers.active.element.style.opacity = 1
         wrappers.active.element.style.visibility = "visible"
         if (goHome)
-            wrappers.learnmore.element.style.left = (distanceToLeft + width) + "px"
+            wrappers.about.element.style.left = (distanceToLeft + width) + "px"
 
         // 3D animations
         if (goHome)
@@ -69,11 +69,11 @@ window.addEventListener("load", async _ => {
         console.log("go to linkedin")
     }
 
-    const onHoverableMouseenter = event => {
+    const onHoverableMouseEnter = event => {
         scene.startAnimation(event.currentTarget.dataset.animation, "hover")
     }
 
-    const onHoverableMouseexit = event => {
+    const onHoverableMousleave = event => {
         scene.endAnimation(event.currentTarget.dataset.animation, "hover")
     }
 
@@ -83,71 +83,71 @@ window.addEventListener("load", async _ => {
             animations: [],
             buttons: [
                 {
-                    element: document.querySelector("#headline-wrapper .contact-button"),
+                    element: document.querySelector("#headline-wrapper .message-button"),
                     listeners: [
                         { type: "click", callback: onButtonClick },
-                        { type: "mouseenter", callback: onHoverableMouseenter },
-                        { type: "mouseleave", callback: onHoverableMouseexit }
+                        { type: "mouseenter", callback: onHoverableMouseEnter },
+                        { type: "mouseleave", callback: onHoverableMousleave }
                     ]
                 },
                 {
-                    element: document.querySelector("#headline-wrapper .linkedin"),
+                    element: document.querySelector("#headline-wrapper .linkedin-button"),
                     listeners: [
                         { type: "click", callback: onButtonClickExternal },
-                        { type: "mouseenter", callback: onHoverableMouseenter },
-                        { type: "mouseleave", callback: onHoverableMouseexit }
+                        { type: "mouseenter", callback: onHoverableMouseEnter },
+                        { type: "mouseleave", callback: onHoverableMousleave }
                     ]
                 },
                 {
                     element: document.querySelector("#headline-wrapper #about-button"),
                     listeners: [
                         { type: "click", callback: onButtonClick },
-                        { type: "mouseenter", callback: onHoverableMouseenter },
-                        { type: "mouseleave", callback: onHoverableMouseexit }
+                        { type: "mouseenter", callback: onHoverableMouseEnter },
+                        { type: "mouseleave", callback: onHoverableMousleave }
                     ]
                 }
             ]
         },
-        contact: {
+        message: {
             element: document.querySelector("#message-wrapper"),
             animations: [
-                { name: "contact", type: "hover" },
-                { name: "contact", type: "click" },
+                { name: "message", type: "hover" },
+                { name: "message", type: "click" },
             ],
             buttons: [
                 {
                     element: document.querySelector("#message-wrapper .back-arrow"),
                     listeners: [
-                        { type: "mouseenter", callback: onHoverableMouseenter },
-                        { type: "mouseleave", callback: onHoverableMouseexit },
+                        { type: "mouseenter", callback: onHoverableMouseEnter },
+                        { type: "mouseleave", callback: onHoverableMousleave },
                         { type: "click", callback: onButtonClick }
                     ]
                 }
             ]
         },
-        learnmore: {
+        about: {
             element: document.querySelector("#about-wrapper"),
             animations: [
-                { name: "learnmore", type: "hover" },
-                { name: "learnmore", type: "click" }
+                { name: "about", type: "hover" },
+                { name: "about", type: "click" }
             ],
             buttons: [
                 {
                     element: document.querySelector("#about-wrapper .back-arrow"),
                     listeners: [
-                        { type: "mouseenter", callback: onHoverableMouseenter },
-                        { type: "mouseleave", callback: onHoverableMouseexit },
+                        { type: "mouseenter", callback: onHoverableMouseEnter },
+                        { type: "mouseleave", callback: onHoverableMousleave },
                         { type: "click", callback: onButtonClick }
                     ]
                 },
                 {
-                    element: document.querySelector("#about-wrapper .contact-button"),
+                    element: document.querySelector("#about-wrapper .message-button"),
                     listeners: [
                         { type: "click", callback: onButtonClick }
                     ]
                 },
                 {
-                    element: document.querySelector("#about-wrapper .linkedin"),
+                    element: document.querySelector("#about-wrapper .linkedin-button"),
                     listeners: [
                         { type: "click", callback: onButtonClickExternal }
                     ]
@@ -194,8 +194,8 @@ window.addEventListener("load", async _ => {
 
     const onResize = _ => {
         wrappers.headline.element.style.left = ""
-        wrappers.contact.element.style.left = ""
-        wrappers.learnmore.element.style.left = ""
+        wrappers.message.element.style.left = ""
+        wrappers.about.element.style.left = ""
 
         if (!hasResizeAnimationEndListener) {
             wrappers.headline.element.addEventListener("transitionend", onResizeAnimationEnd);

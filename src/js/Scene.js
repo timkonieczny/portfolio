@@ -106,12 +106,12 @@ class Scene {
         const up = vec3.create()
         vec3.set(up, 0, 1, 0)
 
-        const contactHoverPosition = vec3.create()
-        vec3.set(contactHoverPosition, 20, 20, 20)
-        const contactHoverLookAt = vec3.create()
-        vec3.set(contactHoverLookAt, 0, 0, 20)
-        const contactHoverUp = vec3.create()
-        vec3.set(contactHoverUp, 0, 1, 0)
+        const messageHoverPosition = vec3.create()
+        vec3.set(messageHoverPosition, 20, 20, 20)
+        const messageHoverLookAt = vec3.create()
+        vec3.set(messageHoverLookAt, 0, 0, 20)
+        const messageHoverUp = vec3.create()
+        vec3.set(messageHoverUp, 0, 1, 0)
 
         const linkedinHoverPosition = vec3.create()
         vec3.set(linkedinHoverPosition, -20, 20, 20)
@@ -120,12 +120,12 @@ class Scene {
         const linkedinHoverUp = vec3.create()
         vec3.set(linkedinHoverUp, 0, 1, 0)
 
-        const learnmoreHoverPosition = vec3.create()
-        vec3.set(learnmoreHoverPosition, 20, 40, 20)
-        const learnmoreHoverLookAt = vec3.create()
-        vec3.set(learnmoreHoverLookAt, 0, 0, 20)
-        const learnmoreHoverUp = vec3.create()
-        vec3.set(learnmoreHoverUp, 0, 1, 0)
+        const aboutHoverPosition = vec3.create()
+        vec3.set(aboutHoverPosition, 20, 40, 20)
+        const aboutHoverLookAt = vec3.create()
+        vec3.set(aboutHoverLookAt, 0, 0, 20)
+        const aboutHoverUp = vec3.create()
+        vec3.set(aboutHoverUp, 0, 1, 0)
 
         const makeGeometry = _ => {
             return new Promise((resolve) => {
@@ -155,16 +155,16 @@ class Scene {
                 hover: new InterpolatorInOut(2000, camera.originalPosition, camera.originalLookAt, camera.originalUp),
                 // TODO: handle click animation here. e.g. new InterpolatorEmpty
             },
-            contact: {
-                hover: new InterpolatorInOut(2000, contactHoverPosition, contactHoverLookAt, contactHoverUp),
+            message: {
+                hover: new InterpolatorInOut(2000, messageHoverPosition, messageHoverLookAt, messageHoverUp),
                 click: new InterpolatorInOut(2000, null, null, null)
             },
             linkedin: {
                 hover: new InterpolatorInOut(2000, linkedinHoverPosition, linkedinHoverLookAt, linkedinHoverUp),
                 click: new InterpolatorInOut(2000, null, null, null)
             },
-            learnmore: {
-                hover: new InterpolatorInOut(2000, learnmoreHoverPosition, learnmoreHoverLookAt, learnmoreHoverUp),
+            about: {
+                hover: new InterpolatorInOut(2000, aboutHoverPosition, aboutHoverLookAt, aboutHoverUp),
                 click: new InterpolatorInOut(2000, null, null, null)
             },
             start: new InterpolatorIn(4000, 2000)
@@ -184,33 +184,33 @@ class Scene {
             mat4.transpose(normalMatrix3, normalMatrix2)
             mat3.fromMat4(normalMatrix, normalMatrix3)
 
-            this.animation.contact.hover.update(time.tslf)
-            this.animation.contact.click.update(time.tslf)
+            this.animation.message.hover.update(time.tslf)
+            this.animation.message.click.update(time.tslf)
             this.animation.linkedin.hover.update(time.tslf)
             this.animation.linkedin.click.update(time.tslf)
-            this.animation.learnmore.hover.update(time.tslf)
-            this.animation.learnmore.click.update(time.tslf)
+            this.animation.about.hover.update(time.tslf)
+            this.animation.about.click.update(time.tslf)
             this.animation.start.update(time.tslf)
             this.animation.headline.hover.update(time.tslf) // 0.5 to 1
 
-            let contactParams = this.animation.contact.hover.getInterpolatedDeltaCameraParameters(camera)
+            let messageParams = this.animation.message.hover.getInterpolatedDeltaCameraParameters(camera)
             let linkedinParams = this.animation.linkedin.hover.getInterpolatedDeltaCameraParameters(camera)
-            let learnmoreParams = this.animation.learnmore.hover.getInterpolatedDeltaCameraParameters(camera)
+            let aboutParams = this.animation.about.hover.getInterpolatedDeltaCameraParameters(camera)
 
             let accumulatedPosition = vec3.create()
             let accumulatedLookAt = vec3.create()
             let accumulatedUp = vec3.create()
 
-            vec3.add(accumulatedPosition, contactParams.position, linkedinParams.position)
-            vec3.add(accumulatedPosition, accumulatedPosition, learnmoreParams.position)
+            vec3.add(accumulatedPosition, messageParams.position, linkedinParams.position)
+            vec3.add(accumulatedPosition, accumulatedPosition, aboutParams.position)
             vec3.add(accumulatedPosition, accumulatedPosition, camera.originalPosition)
 
-            vec3.add(accumulatedLookAt, contactParams.lookAt, linkedinParams.lookAt)
-            vec3.add(accumulatedLookAt, accumulatedLookAt, learnmoreParams.lookAt)
+            vec3.add(accumulatedLookAt, messageParams.lookAt, linkedinParams.lookAt)
+            vec3.add(accumulatedLookAt, accumulatedLookAt, aboutParams.lookAt)
             vec3.add(accumulatedLookAt, accumulatedLookAt, camera.originalLookAt)
 
-            vec3.add(accumulatedUp, contactParams.up, linkedinParams.up)
-            vec3.add(accumulatedUp, accumulatedUp, learnmoreParams.up)
+            vec3.add(accumulatedUp, messageParams.up, linkedinParams.up)
+            vec3.add(accumulatedUp, accumulatedUp, aboutParams.up)
             vec3.add(accumulatedUp, accumulatedUp, camera.originalUp)
 
             let negatedAccumulatedPosition = vec3.create()
@@ -242,9 +242,9 @@ class Scene {
             this.hexGrid.matWorldUniform.update(worldMatrix)
             this.hexGrid.matNormUniform.update(normalMatrix)
             this.hexGrid.timeUniform.update(time.elapsed * 0.001)
-            this.hexGrid.displacementY0Uniform.update(this.animation.contact.click.interpolator)
+            this.hexGrid.displacementY0Uniform.update(this.animation.message.click.interpolator)
             this.hexGrid.displacementY1Uniform.update(this.animation.linkedin.click.interpolator)
-            this.hexGrid.displacementY2Uniform.update(this.animation.learnmore.click.interpolator)
+            this.hexGrid.displacementY2Uniform.update(this.animation.about.click.interpolator)
             this.hexGrid.explosionUniform.update(this.animation.start.interpolator)
             this.hexGrid.doubleExplosionUniform.update(this.animation.headline.hover.interpolator)
         }
