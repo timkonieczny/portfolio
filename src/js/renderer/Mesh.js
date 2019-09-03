@@ -11,7 +11,7 @@ class Mesh {
         const output = new Mesh()
         geometries.forEach((geometry, i) => {
             const newIndices = geometry.indices.map(index => {
-                return index + interleavedArray.length / 17
+                return index + interleavedArray.length / 18
             })
             output.indices.push(...newIndices)
             interleavedArray.push(...geometry.interleavedArray)

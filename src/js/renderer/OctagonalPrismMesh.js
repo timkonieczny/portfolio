@@ -24,8 +24,9 @@ class OctagonalPrismMesh extends Mesh {
         const invertedMatrix = mat4.create()
         mat4.invert(invertedMatrix, matrix)
 
-        const specialY0 = Math.random()
-        const specialY1 = Math.random()
+        const displacementY0 = Math.random() // TODO: rename
+        const displacementY1 = Math.random()
+        const displacementY2 = Math.random()
 
         const y0 = -1
         const y1 = 1
@@ -48,7 +49,7 @@ class OctagonalPrismMesh extends Mesh {
             vec3.set(startPositionD, x0, y1, z0)
             vec3.transformMat4(d, startPositionD, matrix)
 
-            sides.push(new Face4(a, b, c, d, color, center, specialY0, specialY1, [Array.from(startPositionA), Array.from(startPositionB), Array.from(startPositionC), Array.from(startPositionD)]))
+            sides.push(new Face4(a, b, c, d, color, center, displacementY0, displacementY1, displacementY2, [Array.from(startPositionA), Array.from(startPositionB), Array.from(startPositionC), Array.from(startPositionD)]))
         }
         const topVertices = []
         const bottomVertices = []
@@ -82,8 +83,9 @@ class OctagonalPrismMesh extends Mesh {
             ...topVertices,
             color,
             center,
-            specialY0,
-            specialY1,
+            displacementY0,
+            displacementY1,
+            displacementY2,
             topStartPosition2)
 
         const bottomStartPosition2 = bottomStartPosition.map((value) => {
@@ -95,8 +97,9 @@ class OctagonalPrismMesh extends Mesh {
             ...bottomVertices.reverse(),
             color,
             center,
-            specialY0,
-            specialY1,
+            displacementY0,
+            displacementY1,
+            displacementY2,
             bottomStartPosition2)
 
         const geometry = this.mergeGeometries(top, bottom, ...sides)

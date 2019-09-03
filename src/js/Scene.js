@@ -213,10 +213,11 @@ class Scene {
             this.hexGrid.matWorldUniform.update(worldMatrix)
             this.hexGrid.matNormUniform.update(normalMatrix)
             this.hexGrid.timeUniform.update(time.elapsed * 0.001)
-            this.hexGrid.interpolator0Uniform.update(this.animation.contact.click.interpolator)
-            this.hexGrid.interpolator1Uniform.update(this.animation.linkedin.click.interpolator)
+            this.hexGrid.displacementY0Uniform.update(this.animation.contact.click.interpolator)
+            this.hexGrid.displacementY1Uniform.update(this.animation.linkedin.click.interpolator)
+            this.hexGrid.displacementY2Uniform.update(this.animation.learnmore.click.interpolator)
             // TODO: learnmore uniform
-            this.hexGrid.interpolator2Uniform.update(this.animation.start.interpolator)
+            this.hexGrid.explosionUniform.update(this.animation.start.interpolator)
         }
 
         const resize = () => {
@@ -250,6 +251,8 @@ class Scene {
     }
 
     startAnimation(name, type) {
+        console.log(name+" "+type)
+        console.log(this.animation[name][type])
         this.animation[name][type].isDecreasing = false
         this.animation[name][type].isIncreasing = true
     }

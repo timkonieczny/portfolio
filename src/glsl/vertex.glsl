@@ -5,8 +5,9 @@ attribute vec3 aPosition;
 attribute vec3 aColor;
 attribute vec3 aNormal;
 attribute vec3 aCenter;
-attribute float aSpecialY0;
-attribute float aSpecialY1;
+attribute float aDisplacementY0; // TODO: rename
+attribute float aDisplacementY1;
+attribute float aDisplacementY2;
 attribute vec3 aStartPosition;
 varying vec3 vColor;
 varying vec3 vNormal;
@@ -19,9 +20,10 @@ uniform mat4 uView;
 uniform mat4 uProjection;
 uniform mat3 uNormal;
 uniform float uTime;
-uniform float uInterpolator0;
-uniform float uInterpolator1;
-uniform float uInterpolator2;
+uniform float uDisplacementY0;
+uniform float uDisplacementY1;
+uniform float uDisplacementY2;
+uniform float uExplosion;
 uniform vec3 uLightPosition;
 
 void main() {
@@ -31,16 +33,17 @@ void main() {
     float waveHeightX = 2.0;
     float waveHeightZ = 2.0;
 
-    position.y = position.y + uInterpolator2 * (
+    position.y = position.y + uExplosion * (
         sin(uTime + aCenter.x * waveLengthX) * waveHeightX - waveHeightX
         + cos(uTime + aCenter.z * waveLengthZ) * waveHeightZ - waveHeightZ
-        + uInterpolator0 * aSpecialY0 * 20.0
-        + uInterpolator1 * aSpecialY1 * 20.0);
+        + uDisplacementY0 * aDisplacementY0 * 20.0
+        + uDisplacementY1 * aDisplacementY1 * 20.0
+        + uDisplacementY2 * aDisplacementY2 * 20.0);
 
-    position.x = (1.0 - uInterpolator2) * aStartPosition.x
-        + uInterpolator2 * aPosition.x;
-    position.z = (1.0 - uInterpolator2) * aStartPosition.z
-        + uInterpolator2 * aPosition.z;
+    position.x = (1.0 - uExplosion) * aStartPosition.x
+        + uExplosion * aPosition.x;
+    position.z = (1.0 - uExplosion) * aStartPosition.z
+        + uExplosion * aPosition.z;
 
     vColor = aColor;
     vPosition = (uView * vec4((uWorld * vec4(position, 1.0)).xyz, 1.0)).xyz;

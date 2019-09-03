@@ -1,6 +1,5 @@
 import { Mesh } from "./Mesh.js"
 import { Light } from "./Light.js"
-import { mat4, mat3, vec3 } from "gl-matrix"
 import { UniformManager } from "./UniformManager.js";
 import { UniformFloat } from "./UniformFloat.js";
 import { UniformMatrix4f } from "./UniformMatrix4f.js";
@@ -60,15 +59,17 @@ class MeshObject {
         const attribLocationColor = gl.getAttribLocation(this.uniformManager.program, "aColor")
         const attribLocationNormal = gl.getAttribLocation(this.uniformManager.program, "aNormal")
         const attribLocationCenter = gl.getAttribLocation(this.uniformManager.program, "aCenter")
-        const attribLocationSpecialY0 = gl.getAttribLocation(this.uniformManager.program, "aSpecialY0")
-        const attribLocationSpecialY1 = gl.getAttribLocation(this.uniformManager.program, "aSpecialY1")
+        const attribLocationDisplacementY0 = gl.getAttribLocation(this.uniformManager.program, "aDisplacementY0")
+        const attribLocationDisplacementY1 = gl.getAttribLocation(this.uniformManager.program, "aDisplacementY1")
+        const attribLocationDisplacementY2 = gl.getAttribLocation(this.uniformManager.program, "aDisplacementY2")
         const attribLocationStartPosition = gl.getAttribLocation(this.uniformManager.program, "aStartPosition")
         gl.enableVertexAttribArray(attribLocationPosition)
         gl.enableVertexAttribArray(attribLocationColor)
         gl.enableVertexAttribArray(attribLocationNormal)
         gl.enableVertexAttribArray(attribLocationCenter)
-        gl.enableVertexAttribArray(attribLocationSpecialY0)
-        gl.enableVertexAttribArray(attribLocationSpecialY1)
+        gl.enableVertexAttribArray(attribLocationDisplacementY0)
+        gl.enableVertexAttribArray(attribLocationDisplacementY1)
+        gl.enableVertexAttribArray(attribLocationDisplacementY2)
         gl.enableVertexAttribArray(attribLocationStartPosition)
         this.interleaved = {
             buffer: buffer,
@@ -77,18 +78,20 @@ class MeshObject {
                 color: attribLocationColor,
                 normal: attribLocationNormal,
                 center: attribLocationCenter,
-                specialY0: attribLocationSpecialY0,
-                specialY1: attribLocationSpecialY1,
+                displacementY0: attribLocationDisplacementY0,
+                displacementY1: attribLocationDisplacementY1,
+                displacementY2: attribLocationDisplacementY2,
                 startPosition: attribLocationStartPosition
             },
-            numberOfElements: 17,
+            numberOfElements: 18,
             bytesPerElement: 4
         }
 
         this.timeUniform = new UniformFloat("uTime", this.uniformManager)
-        this.interpolator0Uniform = new UniformFloat("uInterpolator0", this.uniformManager)
-        this.interpolator1Uniform = new UniformFloat("uInterpolator1", this.uniformManager)
-        this.interpolator2Uniform = new UniformFloat("uInterpolator2", this.uniformManager)
+        this.displacementY0Uniform = new UniformFloat("uDisplacementY0", this.uniformManager)
+        this.displacementY1Uniform = new UniformFloat("uDisplacementY1", this.uniformManager)
+        this.displacementY2Uniform = new UniformFloat("uDisplacementY2", this.uniformManager)
+        this.explosionUniform = new UniformFloat("uExplosion", this.uniformManager)
         this.matWorldUniform = new UniformMatrix4f("uWorld", this.uniformManager)
         // this.matViewUniform = new UniformMatrix4f("uView", this.uniformManager)
         this.matProjUniform = new UniformMatrix4f("uProjection", this.uniformManager)
@@ -102,9 +105,10 @@ class MeshObject {
         gl.vertexAttribPointer(this.interleaved.attribLocation.normal, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 3)
         gl.vertexAttribPointer(this.interleaved.attribLocation.center, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 6)
         gl.vertexAttribPointer(this.interleaved.attribLocation.color, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 9)
-        gl.vertexAttribPointer(this.interleaved.attribLocation.specialY0, 1, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 12)
-        gl.vertexAttribPointer(this.interleaved.attribLocation.specialY1, 1, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 13)
-        gl.vertexAttribPointer(this.interleaved.attribLocation.startPosition, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 14)
+        gl.vertexAttribPointer(this.interleaved.attribLocation.displacementY0, 1, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 12)
+        gl.vertexAttribPointer(this.interleaved.attribLocation.displacementY1, 1, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 13)
+        gl.vertexAttribPointer(this.interleaved.attribLocation.displacementY2, 1, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 14)
+        gl.vertexAttribPointer(this.interleaved.attribLocation.startPosition, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 15)
         // TODO: startposition: y component unnecessary
     }
 
