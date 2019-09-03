@@ -190,9 +190,29 @@ window.addEventListener("load", async _ => {
         preloader.style.animation = "preloader 1s forwards";
     }
 
+    let hasResizeAnimationEndListener = false
+
     const onResize = _ => {
-        distanceToLeft = wrappers.active.element.getBoundingClientRect().left
-        width = wrappers.active.element.clientWidth
+        wrappers.headline.element.style.left = ""
+        wrappers.contact.element.style.left = ""
+        wrappers.learnmore.element.style.left = ""
+
+        if (!hasResizeAnimationEndListener) {
+            wrappers.headline.element.addEventListener("transitionend", onResizeAnimationEnd);
+            hasResizeAnimationEndListener = true
+        }
+    }
+
+    const onResizeAnimationEnd = _ => {
+        wrappers.headline.element.removeEventListener("transitionend", onResizeAnimationEnd)
+        hasResizeAnimationEndListener = false
+
+        distanceToLeft = wrappers.headline.element.getBoundingClientRect().left
+        width = wrappers.headline.element.clientWidth
+        wrappers.active.element.style.left = distanceToLeft + "px"
+
+        if (wrappers.active !== wrappers.headline)
+            wrappers.headline.element.style.left = (distanceToLeft - width) + "px"
     }
 
     const onMessageFormSubmit = event => {
@@ -236,7 +256,8 @@ window.addEventListener("load", async _ => {
     window.addEventListener("resize", onResize)
     messageForm.addEventListener("submit", onMessageFormSubmit)
 
-    onResize()
+    distanceToLeft = wrappers.headline.element.getBoundingClientRect().left
+    width = wrappers.headline.element.clientWidth
 
     const scene = new Scene()
     scene.addEventListener("progress", progressListener)

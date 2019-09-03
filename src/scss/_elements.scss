@@ -16,6 +16,7 @@ button {
     font-size: 0.8em;
     transition: background-color 0.5s, color 0.5s;
     letter-spacing: 0.1em;
+    cursor: pointer;
     &:hover,
     &:focus {
         color: #ffffff;
@@ -46,6 +47,7 @@ a {
     font-weight: 700;
     transition: background-color 0.5s, color 0.5s;
     letter-spacing: 0.1em;
+    cursor: pointer;
     &:hover {
         color: #ffffff;
     }
@@ -57,6 +59,10 @@ b {
 
 p {
     font-weight: 200;
+}
+
+h1, h2, p{
+    cursor: default;
 }
 
 .back-arrow {
