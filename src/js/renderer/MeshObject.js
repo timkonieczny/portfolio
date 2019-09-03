@@ -15,7 +15,6 @@ class MeshObject {
         /** @type {Light} */ light,
         /** @type {UniformManager} */ uniformManager) {
 
-        // this.program = gl.createProgram();
         this.indices = mesh.indices
         this.uniformManager = uniformManager
 
@@ -92,14 +91,13 @@ class MeshObject {
         this.displacementY1Uniform = new UniformFloat("uDisplacementY1", this.uniformManager)
         this.displacementY2Uniform = new UniformFloat("uDisplacementY2", this.uniformManager)
         this.explosionUniform = new UniformFloat("uExplosion", this.uniformManager)
+        this.doubleExplosionUniform = new UniformFloat("uDoubleExplosion", this.uniformManager)
         this.matWorldUniform = new UniformMatrix4f("uWorld", this.uniformManager)
-        // this.matViewUniform = new UniformMatrix4f("uView", this.uniformManager)
         this.matProjUniform = new UniformMatrix4f("uProjection", this.uniformManager)
         this.matNormUniform = new UniformMatrix3f("uNormal", this.uniformManager)
         this.lightPosUniform = new Uniform3f("uLightPosition", this.uniformManager)
 
         this.lightPosUniform.update(light.position)
-        // this.matViewUniform.update(camera.viewMatrix)
 
         gl.vertexAttribPointer(this.interleaved.attribLocation.position, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 0)
         gl.vertexAttribPointer(this.interleaved.attribLocation.normal, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 3)

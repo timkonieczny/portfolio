@@ -24,6 +24,7 @@ uniform float uDisplacementY0;
 uniform float uDisplacementY1;
 uniform float uDisplacementY2;
 uniform float uExplosion;
+uniform float uDoubleExplosion;
 uniform vec3 uLightPosition;
 
 const float pi = 3.14159;
@@ -36,18 +37,19 @@ const float ambientStrength = 0.1;
 void main() {
     vec3 position = aPosition;
 
-    position.y = position.y + uExplosion * (
+    position.y = position.y + (uExplosion - uDoubleExplosion) * (
         sin(uTime + aCenter.x * waveLengthX) * waveHeightX - waveHeightX
         + cos(uTime + aCenter.z * waveLengthZ) * waveHeightZ - waveHeightZ
         + uDisplacementY0 * aDisplacementY0 * 20.0
         + uDisplacementY1 * aDisplacementY1 * 20.0
         + uDisplacementY2 * aDisplacementY2 * 20.0)
-        + sin(uExplosion * pi) * aDisplacementY0 * 20.0;
+        + sin(uExplosion * pi) * aDisplacementY0 * 20.0
+        + sin((1.0 - uDoubleExplosion) * pi) * aDisplacementY0 * 20.0;
 
-    position.x = (1.0 - uExplosion) * aStartPosition.x
-        + uExplosion * aPosition.x;
-    position.z = (1.0 - uExplosion) * aStartPosition.z
-        + uExplosion * aPosition.z;
+    position.x = (1.0 - uExplosion + uDoubleExplosion) * aStartPosition.x
+        + (uExplosion - uDoubleExplosion) * aPosition.x;
+    position.z = (1.0 - uExplosion + uDoubleExplosion) * aStartPosition.z
+        + (uExplosion - uDoubleExplosion) * aPosition.z;
 
     vColor = aColor;
     vPosition = (uView * vec4((uWorld * vec4(position, 1.0)).xyz, 1.0)).xyz;

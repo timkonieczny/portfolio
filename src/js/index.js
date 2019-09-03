@@ -34,7 +34,7 @@ window.addEventListener("load", async _ => {
         wrappers.active.element.style.opacity = 0
         wrappers.active.element.style.visibility = "hidden"
 
-        wrappers.active.animations.forEach(animation => {    // TODO:
+        wrappers.active.animations.forEach(animation => {
             scene.endAnimation(animation.name, animation.type)
         })
 
@@ -59,7 +59,7 @@ window.addEventListener("load", async _ => {
         if (goHome)
             scene.endAllAnimations()
         else {
-            wrappers.active.animations.forEach(animation => {    // TODO:
+            wrappers.active.animations.forEach(animation => {
                 scene.startAnimation(animation.name, animation.type)
             })
         }
@@ -112,12 +112,14 @@ window.addEventListener("load", async _ => {
             element: document.querySelector("#message-wrapper"),
             animations: [
                 { name: "contact", type: "hover" },
-                { name: "contact", type: "click" }
+                { name: "contact", type: "click" },
             ],
             buttons: [
                 {
                     element: document.querySelector("#message-wrapper .back-arrow"),
                     listeners: [
+                        { type: "mouseenter", callback: onHoverableMouseenter },
+                        { type: "mouseleave", callback: onHoverableMouseexit },
                         { type: "click", callback: onButtonClick }
                     ]
                 }
@@ -133,6 +135,8 @@ window.addEventListener("load", async _ => {
                 {
                     element: document.querySelector("#about-wrapper .back-arrow"),
                     listeners: [
+                        { type: "mouseenter", callback: onHoverableMouseenter },
+                        { type: "mouseleave", callback: onHoverableMouseexit },
                         { type: "click", callback: onButtonClick }
                     ]
                 },

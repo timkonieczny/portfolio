@@ -127,23 +127,6 @@ class Scene {
         const learnmoreHoverUp = vec3.create()
         vec3.set(learnmoreHoverUp, 0, 1, 0)
 
-
-        this.animation = {
-            contact: {
-                hover: new InterpolatorInOut(2000, contactHoverPosition, contactHoverLookAt, contactHoverUp),
-                click: new InterpolatorInOut(2000, null, null, null)
-            },
-            linkedin: {
-                hover: new InterpolatorInOut(2000, linkedinHoverPosition, linkedinHoverLookAt, linkedinHoverUp),
-                click: new InterpolatorInOut(2000, null, null, null)
-            },
-            learnmore: {
-                hover: new InterpolatorInOut(2000, learnmoreHoverPosition, learnmoreHoverLookAt, learnmoreHoverUp),
-                click: new InterpolatorInOut(2000, null, null, null)
-            },
-            start: new InterpolatorIn(4000, 2000)
-        }
-
         const makeGeometry = _ => {
             return new Promise((resolve) => {
                 const worker = new Worker();
@@ -167,6 +150,26 @@ class Scene {
 
         const camera = new Camera(position, lookAt, up, uniformManager)
 
+        this.animation = {
+            headline: {
+                hover: new InterpolatorInOut(2000, camera.originalPosition, camera.originalLookAt, camera.originalUp),
+                // TODO: handle click animation here. e.g. new InterpolatorEmpty
+            },
+            contact: {
+                hover: new InterpolatorInOut(2000, contactHoverPosition, contactHoverLookAt, contactHoverUp),
+                click: new InterpolatorInOut(2000, null, null, null)
+            },
+            linkedin: {
+                hover: new InterpolatorInOut(2000, linkedinHoverPosition, linkedinHoverLookAt, linkedinHoverUp),
+                click: new InterpolatorInOut(2000, null, null, null)
+            },
+            learnmore: {
+                hover: new InterpolatorInOut(2000, learnmoreHoverPosition, learnmoreHoverLookAt, learnmoreHoverUp),
+                click: new InterpolatorInOut(2000, null, null, null)
+            },
+            start: new InterpolatorIn(4000, 2000)
+        }
+
         this.hexGrid.update = time => {
             let worldMatrix = mat4.create()
             const identityMatrix = mat4.create()
@@ -188,6 +191,7 @@ class Scene {
             this.animation.learnmore.hover.update(time.tslf)
             this.animation.learnmore.click.update(time.tslf)
             this.animation.start.update(time.tslf)
+            this.animation.headline.hover.update(time.tslf) // 0.5 to 1
 
             let contactParams = this.animation.contact.hover.getInterpolatedDeltaCameraParameters(camera)
             let linkedinParams = this.animation.linkedin.hover.getInterpolatedDeltaCameraParameters(camera)
@@ -209,6 +213,31 @@ class Scene {
             vec3.add(accumulatedUp, accumulatedUp, learnmoreParams.up)
             vec3.add(accumulatedUp, accumulatedUp, camera.originalUp)
 
+            let negatedAccumulatedPosition = vec3.create()
+            vec3.negate(negatedAccumulatedPosition, accumulatedPosition)
+            let negatedAccumulatedLookAt = vec3.create()
+            vec3.negate(negatedAccumulatedLookAt, accumulatedLookAt)
+            let negatedAccumulatedUp = vec3.create()
+            vec3.negate(negatedAccumulatedUp, accumulatedUp)
+
+            vec3.set(accumulatedPosition,
+                accumulatedPosition[0] * (1 - this.animation.headline.hover.interpolator) + camera.originalPosition[0] * this.animation.headline.hover.interpolator,
+                accumulatedPosition[1] * (1 - this.animation.headline.hover.interpolator) + camera.originalPosition[1] * this.animation.headline.hover.interpolator,
+                accumulatedPosition[2] * (1 - this.animation.headline.hover.interpolator) + camera.originalPosition[2] * this.animation.headline.hover.interpolator,
+            )
+
+            vec3.set(accumulatedLookAt,
+                accumulatedLookAt[0] * (1 - this.animation.headline.hover.interpolator) + camera.originalLookAt[0] * this.animation.headline.hover.interpolator,
+                accumulatedLookAt[1] * (1 - this.animation.headline.hover.interpolator) + camera.originalLookAt[1] * this.animation.headline.hover.interpolator,
+                accumulatedLookAt[2] * (1 - this.animation.headline.hover.interpolator) + camera.originalLookAt[2] * this.animation.headline.hover.interpolator,
+            )
+
+            vec3.set(accumulatedUp,
+                accumulatedUp[0] * (1 - this.animation.headline.hover.interpolator) + camera.originalUp[0] * this.animation.headline.hover.interpolator,
+                accumulatedUp[1] * (1 - this.animation.headline.hover.interpolator) + camera.originalUp[1] * this.animation.headline.hover.interpolator,
+                accumulatedUp[2] * (1 - this.animation.headline.hover.interpolator) + camera.originalUp[2] * this.animation.headline.hover.interpolator,
+            )
+
             camera.update(accumulatedPosition, accumulatedLookAt, accumulatedUp)
             this.hexGrid.matWorldUniform.update(worldMatrix)
             this.hexGrid.matNormUniform.update(normalMatrix)
@@ -216,8 +245,8 @@ class Scene {
             this.hexGrid.displacementY0Uniform.update(this.animation.contact.click.interpolator)
             this.hexGrid.displacementY1Uniform.update(this.animation.linkedin.click.interpolator)
             this.hexGrid.displacementY2Uniform.update(this.animation.learnmore.click.interpolator)
-            // TODO: learnmore uniform
             this.hexGrid.explosionUniform.update(this.animation.start.interpolator)
+            this.hexGrid.doubleExplosionUniform.update(this.animation.headline.hover.interpolator)
         }
 
         const resize = () => {
