@@ -8,8 +8,11 @@ varying vec3 vAmbient;
 varying vec3 vLightPosition;
 uniform mat4 uView;
 
+const vec3 lightColor = vec3(1.0, 1.0, 1.0);
+const float specularStrength = 0.5;
+const float shininess = 32.0;
+
 void main() {
-    vec3 lightColor = vec3(1.0, 1.0, 1.0);
 
     // diffuse component
     vec3 lightDir = normalize(vec4(vLightPosition, 1.0) - vec4(vPosition, 1.0)).xyz;
@@ -17,8 +20,6 @@ void main() {
     vec3 diffuse = diff * lightColor;
 
     // specular component
-    float specularStrength = 0.5;
-    float shininess = 32.0;
     vec3 viewDir = normalize(-vPosition);
     vec3 reflectDir = reflect(-lightDir, vNormal);  
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), shininess);

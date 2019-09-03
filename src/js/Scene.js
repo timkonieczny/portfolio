@@ -141,7 +141,7 @@ class Scene {
                 hover: new InterpolatorInOut(2000, learnmoreHoverPosition, learnmoreHoverLookAt, learnmoreHoverUp),
                 click: new InterpolatorInOut(2000, null, null, null)
             },
-            start: new InterpolatorIn(2000, 2000)
+            start: new InterpolatorIn(4000, 2000)
         }
 
         const makeGeometry = _ => {

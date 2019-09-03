@@ -5,7 +5,7 @@ attribute vec3 aPosition;
 attribute vec3 aColor;
 attribute vec3 aNormal;
 attribute vec3 aCenter;
-attribute float aDisplacementY0; // TODO: rename
+attribute float aDisplacementY0;
 attribute float aDisplacementY1;
 attribute float aDisplacementY2;
 attribute vec3 aStartPosition;
@@ -26,19 +26,23 @@ uniform float uDisplacementY2;
 uniform float uExplosion;
 uniform vec3 uLightPosition;
 
+const float pi = 3.14159;
+const float waveLengthX = 0.1;
+const float waveLengthZ = 0.1;
+const float waveHeightX = 2.0;
+const float waveHeightZ = 2.0;
+const float ambientStrength = 0.1;
+ 
 void main() {
     vec3 position = aPosition;
-    float waveLengthX = 0.1;
-    float waveLengthZ = 0.1;
-    float waveHeightX = 2.0;
-    float waveHeightZ = 2.0;
 
     position.y = position.y + uExplosion * (
         sin(uTime + aCenter.x * waveLengthX) * waveHeightX - waveHeightX
         + cos(uTime + aCenter.z * waveLengthZ) * waveHeightZ - waveHeightZ
         + uDisplacementY0 * aDisplacementY0 * 20.0
         + uDisplacementY1 * aDisplacementY1 * 20.0
-        + uDisplacementY2 * aDisplacementY2 * 20.0);
+        + uDisplacementY2 * aDisplacementY2 * 20.0)
+        + sin(uExplosion * pi) * aDisplacementY0 * 20.0;
 
     position.x = (1.0 - uExplosion) * aStartPosition.x
         + uExplosion * aPosition.x;
@@ -51,7 +55,6 @@ void main() {
     vLightPosition = (uView * vec4(uLightPosition, 1.0)).xyz;
 
     // ambient component
-    float ambientStrength = 0.1;
     vec3 lightColor = vec3(1.0, 1.0, 1.0);
     vAmbient = ambientStrength * lightColor;
 
