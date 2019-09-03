@@ -66,8 +66,13 @@ window.addEventListener("load", async _ => {
     const onButtonClick = event => {
         if (event.currentTarget.dataset.animation != "linkedin")
             moveWrappers(wrappers[event.currentTarget.dataset.animation])
+        if (event.currentTarget.dataset.animation != "learnmore") {
+            scene.endAnimation("learnmore", "click")
+            scene.endAnimation("learnmore", "hover")
+        }
         scene.startAnimation(event.currentTarget.dataset.animation, "click")
-        event.currentTarget.removeEventListener("mouseleave", onHoverableMouseexit)
+        scene.startAnimation(event.currentTarget.dataset.animation, "hover")
+        event.currentTarget.removeEventListener("mouseleave", onHoverableMouseexit) // TODO: disable all eventlisteners on inactive page
         event.currentTarget.removeEventListener("mouseenter", onHoverableMouseenter)
     }
 
@@ -129,7 +134,7 @@ window.addEventListener("load", async _ => {
     window.addEventListener("resize", onResize)
     messageForm.addEventListener("submit", onMessageFormSubmit)
 
-    Array.from(document.querySelectorAll("#headline-wrapper .animated")).forEach(element => {
+    Array.from(document.querySelectorAll("#headline-wrapper .animated, #about-wrapper .contact-button, #about-wrapper .linkedin")).forEach(element => {
         element.addEventListener("click", onButtonClick)
     })
 

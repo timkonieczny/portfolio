@@ -130,16 +130,16 @@ class Scene {
 
         this.animation = {
             contact: {
-                hover: new InterpolatorInOut(500, contactHoverPosition, contactHoverLookAt, contactHoverUp),
-                click: new InterpolatorInOut(500, null, null, null)
+                hover: new InterpolatorInOut(2000, contactHoverPosition, contactHoverLookAt, contactHoverUp),
+                click: new InterpolatorInOut(2000, null, null, null)
             },
             linkedin: {
-                hover: new InterpolatorInOut(500, linkedinHoverPosition, linkedinHoverLookAt, linkedinHoverUp),
-                click: new InterpolatorInOut(500, null, null, null)
+                hover: new InterpolatorInOut(2000, linkedinHoverPosition, linkedinHoverLookAt, linkedinHoverUp),
+                click: new InterpolatorInOut(2000, null, null, null)
             },
             learnmore: {
-                hover: new InterpolatorInOut(500, learnmoreHoverPosition, learnmoreHoverLookAt, learnmoreHoverUp),
-                click: new InterpolatorInOut(500, null, null, null)
+                hover: new InterpolatorInOut(2000, learnmoreHoverPosition, learnmoreHoverLookAt, learnmoreHoverUp),
+                click: new InterpolatorInOut(2000, null, null, null)
             },
             start: new InterpolatorIn(2000, 2000)
         }
@@ -251,8 +251,6 @@ class Scene {
     }
 
     startAnimation(name, type) {
-        console.log(name+" "+type)
-        console.log(this.animation[name][type])
         this.animation[name][type].isDecreasing = false
         this.animation[name][type].isIncreasing = true
     }
