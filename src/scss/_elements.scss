@@ -48,7 +48,8 @@ a {
     transition: background-color 0.5s, color 0.5s;
     letter-spacing: 0.1em;
     cursor: pointer;
-    &:hover {
+    text-decoration: none;
+    &:hover, &:focus {
         color: #ffffff;
     }
 }

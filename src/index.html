@@ -15,35 +15,35 @@
         </h1>
         <p id="subtitle"><span>web frontend</span><span>3D</span><span>android</span></p>
         <div class="message-buttons">
-            <button class="message-button animated" data-animation="message">get in touch</button>
-            <button class="linkedin-button animated" data-animation="linkedin"><i class="fab fa-linkedin-in"></i>connect on
+            <button class="message-button animated" data-animation="message" tabindex="1">get in touch</button>
+            <button class="linkedin-button animated" data-animation="linkedin" tabindex="2"><i class="fab fa-linkedin-in"></i>connect on
                 LinkedIn</button>
         </div>
-        <a class="animated" id="about-button" data-animation="about"><i class="fas fa-long-arrow-alt-right"></i><span>learn
+        <a class="animated" id="about-button" data-animation="about" tabindex="3" href="#"><i class="fas fa-long-arrow-alt-right"></i><span>learn
                 more</span></a>
     </div>
     <div id="message-wrapper" class="section-wrapper">
         <div>
-            <a class="back-arrow" data-animation="headline"><i class="fas fa-long-arrow-alt-left"></i></a>
+            <a class="back-arrow" data-animation="headline" tabindex="1" href="#"><i class="fas fa-long-arrow-alt-left"></i></a>
         </div>
         <div id="message-form-wrapper">
             <h2>Let's have a chat.</h2>
             <form>
                 <div class="field-wrapper">
                     <span>
-                        <input placeholder="Name" name="name" tabindex="1" autocomplete="on" />
-                        <input placeholder="Email" name="emailaddress" type="email" tabindex="2" autocomplete="on" />
+                        <input placeholder="Name" name="name" tabindex="2" autocomplete="on" />
+                        <input placeholder="Email" name="emailaddress" type="email" tabindex="3" autocomplete="on" />
                     </span>
                 </div>
                 <div class="field-wrapper">
-                    <input id="input-subject" placeholder="Subject" name="subject" autocomplete="off" tabindex="3" />
+                    <input id="input-subject" placeholder="Subject" name="subject" autocomplete="off" tabindex="4" />
                 </div>
                 <div class="field-wrapper" id="textarea-wrapper">
-                    <textarea placeholder="Message" name="message" autocomplete="off" tabindex="4"></textarea>
+                    <textarea placeholder="Message" name="message" autocomplete="off" tabindex="5"></textarea>
 
                 </div>
                 <div class="field-wrapper">
-                    <button id="send-button" type="submit" tabindex="5"><i class="fas fa-paper-plane"></i></button>
+                    <button id="send-button" type="submit" tabindex="6"><i class="fas fa-paper-plane"></i></button>
                 </div>
                 <input class="honey" placeholder="Phone" name="phone" tabindex="-1" autocomplete="no" type="tel" />
                 <input class="honey" placeholder="Website" name="website" tabindex="-1" autocomplete="no" type="url" />
@@ -76,7 +76,7 @@
     </div>
     <div id="about-wrapper" class="section-wrapper">
         <div>
-            <a class="back-arrow" data-animation="headline"><i class="fas fa-long-arrow-alt-left"></i></a>
+            <a class="back-arrow" data-animation="headline" tabindex="1" href="#"><i class="fas fa-long-arrow-alt-left"></i></a>
         </div>
         <div id="about-content">
             <h2>Tim Konieczny.</h2>
@@ -103,10 +103,10 @@
                     have a chat!</b>
             </p>
             <div class="message-buttons">
-                <button class="message-button" data-animation="message">
+                <button class="message-button" data-animation="message" tabindex="2">
                     get in touch
                 </button>
-                <button class="linkedin-button" data-animation="linkedin">
+                <button class="linkedin-button" data-animation="linkedin" tabindex="3">
                     <i class="fab fa-linkedin-in"></i> connect on LinkedIn
                 </button>
             </div>

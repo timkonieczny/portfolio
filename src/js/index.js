@@ -87,7 +87,9 @@ window.addEventListener("load", async _ => {
                     listeners: [
                         { type: "click", callback: onButtonClick },
                         { type: "mouseenter", callback: onHoverableMouseEnter },
-                        { type: "mouseleave", callback: onHoverableMousleave }
+                        { type: "focus", callback: onHoverableMouseEnter },
+                        { type: "mouseleave", callback: onHoverableMousleave },
+                        { type: "blur", callback: onHoverableMousleave }
                     ]
                 },
                 {
@@ -95,7 +97,9 @@ window.addEventListener("load", async _ => {
                     listeners: [
                         { type: "click", callback: onButtonClickExternal },
                         { type: "mouseenter", callback: onHoverableMouseEnter },
-                        { type: "mouseleave", callback: onHoverableMousleave }
+                        { type: "focus", callback: onHoverableMouseEnter },
+                        { type: "mouseleave", callback: onHoverableMousleave },
+                        { type: "blur", callback: onHoverableMousleave }
                     ]
                 },
                 {
@@ -103,7 +107,9 @@ window.addEventListener("load", async _ => {
                     listeners: [
                         { type: "click", callback: onButtonClick },
                         { type: "mouseenter", callback: onHoverableMouseEnter },
-                        { type: "mouseleave", callback: onHoverableMousleave }
+                        { type: "focus", callback: onHoverableMouseEnter },
+                        { type: "mouseleave", callback: onHoverableMousleave },
+                        { type: "blur", callback: onHoverableMousleave }
                     ]
                 }
             ]
@@ -119,7 +125,9 @@ window.addEventListener("load", async _ => {
                     element: document.querySelector("#message-wrapper .back-arrow"),
                     listeners: [
                         { type: "mouseenter", callback: onHoverableMouseEnter },
+                        { type: "focus", callback: onHoverableMouseEnter },
                         { type: "mouseleave", callback: onHoverableMousleave },
+                        { type: "blur", callback: onHoverableMousleave },
                         { type: "click", callback: onButtonClick }
                     ]
                 }
@@ -136,7 +144,9 @@ window.addEventListener("load", async _ => {
                     element: document.querySelector("#about-wrapper .back-arrow"),
                     listeners: [
                         { type: "mouseenter", callback: onHoverableMouseEnter },
+                        { type: "focus", callback: onHoverableMouseEnter },
                         { type: "mouseleave", callback: onHoverableMousleave },
+                        { type: "blur", callback: onHoverableMousleave },
                         { type: "click", callback: onButtonClick }
                     ]
                 },
