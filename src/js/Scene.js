@@ -9,6 +9,7 @@ import Stats from "stats-js"
 import vertexShaderSource from "../glsl/vertex.glsl"
 import fragmentShaderSource from "../glsl/fragment.glsl"
 import Worker from './renderer/HexagonGrid.worker.js'
+import { Time } from "./renderer/Time.js";
 
 class Scene {
     constructor() {
@@ -179,13 +180,13 @@ class Scene {
             mat4.transpose(normalMatrix3, normalMatrix2)
             mat3.fromMat4(normalMatrix, normalMatrix3)
 
-            this.animation.contact.hover.update(time)
-            this.animation.contact.click.update(time)
-            this.animation.linkedin.hover.update(time)
-            this.animation.linkedin.click.update(time)
-            this.animation.learnmore.hover.update(time)
-            this.animation.learnmore.click.update(time)
-            this.animation.start.update(time)
+            this.animation.contact.hover.update(time.tslf)
+            this.animation.contact.click.update(time.tslf)
+            this.animation.linkedin.hover.update(time.tslf)
+            this.animation.linkedin.click.update(time.tslf)
+            this.animation.learnmore.hover.update(time.tslf)
+            this.animation.learnmore.click.update(time.tslf)
+            this.animation.start.update(time.tslf)
 
             let contactParams = this.animation.contact.hover.getInterpolatedDeltaCameraParameters(camera)
             let linkedinParams = this.animation.linkedin.hover.getInterpolatedDeltaCameraParameters(camera)
@@ -210,7 +211,7 @@ class Scene {
             camera.update(accumulatedPosition, accumulatedLookAt, accumulatedUp)
             this.hexGrid.matWorldUniform.update(worldMatrix)
             this.hexGrid.matNormUniform.update(normalMatrix)
-            this.hexGrid.timeUniform.update(time * 0.001)
+            this.hexGrid.timeUniform.update(this.time.elapsed * 0.001)
             this.hexGrid.interpolator0Uniform.update(this.animation.contact.click.interpolator)
             this.hexGrid.interpolator1Uniform.update(this.animation.linkedin.click.interpolator)
             // TODO: learnmore uniform
@@ -226,11 +227,13 @@ class Scene {
         }
         window.addEventListener("resize", resize)
         resize()
+        this.time = new Time()
     }
 
     loop(time) {
         this.stats.begin();
-        this.hexGrid.update(time)   // TODO: create Time class and pass tslf
+        this.time.update(time)
+        this.hexGrid.update(this.time)
         this.hexGrid.render(this.gl)
         this.stats.end();
         requestAnimationFrame(this.loop.bind(this))

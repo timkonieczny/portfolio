@@ -13,10 +13,9 @@ class InterpolatorInOut extends Interpolator {
         this.interpolatedUp = vec3.create()
     }
 
-    update(time) {
-        super.update(time)
+    update(tslf) {
         if (this.isIncreasing) {
-            this.interpolationTime += this.tslf
+            this.interpolationTime += tslf
             this.interpolator = (-Math.cos((this.interpolationTime) / this.transitionDuration * Math.PI) + 1) / 2
 
             if (this.interpolationTime >= this.transitionDuration) {
@@ -27,7 +26,7 @@ class InterpolatorInOut extends Interpolator {
             }
         } else if (this.isDecreasing) {
             this.isHighest = false
-            this.interpolationTime -= this.tslf
+            this.interpolationTime -= tslf
             this.interpolator = (-Math.cos((this.interpolationTime) / this.transitionDuration * Math.PI) + 1) / 2
             if (this.interpolationTime <= 0) {
                 this.interpolator = 0

@@ -6,14 +6,6 @@ class Interpolator {
         this.isIncreasing = false
         this.isDecreasing = false
         this.isHighest = false
-        this.tslf = null
-        this.time = null
-    }
-
-    update(time) {
-        if (this.time == null) this.time = time
-        this.tslf = time - this.time
-        this.time = time
     }
 }
 
