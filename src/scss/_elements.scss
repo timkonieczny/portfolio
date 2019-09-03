@@ -92,7 +92,7 @@ p {
     max-height: 90%;
 }
 
-#preloader{
+#preloader {
     position: absolute;
     top: 0;
     left: 0;
@@ -107,11 +107,10 @@ p {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    #progress-bar{
-        // width: 40%;
-        height: .2em;
+    #progress-bar {
+        height: 0.2em;
         background: $color-accent;
-        transition: width .2s;
+        transition: width 200ms linear;
     }
 }
 

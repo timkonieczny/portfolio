@@ -3,7 +3,7 @@ import mail from "../php/mail.php"
 import "../scss/index.scss"
 import "@fortawesome/fontawesome-free/css/all.css"
 
-window.addEventListener("load", () => {
+window.addEventListener("load", async _ => {
 
     let distanceToLeft, width;
     const canvas = document.querySelector("#canvas")
@@ -19,11 +19,21 @@ window.addEventListener("load", () => {
     const timetrapStart = Date.now()
     let isFormDisabled = false
 
-    const callback = progress =>{
-        document.querySelector("#progress-bar").style.width = progress+"%"
-    }
+    const preloader = document.querySelector("#preloader")
+    const progressBar = document.querySelector("#progress-bar")
 
-    const scene = new Scene(canvas, callback) // TODO: scene.init()
+    const progressListener = event => {
+        let progress = 0
+        switch (event.task) {
+            case "generate":
+                progress += event.progress * 0.85
+                break
+            case "merge":
+                progress += 85 + event.progress * 0.15
+                break
+        }
+        progressBar.style.width = progress + "%"
+    }
 
 
     const moveWrappers = newActiveWrapper => {
@@ -111,7 +121,6 @@ window.addEventListener("load", () => {
         request.send(new FormData(document.querySelector("#message-wrapper form")));
     }
 
-
     window.addEventListener("resize", onResize)
     messageForm.addEventListener("submit", onMessageFormSubmit)
 
@@ -128,8 +137,13 @@ window.addEventListener("load", () => {
         element.addEventListener("mouseleave", onHoverableMouseexit)
     })
 
-    onResize()  // TODO: combine 3d and preloader. probably good idea to split up scene
-    console.log("removing")
-    document.querySelector("#preloader").style.visibility = "hidden";
-    document.querySelector("#preloader").style.animation = "preloader 1s forwards";
+    const scene = new Scene()
+    scene.addEventListener("progress", progressListener)
+    await scene.initialize(canvas, progressListener)
+    scene.render()
+
+    onResize()
+    progressBar.style.width = "100%"
+    preloader.style.visibility = "hidden";
+    preloader.style.animation = "preloader 1s forwards";
 })

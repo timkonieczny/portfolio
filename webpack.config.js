@@ -2,7 +2,7 @@ const path = require("path");
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-    entry: "./src/js/index.js",
+    entry: ["babel-polyfill", "./src/js/index.js"],
     mode: "development",
     output: {
         filename: "bundle.js",

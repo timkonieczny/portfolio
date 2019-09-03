@@ -1,7 +1,6 @@
 import { MeshObject } from "./renderer/MeshObject.js"
 import { Camera } from "./renderer/Camera.js";
 import { Light } from "./renderer/Light.js";
-import { HexagonGrid } from "./renderer/HexagonGrid.js";
 import { InterpolatorInOut } from "./renderer/InterpolatorInOut.js";
 import { InterpolatorIn } from "./renderer/InterpolatorIn.js";
 import { UniformManager } from "./renderer/UniformManager.js";
@@ -10,42 +9,45 @@ import Stats from "stats-js"
 import vertexShaderSource from "../glsl/vertex.glsl"
 import fragmentShaderSource from "../glsl/fragment.glsl"
 import Worker from './renderer/HexagonGrid.worker.js'
-// TODO: implement worker
 
 class Scene {
-    constructor(canvas, callback) {
-        let gl = canvas.getContext("webgl2")
-        if (!gl) {
-            gl = canvas.getContext("webgl")
-            if (gl && !gl.getExtension("OES_element_index_uint")) {
+    constructor() {
+        this.progressEventListeners = []
+    }
+
+    async initialize(canvas) {
+        this.gl = canvas.getContext("webgl2")
+        if (!this.gl) {
+            this.gl = canvas.getContext("webgl")
+            if (this.gl && !this.gl.getExtension("OES_element_index_uint")) {
                 console.error("Your browser doesn't support the OES_element_index_uint extension")
                 return
             }
         }
-        if (!gl) {
-            gl = canvas.getContext("experimental-webgl")
-            if (gl && !gl.getExtension("OES_element_index_uint")) {
+        if (!this.gl) {
+            this.gl = canvas.getContext("experimental-webgl")
+            if (this.gl && !this.gl.getExtension("OES_element_index_uint")) {
                 console.error("Your browser doesn't support the OES_element_index_uint extension")
                 return
             }
         }
-        if (!gl) {
+        if (!this.gl) {
             console.error("Your browser doesn't support WebGL")
             return
         }
 
-        const floatPrecisionVertexHigh = gl.getShaderPrecisionFormat(gl.VERTEX_SHADER, gl.HIGH_FLOAT).precision
-        const floatPrecisionFragmentHigh = gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.HIGH_FLOAT).precision
-        const floatPrecisionVertexMedium = gl.getShaderPrecisionFormat(gl.VERTEX_SHADER, gl.MEDIUM_FLOAT).precision
-        const floatPrecisionFragmentMedium = gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.MEDIUM_FLOAT).precision
-        const floatPrecisionVertexLow = gl.getShaderPrecisionFormat(gl.VERTEX_SHADER, gl.LOW_FLOAT).precision
-        const floatPrecisionFragmentLow = gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.LOW_FLOAT).precision
+        const floatPrecisionVertexHigh = this.gl.getShaderPrecisionFormat(this.gl.VERTEX_SHADER, this.gl.HIGH_FLOAT).precision
+        const floatPrecisionFragmentHigh = this.gl.getShaderPrecisionFormat(this.gl.FRAGMENT_SHADER, this.gl.HIGH_FLOAT).precision
+        const floatPrecisionVertexMedium = this.gl.getShaderPrecisionFormat(this.gl.VERTEX_SHADER, this.gl.MEDIUM_FLOAT).precision
+        const floatPrecisionFragmentMedium = this.gl.getShaderPrecisionFormat(this.gl.FRAGMENT_SHADER, this.gl.MEDIUM_FLOAT).precision
+        const floatPrecisionVertexLow = this.gl.getShaderPrecisionFormat(this.gl.VERTEX_SHADER, this.gl.LOW_FLOAT).precision
+        const floatPrecisionFragmentLow = this.gl.getShaderPrecisionFormat(this.gl.FRAGMENT_SHADER, this.gl.LOW_FLOAT).precision
 
-        const ext = gl.getExtension("WEBGL_debug_renderer_info");
+        const ext = this.gl.getExtension("WEBGL_debug_renderer_info");
         let info =
-            "WebGL version:\t\t\t" + gl.getParameter(gl.VERSION) +
-            "\nGLSL version:\t\t\t" + gl.getParameter(gl.SHADING_LANGUAGE_VERSION) +
-            "\nWebGL Vendor:\t\t\t" + gl.getParameter(gl.VENDOR) +
+            "WebGL version:\t\t\t" + this.gl.getParameter(this.gl.VERSION) +
+            "\nGLSL version:\t\t\t" + this.gl.getParameter(this.gl.SHADING_LANGUAGE_VERSION) +
+            "\nWebGL Vendor:\t\t\t" + this.gl.getParameter(this.gl.VENDOR) +
             "\nhighp float precision:\t\tvertex: " + floatPrecisionVertexHigh +
             "\tfragment: " + floatPrecisionFragmentHigh +
             "\nmdiump float precision:\t\tvertex: " + floatPrecisionVertexMedium +
@@ -53,8 +55,8 @@ class Scene {
             "\nlowp float precision:\t\tvertex: " + floatPrecisionVertexLow +
             "\tfragment: " + floatPrecisionFragmentLow
         if (ext) info +=
-            "\nUnmasked WebGL vendor:\t\t" + gl.getParameter(ext.UNMASKED_VENDOR_WEBGL) +
-            "\nUnmasked renderer:\t\t" + gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)
+            "\nUnmasked WebGL vendor:\t\t" + this.gl.getParameter(ext.UNMASKED_VENDOR_WEBGL) +
+            "\nUnmasked renderer:\t\t" + this.gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)
         console.info(info)
 
         if (floatPrecisionVertexHigh != floatPrecisionVertexMedium != floatPrecisionVertexLow) {
@@ -76,21 +78,21 @@ class Scene {
         // TODO: Eliminate / shrink unnecessary uniforms and attributes
         // TODO: Compare Gourand and Phong shading
 
-        const stats = new Stats()
-        stats.showPanel(0)
-        stats.dom.style.left = ""
-        stats.dom.style.right = "80px"
-        document.body.appendChild(stats.dom)
+        this.stats = new Stats()
+        this.stats.showPanel(0)
+        this.stats.dom.style.left = ""
+        this.stats.dom.style.right = "80px"
+        document.body.appendChild(this.stats.dom)
 
 
-        gl.enable(gl.DEPTH_TEST)
-        gl.enable(gl.CULL_FACE)
-        gl.frontFace(gl.CCW)
-        gl.cullFace(gl.BACK)
-        gl.clearColor(0.2, 0.2, 0.2, 1.0)
+        this.gl.enable(this.gl.DEPTH_TEST)
+        this.gl.enable(this.gl.CULL_FACE)
+        this.gl.frontFace(this.gl.CCW)
+        this.gl.cullFace(this.gl.BACK)
+        this.gl.clearColor(0.2, 0.2, 0.2, 1.0)
 
-        const program = gl.createProgram()
-        const uniformManager = new UniformManager(gl, program)
+        const program = this.gl.createProgram()
+        const uniformManager = new UniformManager(this.gl, program)
         const lightPosition = vec3.create()
         vec3.set(lightPosition, 10, 10, -10)
         const light = new Light(lightPosition)
@@ -127,7 +129,7 @@ class Scene {
         this.animation = {
             contact: {
                 hover: new InterpolatorInOut(500, contactHoverPosition, contactHoverLookAt, contactHoverUp),
-                click: new InterpolatorInOut(500, null, null, null) // TODO: click
+                click: new InterpolatorInOut(500, null, null, null)
             },
             linkedin: {
                 hover: new InterpolatorInOut(500, linkedinHoverPosition, linkedinHoverLookAt, linkedinHoverUp),
@@ -140,98 +142,102 @@ class Scene {
             start: new InterpolatorIn(2000, 2000)
         }
 
-        const worker = new Worker();
+        const makeGeometry = _ => {
+            return new Promise((resolve) => {
+                const worker = new Worker();
 
-        worker.addEventListener("message", event => {
-            switch (event.data.type) {
-                case "geometry":
-                    const hexGrid = new MeshObject(gl, event.data.data, vertexShaderSource, fragmentShaderSource, light, uniformManager)
-
-                    const camera = new Camera(position, lookAt, up, uniformManager)
-
-                    hexGrid.update = time => {
-                        let worldMatrix = mat4.create()
-                        const identityMatrix = mat4.create()
-                        const translationVector = vec3.create()
-                        vec3.set(translationVector, 0, -2, 0)
-                        mat4.translate(worldMatrix, identityMatrix, translationVector)
-
-                        let normalMatrix = mat3.create()
-                        let normalMatrix2 = mat4.create()
-                        let normalMatrix3 = mat4.create()
-                        mat4.invert(normalMatrix2, worldMatrix)
-                        mat4.transpose(normalMatrix3, normalMatrix2)
-                        mat3.fromMat4(normalMatrix, normalMatrix3)
-
-                        this.animation.contact.hover.update(time)
-                        this.animation.contact.click.update(time)
-                        this.animation.linkedin.hover.update(time)
-                        this.animation.linkedin.click.update(time)
-                        this.animation.learnmore.hover.update(time)
-                        this.animation.learnmore.click.update(time)
-                        this.animation.start.update(time)
-
-                        let contactParams = this.animation.contact.hover.getInterpolatedDeltaCameraParameters(camera)
-                        let linkedinParams = this.animation.linkedin.hover.getInterpolatedDeltaCameraParameters(camera)
-                        let learnmoreParams = this.animation.learnmore.hover.getInterpolatedDeltaCameraParameters(camera)
-
-                        let accumulatedPosition = vec3.create()
-                        let accumulatedLookAt = vec3.create()
-                        let accumulatedUp = vec3.create()
-
-                        vec3.add(accumulatedPosition, contactParams.position, linkedinParams.position)
-                        vec3.add(accumulatedPosition, accumulatedPosition, learnmoreParams.position)
-                        vec3.add(accumulatedPosition, accumulatedPosition, camera.originalPosition)
-
-                        vec3.add(accumulatedLookAt, contactParams.lookAt, linkedinParams.lookAt)
-                        vec3.add(accumulatedLookAt, accumulatedLookAt, learnmoreParams.lookAt)
-                        vec3.add(accumulatedLookAt, accumulatedLookAt, camera.originalLookAt)
-
-                        vec3.add(accumulatedUp, contactParams.up, linkedinParams.up)
-                        vec3.add(accumulatedUp, accumulatedUp, learnmoreParams.up)
-                        vec3.add(accumulatedUp, accumulatedUp, camera.originalUp)
-
-                        camera.update(accumulatedPosition, accumulatedLookAt, accumulatedUp)
-                        hexGrid.matWorldUniform.update(worldMatrix)
-                        hexGrid.matNormUniform.update(normalMatrix)
-                        hexGrid.timeUniform.update(time * 0.001)
-                        hexGrid.interpolator0Uniform.update(this.animation.contact.click.interpolator)
-                        hexGrid.interpolator1Uniform.update(this.animation.linkedin.click.interpolator)
-                        // TODO: learnmore uniform
-                        hexGrid.interpolator2Uniform.update(this.animation.start.interpolator)
+                worker.addEventListener("message", event => {
+                    switch (event.data.type) {
+                        case "geometry":
+                            resolve(event.data.data)
+                            break
+                        case "progress":
+                            this.progressEventListeners.forEach(listener => { listener(event.data.data) })
+                            break
                     }
+                })
+            })
+        }
 
-                    const resize = () => {
-                        canvas.width = canvas.clientWidth * window.devicePixelRatio
-                        canvas.height = canvas.clientHeight * window.devicePixelRatio
-                        gl.viewport(0, 0, canvas.width, canvas.height)
-                        mat4.perspective(camera.projMatrix, glMatrix.toRadian(45), canvas.width / canvas.height, 0.1, 1000.0)
-                        hexGrid.resize(camera.projMatrix)
-                    }
-                    window.addEventListener("resize", resize)
-                    resize()
+        const geometry = await makeGeometry()
 
-                    const loop = function (time) {
-                        stats.begin();
-                        hexGrid.update(time)
-                        hexGrid.render(gl)
-                        stats.end();
-                        requestAnimationFrame(loop)
-                    }
+        this.hexGrid = new MeshObject(this.gl, geometry, vertexShaderSource, fragmentShaderSource, light, uniformManager)
 
-                    requestAnimationFrame(loop)
-                    break
-                case "progress":
-                    callback(event.data.data)
-                    console.log(event.data.data)
-                    // console.log(event.data.data)
-                    break
-            }
-        })
+        const camera = new Camera(position, lookAt, up, uniformManager)
+
+        this.hexGrid.update = time => {
+            let worldMatrix = mat4.create()
+            const identityMatrix = mat4.create()
+            const translationVector = vec3.create()
+            vec3.set(translationVector, 0, -2, 0)
+            mat4.translate(worldMatrix, identityMatrix, translationVector)
+
+            let normalMatrix = mat3.create()
+            let normalMatrix2 = mat4.create()
+            let normalMatrix3 = mat4.create()
+            mat4.invert(normalMatrix2, worldMatrix)
+            mat4.transpose(normalMatrix3, normalMatrix2)
+            mat3.fromMat4(normalMatrix, normalMatrix3)
+
+            this.animation.contact.hover.update(time)
+            this.animation.contact.click.update(time)
+            this.animation.linkedin.hover.update(time)
+            this.animation.linkedin.click.update(time)
+            this.animation.learnmore.hover.update(time)
+            this.animation.learnmore.click.update(time)
+            this.animation.start.update(time)
+
+            let contactParams = this.animation.contact.hover.getInterpolatedDeltaCameraParameters(camera)
+            let linkedinParams = this.animation.linkedin.hover.getInterpolatedDeltaCameraParameters(camera)
+            let learnmoreParams = this.animation.learnmore.hover.getInterpolatedDeltaCameraParameters(camera)
+
+            let accumulatedPosition = vec3.create()
+            let accumulatedLookAt = vec3.create()
+            let accumulatedUp = vec3.create()
+
+            vec3.add(accumulatedPosition, contactParams.position, linkedinParams.position)
+            vec3.add(accumulatedPosition, accumulatedPosition, learnmoreParams.position)
+            vec3.add(accumulatedPosition, accumulatedPosition, camera.originalPosition)
+
+            vec3.add(accumulatedLookAt, contactParams.lookAt, linkedinParams.lookAt)
+            vec3.add(accumulatedLookAt, accumulatedLookAt, learnmoreParams.lookAt)
+            vec3.add(accumulatedLookAt, accumulatedLookAt, camera.originalLookAt)
+
+            vec3.add(accumulatedUp, contactParams.up, linkedinParams.up)
+            vec3.add(accumulatedUp, accumulatedUp, learnmoreParams.up)
+            vec3.add(accumulatedUp, accumulatedUp, camera.originalUp)
+
+            camera.update(accumulatedPosition, accumulatedLookAt, accumulatedUp)
+            this.hexGrid.matWorldUniform.update(worldMatrix)
+            this.hexGrid.matNormUniform.update(normalMatrix)
+            this.hexGrid.timeUniform.update(time * 0.001)
+            this.hexGrid.interpolator0Uniform.update(this.animation.contact.click.interpolator)
+            this.hexGrid.interpolator1Uniform.update(this.animation.linkedin.click.interpolator)
+            // TODO: learnmore uniform
+            this.hexGrid.interpolator2Uniform.update(this.animation.start.interpolator)
+        }
+
+        const resize = () => {
+            canvas.width = canvas.clientWidth * window.devicePixelRatio
+            canvas.height = canvas.clientHeight * window.devicePixelRatio
+            this.gl.viewport(0, 0, canvas.width, canvas.height)
+            mat4.perspective(camera.projMatrix, glMatrix.toRadian(45), canvas.width / canvas.height, 0.1, 1000.0)
+            this.hexGrid.resize(camera.projMatrix)
+        }
+        window.addEventListener("resize", resize)
+        resize()
     }
 
-    initialize() {
+    loop(time) {
+        this.stats.begin();
+        this.hexGrid.update(time)   // TODO: create Time class and pass tslf
+        this.hexGrid.render(this.gl)
+        this.stats.end();
+        requestAnimationFrame(this.loop.bind(this))
+    }
 
+    render() {
+        requestAnimationFrame(this.loop.bind(this))
     }
 
     startAnimation(name, type) {
@@ -251,6 +257,18 @@ class Scene {
                     this.endAnimation(name, type)
             }, this)
         }, this)
+    }
+
+    addEventListener(type, listener) {
+        if (type == "progress")
+            this.progressEventListeners.push(listener)
+    }
+
+    removeEventListener(type, listener) {
+        if (type == "progress")
+            this.progressEventListeners = this.progressEventListeners.filter(activeListener => {
+                return activeListener === listener
+            })
     }
 }
 

@@ -1,15 +1,17 @@
-import {HexagonGrid} from "./HexagonGrid.js"
+import { HexagonGrid } from "./HexagonGrid.js"
 
-const callback = progress=>{
+const progressListener = event => {
     postMessage({
-        data: progress,
+        data: event,
         type: "progress"
     })
 }
 
-const geometry = new HexagonGrid(30, 1.1, 2, callback)
+const geometry = new HexagonGrid(30, 1.1, 2)
+geometry.addEventListener("progress", progressListener)
+geometry.generate()
 
 postMessage({
-        data: geometry,
-        type: "geometry"
-    })
+    data: geometry.getData(),
+    type: "geometry"
+})
