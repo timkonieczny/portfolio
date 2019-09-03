@@ -35,6 +35,11 @@ window.addEventListener("load", async _ => {
         progressBar.style.width = progress + "%"
     }
 
+    const initCompleteListener = _ => {
+        progressBar.style.width = "100%"    // TODO: update progress bar between geometry merge and first frame. Recalculate percentages
+        preloader.style.visibility = "hidden";
+        preloader.style.animation = "preloader 1s forwards";
+    }
 
     const moveWrappers = newActiveWrapper => {
         const goHome = newActiveWrapper === wrappers.headline
@@ -137,13 +142,11 @@ window.addEventListener("load", async _ => {
         element.addEventListener("mouseleave", onHoverableMouseexit)
     })
 
+    onResize()
+
     const scene = new Scene()
     scene.addEventListener("progress", progressListener)
+    scene.addEventListener("initComplete", initCompleteListener)
     await scene.initialize(canvas, progressListener)
     scene.render()
-
-    onResize()
-    progressBar.style.width = "100%"
-    preloader.style.visibility = "hidden";
-    preloader.style.animation = "preloader 1s forwards";
 })

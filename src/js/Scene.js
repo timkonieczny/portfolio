@@ -14,6 +14,7 @@ import { Time } from "./renderer/Time.js";
 class Scene {
     constructor() {
         this.progressEventListeners = []
+        this.initCompleteEventListeners = []
     }
 
     async initialize(canvas) {
@@ -211,7 +212,7 @@ class Scene {
             camera.update(accumulatedPosition, accumulatedLookAt, accumulatedUp)
             this.hexGrid.matWorldUniform.update(worldMatrix)
             this.hexGrid.matNormUniform.update(normalMatrix)
-            this.hexGrid.timeUniform.update(this.time.elapsed * 0.001)
+            this.hexGrid.timeUniform.update(time.elapsed * 0.001)
             this.hexGrid.interpolator0Uniform.update(this.animation.contact.click.interpolator)
             this.hexGrid.interpolator1Uniform.update(this.animation.linkedin.click.interpolator)
             // TODO: learnmore uniform
@@ -228,6 +229,7 @@ class Scene {
         window.addEventListener("resize", resize)
         resize()
         this.time = new Time()
+        this.firstFrame = true
     }
 
     loop(time) {
@@ -235,6 +237,10 @@ class Scene {
         this.time.update(time)
         this.hexGrid.update(this.time)
         this.hexGrid.render(this.gl)
+        if (this.firstFrame) {
+            this.firstFrame = false
+            this.initCompleteEventListeners.forEach(listener => { listener() })
+        }
         this.stats.end();
         requestAnimationFrame(this.loop.bind(this))
     }
@@ -263,15 +269,29 @@ class Scene {
     }
 
     addEventListener(type, listener) {
-        if (type == "progress")
-            this.progressEventListeners.push(listener)
+        switch (type) {
+            case "progress":
+                this.progressEventListeners.push(listener)
+                break
+            case "initComplete":
+                this.initCompleteEventListeners.push(listener)
+                break
+        }
     }
 
     removeEventListener(type, listener) {
-        if (type == "progress")
-            this.progressEventListeners = this.progressEventListeners.filter(activeListener => {
-                return activeListener === listener
-            })
+        switch (type) {
+            case "progress":
+                this.progressEventListeners = this.progressEventListeners.filter(activeListener => {
+                    return activeListener === listener
+                })
+                break
+            case "initComplete":
+                this.initCompleteEventListeners = this.initCompleteEventListeners.filter(activeListener => {
+                    return activeListener === listener
+                })
+                break
+        }
     }
 }
 
