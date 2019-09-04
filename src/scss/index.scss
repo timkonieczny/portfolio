@@ -104,13 +104,17 @@ canvas {
                 textarea {
                     resize: none;
                 }
-                span {
+                >span {
                     height: 100%;
                     display: flex;
                     flex-direction: row;
                     justify-content: space-between;
                     input {
-                        width: 47%;
+                        flex: 1;
+                        min-width: 0;
+                    }
+                    span{
+                        width: 1em;
                     }
                 }
             }
