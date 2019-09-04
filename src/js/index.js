@@ -66,7 +66,7 @@ window.addEventListener("load", async _ => {
     }
 
     const onButtonClickExternal = _ => {
-        console.log("go to linkedin")
+        window.location.href = "https://www.linkedin.com/in/tim-konieczny";
     }
 
     const onHoverableMouseEnter = event => {
