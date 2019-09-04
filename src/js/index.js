@@ -204,8 +204,6 @@ window.addEventListener("load", async _ => {
 
     const onResize = _ => {
         wrappers.headline.element.style.left = ""
-        wrappers.message.element.style.left = ""
-        wrappers.about.element.style.left = ""
 
         if (!hasResizeAnimationEndListener) {
             wrappers.headline.element.addEventListener("transitionend", onResizeAnimationEnd);
