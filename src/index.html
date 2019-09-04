@@ -4,8 +4,19 @@
 <meta name="theme-color" content="#000000" />
 <script src="bundle.js"></script>
 <canvas id="canvas"></canvas>
-<div id="preloader">
+<!-- <div id="preloader">
     <div id="progress-bar"></div>
+</div> -->
+<div id="preloader">
+    <div class="half-placeholder"></div>
+    <div id="upper-half"></div>
+    <div id="progress-bar-wrapper">
+        <div class="progress-bar-placeholder"></div>
+        <div id="progress-bar"></div>
+        <div class="progress-bar-placeholder"></div>
+    </div>
+    <div id="lower-half"></div>
+    <div class="half-placeholder"></div>
 </div>
 <div id="wrapper">
 
@@ -17,15 +28,18 @@
         <p id="subtitle"><span>web frontend</span><span>3D</span><span>android</span></p>
         <div class="message-buttons">
             <button class="message-button animated" data-animation="message" tabindex="1">get in touch</button>
-            <button class="linkedin-button animated" data-animation="linkedin" tabindex="2"><i class="fab fa-linkedin-in"></i>connect on
+            <button class="linkedin-button animated" data-animation="linkedin" tabindex="2"><i
+                    class="fab fa-linkedin-in"></i>connect on
                 LinkedIn</button>
         </div>
-        <a class="animated" id="about-button" data-animation="about" tabindex="3" href="#"><i class="fas fa-long-arrow-alt-right"></i><span>learn
+        <a class="animated" id="about-button" data-animation="about" tabindex="3" href="#"><i
+                class="fas fa-long-arrow-alt-right"></i><span>learn
                 more</span></a>
     </div>
     <div id="message-wrapper" class="section-wrapper">
         <div>
-            <a class="back-arrow" data-animation="headline" tabindex="1" href="#"><i class="fas fa-long-arrow-alt-left"></i></a>
+            <a class="back-arrow" data-animation="headline" tabindex="1" href="#"><i
+                    class="fas fa-long-arrow-alt-left"></i></a>
         </div>
         <div id="message-form-wrapper">
             <h2>Let's have a chat.</h2>
@@ -78,7 +92,8 @@
     </div>
     <div id="about-wrapper" class="section-wrapper">
         <div>
-            <a class="back-arrow" data-animation="headline" tabindex="1" href="#"><i class="fas fa-long-arrow-alt-left"></i></a>
+            <a class="back-arrow" data-animation="headline" tabindex="1" href="#"><i
+                    class="fas fa-long-arrow-alt-left"></i></a>
         </div>
         <div id="about-content">
             <h2>Tim Konieczny.</h2>

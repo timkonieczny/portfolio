@@ -167,7 +167,7 @@ class Scene {
                 hover: new InterpolatorInOut(2000, aboutHoverPosition, aboutHoverLookAt, aboutHoverUp),
                 click: new InterpolatorInOut(2000, null, null, null)
             },
-            start: new InterpolatorIn(4000, 2000)
+            start: new InterpolatorIn(3000, 2000)
         }
 
         this.hexGrid.update = time => {

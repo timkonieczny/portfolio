@@ -3,6 +3,7 @@
 $color-accent: #00b0cf;
 $font-main: "Montserrat", sans-serif;
 $l: "screen and (max-width : 425px)";
+$preloader-duration: 3s;
 
 button {
     border: 0.2em solid $color-accent;
@@ -39,7 +40,7 @@ input {
     display: block;
     font-family: "Montserrat", sans-serif;
     font-weight: 500;
-    &::placeholder{
+    &::placeholder {
         color: #f0f0f0;
         font-weight: 300;
     }
@@ -54,7 +55,8 @@ a {
     letter-spacing: 0.1em;
     cursor: pointer;
     text-decoration: none;
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
         color: #ffffff;
     }
 }
@@ -67,7 +69,9 @@ p {
     font-weight: 200;
 }
 
-h1, h2, p{
+h1,
+h2,
+p {
     cursor: default;
 }
 
@@ -111,26 +115,37 @@ h1, h2, p{
     height: 100%;
     width: 100%;
     z-index: 3;
-    background-color: black;
     opacity: 1;
     transition: visibility 0s;
-    transition-delay: 1s;
+    transition-delay: $preloader-duration;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    #progress-bar {
-        height: 0.2em;
-        background: $color-accent;
-        transition: width 200ms linear;
+    align-content: center;
+    #progress-bar-wrapper {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        transition: $preloader-duration/2 width ease-in;
+        transition-delay: $preloader-duration/2;
+        align-self: center;
+        #progress-bar {
+            height: 0.2em;
+            background: $color-accent;
+            transition: width 200ms linear;
+        }
+        .progress-bar-placeholder {
+            flex: 1;
+            height: 0.2em;
+        }
     }
-}
-
-@keyframes preloader {
-    0% {
-        opacity: 1;
+    #upper-half,
+    #lower-half {
+        flex: 1;
+        background: black;
+        transition: $preloader-duration/2 flex ease-in;
     }
-    100% {
-        opacity: 0;
+    .half-placeholder{
+        flex: 0;
+        transition: $preloader-duration/2 flex ease-in;
     }
 }

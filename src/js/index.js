@@ -7,6 +7,10 @@ window.addEventListener("load", async _ => {
 
     let distanceToLeft, width;
     const canvas = document.querySelector("#canvas")
+    const progressBarWrapper = document.querySelector("#progress-bar-wrapper")
+    const contentWrapper = document.querySelector("#wrapper")
+    const preloaderHalves = Array.from(document.querySelectorAll("#upper-half, #lower-half"))
+    const preloaderHalvesPlaceholders = Array.from(document.querySelectorAll(".half-placeholder"))
 
     const onButtonClick = event => {
 
@@ -196,8 +200,15 @@ window.addEventListener("load", async _ => {
 
     const initCompleteListener = _ => {
         progressBar.style.width = "100%"    // TODO: update progress bar between geometry merge and first frame. Recalculate percentages
-        preloader.style.visibility = "hidden";
-        preloader.style.animation = "preloader 1s forwards";
+        preloaderHalves.forEach(element =>{
+            element.style.flex = 0;
+        })
+        preloaderHalvesPlaceholders.forEach(element =>{
+            element.style.flex = 1;
+        })
+        progressBarWrapper.style.width = 0;
+        contentWrapper.style.opacity = 1;
+        preloader.style.visibility = "hidden"
     }
 
     let hasResizeAnimationEndListener = false
