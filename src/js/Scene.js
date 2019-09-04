@@ -5,14 +5,15 @@ import { InterpolatorInOut } from "./renderer/InterpolatorInOut.js";
 import { InterpolatorIn } from "./renderer/InterpolatorIn.js";
 import { UniformManager } from "./renderer/UniformManager.js";
 import { mat4, mat3, vec3, glMatrix } from "gl-matrix"
-import Stats from "stats-js"
 import vertexShaderSource from "../glsl/vertex.glsl"
 import fragmentShaderSource from "../glsl/fragment.glsl"
 import Worker from './renderer/HexagonGrid.worker.js'
-import { Time } from "./renderer/Time.js";
+import { Time } from "./renderer/Time.js"
+import {Loop} from "Loop"
 
-class Scene {
+class Scene extends Loop{
     constructor() {
+        super()
         this.progressEventListeners = []
         this.initCompleteEventListeners = []
     }
@@ -79,13 +80,6 @@ class Scene {
         // PERFORMANCE
         // TODO: Eliminate / shrink unnecessary uniforms and attributes
         // TODO: Compare Gourand and Phong shading
-
-        this.stats = new Stats()
-        this.stats.showPanel(0)
-        this.stats.dom.style.left = ""
-        this.stats.dom.style.right = "80px"
-        document.body.appendChild(this.stats.dom)
-
 
         this.gl.enable(this.gl.DEPTH_TEST)
         this.gl.enable(this.gl.CULL_FACE)
@@ -262,8 +256,7 @@ class Scene {
         this.firstFrame = true
     }
 
-    loop(time) {
-        this.stats.begin();
+    tick(time) {
         this.time.update(time)
         this.hexGrid.update(this.time)
         this.hexGrid.render(this.gl)
@@ -271,12 +264,6 @@ class Scene {
             this.firstFrame = false
             this.initCompleteEventListeners.forEach(listener => { listener() })
         }
-        this.stats.end();
-        requestAnimationFrame(this.loop.bind(this))
-    }
-
-    render() {
-        requestAnimationFrame(this.loop.bind(this))
     }
 
     startAnimation(name, type) {
