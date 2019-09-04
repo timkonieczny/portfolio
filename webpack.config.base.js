@@ -1,4 +1,3 @@
-const path = require("path");
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
@@ -6,14 +5,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.css$/,
-                use: [
-                    "style-loader",
-                    "css-loader",
-                ]
-            },
-            {
-                test: /\.s[ac]ss$/i,
+                test: /\.(sass|scss|css)$/i,
                 use: [
                     "style-loader",
                     "css-loader",
