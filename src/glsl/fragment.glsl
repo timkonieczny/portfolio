@@ -9,8 +9,8 @@ varying vec3 vLightPosition;
 uniform mat4 uView;
 
 const vec3 lightColor = vec3(1.0, 1.0, 1.0);
-const float specularStrength = 0.5;
-const float shininess = 32.0;
+const float specularStrength = 2.0;
+const float shininess = 128.0;
 
 void main() {
 

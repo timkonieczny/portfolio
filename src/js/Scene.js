@@ -85,12 +85,12 @@ class Scene extends Loop{
         this.gl.enable(this.gl.CULL_FACE)
         this.gl.frontFace(this.gl.CCW)
         this.gl.cullFace(this.gl.BACK)
-        this.gl.clearColor(0.2, 0.2, 0.2, 1.0)
+        this.gl.clearColor(0.0, 0.0, 0.0, 1.0)
 
         const program = this.gl.createProgram()
         const uniformManager = new UniformManager(this.gl, program)
         const lightPosition = vec3.create()
-        vec3.set(lightPosition, 10, 10, -10)
+        vec3.set(lightPosition, 30, 10, -10)
         const light = new Light(lightPosition)
 
         const position = vec3.create()
@@ -108,7 +108,7 @@ class Scene extends Loop{
         vec3.set(messageHoverUp, 0, 1, 0)
 
         const linkedinHoverPosition = vec3.create()
-        vec3.set(linkedinHoverPosition, 0, 20, 0)
+        vec3.set(linkedinHoverPosition, 0, 40, 0)
         const linkedinHoverLookAt = vec3.create()
         vec3.set(linkedinHoverLookAt, 0, 0, 0)
         const linkedinHoverUp = vec3.create()
