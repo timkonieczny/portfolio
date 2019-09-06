@@ -101,7 +101,7 @@ class Scene extends Loop{
         vec3.set(up, 0, 1, 0)
 
         const messageHoverPosition = vec3.create()
-        vec3.set(messageHoverPosition, 20, -20, 60)
+        vec3.set(messageHoverPosition, 20, -25, 60)
         const messageHoverLookAt = vec3.create()
         vec3.set(messageHoverLookAt, 0, 0, 0)
         const messageHoverUp = vec3.create()
@@ -117,7 +117,7 @@ class Scene extends Loop{
         const aboutHoverPosition = vec3.create()
         vec3.set(aboutHoverPosition, 60, 20, 10)
         const aboutHoverLookAt = vec3.create()
-        vec3.set(aboutHoverLookAt, -30, -10, 20)
+        vec3.set(aboutHoverLookAt, -40, -10, -30)
         const aboutHoverUp = vec3.create()
         vec3.set(aboutHoverUp, 0, 1, 0)
 

@@ -24,9 +24,9 @@ class OctagonalPrismMesh extends Mesh {
         const invertedMatrix = mat4.create()
         mat4.invert(invertedMatrix, matrix)
 
-        const displacementY0 = Math.random() // TODO: rename
-        const displacementY1 = Math.random()
-        const displacementY2 = Math.random()
+        const displacementY0 = Math.random() - .5
+        const displacementY1 = Math.random() - .5
+        const displacementY2 = Math.random() - .5
 
         const y0 = -1
         const y1 = 1
