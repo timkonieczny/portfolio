@@ -13,27 +13,18 @@ class HexagonGrid extends Mesh {
 
     generate() {
         let time = Date.now()
-        console.info("[grid generation] start")
-
 
         this.progressTotalElements = 6 * ((this.rings * (this.rings + 1)) / 2)
         this.progressCurrentElement = 0
 
-        console.info("[grid generation] creating elements")
         this.startTime = Date.now()
         this.makeGrid(this.geometries)
-        console.info("[grid generation] creating elements done (" + (Date.now() - time) + "ms)")
         time = Date.now()
 
-        console.info("[grid generation] merging geometries")
         const hexGridGeometry = this.mergeGeometries(...this.geometries)
-        console.info("[grid generation] merging geometries done (" + (Date.now() - time) + "ms)")
 
         this.indices = hexGridGeometry.indices
         this.interleavedArray = hexGridGeometry.interleavedArray
-        console.info("[grid generation] done.\n\t" +
-            this.indices.length + " indices.\n\t" +
-            this.interleavedArray.length + " elements in interleaved array.")
     }
 
     makeRing(level) {

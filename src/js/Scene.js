@@ -39,40 +39,24 @@ class Scene extends Loop{
             return
         }
 
-        const floatPrecisionVertexHigh = this.gl.getShaderPrecisionFormat(this.gl.VERTEX_SHADER, this.gl.HIGH_FLOAT).precision
-        const floatPrecisionFragmentHigh = this.gl.getShaderPrecisionFormat(this.gl.FRAGMENT_SHADER, this.gl.HIGH_FLOAT).precision
-        const floatPrecisionVertexMedium = this.gl.getShaderPrecisionFormat(this.gl.VERTEX_SHADER, this.gl.MEDIUM_FLOAT).precision
-        const floatPrecisionFragmentMedium = this.gl.getShaderPrecisionFormat(this.gl.FRAGMENT_SHADER, this.gl.MEDIUM_FLOAT).precision
-        const floatPrecisionVertexLow = this.gl.getShaderPrecisionFormat(this.gl.VERTEX_SHADER, this.gl.LOW_FLOAT).precision
-        const floatPrecisionFragmentLow = this.gl.getShaderPrecisionFormat(this.gl.FRAGMENT_SHADER, this.gl.LOW_FLOAT).precision
+        this.floatPrecisionVertexHigh = this.gl.getShaderPrecisionFormat(this.gl.VERTEX_SHADER, this.gl.HIGH_FLOAT).precision
+        this.floatPrecisionFragmentHigh = this.gl.getShaderPrecisionFormat(this.gl.FRAGMENT_SHADER, this.gl.HIGH_FLOAT).precision
+        this.floatPrecisionVertexMedium = this.gl.getShaderPrecisionFormat(this.gl.VERTEX_SHADER, this.gl.MEDIUM_FLOAT).precision
+        this.floatPrecisionFragmentMedium = this.gl.getShaderPrecisionFormat(this.gl.FRAGMENT_SHADER, this.gl.MEDIUM_FLOAT).precision
+        this.floatPrecisionVertexLow = this.gl.getShaderPrecisionFormat(this.gl.VERTEX_SHADER, this.gl.LOW_FLOAT).precision
+        this.floatPrecisionFragmentLow = this.gl.getShaderPrecisionFormat(this.gl.FRAGMENT_SHADER, this.gl.LOW_FLOAT).precision
 
-        const ext = this.gl.getExtension("WEBGL_debug_renderer_info");
-        let info =
-            "WebGL version:\t\t\t" + this.gl.getParameter(this.gl.VERSION) +
-            "\nGLSL version:\t\t\t" + this.gl.getParameter(this.gl.SHADING_LANGUAGE_VERSION) +
-            "\nWebGL Vendor:\t\t\t" + this.gl.getParameter(this.gl.VENDOR) +
-            "\nhighp float precision:\t\tvertex: " + floatPrecisionVertexHigh +
-            "\tfragment: " + floatPrecisionFragmentHigh +
-            "\nmdiump float precision:\t\tvertex: " + floatPrecisionVertexMedium +
-            "\tfragment: " + floatPrecisionFragmentMedium +
-            "\nlowp float precision:\t\tvertex: " + floatPrecisionVertexLow +
-            "\tfragment: " + floatPrecisionFragmentLow
-        if (ext) info +=
-            "\nUnmasked WebGL vendor:\t\t" + this.gl.getParameter(ext.UNMASKED_VENDOR_WEBGL) +
-            "\nUnmasked renderer:\t\t" + this.gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)
-        console.info(info)
-
-        if (floatPrecisionVertexHigh != floatPrecisionVertexMedium != floatPrecisionVertexLow) {
-            if (floatPrecisionVertexLow >= 23) {
+        if (this.floatPrecisionVertexHigh != this.floatPrecisionVertexMedium != this.floatPrecisionVertexLow) {
+            if (this.floatPrecisionVertexLow >= 23) {
                 vertexShaderSource.replace("precision highp float;", "precision lowp float;")
-            } else if (floatPrecisionVertexMedium >= 23) {
+            } else if (this.floatPrecisionVertexMedium >= 23) {
                 vertexShaderSource.replace("precision highp float;", "precision mediump float;")
             }
         }
-        if (floatPrecisionFragmentHigh != floatPrecisionFragmentMedium != floatPrecisionFragmentLow) {
-            if (floatPrecisionFragmentLow >= 23) {
+        if (this.floatPrecisionFragmentHigh != this.floatPrecisionFragmentMedium != this.floatPrecisionFragmentLow) {
+            if (this.floatPrecisionFragmentLow >= 23) {
                 fragmentShaderSource.replace("precision highp float;", "precision lowp float;")
-            } else if (floatPrecisionFragmentMedium >= 23) {
+            } else if (this.floatPrecisionFragmentMedium >= 23) {
                 fragmentShaderSource.replace("precision highp float;", "precision mediump float;")
             }
         }

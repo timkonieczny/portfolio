@@ -19,7 +19,26 @@ class Loop{
     tick(){}
 
     render() {
+        this.printInfo()
         requestAnimationFrame(this.loop.bind(this))
+    }
+
+    printInfo(){
+        const ext = this.gl.getExtension("WEBGL_debug_renderer_info");
+        let info =
+            "WebGL version:\t\t\t" + this.gl.getParameter(this.gl.VERSION) +
+            "\nGLSL version:\t\t\t" + this.gl.getParameter(this.gl.SHADING_LANGUAGE_VERSION) +
+            "\nWebGL Vendor:\t\t\t" + this.gl.getParameter(this.gl.VENDOR) +
+            "\nhighp float precision:\t\tvertex: " + this.floatPrecisionVertexHigh +
+            "\tfragment: " + this.floatPrecisionFragmentHigh +
+            "\nmdiump float precision:\t\tvertex: " + this.floatPrecisionVertexMedium +
+            "\tfragment: " + this.floatPrecisionFragmentMedium +
+            "\nlowp float precision:\t\tvertex: " + this.floatPrecisionVertexLow +
+            "\tfragment: " + this.floatPrecisionFragmentLow
+        if (ext) info +=
+            "\nUnmasked WebGL vendor:\t\t" + this.gl.getParameter(ext.UNMASKED_VENDOR_WEBGL) +
+            "\nUnmasked renderer:\t\t" + this.gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)
+        console.info(info)
     }
 }
 
