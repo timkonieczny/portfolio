@@ -50,6 +50,7 @@ module.exports = {
         new CopyPlugin([
             { from: 'src/index.html', to: 'index.html' },
             { from: 'src/php/credentials.php', to: 'credentials.php' },
+            { from: 'assets/favicon', to: '' },
         ]),
     ],
 };
