@@ -1,5 +1,5 @@
 import { Scene } from "./Scene.js"
-import mail from "../php/mail.php"
+import { mailServerURL } from "URLs"
 import "../scss/index.scss"
 import "@fortawesome/fontawesome-free/scss/fontawesome.scss"
 import "@fortawesome/fontawesome-free/scss/solid.scss"
@@ -280,7 +280,9 @@ window.addEventListener("load", async _ => {
             }
         })
 
-        request.open("POST", "http://localhost:3000/dist/" + mail); // TODO: dev and prod paths
+        console.log(mailServerURL)
+
+        request.open("POST", mailServerURL);
 
         request.send(new FormData(document.querySelector("#message-wrapper form")));
     }
