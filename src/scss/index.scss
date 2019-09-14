@@ -1,5 +1,7 @@
 @import "elements";
 
+$send-animation-duration: 1s;
+
 body,
 html,
 canvas {
@@ -74,13 +76,14 @@ canvas {
             flex-direction: column;
             flex: 1;
             justify-content: space-between;
+            width: 100%;
             &.sent {
-                animation: send 1s forwards;
+                animation: send $send-animation-duration forwards;
                 height: 0;
-                flex: 0;
-                visibility: hidden;
-                transition: height 0s, flex 0s, visibility 0s;
-                transition-delay: 1s;
+                width: 0;
+                transition-property: height, width;
+                transition-duration: 0s, 0s;
+                transition-delay: $send-animation-duration, $send-animation-duration;
             }
 
             .field-wrapper {
@@ -107,7 +110,7 @@ canvas {
                 textarea {
                     resize: none;
                 }
-                >span {
+                > span {
                     height: 100%;
                     display: flex;
                     flex-direction: row;
@@ -116,7 +119,7 @@ canvas {
                         flex: 1;
                         min-width: 0;
                     }
-                    span{
+                    span {
                         width: 1em;
                     }
                 }
@@ -135,32 +138,35 @@ canvas {
             }
         }
         #message-confirmation {
-            display: flex;
+            display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            visibility: hidden;
-            opacity: 0;
-            height: 0;
+            flex: 1;
             &.show {
-                visibility: visible;
-                opacity: 1;
-                height: 100%;
-                transition: opacity 1s, visibility 0s, height 0s;
-                transition-delay: 1s;
+                display: block;
             }
             #message-success,
             #message-server-error,
             #message-client-error,
             #message-unknown-error {
-                display: none;
+                display: flex;
+                height: 0;
+                opacity: 0;
                 flex-direction: column;
                 justify-content: space-between;
                 align-items: center;
-                height: 100%;
-                padding: 10%;
                 text-align: center;
                 line-height: 1.5em;
+                transition: opacity 500ms;
+                box-sizing: border-box;
+                &.show {
+                    padding: 10%;
+                    height: 100%;
+                    width: 100%;
+                    display: flex;
+                    opacity: 1;
+                }
                 i {
                     font-size: 4em;
                 }

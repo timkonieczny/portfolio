@@ -181,6 +181,7 @@ window.addEventListener("load", async _ => {
     })
 
     const messageForm = document.querySelector("#message-wrapper form")
+    const messageFormWrapper = document.querySelector("#message-form-wrapper")
     const timetrapStart = Date.now()
     let isFormDisabled = false
 
@@ -202,10 +203,10 @@ window.addEventListener("load", async _ => {
 
     const initCompleteListener = _ => {
         progressBar.style.width = "100%"    // TODO: update progress bar between geometry merge and first frame. Recalculate percentages
-        preloaderHalves.forEach(element =>{
+        preloaderHalves.forEach(element => {
             element.style.flex = 0;
         })
-        preloaderHalvesPlaceholders.forEach(element =>{
+        preloaderHalvesPlaceholders.forEach(element => {
             element.style.flex = 1;
         })
         progressBarWrapper.style.width = 0;
@@ -236,6 +237,8 @@ window.addEventListener("load", async _ => {
             wrappers.headline.element.style.left = (distanceToLeft - width) + "px"
     }
 
+    let isAnimationPending = true
+
     const onMessageFormSubmit = event => {
         event.preventDefault()
 
@@ -246,30 +249,38 @@ window.addEventListener("load", async _ => {
         }
 
         const request = new XMLHttpRequest();
-        request.onreadystatechange = function () {
-
-            messageForm.classList.add("sent")
-
-            if (this.readyState == 4) {
-                switch (this.status) {
+        request.addEventListener("readystatechange", event => {
+            if (event.currentTarget.readyState == 4) {
+                switch (event.currentTarget.status) {
                     case 200:
-                        document.querySelector("#message-success").style.display = "flex"
+                        document.querySelector("#message-success").classList.add("show")
                         break
                     case 400:
-                        document.querySelector("#message-client-error").style.display = "flex"
+                        document.querySelector("#message-client-error").classList.add("show")
                         break
                     case 500:
-                        document.querySelector("#message-server-error").style.display = "flex"
+                        document.querySelector("#message-server-error").classList.add("show")
                         break
                     default:
-                        document.querySelector("#message-unknown-error").style.display = "flex"
+                        document.querySelector("#message-unknown-error").classList.add("show")
                         break
                 }
             }
+            if (isAnimationPending) {
+                isAnimationPending = false
+                messageForm.classList.add("sent")
+                messageFormWrapper.style.overflow = "visible"
+                const onSentAnimationEnd = _ => {
+                    messageFormWrapper.style.overflow = ""
+                    document.querySelector("#message-confirmation").classList.add("show")
+                    messageForm.style.display = "none"
+                    messageForm.removeEventListener("animationend", onSentAnimationEnd)
+                }
+                messageForm.addEventListener("animationend", onSentAnimationEnd)
+            }
+        })
 
-            document.querySelector("#message-confirmation").classList.add("show")
-        };
-        request.open("POST", "http://localhost:3000/dist/" + mail);
+        request.open("POST", "http://localhost:3000/dist/" + mail); // TODO: dev and prod paths
 
         request.send(new FormData(document.querySelector("#message-wrapper form")));
     }
