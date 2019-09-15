@@ -186,6 +186,10 @@ canvas {
     #about-content {
         flex: 1;
         overflow-y: auto;
+        p {
+            hyphens: auto;
+            text-align: justify;
+        }
     }
 }
 
