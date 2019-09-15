@@ -1,5 +1,6 @@
 const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 
 module.exports = {
     entry: ["babel-polyfill", "./src/js/index.js"],
@@ -65,12 +66,15 @@ module.exports = {
                 useShortDoctype: true
             },
             title: "Tim Konieczny | Freelance Developer",
-            favicon: "./assets/favicon/32x32.png",
             meta: {
                 viewport: "width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no",
                 "theme-color": "#000000",
                 charset: "UTF-8"
             }
+        }),
+        new FaviconsWebpackPlugin({
+            logo: "./assets/logo.svg",
+            prefix: ""
         })
     ],
 };
