@@ -1,6 +1,7 @@
 const path = require("path");
 const merge = require('webpack-merge');
 const baseConfig = require('./webpack.config.base.js');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = merge(baseConfig, {
     mode: "production",
@@ -18,4 +19,11 @@ module.exports = merge(baseConfig, {
         contentBase: path.join(__dirname, 'dist/prod'),
         host: '0.0.0.0'
     },
+    plugins: [
+        new BundleAnalyzerPlugin({
+            analyzerMode: "static",
+            reportFilename: "../report.prod.html",
+            openAnalyzer: false
+        })
+    ],
 });

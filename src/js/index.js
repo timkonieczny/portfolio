@@ -1,11 +1,21 @@
 import { Scene } from "./Scene.js"
 import { mailServerURL } from "URLs"
 import "../scss/index.scss"
-import "@fortawesome/fontawesome-free/scss/fontawesome.scss"
-import "@fortawesome/fontawesome-free/scss/solid.scss"
-import "@fortawesome/fontawesome-free/scss/brands.scss"
+import { library, dom } from '@fortawesome/fontawesome-svg-core'
+import { faPaperPlane, faRobot, faRedoAlt, faLongArrowAltLeft, faLongArrowAltRight } from "@fortawesome/free-solid-svg-icons"
+import { faLinkedinIn } from "@fortawesome/free-brands-svg-icons"
+
+library.add(
+    faPaperPlane,
+    faRobot,
+    faRedoAlt,
+    faLongArrowAltLeft,
+    faLongArrowAltRight,
+    faLinkedinIn
+)
 
 window.addEventListener("load", async _ => {
+    dom.i2svg()
 
     let distanceToLeft, width;
     const canvas = document.querySelector("#canvas")

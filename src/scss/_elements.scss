@@ -23,8 +23,8 @@ button {
         color: #ffffff;
         background-color: $color-accent;
     }
-    i {
-        margin: 0 0.5em 0 0;
+    svg {
+        margin: 0 1em 0 0;
     }
     @media #{$l} {
         padding: 1em;
@@ -144,7 +144,7 @@ p {
         background: black;
         transition: $preloader-duration/2 flex ease-in;
     }
-    .half-placeholder{
+    .half-placeholder {
         flex: 0;
         transition: $preloader-duration/2 flex ease-in;
     }
