@@ -5,6 +5,11 @@ $font-main: "Montserrat", sans-serif;
 $l: "screen and (max-width : 425px)";
 $preloader-duration: 3s;
 
+h1,
+h2 {
+    font-weight: 700;
+}
+
 button {
     border: 0.2em solid $color-accent;
     color: $color-accent;
@@ -42,7 +47,7 @@ input {
     font-weight: 500;
     &::placeholder {
         color: #f0f0f0;
-        font-weight: 300;
+        font-weight: 200;
     }
 }
 
@@ -62,7 +67,7 @@ a {
 }
 
 b {
-    font-weight: 600;
+    font-weight: 500;
 }
 
 p {
