@@ -1,4 +1,5 @@
 const CopyPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: ["babel-polyfill", "./src/js/index.js"],
@@ -49,10 +50,27 @@ module.exports = {
     },
     plugins: [
         new CopyPlugin([
-            { from: 'src/index.html', to: 'index.html' },
             { from: 'src/php/credentials.php', to: 'credentials.php' },
-            { from: 'src/.htaccess', to: '' },
-            { from: 'assets/favicon', to: '' },
-        ])
+            { from: 'src/.htaccess', to: '' }
+        ]),
+        new HtmlWebpackPlugin({
+            template: './src/index.ejs',
+            inject: "head",
+            minify: {
+                collapseWhitespace: true,
+                removeComments: true,
+                removeOptionalTags: true,
+                removeRedundantAttributes: true,
+                removeScriptTypeAttributes: true,
+                useShortDoctype: true
+            },
+            title: "Tim Konieczny | Freelance Developer",
+            favicon: "./assets/favicon/32x32.png",
+            meta: {
+                viewport: "width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no",
+                "theme-color": "#000000",
+                charset: "UTF-8"
+            }
+        })
     ],
 };

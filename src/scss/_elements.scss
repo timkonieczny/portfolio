@@ -141,12 +141,13 @@ p {
         .progress-bar-placeholder {
             flex: 1;
             height: 0.2em;
+            background: rgb(26, 26, 26);
         }
     }
     #upper-half,
     #lower-half {
         flex: 1;
-        background: black;
+        background: rgb(26, 26, 26);
         transition: $preloader-duration/2 flex ease-in;
     }
     .half-placeholder {
