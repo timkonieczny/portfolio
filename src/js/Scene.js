@@ -130,20 +130,19 @@ class Scene extends Loop {
 
         this.animation = {
             headline: {
-                hover: new InterpolatorInOut(1000, camera.originalPosition, camera.originalLookAt, camera.originalUp),
-                // TODO: handle click animation here. e.g. new InterpolatorEmpty
+                hover: new InterpolatorInOut(1000, 2000, camera.originalPosition, camera.originalLookAt, camera.originalUp),
             },
             message: {
-                hover: new InterpolatorInOut(1000, messageHoverPosition, messageHoverLookAt, messageHoverUp),
-                click: new InterpolatorInOut(2000, null, null, null)
+                hover: new InterpolatorInOut(1000, 1000, messageHoverPosition, messageHoverLookAt, messageHoverUp),
+                click: new InterpolatorInOut(2000, 2000, null, null, null)
             },
             linkedin: {
-                hover: new InterpolatorInOut(1000, linkedinHoverPosition, linkedinHoverLookAt, linkedinHoverUp),
-                click: new InterpolatorInOut(2000, null, null, null)
+                hover: new InterpolatorInOut(1000, 1000, linkedinHoverPosition, linkedinHoverLookAt, linkedinHoverUp),
+                click: new InterpolatorInOut(2000, 2000, null, null, null)
             },
             about: {
-                hover: new InterpolatorInOut(1000, aboutHoverPosition, aboutHoverLookAt, aboutHoverUp),
-                click: new InterpolatorInOut(2000, null, null, null)
+                hover: new InterpolatorInOut(1000, 1000, aboutHoverPosition, aboutHoverLookAt, aboutHoverUp),
+                click: new InterpolatorInOut(2000, 2000, null, null, null)
             },
             start: new InterpolatorIn(3000, 2000)
         }

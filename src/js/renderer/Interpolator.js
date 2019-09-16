@@ -1,8 +1,8 @@
 class Interpolator {
-    constructor(duration) {
+    constructor(durationIn) {
         this.interpolationTime = 0
         this.interpolator = 0
-        this.transitionDuration = duration
+        this.transitionDurationIn = durationIn
         this.isIncreasing = false
         this.isDecreasing = false
         this.isHighest = false

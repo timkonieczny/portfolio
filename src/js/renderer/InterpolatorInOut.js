@@ -2,8 +2,9 @@ import { Interpolator } from "./Interpolator.js"
 import { vec3 } from "gl-matrix"
 
 class InterpolatorInOut extends Interpolator {
-    constructor(duration, targetPosition, targetLookAt, targetUp) {
-        super(duration)
+    constructor(durationIn, durationOut, targetPosition, targetLookAt, targetUp) {
+        super(durationIn)
+        this.transitionDurationOut = durationOut
         this.targetPosition = targetPosition
         this.targetLookAt = targetLookAt
         this.targetUp = targetUp
@@ -16,18 +17,18 @@ class InterpolatorInOut extends Interpolator {
     update(tslf) {
         if (this.isIncreasing) {
             this.interpolationTime += tslf
-            this.interpolator = (-Math.cos((this.interpolationTime) / this.transitionDuration * Math.PI) + 1) / 2
+            this.interpolator = (-Math.cos((this.interpolationTime) / this.transitionDurationIn * Math.PI) + 1) / 2
 
-            if (this.interpolationTime >= this.transitionDuration) {
+            if (this.interpolationTime >= this.transitionDurationIn) {
                 this.interpolator = 1
                 this.isIncreasing = false
                 this.isHighest = true
-                this.interpolationTime = this.transitionDuration
+                this.interpolationTime = this.transitionDurationIn
             }
         } else if (this.isDecreasing) {
             this.isHighest = false
-            this.interpolationTime -= tslf
-            this.interpolator = (-Math.cos((this.interpolationTime) / this.transitionDuration * Math.PI) + 1) / 2
+            this.interpolationTime -= tslf * this.transitionDurationIn / this.transitionDurationOut
+            this.interpolator = (-Math.cos((this.interpolationTime) / this.transitionDurationIn * Math.PI) + 1) / 2
             if (this.interpolationTime <= 0) {
                 this.interpolator = 0
                 this.isDecreasing = false
