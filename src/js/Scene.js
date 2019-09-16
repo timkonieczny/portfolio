@@ -9,9 +9,9 @@ import vertexShaderSource from "../glsl/vertex.glsl"
 import fragmentShaderSource from "../glsl/fragment.glsl"
 import Worker from './renderer/HexagonGrid.worker.js'
 import { Time } from "./renderer/Time.js"
-import {Loop} from "Loop"
+import { Loop } from "Loop"
 
-class Scene extends Loop{
+class Scene extends Loop {
     constructor() {
         super()
         this.progressEventListeners = []
@@ -130,19 +130,19 @@ class Scene extends Loop{
 
         this.animation = {
             headline: {
-                hover: new InterpolatorInOut(2000, camera.originalPosition, camera.originalLookAt, camera.originalUp),
+                hover: new InterpolatorInOut(1000, camera.originalPosition, camera.originalLookAt, camera.originalUp),
                 // TODO: handle click animation here. e.g. new InterpolatorEmpty
             },
             message: {
-                hover: new InterpolatorInOut(2000, messageHoverPosition, messageHoverLookAt, messageHoverUp),
+                hover: new InterpolatorInOut(1000, messageHoverPosition, messageHoverLookAt, messageHoverUp),
                 click: new InterpolatorInOut(2000, null, null, null)
             },
             linkedin: {
-                hover: new InterpolatorInOut(2000, linkedinHoverPosition, linkedinHoverLookAt, linkedinHoverUp),
+                hover: new InterpolatorInOut(1000, linkedinHoverPosition, linkedinHoverLookAt, linkedinHoverUp),
                 click: new InterpolatorInOut(2000, null, null, null)
             },
             about: {
-                hover: new InterpolatorInOut(2000, aboutHoverPosition, aboutHoverLookAt, aboutHoverUp),
+                hover: new InterpolatorInOut(1000, aboutHoverPosition, aboutHoverLookAt, aboutHoverUp),
                 click: new InterpolatorInOut(2000, null, null, null)
             },
             start: new InterpolatorIn(3000, 2000)

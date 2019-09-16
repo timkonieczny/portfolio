@@ -1,0 +1,27 @@
+#headline-wrapper {
+    opacity: 1;
+    visibility: visible;
+    overflow: auto;
+    #subtitle {
+        margin: 1em 0;
+        span {
+            margin: 0 2em 0 0;
+            @media #{$l} {
+                margin: 0.2em 0;
+            }
+        }
+        @media #{$l} {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+    #about-button {
+        display: inline-flex;
+        flex-direction: row;
+        align-items: center;
+        svg {
+            font-size: 1.5em;
+            margin: 0 0.5em 0 0.5em;
+        }
+    }
+}

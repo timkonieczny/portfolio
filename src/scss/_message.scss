@@ -1,0 +1,172 @@
+#message-wrapper {
+    left: 80%;
+    height: 35em;
+    max-height: 70%;
+    display: flex;
+    flex-direction: column;
+    #message-form-wrapper {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        overflow: auto;
+        form {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            justify-content: space-between;
+            width: 100%;
+            &.sent {
+                animation: send $send-animation-duration forwards;
+                height: 0;
+                width: 0;
+                transition-property: height, width;
+                transition-duration: 0s, 0s;
+                transition-delay: $send-animation-duration, $send-animation-duration;
+            }
+
+            .field-wrapper {
+                height: 15%;
+                display: flex;
+                flex-direction: column;
+                textarea,
+                input,
+                button {
+                    padding: 1em;
+                    height: 100%;
+                    margin: 0;
+                    box-sizing: border-box;
+                    &.invalid {
+                        border: 0.2em solid $color-error;
+                    }
+                }
+                button {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                }
+                button svg {
+                    font-size: 2em;
+                }
+                textarea {
+                    resize: none;
+                }
+                > span {
+                    height: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    input {
+                        flex: 1;
+                        min-width: 0;
+                    }
+                    span {
+                        width: 1em;
+                    }
+                }
+            }
+            #textarea-wrapper {
+                height: 45%;
+            }
+            #submit-button-wrapper {
+                overflow: hidden;
+                opacity: 1;
+                transition-property: opacity, height;
+                transition-duration: $input-error-transition-duration, 0s;
+                transition-delay: $input-error-transition-duration, $input-error-transition-duration;
+                &.hide {
+                    transition-delay: 0s, $input-error-transition-duration;
+                    height: 0;
+                    opacity: 0;
+                }
+            }
+            #invalid-input-wrapper {
+                text-align: center;
+                color: $color-error;
+                overflow: hidden;
+                opacity: 1;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                transition-property: opacity, height;
+                transition-duration: $input-error-transition-duration, 0s;
+                transition-delay: $input-error-transition-duration, $input-error-transition-duration;
+                &.hide {
+                    height: 0;
+                    opacity: 0;
+                    transition-delay: 0s, $input-error-transition-duration;
+                }
+                p {
+                    font-weight: 700;
+                    margin: 0 0 0 0.5em;
+                }
+                svg {
+                    font-size: 0.8em;
+                }
+            }
+            input.honey {
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: -1;
+                height: 0;
+                width: 0;
+                border: 0;
+            }
+        }
+        #message-confirmation {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            &.show {
+                display: block;
+            }
+            #message-success,
+            #message-server-error,
+            #message-client-error,
+            #message-unknown-error {
+                display: flex;
+                height: 0;
+                opacity: 0;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                text-align: center;
+                line-height: 1.5em;
+                transition: opacity 500ms;
+                box-sizing: border-box;
+                &.show {
+                    padding: 10%;
+                    height: 100%;
+                    width: 100%;
+                    display: flex;
+                    opacity: 1;
+                }
+                svg {
+                    font-size: 4em;
+                }
+                h3,
+                p {
+                    margin: 0;
+                }
+            }
+        }
+    }
+}
+
+@keyframes send {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(0, 0) scale(1.1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(0, -100%) scale(1.1);
+        opacity: 0;
+    }
+}

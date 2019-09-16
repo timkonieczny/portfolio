@@ -1,5 +1,32 @@
-@import "variables";
-@import "fonts";
+body,
+html,
+canvas {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    font-family: "Montserrat", sans-serif;
+    color: white;
+    background: $color-background-primary;
+}
+
+canvas {
+    position: absolute;
+}
+
+#wrapper {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+    width: 80%;
+    z-index: 2;
+    padding: 0 10%;
+    opacity: 0;
+    transition: 1s opacity;
+    transition-delay: $preloader-duration;
+}
 
 h1,
 h2 {
