@@ -2,7 +2,7 @@ import { Scene } from "./Scene.js"
 import { mailServerURL } from "URLs"
 import "../scss/index.scss"
 import { library, dom } from '@fortawesome/fontawesome-svg-core'
-import { faPaperPlane, faRobot, faRedoAlt, faLongArrowAltLeft, faLongArrowAltRight } from "@fortawesome/free-solid-svg-icons"
+import { faPaperPlane, faRobot, faRedoAlt, faLongArrowAltLeft, faLongArrowAltRight, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons"
 import { faLinkedinIn } from "@fortawesome/free-brands-svg-icons"
 
 library.add(
@@ -11,7 +11,8 @@ library.add(
     faRedoAlt,
     faLongArrowAltLeft,
     faLongArrowAltRight,
-    faLinkedinIn
+    faLinkedinIn,
+    faExclamationTriangle
 )
 
 window.addEventListener("load", async _ => {

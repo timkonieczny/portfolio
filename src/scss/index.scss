@@ -146,6 +146,9 @@ canvas {
                 color: $color-error;
                 overflow: hidden;
                 opacity: 1;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
                 transition-property: opacity, height;
                 transition-duration: $input-error-transition-duration, 0s;
                 transition-delay: $input-error-transition-duration, $input-error-transition-duration;
@@ -156,6 +159,10 @@ canvas {
                 }
                 p {
                     font-weight: 700;
+                    margin: 0 0 0 0.5em;
+                }
+                svg {
+                    font-size: 0.8em;
                 }
             }
             input.honey {
