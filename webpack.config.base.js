@@ -52,7 +52,8 @@ module.exports = {
     plugins: [
         new CopyPlugin([
             { from: 'src/php/credentials.php', to: 'credentials.php' },
-            { from: 'src/.htaccess', to: '' }
+            { from: 'src/.htaccess', to: '' },
+            { from: 'assets/card.png', to: '' }
         ]),
         new HtmlWebpackPlugin({
             template: './src/index.ejs',
@@ -68,13 +69,36 @@ module.exports = {
             title: "Tim Konieczny | Freelance Developer",
             meta: {
                 viewport: "width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no",
-                "theme-color": "#000000",
-                charset: "UTF-8"
+                charset: "UTF-8",
+                "og:title": "Tim Konieczny | Freelance Developer",
+                "og:site_name": "Tim Konieczny | Freelance Developer",
+                "og:description": "I'm a freelance developer, specializing in web frontend, 3D and Android development.",
+                "og:image": "https://timkonieczny.com/card.png",
+                "og:url": "https://timkonieczny.com",
+                "twitter:card": "summary_large_image",
+                "twitter:image:alt": "A 3D scene. The headline reads: Hello, I'm Tim, Freelance Developer.",
+                "twitter:site": "@timkonieczny",
+                "twitter:content": "@timkonieczny",
             }
         }),
         new FaviconsWebpackPlugin({
             logo: "./assets/logo.svg",
-            prefix: ""
+            prefix: "",
+            favicons: {
+                appName: "Tim Konieczny | Freelance Developer",
+                appShortName: "Tim Konieczny",
+                appDescription: "I'm a freelance developer, specializing in web frontend, 3D and Android development.",
+                developerName: "Tim Konieczny",
+                developerURL: "Tim Konieczny",
+                dir: "auto",
+                lang: "en-US",
+                background: "#1A1A1A",
+                theme_color: "#000",
+                appleStatusBarStyle: "black-translucent",
+                display: "standalone",
+                orientation: "any",
+                version: "1.0"
+            }
         })
     ],
 };
