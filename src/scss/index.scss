@@ -1,6 +1,5 @@
+@import "variables";
 @import "elements";
-
-$send-animation-duration: 1s;
 
 body,
 html,
@@ -11,7 +10,7 @@ canvas {
     overflow: hidden;
     font-family: "Montserrat", sans-serif;
     color: white;
-    background: black;
+    background: $color-background-primary;
 }
 
 canvas {
@@ -97,6 +96,9 @@ canvas {
                     height: 100%;
                     margin: 0;
                     box-sizing: border-box;
+                    &.invalid {
+                        border: 0.2em solid $color-error;
+                    }
                 }
                 button {
                     display: flex;
@@ -126,6 +128,35 @@ canvas {
             }
             #textarea-wrapper {
                 height: 45%;
+            }
+            #submit-button-wrapper {
+                overflow: hidden;
+                opacity: 1;
+                transition-property: opacity, height;
+                transition-duration: $input-error-transition-duration, 0s;
+                transition-delay: $input-error-transition-duration, $input-error-transition-duration;
+                &.hide {
+                    transition-delay: 0s, $input-error-transition-duration;
+                    height: 0;
+                    opacity: 0;
+                }
+            }
+            #invalid-input-wrapper {
+                text-align: center;
+                color: $color-error;
+                overflow: hidden;
+                opacity: 1;
+                transition-property: opacity, height;
+                transition-duration: $input-error-transition-duration, 0s;
+                transition-delay: $input-error-transition-duration, $input-error-transition-duration;
+                &.hide {
+                    height: 0;
+                    opacity: 0;
+                    transition-delay: 0s, $input-error-transition-duration;
+                }
+                p {
+                    font-weight: 700;
+                }
             }
             input.honey {
                 position: absolute;

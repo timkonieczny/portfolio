@@ -1,9 +1,5 @@
+@import "variables";
 @import "fonts";
-
-$color-accent: #00b0cf;
-$font-main: "Montserrat", sans-serif;
-$l: "screen and (max-width : 425px)";
-$preloader-duration: 3s;
 
 h1,
 h2 {
@@ -45,6 +41,7 @@ input {
     display: block;
     font-family: "Montserrat", sans-serif;
     font-weight: 500;
+    transition: $input-error-transition-duration * 2 border;
     &::placeholder {
         color: #f0f0f0;
         font-weight: 200;
@@ -141,13 +138,13 @@ p {
         .progress-bar-placeholder {
             flex: 1;
             height: 0.2em;
-            background: rgb(26, 26, 26);
+            background: $color-background-secondary;
         }
     }
     #upper-half,
     #lower-half {
         flex: 1;
-        background: rgb(26, 26, 26);
+        background: $color-background-secondary;
         transition: $preloader-duration/2 flex ease-in;
     }
     .half-placeholder {

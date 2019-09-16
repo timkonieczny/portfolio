@@ -249,52 +249,96 @@ window.addEventListener("load", async _ => {
 
     let isAnimationPending = true
 
+    const invalidInputWrapper = document.querySelector("#invalid-input-wrapper")
+    const invalidInputText = document.querySelector("#invalid-input-wrapper p")
+    const submitButtonWrapper = document.querySelector("#submit-button-wrapper")
+    const nameField = document.querySelector("#name-input")
+    const emailField = document.querySelector("#emailaddress-input")
+    const subjectField = document.querySelector("#subject-input")
+    const messageField = document.querySelector("#message-input")
+
+    const onInvalidInputFocus = event => {
+        event.currentTarget.classList.remove("invalid")
+        invalidInputWrapper.classList.add("hide")
+        submitButtonWrapper.classList.remove("hide")
+        event.currentTarget.removeEventListener("focus", onInvalidInputFocus)
+    }
+
+    const validateInput = (input, errorMessage) => {
+        if (!input.value) {
+            invalidInputText.innerText = errorMessage
+            input.classList.add("invalid")
+            invalidInputWrapper.classList.remove("hide")
+            submitButtonWrapper.classList.add("hide")
+            input.addEventListener("focus", onInvalidInputFocus)
+            return false
+        }
+        return true
+    }
+
+    const validateEmail = (input, errorMessage) => {
+        const regex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+        if (!input.value || !regex.test(input.value)) {
+            invalidInputText.innerText = errorMessage
+            input.classList.add("invalid")
+            invalidInputWrapper.classList.remove("hide")
+            submitButtonWrapper.classList.add("hide")
+            input.addEventListener("focus", onInvalidInputFocus)
+            return false
+        }
+        return true
+    }
+
     const onMessageFormSubmit = event => {
         event.preventDefault()
 
-        // anti spam timetrap
-        if (isFormDisabled || Date.now() - timetrapStart < 3000) {
-            isFormDisabled = true
-            return
+        if (validateInput(nameField, "Please enter your name.") &&
+            validateEmail(emailField, "Please enter a valid email address.") &&
+            validateInput(subjectField, "Please enter a subject.") &&
+            validateInput(messageField, "Please enter a message.")) {
+
+            // anti spam timetrap
+            if (isFormDisabled || Date.now() - timetrapStart < 3000) {
+                isFormDisabled = true
+                return
+            }
+
+            const request = new XMLHttpRequest();
+            request.addEventListener("readystatechange", event => {
+                if (event.currentTarget.readyState == 4) {
+                    switch (event.currentTarget.status) {
+                        case 200:
+                            document.querySelector("#message-success").classList.add("show")
+                            break
+                        case 400:
+                            document.querySelector("#message-client-error").classList.add("show")
+                            break
+                        case 500:
+                            document.querySelector("#message-server-error").classList.add("show")
+                            break
+                        default:
+                            document.querySelector("#message-unknown-error").classList.add("show")
+                            break
+                    }
+                }
+                if (isAnimationPending) {
+                    isAnimationPending = false
+                    messageForm.classList.add("sent")
+                    messageFormWrapper.style.overflow = "visible"
+                    const onSentAnimationEnd = _ => {
+                        messageFormWrapper.style.overflow = ""
+                        document.querySelector("#message-confirmation").classList.add("show")
+                        messageForm.style.display = "none"
+                        messageForm.removeEventListener("animationend", onSentAnimationEnd)
+                    }
+                    messageForm.addEventListener("animationend", onSentAnimationEnd)
+                }
+            })
+
+            request.open("POST", mailServerURL);
+
+            request.send(new FormData(document.querySelector("#message-wrapper form")));
         }
-
-        const request = new XMLHttpRequest();
-        request.addEventListener("readystatechange", event => {
-            if (event.currentTarget.readyState == 4) {
-                switch (event.currentTarget.status) {
-                    case 200:
-                        document.querySelector("#message-success").classList.add("show")
-                        break
-                    case 400:
-                        document.querySelector("#message-client-error").classList.add("show")
-                        break
-                    case 500:
-                        document.querySelector("#message-server-error").classList.add("show")
-                        break
-                    default:
-                        document.querySelector("#message-unknown-error").classList.add("show")
-                        break
-                }
-            }
-            if (isAnimationPending) {
-                isAnimationPending = false
-                messageForm.classList.add("sent")
-                messageFormWrapper.style.overflow = "visible"
-                const onSentAnimationEnd = _ => {
-                    messageFormWrapper.style.overflow = ""
-                    document.querySelector("#message-confirmation").classList.add("show")
-                    messageForm.style.display = "none"
-                    messageForm.removeEventListener("animationend", onSentAnimationEnd)
-                }
-                messageForm.addEventListener("animationend", onSentAnimationEnd)
-            }
-        })
-
-        console.log(mailServerURL)
-
-        request.open("POST", mailServerURL);
-
-        request.send(new FormData(document.querySelector("#message-wrapper form")));
     }
 
     window.addEventListener("resize", onResize)

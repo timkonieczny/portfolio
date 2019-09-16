@@ -43,25 +43,29 @@
             </div>
             <div id="message-form-wrapper">
                 <h2>Let's have a chat.</h2>
-                <form>
+                <form novalidate>
                     <div class="field-wrapper">
                         <span>
-                            <input placeholder="Name" name="name" tabindex="2" autocomplete="on" />
+                            <input placeholder="Name" name="name" tabindex="2" autocomplete="on" id="name-input" />
                             <span></span>
-                            <input placeholder="Email" name="emailaddress" type="email" tabindex="3"
-                                autocomplete="on" />
+                            <input placeholder="Email" name="emailaddress" type="email" tabindex="3" autocomplete="on"
+                                id="emailaddress-input" />
                         </span>
                     </div>
                     <div class="field-wrapper">
-                        <input id="input-subject" placeholder="Subject" name="subject" autocomplete="off"
-                            tabindex="4" />
+                        <input placeholder="Subject" name="subject" autocomplete="off" tabindex="4"
+                            id="subject-input" />
                     </div>
                     <div class="field-wrapper" id="textarea-wrapper">
-                        <textarea placeholder="Message" name="message" autocomplete="off" tabindex="5"></textarea>
+                        <textarea placeholder="Message" name="message" autocomplete="off" tabindex="5"
+                            id="message-input"></textarea>
 
                     </div>
-                    <div class="field-wrapper">
+                    <div class="field-wrapper" id="submit-button-wrapper">
                         <button id="send-button" type="submit" tabindex="6"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                    <div class="field-wrapper hide" id="invalid-input-wrapper">
+                        <p>Please fill out all the fields.</p>
                     </div>
                     <input class="honey" placeholder="Phone" name="phone" tabindex="-1" autocomplete="no" type="tel" />
                     <input class="honey" placeholder="Website" name="website" tabindex="-1" autocomplete="no"
