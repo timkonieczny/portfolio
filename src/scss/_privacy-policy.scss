@@ -1,0 +1,13 @@
+#privacy-policy-wrapper {
+    left: 80%;
+    display: flex;
+    flex-direction: column;
+    #privacy-policy-content {
+        flex: 1;
+        overflow-y: auto;
+        p {
+            hyphens: auto;
+            text-align: justify;
+        }
+    }
+}

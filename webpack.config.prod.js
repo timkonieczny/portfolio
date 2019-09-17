@@ -2,6 +2,8 @@ const path = require("path");
 const merge = require('webpack-merge');
 const baseConfig = require('./webpack.config.base.js');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const HtmlWebpackPartialsPlugin = require('html-webpack-partials-plugin');
+const Secret = require("./secret.js");
 
 module.exports = merge(baseConfig, {
     mode: "production",
@@ -24,6 +26,28 @@ module.exports = merge(baseConfig, {
             analyzerMode: "static",
             reportFilename: "../report.prod.html",
             openAnalyzer: false
-        })
+        }),
+        new HtmlWebpackPartialsPlugin([{
+            path: './src/google-analytics.html',
+            location: 'head',
+            priority: 'high',
+            options: {
+                ga_property_id: Secret.analytics.google,
+            }
+        }, {
+            path: './src/facebook-pixel.html',
+            location: 'head',
+            priority: 'high',
+            options: {
+                facebook_pixel: Secret.analytics.facebook,
+            }
+        }, {
+            path: './src/twitter-tag.html',
+            location: 'head',
+            priority: 'high',
+            options: {
+                twitter_tag: Secret.analytics.twitter,
+            }
+        }]),
     ],
 });

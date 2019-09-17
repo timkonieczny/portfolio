@@ -8,6 +8,7 @@ attribute vec3 aCenter;
 attribute float aDisplacementY0;
 attribute float aDisplacementY1;
 attribute float aDisplacementY2;
+attribute float aDisplacementY3;
 attribute vec3 aStartPosition;
 varying vec3 vColor;
 varying vec3 vNormal;
@@ -23,6 +24,7 @@ uniform float uTime;
 uniform float uDisplacementY0;
 uniform float uDisplacementY1;
 uniform float uDisplacementY2;
+uniform float uDisplacementY3;
 uniform float uExplosion;
 uniform float uDoubleExplosion;
 uniform vec3 uLightPosition;
@@ -42,7 +44,8 @@ void main() {
         + cos(uTime + aCenter.z * waveLengthZ) * waveHeightZ - waveHeightZ
         + uDisplacementY0 * aDisplacementY0 * 20.0
         + uDisplacementY1 * aDisplacementY1 * 20.0
-        + uDisplacementY2 * aDisplacementY2 * 20.0)
+        + uDisplacementY2 * aDisplacementY2 * 20.0
+        + uDisplacementY3 * aDisplacementY3 * 20.0)
         + sin(uExplosion * pi) * aDisplacementY0 * 20.0
         + sin((1.0 - uDoubleExplosion) * pi) * aDisplacementY0 * 20.0;
 

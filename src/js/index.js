@@ -178,6 +178,31 @@ window.addEventListener("load", async _ => {
                     listeners: [
                         { type: "click", callback: onButtonClickExternal }
                     ]
+                },
+                {
+                    element: document.querySelector("#about-wrapper #privacy-policy-button"),
+                    listeners: [
+                        { type: "click", callback: onButtonClick }
+                    ]
+                }
+            ]
+        },
+        privacyPolicy: {
+            element: document.querySelector("#privacy-policy-wrapper"),
+            animations: [
+                { name: "privacyPolicy", type: "hover" },
+                { name: "privacyPolicy", type: "click" }
+            ],
+            buttons: [
+                {
+                    element: document.querySelector("#privacy-policy-wrapper .back-arrow"),
+                    listeners: [
+                        { type: "mouseenter", callback: onHoverableMouseEnter },
+                        { type: "focus", callback: onHoverableMouseEnter },
+                        { type: "mouseleave", callback: onHoverableMousleave },
+                        { type: "blur", callback: onHoverableMousleave },
+                        { type: "click", callback: onButtonClick }
+                    ]
                 }
             ]
         },

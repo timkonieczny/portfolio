@@ -1,8 +1,7 @@
 const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
-const Analytics = require("./analytics.config.js")
-const HtmlWebpackPartialsPlugin = require('html-webpack-partials-plugin');
+const Secret = require("./secret.js")
 
 module.exports = {
     entry: ["babel-polyfill", "./src/js/index.js"],
@@ -70,7 +69,11 @@ module.exports = {
                 useShortDoctype: true
             },
             title: "Tim Konieczny | Freelance Developer",
-            // google_analytics: Analytics.googleAnalytics,
+            street: Secret.street,
+            city: Secret.city,
+            country: Secret.country,
+            phone: Secret.phone,
+            email: Secret.email,
             meta: {
                 viewport: "width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no",
                 charset: "UTF-8",
@@ -85,28 +88,6 @@ module.exports = {
                 "twitter:content": "@timkonieczny",
             }
         }),
-        new HtmlWebpackPartialsPlugin([{
-            path: './src/google-analytics.html',
-            location: 'head',
-            priority: 'high',
-            options: {
-                ga_property_id: Analytics.googleAnalytics,
-            }
-        }, {
-            path: './src/facebook-pixel.html',
-            location: 'head',
-            priority: 'high',
-            options: {
-                facebook_pixel: Analytics.facebookPixel,
-            }
-        }, {
-            path: './src/twitter-tag.html',
-            location: 'head',
-            priority: 'high',
-            options: {
-                twitter_tag: Analytics.twitterTag,
-            }
-        }]),
         new FaviconsWebpackPlugin({
             logo: "./assets/logo.svg",
             prefix: "",

@@ -61,6 +61,7 @@ class MeshObject {
         const attribLocationDisplacementY0 = gl.getAttribLocation(this.uniformManager.program, "aDisplacementY0")
         const attribLocationDisplacementY1 = gl.getAttribLocation(this.uniformManager.program, "aDisplacementY1")
         const attribLocationDisplacementY2 = gl.getAttribLocation(this.uniformManager.program, "aDisplacementY2")
+        const attribLocationDisplacementY3 = gl.getAttribLocation(this.uniformManager.program, "aDisplacementY3")
         const attribLocationStartPosition = gl.getAttribLocation(this.uniformManager.program, "aStartPosition")
         gl.enableVertexAttribArray(attribLocationPosition)
         gl.enableVertexAttribArray(attribLocationColor)
@@ -69,6 +70,7 @@ class MeshObject {
         gl.enableVertexAttribArray(attribLocationDisplacementY0)
         gl.enableVertexAttribArray(attribLocationDisplacementY1)
         gl.enableVertexAttribArray(attribLocationDisplacementY2)
+        gl.enableVertexAttribArray(attribLocationDisplacementY3)
         gl.enableVertexAttribArray(attribLocationStartPosition)
         this.interleaved = {
             buffer: buffer,
@@ -80,9 +82,10 @@ class MeshObject {
                 displacementY0: attribLocationDisplacementY0,
                 displacementY1: attribLocationDisplacementY1,
                 displacementY2: attribLocationDisplacementY2,
+                displacementY3: attribLocationDisplacementY3,
                 startPosition: attribLocationStartPosition
             },
-            numberOfElements: 18,
+            numberOfElements: 19,
             bytesPerElement: 4
         }
 
@@ -90,6 +93,7 @@ class MeshObject {
         this.displacementY0Uniform = new UniformFloat("uDisplacementY0", this.uniformManager)
         this.displacementY1Uniform = new UniformFloat("uDisplacementY1", this.uniformManager)
         this.displacementY2Uniform = new UniformFloat("uDisplacementY2", this.uniformManager)
+        this.displacementY3Uniform = new UniformFloat("uDisplacementY3", this.uniformManager)
         this.explosionUniform = new UniformFloat("uExplosion", this.uniformManager)
         this.doubleExplosionUniform = new UniformFloat("uDoubleExplosion", this.uniformManager)
         this.matWorldUniform = new UniformMatrix4f("uWorld", this.uniformManager)
@@ -106,7 +110,8 @@ class MeshObject {
         gl.vertexAttribPointer(this.interleaved.attribLocation.displacementY0, 1, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 12)
         gl.vertexAttribPointer(this.interleaved.attribLocation.displacementY1, 1, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 13)
         gl.vertexAttribPointer(this.interleaved.attribLocation.displacementY2, 1, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 14)
-        gl.vertexAttribPointer(this.interleaved.attribLocation.startPosition, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 15)
+        gl.vertexAttribPointer(this.interleaved.attribLocation.displacementY3, 1, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 15)
+        gl.vertexAttribPointer(this.interleaved.attribLocation.startPosition, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 16)
         // TODO: startposition: y component unnecessary
     }
 

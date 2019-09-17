@@ -27,6 +27,7 @@ class OctagonalPrismMesh extends Mesh {
         const displacementY0 = Math.random() - .5
         const displacementY1 = Math.random() - .5
         const displacementY2 = Math.random() - .5
+        const displacementY3 = Math.random() - .5
 
         const y0 = -1
         const y1 = 1
@@ -49,7 +50,7 @@ class OctagonalPrismMesh extends Mesh {
             vec3.set(startPositionD, x0, y1, z0)
             vec3.transformMat4(d, startPositionD, matrix)
 
-            sides.push(new Face4(a, b, c, d, color, center, displacementY0, displacementY1, displacementY2, [Array.from(startPositionA), Array.from(startPositionB), Array.from(startPositionC), Array.from(startPositionD)]))
+            sides.push(new Face4(a, b, c, d, color, center, displacementY0, displacementY1, displacementY2, displacementY3, [Array.from(startPositionA), Array.from(startPositionB), Array.from(startPositionC), Array.from(startPositionD)]))
         }
         const topVertices = []
         const bottomVertices = []
@@ -86,6 +87,7 @@ class OctagonalPrismMesh extends Mesh {
             displacementY0,
             displacementY1,
             displacementY2,
+            displacementY3,
             topStartPosition2)
 
         const bottomStartPosition2 = bottomStartPosition.map((value) => {
@@ -100,6 +102,7 @@ class OctagonalPrismMesh extends Mesh {
             displacementY0,
             displacementY1,
             displacementY2,
+            displacementY3,
             bottomStartPosition2)
 
         const geometry = this.mergeGeometries(top, bottom, ...sides)

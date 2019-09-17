@@ -3,16 +3,6 @@
 
 <head>
     <title><%= htmlWebpackPlugin.options.title %></title>
-    <!-- TODO: include like title. pass id through webpack -->
-    <!-- <script async
-        src="https://www.googletagmanager.com/gtag/js?id=<%= htmlWebpackPlugin.options.google_analytics %>"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', '<%= htmlWebpackPlugin.options.google_analytics %>');
-    </script> -->
 </head>
 
 <body>
@@ -42,7 +32,7 @@
                         class="fab fa-linkedin-in"></i>connect on
                     LinkedIn</button>
             </div>
-            <a class="animated" id="about-button" data-animation="about" tabindex="3" href="#"><i
+            <a class="animated link-with-icon" id="about-button" data-animation="about" tabindex="3" href="#"><i
                     class="fas fa-long-arrow-alt-right"></i><span>learn
                     more</span></a>
         </div>
@@ -118,16 +108,19 @@
             <div id="about-content">
                 <h2>Tim Konieczny.</h2>
                 <p lang="en">
-                    My main areas of expertise are <b>font end development</b>, <b>computer graphics</b> and <b>digital
+                    My main areas of expertise are <b>font end development</b>, <b>computer graphics</b> and
+                    <b>digital
                         experiences</b>.
                 </p>
                 <p lang="en">
-                    I specialize in small and medium web applications in <b>React / Redux</b> and <b>HTML / CSS</b>, and
+                    I specialize in small and medium web applications in <b>React / Redux</b> and <b>HTML / CSS</b>,
+                    and
                     in
                     creating <b>compelling user experiences</b> through <b>animations</b> and <b>transitions</b>.
                 </p>
                 <p lang="en">
-                    Also, I’m passionate about <b>all things 3D</b>, and love working with <b>WebGL / three.js</b>, toy
+                    Also, I’m passionate about <b>all things 3D</b>, and love working with <b>WebGL / three.js</b>,
+                    toy
                     around
                     with <b>shaders</b> and <b>Virtual Reality</b> tech like <b>WebXR</b>.
                 </p>
@@ -137,7 +130,8 @@
                         graphics applications</b> (OpenGL ES).
                 </p>
                 <p lang="en">
-                    <b>I’m always excited to tackle interesting projects and collaborate with great people. Sounds good?
+                    <b>I’m always excited to tackle interesting projects and collaborate with great people. Sounds
+                        good?
                         Let’s
                         have a chat!</b>
                 </p>
@@ -149,6 +143,37 @@
                         <i class="fab fa-linkedin-in"></i>connect on LinkedIn
                     </button>
                 </div>
+                <a id="privacy-policy-button" class="animated link-with-icon" data-animation="privacyPolicy"
+                    tabindex="4" href="#"><i class="fas fa-long-arrow-alt-right"></i><span>privacy policy and legal
+                        information</span></a>
+            </div>
+        </div>
+        <div id="privacy-policy-wrapper" class="section-wrapper">
+            <div>
+                <a class="back-arrow" data-animation="headline" tabindex="1" href="#"><i
+                        class="fas fa-long-arrow-alt-left"></i></a>
+            </div>
+            <div id="privacy-policy-content">
+                <h2>About this website.</h2>
+                <h3>Privacy policy</h3>
+                <p lang="en">
+                    This website transmits website traffic to external servers via the following services: Google
+                    Analytics, Facebook Pixel and Twitter Pixel. The respective instances on this website do not
+                    identify individual users or associate your IP address with any other data held by Google, Facebook
+                    or Twitter. The reports provided by these services are used to help understand website traffic and
+                    webpage usage.
+                    You may opt out of this tracking at any time by activating the “Do Not Track” setting in your
+                    browser.
+                </p>
+                <h3>Legal information</h3>
+                <p lang="en">
+                    Tim Konieczny<br />
+                    <%= htmlWebpackPlugin.options.street %><br />
+                    <%= htmlWebpackPlugin.options.city %><br />
+                    <%= htmlWebpackPlugin.options.country %><br />
+                    Phone: <%= htmlWebpackPlugin.options.phone %><br />
+                    Email: <%= htmlWebpackPlugin.options.email %>
+                </p>
             </div>
         </div>
     </div>
