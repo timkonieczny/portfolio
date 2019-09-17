@@ -28,26 +28,12 @@ module.exports = merge(baseConfig, {
             openAnalyzer: false
         }),
         new HtmlWebpackPartialsPlugin([{
-            path: './src/google-analytics.html',
+            path: './src/google-tag-manager.html',
             location: 'head',
             priority: 'high',
             options: {
-                ga_property_id: Secret.analytics.google,
+                gtm_id: Secret.analytics.google,
             }
-        }, {
-            path: './src/facebook-pixel.html',
-            location: 'head',
-            priority: 'high',
-            options: {
-                facebook_pixel: Secret.analytics.facebook,
-            }
-        }, {
-            path: './src/twitter-tag.html',
-            location: 'head',
-            priority: 'high',
-            options: {
-                twitter_tag: Secret.analytics.twitter,
-            }
-        }]),
+        }])
     ],
 });
