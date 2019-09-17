@@ -315,6 +315,10 @@ window.addEventListener("load", async _ => {
         return true
     }
 
+    let isSendAnimationFinished = false
+    let hasRequestReadyState = false
+    let requestStatus;
+
     const onMessageFormSubmit = event => {
         event.preventDefault()
 
@@ -332,19 +336,11 @@ window.addEventListener("load", async _ => {
             const request = new XMLHttpRequest();
             request.addEventListener("readystatechange", event => {
                 if (event.currentTarget.readyState == 4) {
-                    switch (event.currentTarget.status) {
-                        case 200:
-                            document.querySelector("#message-success").classList.add("show")
-                            break
-                        case 400:
-                            document.querySelector("#message-client-error").classList.add("show")
-                            break
-                        case 500:
-                            document.querySelector("#message-server-error").classList.add("show")
-                            break
-                        default:
-                            document.querySelector("#message-unknown-error").classList.add("show")
-                            break
+                    if (isSendAnimationFinished) {
+                        showMessageConfirmation(event.currentTarget.status)
+                    } else {
+                        requestStatus = event.currentTarget.status
+                        hasRequestReadyState = true
                     }
                 }
                 if (isAnimationPending) {
@@ -355,6 +351,10 @@ window.addEventListener("load", async _ => {
                         messageFormWrapper.style.overflow = ""
                         document.querySelector("#message-confirmation").classList.add("show")
                         messageForm.style.display = "none"
+                        if (hasRequestReadyState)
+                            showMessageConfirmation(requestStatus)
+                        else
+                            isSendAnimationFinished = true
                         messageForm.removeEventListener("animationend", onSentAnimationEnd)
                     }
                     messageForm.addEventListener("animationend", onSentAnimationEnd)
@@ -364,6 +364,23 @@ window.addEventListener("load", async _ => {
             request.open("POST", mailServerURL);
 
             request.send(new FormData(document.querySelector("#message-wrapper form")));
+        }
+    }
+
+    const showMessageConfirmation = requestStatus => {
+        switch (requestStatus) {
+            case 200:
+                document.querySelector("#message-success").classList.add("show")
+                break
+            case 400:
+                document.querySelector("#message-client-error").classList.add("show")
+                break
+            case 500:
+                document.querySelector("#message-server-error").classList.add("show")
+                break
+            default:
+                document.querySelector("#message-unknown-error").classList.add("show")
+                break
         }
     }
 
