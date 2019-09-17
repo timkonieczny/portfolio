@@ -8,6 +8,9 @@
         p {
             hyphens: auto;
             text-align: justify;
+            .no-hyphenation {
+                hyphens: none;
+            }
         }
     }
 }
