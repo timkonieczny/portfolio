@@ -85,14 +85,28 @@ module.exports = {
                 "twitter:content": "@timkonieczny",
             }
         }),
-        new HtmlWebpackPartialsPlugin({
-            path: './src/analytics.html',
+        new HtmlWebpackPartialsPlugin([{
+            path: './src/google-analytics.html',
             location: 'head',
             priority: 'high',
             options: {
-                ga_property_id: Analytics.googleAnalytics
+                ga_property_id: Analytics.googleAnalytics,
             }
-        }),
+        }, {
+            path: './src/facebook-pixel.html',
+            location: 'head',
+            priority: 'high',
+            options: {
+                facebook_pixel: Analytics.facebookPixel,
+            }
+        }, {
+            path: './src/twitter-tag.html',
+            location: 'head',
+            priority: 'high',
+            options: {
+                twitter_tag: Analytics.twitterTag,
+            }
+        }]),
         new FaviconsWebpackPlugin({
             logo: "./assets/logo.svg",
             prefix: "",
