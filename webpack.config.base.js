@@ -76,7 +76,6 @@ module.exports = {
             email: Secret.email,
             meta: {
                 viewport: "width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no",
-                charset: "UTF-8",
                 "og:title": "Tim Konieczny | Freelance Developer",
                 "og:site_name": "Tim Konieczny | Freelance Developer",
                 "og:description": "I'm a freelance developer, specializing in web frontend, 3D and Android development.",
