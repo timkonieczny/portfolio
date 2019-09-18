@@ -110,7 +110,7 @@ class Scene extends Loop {
         const privacyPolicyHoverLookAt = vec3.create()
         vec3.set(privacyPolicyHoverLookAt, 0, 0, 0)
         const privacyPolicyHoverUp = vec3.create()
-        vec3.set(privacyPolicyHoverUp, 1, 0, 0)
+        vec3.set(privacyPolicyHoverUp, 0, 0, 1)
 
         const makeGeometry = _ => {
             return new Promise((resolve) => {
