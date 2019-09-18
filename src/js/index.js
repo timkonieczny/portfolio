@@ -82,7 +82,8 @@ window.addEventListener("load", async _ => {
         }
     }
 
-    const onButtonClickExternal = _ => {
+    const onButtonClickExternal = event => {
+        event.currentTarget.blur()
         const url = "https://www.linkedin.com/in/tim-konieczny"
         if (!window.open(url, '_blank'))
             window.location.href = url
