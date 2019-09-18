@@ -85,6 +85,7 @@ module.exports = {
                 "twitter:image:alt": "A 3D scene. The headline reads: Hello, I'm Tim, Freelance Developer.",
                 "twitter:site": "@timkonieczny",
                 "twitter:content": "@timkonieczny",
+                "format-detection": "telephone=no",
             }
         }),
         new FaviconsWebpackPlugin({
