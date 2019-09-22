@@ -94,7 +94,7 @@ module.exports = {
             logo: "./assets/logo.svg",
             prefix: "",
             favicons: {
-                appName: "Tim Konieczny | Freelance Developer",
+                appName: "Tim Konieczny",
                 appShortName: "Tim Konieczny",
                 appDescription: "I specialize in computer graphics, digital experiences and front-end development.",
                 developerName: "Tim Konieczny",
