@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+
+<head>
+    <meta charset="utf-8" />
+
+    <meta property="og:type" content="<%= htmlWebpackPlugin.options.type %>" />
+    <meta property="og:locale" content="<%= htmlWebpackPlugin.options.locale %>" />
+    <meta property="og:title" content="<%= htmlWebpackPlugin.options.title %>" />
+    <meta property="og:site_name" content="<%= htmlWebpackPlugin.options.title %>" />
+    <meta property="og:description" content="<%= htmlWebpackPlugin.options.description %>" />
+    <meta property="og:image" content="<%= htmlWebpackPlugin.options.image %>" />
+    <meta property="og:image:secure_url" content="<%= htmlWebpackPlugin.options.image %>" />
+    <meta property="og:image:type" content="<%= htmlWebpackPlugin.options.imageType %>" />
+    <meta property="og:image:width" content="<%= htmlWebpackPlugin.options.imageWidth %>" />
+    <meta property="og:image:height" content="<%= htmlWebpackPlugin.options.imageHeight %>" />
+    <meta property="og:image:alt" content="<%= htmlWebpackPlugin.options.imageAlt %>" />
+    <meta property="og:url" content="<%= htmlWebpackPlugin.options.url %>" />
+    <meta property="og:secure_url" content="<%= htmlWebpackPlugin.options.url %>" />
+
+    <meta name="twitter:creator" content="<%= htmlWebpackPlugin.options.twitter %>" />
+    <meta name="twitter:image" content="<%= htmlWebpackPlugin.options.image %>" />
+    <meta name="twitter:image:alt" content="<%= htmlWebpackPlugin.options.imageAlt %>" />
+    <meta name="twitter:card" content="<%= htmlWebpackPlugin.options.twitterCard %>" />
+    <meta name="twitter:site" content="<%= htmlWebpackPlugin.options.twitter %>" />
+    <meta name="twitter:description" content="<%= htmlWebpackPlugin.options.description %>" />
+    <meta name="twitter:title" content="<%= htmlWebpackPlugin.options.title %>" />
+
+    <title><%= htmlWebpackPlugin.options.title %></title>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <div id="preloader">
+        <div class="half-placeholder"></div>
+        <div id="upper-half"></div>
+        <div id="progress-bar-wrapper">
+            <div class="progress-bar-placeholder"></div>
+            <div id="progress-bar"></div>
+            <div class="progress-bar-placeholder"></div>
+        </div>
+        <div id="lower-half"></div>
+        <div class="half-placeholder"></div>
+    </div>
+    <div id="wrapper">
+        <%- include headline %>
+        <%- include message %>
+        <%- include about %>
+        <%- include privacy-policy %>
+        <%- include work %>
+    </div>
+</body>
+
+</html>

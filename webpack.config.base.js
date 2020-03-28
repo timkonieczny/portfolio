@@ -57,7 +57,7 @@ module.exports = {
             { from: 'assets/card.png', to: '' }
         ]),
         new HtmlWebpackPlugin({
-            template: './src/index.ejs',
+            template: '!!ejs-webpack-loader!./src/ejs/index.ejs',
             inject: "head",
             minify: {
                 collapseWhitespace: true,
