@@ -112,6 +112,13 @@ class Scene extends Loop {
         const privacyPolicyHoverUp = vec3.create()
         vec3.set(privacyPolicyHoverUp, 0, 0, 1)
 
+        const workHoverPosition = vec3.create()     // TODO: Add new animation parameters for work section
+        vec3.set(workHoverPosition, 0, 40, 0)
+        const workHoverLookAt = vec3.create()
+        vec3.set(workHoverLookAt, 0, 0, 0)
+        const workHoverUp = vec3.create()
+        vec3.set(workHoverUp, 0, 0, 1)
+
         const makeGeometry = _ => {
             return new Promise((resolve) => {
                 const worker = new Worker();
@@ -155,6 +162,10 @@ class Scene extends Loop {
                 hover: new InterpolatorInOut(1000, 1000, privacyPolicyHoverPosition, privacyPolicyHoverLookAt, privacyPolicyHoverUp),
                 click: new InterpolatorInOut(2000, 2000, null, null, null)
             },
+            work: {
+                hover: new InterpolatorInOut(1000, 1000, workHoverPosition, workHoverLookAt, workHoverUp),
+                click: new InterpolatorInOut(2000, 2000, null, null, null)
+            },
             start: new InterpolatorIn(3000, 2000)
         }
 
@@ -180,6 +191,8 @@ class Scene extends Loop {
             this.animation.about.click.update(time.tslf)
             this.animation.privacyPolicy.hover.update(time.tslf)
             this.animation.privacyPolicy.click.update(time.tslf)
+            this.animation.work.hover.update(time.tslf)
+            this.animation.work.click.update(time.tslf)
             this.animation.start.update(time.tslf)
             this.animation.headline.hover.update(time.tslf) // 0.5 to 1
 
@@ -187,6 +200,7 @@ class Scene extends Loop {
             let linkedinParams = this.animation.linkedin.hover.getInterpolatedDeltaCameraParameters(camera)
             let aboutParams = this.animation.about.hover.getInterpolatedDeltaCameraParameters(camera)
             let privacyPolicyParams = this.animation.privacyPolicy.hover.getInterpolatedDeltaCameraParameters(camera)
+            let workParams = this.animation.work.hover.getInterpolatedDeltaCameraParameters(camera)
 
             let accumulatedPosition = vec3.create()
             let accumulatedLookAt = vec3.create()
@@ -195,16 +209,19 @@ class Scene extends Loop {
             vec3.add(accumulatedPosition, messageParams.position, linkedinParams.position)
             vec3.add(accumulatedPosition, accumulatedPosition, aboutParams.position)
             vec3.add(accumulatedPosition, accumulatedPosition, privacyPolicyParams.position)
+            vec3.add(accumulatedPosition, accumulatedPosition, workParams.position)
             vec3.add(accumulatedPosition, accumulatedPosition, camera.originalPosition)
 
             vec3.add(accumulatedLookAt, messageParams.lookAt, linkedinParams.lookAt)
             vec3.add(accumulatedLookAt, accumulatedLookAt, aboutParams.lookAt)
             vec3.add(accumulatedLookAt, accumulatedLookAt, privacyPolicyParams.lookAt)
+            vec3.add(accumulatedLookAt, accumulatedLookAt, workParams.lookAt)
             vec3.add(accumulatedLookAt, accumulatedLookAt, camera.originalLookAt)
 
             vec3.add(accumulatedUp, messageParams.up, linkedinParams.up)
             vec3.add(accumulatedUp, accumulatedUp, aboutParams.up)
             vec3.add(accumulatedUp, accumulatedUp, privacyPolicyParams.up)
+            vec3.add(accumulatedUp, accumulatedUp, workParams.up)
             vec3.add(accumulatedUp, accumulatedUp, camera.originalUp)
 
             let negatedAccumulatedPosition = vec3.create()
@@ -240,6 +257,7 @@ class Scene extends Loop {
             this.hexGrid.displacementY1Uniform.update(this.animation.linkedin.click.interpolator)
             this.hexGrid.displacementY2Uniform.update(this.animation.about.click.interpolator)
             this.hexGrid.displacementY3Uniform.update(this.animation.privacyPolicy.click.interpolator)
+            this.hexGrid.displacementY3Uniform.update(this.animation.work.click.interpolator)
             this.hexGrid.explosionUniform.update(this.animation.start.interpolator)
             this.hexGrid.doubleExplosionUniform.update(this.animation.headline.hover.interpolator)
         }
@@ -268,6 +286,8 @@ class Scene extends Loop {
     }
 
     startAnimation(name, type) {
+        console.log(`startAnimation ${name} ${type}`)
+        console.log(this.animation[name][type])
         this.animation[name][type].isDecreasing = false
         this.animation[name][type].isIncreasing = true
     }

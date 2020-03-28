@@ -1,0 +1,15 @@
+#work-wrapper {
+    left: 80%;
+    display: flex;
+    flex-direction: column;
+    max-width: none;
+    width: 90%;
+    // TODO: height
+    #work-content {
+        flex: 1;
+        p {
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+    }
+}

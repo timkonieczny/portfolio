@@ -1,201 +1,302 @@
 <!DOCTYPE html>
 <html prefix="og: http://ogp.me/ns#">
+    <head>
+        <meta charset="utf-8" />
 
-<head>
-    <meta charset="utf-8" />
+        <meta property="og:type" content="<%= htmlWebpackPlugin.options.type %>" />
+        <meta property="og:locale" content="<%= htmlWebpackPlugin.options.locale %>" />
+        <meta property="og:title" content="<%= htmlWebpackPlugin.options.title %>" />
+        <meta property="og:site_name" content="<%= htmlWebpackPlugin.options.title %>" />
+        <meta property="og:description" content="<%= htmlWebpackPlugin.options.description %>" />
+        <meta property="og:image" content="<%= htmlWebpackPlugin.options.image %>" />
+        <meta property="og:image:secure_url" content="<%= htmlWebpackPlugin.options.image %>" />
+        <meta property="og:image:type" content="<%= htmlWebpackPlugin.options.imageType %>" />
+        <meta property="og:image:width" content="<%= htmlWebpackPlugin.options.imageWidth %>" />
+        <meta property="og:image:height" content="<%= htmlWebpackPlugin.options.imageHeight %>" />
+        <meta property="og:image:alt" content="<%= htmlWebpackPlugin.options.imageAlt %>" />
+        <meta property="og:url" content="<%= htmlWebpackPlugin.options.url %>" />
+        <meta property="og:secure_url" content="<%= htmlWebpackPlugin.options.url %>" />
 
-    <meta property="og:type" content="<%= htmlWebpackPlugin.options.type %>" />
-    <meta property="og:locale" content="<%= htmlWebpackPlugin.options.locale %>" />
-    <meta property="og:title" content="<%= htmlWebpackPlugin.options.title %>" />
-    <meta property="og:site_name" content="<%= htmlWebpackPlugin.options.title %>" />
-    <meta property="og:description" content="<%= htmlWebpackPlugin.options.description %>" />
-    <meta property="og:image" content="<%= htmlWebpackPlugin.options.image %>" />
-    <meta property="og:image:secure_url" content="<%= htmlWebpackPlugin.options.image %>" />
-    <meta property="og:image:type" content="<%= htmlWebpackPlugin.options.imageType %>" />
-    <meta property="og:image:width" content="<%= htmlWebpackPlugin.options.imageWidth %>" />
-    <meta property="og:image:height" content="<%= htmlWebpackPlugin.options.imageHeight %>" />
-    <meta property="og:image:alt" content="<%= htmlWebpackPlugin.options.imageAlt %>" />
-    <meta property="og:url" content="<%= htmlWebpackPlugin.options.url %>" />
-    <meta property="og:secure_url" content="<%= htmlWebpackPlugin.options.url %>" />
+        <meta name="twitter:creator" content="<%= htmlWebpackPlugin.options.twitter %>" />
+        <meta name="twitter:image" content="<%= htmlWebpackPlugin.options.image %>" />
+        <meta name="twitter:image:alt" content="<%= htmlWebpackPlugin.options.imageAlt %>" />
+        <meta name="twitter:card" content="<%= htmlWebpackPlugin.options.twitterCard %>" />
+        <meta name="twitter:site" content="<%= htmlWebpackPlugin.options.twitter %>" />
+        <meta name="twitter:description" content="<%= htmlWebpackPlugin.options.description %>" />
+        <meta name="twitter:title" content="<%= htmlWebpackPlugin.options.title %>" />
 
-    <meta name="twitter:creator" content="<%= htmlWebpackPlugin.options.twitter %>" />
-    <meta name="twitter:image" content="<%= htmlWebpackPlugin.options.image %>" />
-    <meta name="twitter:image:alt" content="<%= htmlWebpackPlugin.options.imageAlt %>" />
-    <meta name="twitter:card" content="<%= htmlWebpackPlugin.options.twitterCard %>" />
-    <meta name="twitter:site" content="<%= htmlWebpackPlugin.options.twitter %>" />
-    <meta name="twitter:description" content="<%= htmlWebpackPlugin.options.description %>" />
-    <meta name="twitter:title" content="<%= htmlWebpackPlugin.options.title %>" />
+        <title><%= htmlWebpackPlugin.options.title %></title>
+    </head>
 
-    <title><%= htmlWebpackPlugin.options.title %></title>
-</head>
-
-<body>
-    <canvas id="canvas"></canvas>
-    <div id="preloader">
-        <div class="half-placeholder"></div>
-        <div id="upper-half"></div>
-        <div id="progress-bar-wrapper">
-            <div class="progress-bar-placeholder"></div>
-            <div id="progress-bar"></div>
-            <div class="progress-bar-placeholder"></div>
+    <body>
+        <canvas id="canvas"></canvas>
+        <div id="preloader">
+            <div class="half-placeholder"></div>
+            <div id="upper-half"></div>
+            <div id="progress-bar-wrapper">
+                <div class="progress-bar-placeholder"></div>
+                <div id="progress-bar"></div>
+                <div class="progress-bar-placeholder"></div>
+            </div>
+            <div id="lower-half"></div>
+            <div class="half-placeholder"></div>
         </div>
-        <div id="lower-half"></div>
-        <div class="half-placeholder"></div>
-    </div>
-    <div id="wrapper">
-
-        <div id="headline-wrapper" class="section-wrapper">
-            <h1>Hello,<br />
-                I'm Tim,<br />
-                <span>Freelance Developer.</span><br />
-            </h1>
-            <p id="subtitle"><span>3D</span><span class="separator">|</span><span>digital experiences</span><span
-                    class="separator">|</span><span>front-end development</span></p>
-            <div class="message-buttons">
-                <button class="message-button animated" data-animation="message" tabindex="1">get in touch</button>
-                <button class="linkedin-button animated" data-animation="linkedin" tabindex="2"><i
-                        class="fab fa-linkedin-in"></i>connect on
-                    LinkedIn</button>
-            </div>
-            <a class="animated link-with-icon" id="about-button" data-animation="about" tabindex="3" href="#"><i
-                    class="fas fa-long-arrow-alt-right"></i><span>learn more</span></a>
-        </div>
-        <div id="message-wrapper" class="section-wrapper">
-            <div>
-                <a class="back-arrow" data-animation="headline" tabindex="1" href="#"><i
-                        class="fas fa-long-arrow-alt-left"></i></a>
-            </div>
-            <div id="message-form-wrapper">
-                <h2>Let's have a chat.</h2>
-                <form novalidate>
-                    <div class="field-wrapper">
-                        <span>
-                            <input placeholder="Name" name="name" tabindex="2" autocomplete="on" id="name-input" />
-                            <span></span>
-                            <input placeholder="Email" name="emailaddress" type="email" tabindex="3" autocomplete="on"
-                                id="emailaddress-input" />
-                        </span>
-                    </div>
-                    <div class="field-wrapper">
-                        <input placeholder="Subject" name="subject" autocomplete="off" tabindex="4"
-                            id="subject-input" />
-                    </div>
-                    <div class="field-wrapper" id="textarea-wrapper">
-                        <textarea placeholder="Message" name="message" autocomplete="off" tabindex="5"
-                            id="message-input"></textarea>
-
-                    </div>
-                    <div class="field-wrapper" id="submit-button-wrapper">
-                        <button id="send-button" type="submit" tabindex="6"><i class="fas fa-paper-plane"></i></button>
-                    </div>
-                    <div class="field-wrapper hide" id="invalid-input-wrapper">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <p>Please fill out all the fields.</p>
-                    </div>
-                    <input class="honey" placeholder="Phone" name="phone" tabindex="-1" autocomplete="no" type="tel" />
-                    <input class="honey" placeholder="Website" name="website" tabindex="-1" autocomplete="no"
-                        type="url" />
-                    <input class="honey" placeholder="Email" name="email" tabindex="-1" autocomplete="no"
-                        type="email" />
-                </form>
-                <div id="message-confirmation">
-                    <div id="message-success">
-                        <i class="fas fa-paper-plane"></i>
-                        <h3>Thank you for your message.</h3>
-                        <p>I'll get back to you as soon as possible!</p>
-                    </div>
-                    <div id="message-client-error">
-                        <i class="fas fa-robot"></i>
-                        <h3>400 (Bad Request)</h3>
-                        <p>The server has rejected the data you entered.<br />Please try again later.<br />Sorry for the
-                            inconvenience.</p>
-                    </div>
-                    <div id="message-server-error">
-                        <i class="fas fa-redo-alt"></i>
-                        <h3>400 (Internal Server Error)</h3>
-                        <p>Uh. Oh. Something went wrong.<br />Please try again later.<br />Sorry for the inconvenience.
-                        </p>
-                    </div>
-                    <div id="message-unknown-error">
-                        <i class="fas fa-redo-alt"></i>
-                        <h3>Uh. Oh. Something went wrong.</h3>
-                        <p>Please try again later.<br />Sorry for the inconvenience.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="about-wrapper" class="section-wrapper">
-            <div>
-                <a class="back-arrow" data-animation="headline" tabindex="1" href="#"><i
-                        class="fas fa-long-arrow-alt-left"></i></a>
-            </div>
-            <div id="about-content">
-                <h2>Tim Konieczny.</h2>
-                <p lang="en">
-                    My main areas of expertise are <b>computer graphics</b>, <b>digital experiences</b> and <b>front-end
-                        development</b>.
-                </p>
-                <p lang="en">
-                    I specialize in <b>all things 3D</b> and love creating <b>compelling user experiences</b> through
-                    <b>animations</b> and <b>transitions</b>.
-                </p>
-                <p lang="en">
-                    I focus on <b>small and medium web applications</b>. My experience ranges from 3D technologies like
-                    <b class="no-hyphenation">WebGL</b>, <b class="no-hyphenation">three.js</b>, <b>shaders</b> and <b
-                        class="no-hyphenation">WebXR</b>, to front-end technologies like <b
-                        class="no-hyphenation">React</b>, <b class="no-hyphenation">Redux</b>, <b
-                        class="no-hyphenation">HTML</b>, <b class="no-hyphenation">CSS</b> and <b
-                        class="no-hyphenation">JavaScript</b>.
-                </p>
-                <p lang="en">
-                    I can also help you with <b>native <span class="no-hyphenation">Android</span> development</b>,
-                    including both <b>UI-driven apps</b> and <b>computer graphics projects</b> using <b
-                        class="no-hyphenation">OpenGL ES</b>.
-                </p>
-                <p lang="en">
-                    <b>I’m always excited to tackle interesting projects and collaborate with great people. Sounds good?
-                        Let’s have a chat!</b>
+        <div id="wrapper">
+            <div id="headline-wrapper" class="section-wrapper">
+                <h1>
+                    Hello,<br />
+                    I'm Tim,<br />
+                    <span>Freelance Developer.</span><br />
+                </h1>
+                <p id="subtitle">
+                    <span>3D</span><span class="separator">|</span><span>digital experiences</span
+                    ><span class="separator">|</span><span>front-end development</span>
                 </p>
                 <div class="message-buttons">
-                    <button class="message-button" data-animation="message" tabindex="2">
+                    <button class="message-button animated" data-animation="message" tabindex="1">
                         get in touch
                     </button>
-                    <button class="linkedin-button" data-animation="linkedin" tabindex="3">
+                    <button class="linkedin-button animated" data-animation="linkedin" tabindex="2">
                         <i class="fab fa-linkedin-in"></i>connect on LinkedIn
                     </button>
                 </div>
-                <a id="privacy-policy-button" class="animated link-with-icon" data-animation="privacyPolicy"
-                    tabindex="4" href="#"><i class="fas fa-long-arrow-alt-right"></i><span>privacy policy and legal
-                        information</span></a>
+                <a
+                    class="animated link-with-icon"
+                    id="about-button"
+                    data-animation="about"
+                    tabindex="3"
+                    href="#"
+                    ><i class="fas fa-long-arrow-alt-right"></i><span>learn more</span></a
+                >
+                <a
+                    class="animated link-with-icon"
+                    id="work-button"
+                    data-animation="work"
+                    tabindex="4"
+                    href="#"
+                    ><i class="fas fa-long-arrow-alt-right"></i><span>work</span></a
+                >
+            </div>
+            <div id="message-wrapper" class="section-wrapper">
+                <div>
+                    <a class="back-arrow" data-animation="headline" tabindex="1" href="#"
+                        ><i class="fas fa-long-arrow-alt-left"></i
+                    ></a>
+                </div>
+                <div id="message-form-wrapper">
+                    <h2>Let's have a chat.</h2>
+                    <form novalidate>
+                        <div class="field-wrapper">
+                            <span>
+                                <input
+                                    placeholder="Name"
+                                    name="name"
+                                    tabindex="2"
+                                    autocomplete="on"
+                                    id="name-input"
+                                />
+                                <span></span>
+                                <input
+                                    placeholder="Email"
+                                    name="emailaddress"
+                                    type="email"
+                                    tabindex="3"
+                                    autocomplete="on"
+                                    id="emailaddress-input"
+                                />
+                            </span>
+                        </div>
+                        <div class="field-wrapper">
+                            <input
+                                placeholder="Subject"
+                                name="subject"
+                                autocomplete="off"
+                                tabindex="4"
+                                id="subject-input"
+                            />
+                        </div>
+                        <div class="field-wrapper" id="textarea-wrapper">
+                            <textarea
+                                placeholder="Message"
+                                name="message"
+                                autocomplete="off"
+                                tabindex="5"
+                                id="message-input"
+                            ></textarea>
+                        </div>
+                        <div class="field-wrapper" id="submit-button-wrapper">
+                            <button id="send-button" type="submit" tabindex="6">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                        <div class="field-wrapper hide" id="invalid-input-wrapper">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p>Please fill out all the fields.</p>
+                        </div>
+                        <input
+                            class="honey"
+                            placeholder="Phone"
+                            name="phone"
+                            tabindex="-1"
+                            autocomplete="no"
+                            type="tel"
+                        />
+                        <input
+                            class="honey"
+                            placeholder="Website"
+                            name="website"
+                            tabindex="-1"
+                            autocomplete="no"
+                            type="url"
+                        />
+                        <input
+                            class="honey"
+                            placeholder="Email"
+                            name="email"
+                            tabindex="-1"
+                            autocomplete="no"
+                            type="email"
+                        />
+                    </form>
+                    <div id="message-confirmation">
+                        <div id="message-success">
+                            <i class="fas fa-paper-plane"></i>
+                            <h3>Thank you for your message.</h3>
+                            <p>I'll get back to you as soon as possible!</p>
+                        </div>
+                        <div id="message-client-error">
+                            <i class="fas fa-robot"></i>
+                            <h3>400 (Bad Request)</h3>
+                            <p>
+                                The server has rejected the data you entered.<br />Please try again
+                                later.<br />Sorry for the inconvenience.
+                            </p>
+                        </div>
+                        <div id="message-server-error">
+                            <i class="fas fa-redo-alt"></i>
+                            <h3>400 (Internal Server Error)</h3>
+                            <p>
+                                Uh. Oh. Something went wrong.<br />Please try again later.<br />Sorry
+                                for the inconvenience.
+                            </p>
+                        </div>
+                        <div id="message-unknown-error">
+                            <i class="fas fa-redo-alt"></i>
+                            <h3>Uh. Oh. Something went wrong.</h3>
+                            <p>Please try again later.<br />Sorry for the inconvenience.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="about-wrapper" class="section-wrapper">
+                <div>
+                    <a class="back-arrow" data-animation="headline" tabindex="1" href="#"
+                        ><i class="fas fa-long-arrow-alt-left"></i
+                    ></a>
+                </div>
+                <div id="about-content">
+                    <h2>Tim Konieczny.</h2>
+                    <p lang="en">
+                        My main areas of expertise are <b>computer graphics</b>,
+                        <b>digital experiences</b> and <b>front-end development</b>.
+                    </p>
+                    <p lang="en">
+                        I specialize in <b>all things 3D</b> and love creating
+                        <b>compelling user experiences</b> through <b>animations</b> and
+                        <b>transitions</b>.
+                    </p>
+                    <p lang="en">
+                        I focus on <b>small and medium web applications</b>. My experience ranges
+                        from 3D technologies like <b class="no-hyphenation">WebGL</b>,
+                        <b class="no-hyphenation">three.js</b>, <b>shaders</b> and
+                        <b class="no-hyphenation">WebXR</b>, to front-end technologies like
+                        <b class="no-hyphenation">React</b>, <b class="no-hyphenation">Redux</b>,
+                        <b class="no-hyphenation">HTML</b>, <b class="no-hyphenation">CSS</b> and
+                        <b class="no-hyphenation">JavaScript</b>.
+                    </p>
+                    <p lang="en">
+                        I can also help you with
+                        <b>native <span class="no-hyphenation">Android</span> development</b>,
+                        including both <b>UI-driven apps</b> and
+                        <b>computer graphics projects</b> using
+                        <b class="no-hyphenation">OpenGL ES</b>.
+                    </p>
+                    <p lang="en">
+                        <b
+                            >I’m always excited to tackle interesting projects and collaborate with
+                            great people. Sounds good? Let’s have a chat!</b
+                        >
+                    </p>
+                    <div class="message-buttons">
+                        <button class="message-button" data-animation="message" tabindex="2">
+                            get in touch
+                        </button>
+                        <button class="linkedin-button" data-animation="linkedin" tabindex="3">
+                            <i class="fab fa-linkedin-in"></i>connect on LinkedIn
+                        </button>
+                    </div>
+                    <a
+                        id="privacy-policy-button"
+                        class="animated link-with-icon"
+                        data-animation="privacyPolicy"
+                        tabindex="4"
+                        href="#"
+                        ><i class="fas fa-long-arrow-alt-right"></i
+                        ><span>privacy policy and legal information</span></a
+                    >
+                </div>
+            </div>
+            <div id="privacy-policy-wrapper" class="section-wrapper">
+                <div>
+                    <a class="back-arrow" data-animation="headline" tabindex="1" href="#"
+                        ><i class="fas fa-long-arrow-alt-left"></i
+                    ></a>
+                </div>
+                <div id="privacy-policy-content">
+                    <h2>About this website.</h2>
+                    <h3>Privacy policy</h3>
+                    <p lang="en">
+                        This website uses Google Analytics, a service which transmits website
+                        traffic data to Google servers. This instance of Google Analytics does not
+                        identify individual users or associate your IP address with any other data
+                        held by Google. Reports provided by Google Analytics are used to help
+                        understand website traffic and webpage usage. You may opt out of this
+                        tracking at any time by activating the “Do Not Track” setting in your
+                        browser.
+                    </p>
+                    <h3>Legal information</h3>
+                    <p lang="en">
+                        Tim Konieczny<br />
+                        <span class="reverse"><%= htmlWebpackPlugin.options.street %></span><br />
+                        <span class="reverse"><%= htmlWebpackPlugin.options.city %></span><br />
+                        <span class="reverse"><%= htmlWebpackPlugin.options.country %></span><br />
+                        Phone: <span class="reverse"><%= htmlWebpackPlugin.options.phone %></span
+                        ><br />
+                        Email: <span class="reverse"><%= htmlWebpackPlugin.options.email %></span>
+                    </p>
+                </div>
+            </div>
+            <div id="work-wrapper" class="section-wrapper">
+                <div>
+                    <a class="back-arrow" data-animation="headline" tabindex="1" href="#"
+                        ><i class="fas fa-long-arrow-alt-left"></i
+                    ></a>
+                </div>
+                <div id="work-content">
+                    <h2>Work.</h2>
+                    <p lang="en">
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+                        eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+                        voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+                        clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
+                        amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+                        nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed
+                        diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+                        clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
+                        amet.
+                    </p>
+                </div>
             </div>
         </div>
-        <div id="privacy-policy-wrapper" class="section-wrapper">
-            <div>
-                <a class="back-arrow" data-animation="headline" tabindex="1" href="#"><i
-                        class="fas fa-long-arrow-alt-left"></i></a>
-            </div>
-            <div id="privacy-policy-content">
-                <h2>About this website.</h2>
-                <h3>Privacy policy</h3>
-                <p lang="en">
-                    This website uses Google Analytics, a service which transmits website traffic data to Google
-                    servers. This instance of Google Analytics does not identify individual users or associate your IP
-                    address with any other data held by Google. Reports provided by Google Analytics are used to help
-                    understand website traffic and webpage usage. You may opt out of this tracking at any time by
-                    activating the “Do Not Track” setting in your browser.
-                </p>
-                <h3>Legal information</h3>
-                <p lang="en">
-                    Tim Konieczny<br />
-                    <span class="reverse"><%= htmlWebpackPlugin.options.street %></span><br />
-                    <span class="reverse"><%= htmlWebpackPlugin.options.city %></span><br />
-                    <span class="reverse"><%= htmlWebpackPlugin.options.country %></span><br />
-                    Phone: <span class="reverse"><%= htmlWebpackPlugin.options.phone %></span><br />
-                    Email: <span class="reverse"><%= htmlWebpackPlugin.options.email %></span>
-                </p>
-            </div>
-        </div>
-    </div>
-</body>
-
+    </body>
 </html>

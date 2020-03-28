@@ -131,6 +131,16 @@ window.addEventListener("load", async _ => {
                         { type: "mouseleave", callback: onHoverableMousleave },
                         { type: "blur", callback: onHoverableMousleave }
                     ]
+                },
+                {
+                    element: document.querySelector("#headline-wrapper #work-button"),
+                    listeners: [
+                        { type: "click", callback: onButtonClick },
+                        { type: "mouseenter", callback: onHoverableMouseEnter },
+                        { type: "focus", callback: onHoverableMouseEnter },
+                        { type: "mouseleave", callback: onHoverableMousleave },
+                        { type: "blur", callback: onHoverableMousleave }
+                    ]
                 }
             ]
         },
@@ -199,6 +209,25 @@ window.addEventListener("load", async _ => {
             buttons: [
                 {
                     element: document.querySelector("#privacy-policy-wrapper .back-arrow"),
+                    listeners: [
+                        { type: "mouseenter", callback: onHoverableMouseEnter },
+                        { type: "focus", callback: onHoverableMouseEnter },
+                        { type: "mouseleave", callback: onHoverableMousleave },
+                        { type: "blur", callback: onHoverableMousleave },
+                        { type: "click", callback: onButtonClick }
+                    ]
+                }
+            ]
+        },
+        work: {
+            element: document.querySelector("#work-wrapper"),
+            animations: [
+                { name: "work", type: "hover" },
+                { name: "work", type: "click" }
+            ],
+            buttons: [
+                {
+                    element: document.querySelector("#work-wrapper .back-arrow"),
                     listeners: [
                         { type: "mouseenter", callback: onHoverableMouseEnter },
                         { type: "focus", callback: onHoverableMouseEnter },
