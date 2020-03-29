@@ -18,27 +18,92 @@
             grid-auto-columns: 20em;
             grid-auto-flow: column;
             .cell {
-                background-size: cover;
-                background-position: center center;
+                position: relative;
+                .image {
+                    position: absolute;
+                    background-size: cover;
+                    background-position: center center;
+                    width: 100%;
+                    height: 100%;
+                }
+                .content {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.5);
+                    opacity: 0;
+                    transition: opacity 0.5s;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    overflow: hidden;
+                    box-sizing: border-box;
+                    padding: 0 2em;
+                    &:hover {
+                        opacity: 1;
+                        h3 {
+                            margin-top: 0;
+                        }
+                    }
+                    & > * {
+                        margin: 0;
+                    }
+                    h3 {
+                        transition: margin 0.5s;
+                        margin: 2em 0 0.5em 0;
+                    }
+                    p {
+                        font-size: 0.8em;
+                        text-align: justify;
+                    }
+                    p,
+                    a {
+                        margin: 0.7em 0;
+                    }
+                    .tags {
+                        .tag {
+                            background-color: white;
+                            color: black;
+                            padding: 0.4em 0.8em;
+                            font-weight: 500;
+                            border-radius: 0.3em;
+                            margin: 0 0.2em;
+                            display: inline-block;
+                        }
+                    }
+                }
                 &#project1 {
                     grid-row-start: 1;
                     grid-row-end: 3;
-                    background-image: url("../../assets/sample1.webp");
+                    .image {
+                        background-image: url("../../assets/sample1.webp");
+                    }
                 }
                 &#project2 {
-                    background-image: url("../../assets/sample2.webp");
+                    .image {
+                        background-image: url("../../assets/sample2.webp");
+                    }
                 }
                 &#project3 {
-                    background-image: url("../../assets/sample3.webp");
+                    .image {
+                        background-image: url("../../assets/sample3.webp");
+                    }
                 }
                 &#project4 {
-                    background-image: url("../../assets/sample4.webp");
+                    .image {
+                        background-image: url("../../assets/sample4.webp");
+                    }
                 }
                 &#project5 {
-                    background-image: url("../../assets/sample5.webp");
+                    .image {
+                        background-image: url("../../assets/sample5.webp");
+                    }
                 }
                 &#project6 {
-                    background-image: url("../../assets/sample6.webp");
+                    .image {
+                        background-image: url("../../assets/sample6.webp");
+                    }
                 }
             }
         }
