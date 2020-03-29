@@ -4,12 +4,43 @@
     flex-direction: column;
     max-width: none;
     width: 90%;
-    // TODO: height
+    height: 90%;
     #work-content {
         flex: 1;
-        p {
-            overflow-x: auto;
-            white-space: nowrap;
+        display: flex;
+        flex-direction: column;
+        #grid {
+            width: 100%;
+            overflow: auto;
+            flex: 1;
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+            grid-auto-columns: 20em;
+            grid-auto-flow: column;
+            .cell {
+                background-size: cover;
+                background-position: center center;
+                &#project1 {
+                    grid-row-start: 1;
+                    grid-row-end: 3;
+                    background-image: url("../../assets/sample1.webp");
+                }
+                &#project2 {
+                    background-image: url("../../assets/sample2.webp");
+                }
+                &#project3 {
+                    background-image: url("../../assets/sample3.webp");
+                }
+                &#project4 {
+                    background-image: url("../../assets/sample4.webp");
+                }
+                &#project5 {
+                    background-image: url("../../assets/sample5.webp");
+                }
+                &#project6 {
+                    background-image: url("../../assets/sample6.webp");
+                }
+            }
         }
     }
 }

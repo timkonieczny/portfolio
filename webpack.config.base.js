@@ -32,6 +32,12 @@ module.exports = {
                 ]
             },
             {
+                test: /\.webp$/,
+                use: [
+                    'file-loader'
+                ]
+            },
+            {
                 test: /\.svg$/,
                 exclude: /credentials.php/,
                 use: [
