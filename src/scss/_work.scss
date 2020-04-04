@@ -40,6 +40,9 @@
                     overflow: hidden;
                     box-sizing: border-box;
                     padding: 0 2em;
+                    @media #{$l} {
+                        opacity: 1;
+                    }
                     &:hover {
                         opacity: 1;
                         h3 {
@@ -52,6 +55,9 @@
                     h3 {
                         transition: margin 0.5s;
                         margin: 2em 0 0.5em 0;
+                        @media #{$l} {
+                            margin: 0 0 0.5em 0;
+                        }
                     }
                     p {
                         font-size: 0.8em;
@@ -101,6 +107,8 @@
                     }
                 }
                 &#project6 {
+                    grid-row-start: 1;
+                    grid-row-end: 3;
                     .image {
                         background-image: url("../../assets/sample6.webp");
                     }
