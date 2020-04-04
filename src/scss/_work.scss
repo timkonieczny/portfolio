@@ -40,7 +40,7 @@
                     overflow: hidden;
                     box-sizing: border-box;
                     padding: 0 2em;
-                    @media #{$l} {
+                    @media (hover: none) {
                         opacity: 1;
                     }
                     &:hover {
@@ -55,7 +55,7 @@
                     h3 {
                         transition: margin 0.5s;
                         margin: 2em 0 0.5em 0;
-                        @media #{$l} {
+                        @media (hover: none) {
                             margin: 0 0 0.5em 0;
                         }
                     }
