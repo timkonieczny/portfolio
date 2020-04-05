@@ -3,8 +3,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 const Secret = require("./secret.js")
 
+// TODO: Add Hot Component Replacement Plugin
+// TODO: Insert head nodes via React Helmet? https://css-tricks.com/its-all-in-the-head-managing-the-document-head-of-a-react-powered-site-with-react-helmet/
+
 module.exports = {
     entry: ["babel-polyfill", "./src/js/index.js"],
+    resolve: {
+        extensions: ['.jsx', '.js']
+    },
     module: {
         rules: [
             {
@@ -21,7 +27,7 @@ module.exports = {
                 loader: "webpack-glsl-loader"
             },
             {
-                test: /\.js$/,
+                test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 loader: "babel-loader"
             },
@@ -86,11 +92,6 @@ module.exports = {
             url: "https://timkonieczny.com/",
             twitter: "@timkonieczny",
             twitterCard: "summary_large_image",
-            street: Secret.street,
-            city: Secret.city,
-            country: Secret.country,
-            phone: Secret.phone,
-            email: Secret.email,
             meta: {
                 viewport: "width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no",
                 "format-detection": "telephone=no",
