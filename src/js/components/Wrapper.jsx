@@ -17,10 +17,8 @@ class Wrapper extends Component {
         super();
 
         this.state = {
-            value: ""
-        };
-
-        this.handleChange = this.handleChange.bind(this);
+            progress: 0
+        }
     }
 
     async componentDidMount() {
@@ -40,10 +38,7 @@ class Wrapper extends Component {
 
         let distanceToLeft, width;
         const canvas = document.querySelector("#canvas")
-        const progressBarWrapper = document.querySelector("#progress-bar-wrapper")
         const contentWrapper = document.querySelector("#wrapper")
-        const preloaderHalves = Array.from(document.querySelectorAll("#upper-half, #lower-half"))
-        const preloaderHalvesPlaceholders = Array.from(document.querySelectorAll(".half-placeholder"))
 
         const onButtonClick = event => {
 
@@ -273,33 +268,21 @@ class Wrapper extends Component {
         const timetrapStart = Date.now()
         let isFormDisabled = false
 
-        const preloader = document.querySelector("#preloader")
-        const progressBar = document.querySelector("#progress-bar")
 
         const progressListener = event => {
-            let progress = 0
             switch (event.task) {
                 case "generate":
-                    progress += event.progress * 0.85
+                    this.setState({ progress: event.progress * .85 })
                     break
                 case "merge":
-                    progress += 85 + event.progress * 0.15
+                    this.setState({ progress: 85 + event.progress * .85 })
                     break
             }
-            progressBar.style.width = progress + "%"
         }
 
         const initCompleteListener = _ => {
-            progressBar.style.width = "100%"    // TODO: update progress bar between geometry merge and first frame. Recalculate percentages
-            preloaderHalves.forEach(element => {
-                element.style.flex = 0;
-            })
-            preloaderHalvesPlaceholders.forEach(element => {
-                element.style.flex = 1;
-            })
-            progressBarWrapper.style.width = 0;
+            this.setState({ progress: 100 })
             contentWrapper.style.opacity = 1;
-            preloader.style.visibility = "hidden"
         }
 
         let hasResizeAnimationEndListener = false
@@ -449,20 +432,11 @@ class Wrapper extends Component {
         scene.render()
     }
 
-    handleChange(event) {
-        const { value } = event.target;
-        this.setState(() => {
-            return {
-                value
-            };
-        });
-    }
-
     render() {
         return (
             <Fragment>
                 <canvas id="canvas"></canvas>
-                <Preloader />
+                <Preloader progress={this.state.progress} />
                 <div id="wrapper">
                     <Home />
                     <Message />

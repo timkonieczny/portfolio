@@ -2,6 +2,10 @@ import React, { Component } from "react";
 
 class Work extends Component {
     render() {
+        // TODO: add hyphens
+        // TODO: add horizontal wheel scrolling
+        // TODO: create component for tile
+
         return (
             <div id="work-wrapper" className="section-wrapper">
                 <div>
