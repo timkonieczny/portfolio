@@ -281,7 +281,7 @@ class Scene extends Loop {
         this.hexGrid.render(this.gl)
         if (this.firstFrame) {
             this.firstFrame = false
-            this.initCompleteEventListeners.forEach(listener => { listener() })
+            this.initCompleteEventListeners.forEach(listener => { listener({ progress: 100, task: "complete" }) })
         }
     }
 
