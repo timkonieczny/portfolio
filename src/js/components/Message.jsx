@@ -3,23 +3,24 @@ import { mailServerURL } from "../URLs"
 
 class Message extends Component {
 
+    constructor() {
+        super()
+        this.state = {
+            errorMessage: "",
+            errorType: null
+        }
+    }
+
     componentDidMount() {
 
-        const invalidInputText = document.querySelector("#invalid-input-wrapper p")
-        const invalidInputWrapper = document.querySelector("#invalid-input-wrapper")
-        const submitButtonWrapper = document.querySelector("#submit-button-wrapper")
         const nameField = document.querySelector("#name-input")
         const emailField = document.querySelector("#emailaddress-input")
         const subjectField = document.querySelector("#subject-input")
         const messageField = document.querySelector("#message-input")
-
         const messageForm = document.querySelector("#message-wrapper form")
-
         const messageFormWrapper = document.querySelector("#message-form-wrapper")
 
-
         let isAnimationPending = true
-
 
         const timetrapStart = Date.now()
         let isFormDisabled = false
@@ -28,11 +29,9 @@ class Message extends Component {
         let hasRequestReadyState = false
         let requestStatus;
 
-
         const onInvalidInputFocus = event => {
             event.currentTarget.classList.remove("invalid")
-            invalidInputWrapper.classList.add("hide")
-            submitButtonWrapper.classList.remove("hide")
+            this.setState({ errorType: null })
             event.currentTarget.removeEventListener("focus", onInvalidInputFocus)
         }
 
@@ -55,10 +54,7 @@ class Message extends Component {
 
         const validateInput = (input, errorMessage) => {
             if (!input.value) {
-                invalidInputText.innerText = errorMessage
-                input.classList.add("invalid")
-                invalidInputWrapper.classList.remove("hide")
-                submitButtonWrapper.classList.add("hide")
+                this.setState({ errorMessage: errorMessage, errorType: input.name })
                 input.addEventListener("focus", onInvalidInputFocus)
                 return false
             }
@@ -68,10 +64,7 @@ class Message extends Component {
         const validateEmail = (input, errorMessage) => {
             const regex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
             if (!input.value || !regex.test(input.value)) {
-                invalidInputText.innerText = errorMessage
-                input.classList.add("invalid")
-                invalidInputWrapper.classList.remove("hide")
-                submitButtonWrapper.classList.add("hide")
+                this.setState({ errorMessage: errorMessage, errorType: input.name })
                 input.addEventListener("focus", onInvalidInputFocus)
                 return false
             }
@@ -126,9 +119,7 @@ class Message extends Component {
             }
         }
 
-
         messageForm.addEventListener("submit", onMessageFormSubmit)
-
     }
 
 
@@ -144,27 +135,27 @@ class Message extends Component {
                     <form noValidate>
                         <div className="field-wrapper">
                             <span>
-                                <input placeholder="Name" name="name" tabIndex="2" autoComplete="on" id="name-input" />
+                                <input placeholder="Name" name="name" tabIndex="2" autoComplete="on" id="name-input" className={`${this.state.errorType === "name" ? "invalid" : ""}`} />
                                 <span></span>
                                 <input placeholder="Email" name="emailaddress" type="email" tabIndex="3" autoComplete="on"
-                                    id="emailaddress-input" />
+                                    id="emailaddress-input" className={`${this.state.errorType === "emailaddress" ? "invalid" : ""}`} />
                             </span>
                         </div>
                         <div className="field-wrapper">
-                            <input placeholder="Subject" name="subject" autoComplete="off" tabIndex="4" id="subject-input" />
+                            <input placeholder="Subject" name="subject" autoComplete="off" tabIndex="4" id="subject-input" className={`${this.state.errorType === "subject" ? "invalid" : ""}`} />
                         </div>
                         <div className="field-wrapper" id="textarea-wrapper">
                             <textarea placeholder="Message" name="message" autoComplete="off" tabIndex="5"
-                                id="message-input"></textarea>
+                                id="message-input" className={`${this.state.errorType === "message" ? "invalid" : ""}`}></textarea>
                         </div>
-                        <div className="field-wrapper" id="submit-button-wrapper">
+                        <div className={`field-wrapper ${this.state.errorType ? "hide" : ""}`} id="submit-button-wrapper">
                             <button id="send-button" type="submit" tabIndex="6">
                                 <i className="fas fa-paper-plane"></i>
                             </button>
                         </div>
-                        <div className="field-wrapper hide" id="invalid-input-wrapper">
+                        <div className={`field-wrapper ${this.state.errorType ? "" : "hide"}`} id="invalid-input-wrapper">
                             <i className="fas fa-exclamation-triangle"></i>
-                            <p>Please fill out all the fields.</p>
+                            <p>{this.state.errorMessage}</p>
                         </div>
                         <input className="honey" placeholder="Phone" name="phone" tabIndex="-1" autoComplete="no" type="tel" />
                         <input className="honey" placeholder="Website" name="website" tabIndex="-1" autoComplete="no" type="url" />
