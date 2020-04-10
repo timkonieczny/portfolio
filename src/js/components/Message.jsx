@@ -9,119 +9,111 @@ class Message extends Component {
             errorMessage: "",
             errorType: null
         }
+        this.isFormDisabled = false
+        this.isSendAnimationFinished = false
+        this.hasRequestReadyState = false
+        this.isAnimationPending = true
     }
 
     componentDidMount() {
-
-        const nameField = document.querySelector("#name-input")
-        const emailField = document.querySelector("#emailaddress-input")
-        const subjectField = document.querySelector("#subject-input")
-        const messageField = document.querySelector("#message-input")
-        const messageForm = document.querySelector("#message-wrapper form")
-        const messageFormWrapper = document.querySelector("#message-form-wrapper")
-
-        let isAnimationPending = true
-
-        const timetrapStart = Date.now()
-        let isFormDisabled = false
-
-        let isSendAnimationFinished = false
-        let hasRequestReadyState = false
-        let requestStatus;
-
-        const onInvalidInputFocus = event => {
-            event.currentTarget.classList.remove("invalid")
-            this.setState({ errorType: null })
-            event.currentTarget.removeEventListener("focus", onInvalidInputFocus)
-        }
-
-        const showMessageConfirmation = requestStatus => {
-            switch (requestStatus) {
-                case 200:
-                    document.querySelector("#message-success").classList.add("show")
-                    break
-                case 400:
-                    document.querySelector("#message-client-error").classList.add("show")
-                    break
-                case 500:
-                    document.querySelector("#message-server-error").classList.add("show")
-                    break
-                default:
-                    document.querySelector("#message-unknown-error").classList.add("show")
-                    break
-            }
-        }
-
-        const validateInput = (input, errorMessage) => {
-            if (!input.value) {
-                this.setState({ errorMessage: errorMessage, errorType: input.name })
-                input.addEventListener("focus", onInvalidInputFocus)
-                return false
-            }
-            return true
-        }
-
-        const validateEmail = (input, errorMessage) => {
-            const regex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-            if (!input.value || !regex.test(input.value)) {
-                this.setState({ errorMessage: errorMessage, errorType: input.name })
-                input.addEventListener("focus", onInvalidInputFocus)
-                return false
-            }
-            return true
-        }
-
-        const onMessageFormSubmit = event => {
-            event.preventDefault()
-
-            if (validateInput(nameField, "Please enter your name.") &&
-                validateEmail(emailField, "Please enter a valid email address.") &&
-                validateInput(subjectField, "Please enter a subject.") &&
-                validateInput(messageField, "Please enter a message.")) {
-
-                // anti spam timetrap
-                if (isFormDisabled || Date.now() - timetrapStart < 3000) {
-                    isFormDisabled = true
-                    return
-                }
-
-                const request = new XMLHttpRequest();
-                request.addEventListener("readystatechange", event => {
-                    if (event.currentTarget.readyState == 4) {
-                        if (isSendAnimationFinished) {
-                            showMessageConfirmation(event.currentTarget.status)
-                        } else {
-                            requestStatus = event.currentTarget.status
-                            hasRequestReadyState = true
-                        }
-                    }
-                    if (isAnimationPending) {
-                        isAnimationPending = false
-                        messageForm.classList.add("sent")
-                        messageFormWrapper.style.overflow = "visible"
-                        const onSentAnimationEnd = _ => {
-                            messageFormWrapper.style.overflow = ""
-                            document.querySelector("#message-confirmation").classList.add("show")
-                            messageForm.style.display = "none"
-                            if (hasRequestReadyState)
-                                showMessageConfirmation(requestStatus)
-                            else
-                                isSendAnimationFinished = true
-                            messageForm.removeEventListener("animationend", onSentAnimationEnd)
-                        }
-                        messageForm.addEventListener("animationend", onSentAnimationEnd)
-                    }
-                })
-
-                request.open("POST", mailServerURL);
-
-                request.send(new FormData(document.querySelector("#message-wrapper form")));
-            }
-        }
-
-        messageForm.addEventListener("submit", onMessageFormSubmit)
+        this.timetrapStart = Date.now()
     }
 
+    onInvalidInputFocus(event) {
+        event.currentTarget.classList.remove("invalid")
+        this.setState({ errorType: null })
+        event.currentTarget.removeEventListener("focus", event.currentTarget.onInvalidInputFocus)
+    }
+
+    validateInput(input, errorMessage) {
+        if (!input.value) {
+            this.setState({ errorMessage: errorMessage, errorType: input.name })
+            input.onInvalidInputFocus = this.onInvalidInputFocus.bind(this)
+            input.addEventListener("focus", input.onInvalidInputFocus)
+            return false
+        }
+        return true
+    }
+
+    validateEmail(input, errorMessage) {
+        const regex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+        if (!input.value || !regex.test(input.value)) {
+            this.setState({ errorMessage: errorMessage, errorType: input.name })
+            input.onInvalidInputFocus = this.onInvalidInputFocus.bind(this)
+            input.addEventListener("focus", input.onInvalidInputFocus)
+            return false
+        }
+        return true
+    }
+
+    showMessageConfirmation(requestStatus) {
+        switch (requestStatus) {
+            case 200:
+                document.querySelector("#message-success").classList.add("show")
+                break
+            case 400:
+                document.querySelector("#message-client-error").classList.add("show")
+                break
+            case 500:
+                document.querySelector("#message-server-error").classList.add("show")
+                break
+            default:
+                document.querySelector("#message-unknown-error").classList.add("show")
+                break
+        }
+    }
+
+    onMessageFormSubmit(event) {
+        event.preventDefault()
+
+        if (this.validateInput(this.nameInput, "Please enter your name.") &&
+            this.validateEmail(this.emailInput, "Please enter a valid email address.") &&
+            this.validateInput(this.subjectInput, "Please enter a subject.") &&
+            this.validateInput(this.messageInput, "Please enter a message.")) {
+
+            // anti spam timetrap
+            if (this.isFormDisabled || Date.now() - this.timetrapStart < 3000) {
+                this.isFormDisabled = true
+                return
+            }
+
+            const request = new XMLHttpRequest();
+            request.addEventListener("readystatechange", event => {
+                let requestStatus
+                if (event.currentTarget.readyState == 4) {
+                    if (this.isSendAnimationFinished) {
+                        this.showMessageConfirmation(event.currentTarget.status)
+                    } else {
+                        requestStatus = event.currentTarget.status
+                        this.hasRequestReadyState = true
+                    }
+                }
+                if (this.isAnimationPending) {
+                    this.isAnimationPending = false
+                    const messageForm = document.querySelector("#message-wrapper form")
+                    messageForm.classList.add("sent")
+                    const messageFormWrapper = document.querySelector("#message-form-wrapper")
+
+                    messageFormWrapper.style.overflow = "visible"
+                    const onSentAnimationEnd = _ => {
+                        messageFormWrapper.style.overflow = ""
+                        document.querySelector("#message-confirmation").classList.add("show")
+                        messageForm.style.display = "none"
+                        if (this.hasRequestReadyState)
+                            this.showMessageConfirmation(requestStatus)
+                        else
+                            this.isSendAnimationFinished = true
+                        messageForm.removeEventListener("animationend", onSentAnimationEnd)
+                    }
+                    messageForm.addEventListener("animationend", onSentAnimationEnd)
+                }
+            })
+
+            request.open("POST", mailServerURL);
+
+            request.send(new FormData(document.querySelector("#message-wrapper form")));
+        }
+    }
 
     render() {
         return (
@@ -132,21 +124,21 @@ class Message extends Component {
                 </div>
                 <div id="message-form-wrapper">
                     <h2>Let's have a chat.</h2>
-                    <form noValidate>
+                    <form noValidate onSubmit={this.onMessageFormSubmit.bind(this)}>
                         <div className="field-wrapper">
                             <span>
-                                <input placeholder="Name" name="name" tabIndex="2" autoComplete="on" id="name-input" className={`${this.state.errorType === "name" ? "invalid" : ""}`} />
+                                <input placeholder="Name" name="name" tabIndex="2" autoComplete="on" id="name-input" className={`${this.state.errorType === "name" ? "invalid" : ""}`} ref={(element) => { this.nameInput = element }} />
                                 <span></span>
                                 <input placeholder="Email" name="emailaddress" type="email" tabIndex="3" autoComplete="on"
-                                    id="emailaddress-input" className={`${this.state.errorType === "emailaddress" ? "invalid" : ""}`} />
+                                    id="emailaddress-input" className={`${this.state.errorType === "emailaddress" ? "invalid" : ""}`} ref={(element) => { this.emailInput = element }} />
                             </span>
                         </div>
                         <div className="field-wrapper">
-                            <input placeholder="Subject" name="subject" autoComplete="off" tabIndex="4" id="subject-input" className={`${this.state.errorType === "subject" ? "invalid" : ""}`} />
+                            <input placeholder="Subject" name="subject" autoComplete="off" tabIndex="4" id="subject-input" className={`${this.state.errorType === "subject" ? "invalid" : ""}`} ref={(element) => { this.subjectInput = element }} />
                         </div>
                         <div className="field-wrapper" id="textarea-wrapper">
                             <textarea placeholder="Message" name="message" autoComplete="off" tabIndex="5"
-                                id="message-input" className={`${this.state.errorType === "message" ? "invalid" : ""}`}></textarea>
+                                id="message-input" className={`${this.state.errorType === "message" ? "invalid" : ""}`} ref={(element) => { this.messageInput = element }}></textarea>
                         </div>
                         <div className={`field-wrapper ${this.state.errorType ? "hide" : ""}`} id="submit-button-wrapper">
                             <button id="send-button" type="submit" tabIndex="6">
