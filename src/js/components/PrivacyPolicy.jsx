@@ -1,13 +1,40 @@
 import React, { Component } from "react";
 import * as Secret from "../../../secret"
+import { library, dom } from "@fortawesome/fontawesome-svg-core";
+import { faPaperPlane, faRobot, faRedoAlt, faLongArrowAltLeft, faLongArrowAltRight, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons"
+import { faLinkedinIn } from "@fortawesome/free-brands-svg-icons"
+import {
+    BrowserRouter,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
 
 class PrivacyPolicy extends Component {
+
+    componentDidMount() {
+        library.add(
+            faPaperPlane,
+            faRobot,
+            faRedoAlt,
+            faLongArrowAltLeft,
+            faLongArrowAltRight,
+            faLinkedinIn,
+            faExclamationTriangle
+        )
+        dom.i2svg()
+    }
+
     render() {
         return (
             <div id="privacy-policy-wrapper" className="section-wrapper">
                 <div>
-                    <a className="back-arrow" data-animation="headline" tabIndex="1" href="#"><i
-                        className="fas fa-long-arrow-alt-left"></i></a>
+                    <Link to="/" className="back-arrow" data-animation="headline" tabIndex="1"
+                        onMouseEnter={this.props.mouseEnterListener} onMouseLeave={this.props.mouseLeaveListener}
+                        onFocus={this.props.mouseEnterListener} onBlur={this.props.mouseLeaveListener}
+                        onClick={this.props.clickListener}>
+                        <i className="fas fa-long-arrow-alt-left"></i>
+                    </Link>
                 </div>
                 <div id="privacy-policy-content">
                     <h2>About this website.</h2>

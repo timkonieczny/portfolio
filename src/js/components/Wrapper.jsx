@@ -10,13 +10,20 @@ import Canvas from "./Canvas";
 import { library, dom } from "@fortawesome/fontawesome-svg-core";
 import { faPaperPlane, faRobot, faRedoAlt, faLongArrowAltLeft, faLongArrowAltRight, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons"
 import { faLinkedinIn } from "@fortawesome/free-brands-svg-icons"
+import {
+    BrowserRouter,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
 
 class Wrapper extends Component {
     constructor() {
         super();
 
         this.state = {
-            progress: 0
+            progress: 0,
+            animation: "headline"
         }
     }
 
@@ -40,72 +47,61 @@ class Wrapper extends Component {
     async componentDidMount() {
         // TODO: use React click handlers
 
-        library.add(
-            faPaperPlane,
-            faRobot,
-            faRedoAlt,
-            faLongArrowAltLeft,
-            faLongArrowAltRight,
-            faLinkedinIn,
-            faExclamationTriangle
-        )
-        dom.i2svg()
-
         let distanceToLeft, width;
 
-        const onButtonClick = event => {
+        // const onButtonClick = event => {
 
-            // init
-            const wrapper = wrappers[event.currentTarget.dataset.animation]
-            const goHome = wrapper === wrappers.headline
+        //     // // init
+        //     // const wrapper = wrappers[event.currentTarget.dataset.animation]
+        //     // const goHome = wrapper === wrappers.headline
 
 
-            // old wrapper
+        //     // // old wrapper
 
-            // remove listeners
-            if (wrappers.active) {
-                wrappers.active.buttons.forEach(button => {
-                    button.listeners.forEach(listener => {
-                        button.element.removeEventListener(listener.type, listener.callback)
-                    })
-                })
-            }
+        //     // // remove listeners
+        //     // if (wrappers.active) {
+        //     //     wrappers.active.buttons.forEach(button => {
+        //     //         button.listeners.forEach(listener => {
+        //     //             button.element.removeEventListener(listener.type, listener.callback)
+        //     //         })
+        //     //     })
+        //     // }
 
-            // move UI
-            if (goHome)
-                wrappers.active.element.style.left = (distanceToLeft + width) + "px"
-            else
-                wrappers.active.element.style.left = (distanceToLeft - width) + "px"
-            wrappers.active.element.style.opacity = 0
-            wrappers.active.element.style.visibility = "hidden"
+        //     // // move UI
+        //     // if (goHome)
+        //     //     wrappers.active.element.style.left = (distanceToLeft + width) + "px"
+        //     // else
+        //     //     wrappers.active.element.style.left = (distanceToLeft - width) + "px"
+        //     // wrappers.active.element.style.opacity = 0
+        //     // wrappers.active.element.style.visibility = "hidden"
 
-            wrappers.active.animations.forEach(animation => {
-                this.scene.endAnimation(animation.name, animation.type)
-            })
+        //     // wrappers.active.animations.forEach(animation => {
+        //     //     this.scene.endAnimation(animation.name, animation.type)
+        //     // })
 
-            // new wrapper
+        //     // // new wrapper
 
-            // add listeners
-            wrappers.active = wrapper
-            wrappers.active.buttons.forEach(button => {
-                button.listeners.forEach(listener => {
-                    button.element.addEventListener(listener.type, listener.callback)
-                })
-            })
+        //     // // add listeners
+        //     // wrappers.active = wrapper
+        //     // wrappers.active.buttons.forEach(button => {
+        //     //     button.listeners.forEach(listener => {
+        //     //         button.element.addEventListener(listener.type, listener.callback)
+        //     //     })
+        //     // })
 
-            // move UI
-            wrappers.active.element.style.left = distanceToLeft + "px"
-            wrappers.active.element.style.opacity = 1
-            wrappers.active.element.style.visibility = "visible"
-            if (goHome)
-                wrappers.about.element.style.left = (distanceToLeft + width) + "px"
+        //     // // move UI
+        //     // wrappers.active.element.style.left = distanceToLeft + "px"
+        //     // wrappers.active.element.style.opacity = 1
+        //     // wrappers.active.element.style.visibility = "visible"
+        //     // if (goHome)
+        //     //     wrappers.about.element.style.left = (distanceToLeft + width) + "px"
 
-            // 3D animations
-            if (goHome)
-                this.canvas.scene.endAllAnimations()
-            else
-                this.canvas.scene.startAnimations(wrappers.active.animations)
-        }
+        //     // // 3D animations
+        //     // if (goHome)
+        //     //     this.canvas.scene.endAllAnimations()
+        //     // else
+        //     //     this.canvas.scene.startAnimations(wrappers.active.animations)
+        // }
 
 
 
@@ -116,13 +112,13 @@ class Wrapper extends Component {
                 window.location.href = url
         }
 
-        const onHoverableMouseEnter = event => {
-            this.canvas.scene.startAnimation(event.currentTarget.dataset.animation, "hover")
-        }
+        // const onHoverableMouseEnter = event => {
+        //     this.canvas.scene.startAnimation(event.currentTarget.dataset.animation, "hover")
+        // }
 
-        const onHoverableMousleave = event => {
-            this.canvas.scene.endAnimation(event.currentTarget.dataset.animation, "hover")
-        }
+        // const onHoverableMousleave = event => {
+        //     this.canvas.scene.endAnimation(event.currentTarget.dataset.animation, "hover")
+        // }
 
         const wrappers = {
             headline: {
@@ -132,41 +128,41 @@ class Wrapper extends Component {
                     {
                         element: document.querySelector("#headline-wrapper .message-button"),
                         listeners: [
-                            { type: "click", callback: onButtonClick },
-                            { type: "mouseenter", callback: onHoverableMouseEnter },
-                            { type: "focus", callback: onHoverableMouseEnter },
-                            { type: "mouseleave", callback: onHoverableMousleave },
-                            { type: "blur", callback: onHoverableMousleave }
+                            { type: "click", callback: this.onButtonClick },
+                            { type: "mouseenter", callback: this.onHoverableMouseEnter },
+                            { type: "focus", callback: this.onHoverableMouseEnter },
+                            { type: "mouseleave", callback: this.onHoverableMouseLeave },
+                            { type: "blur", callback: this.onHoverableMouseLeave }
                         ]
                     },
                     {
                         element: document.querySelector("#headline-wrapper .linkedin-button"),
                         listeners: [
                             { type: "click", callback: onButtonClickExternal },
-                            { type: "mouseenter", callback: onHoverableMouseEnter },
-                            { type: "focus", callback: onHoverableMouseEnter },
-                            { type: "mouseleave", callback: onHoverableMousleave },
-                            { type: "blur", callback: onHoverableMousleave }
+                            { type: "mouseenter", callback: this.onHoverableMouseEnter },
+                            { type: "focus", callback: this.onHoverableMouseEnter },
+                            { type: "mouseleave", callback: this.onHoverableMouseLeave },
+                            { type: "blur", callback: this.onHoverableMouseLeave }
                         ]
                     },
                     {
                         element: document.querySelector("#headline-wrapper #about-button"),
                         listeners: [
-                            { type: "click", callback: onButtonClick },
-                            { type: "mouseenter", callback: onHoverableMouseEnter },
-                            { type: "focus", callback: onHoverableMouseEnter },
-                            { type: "mouseleave", callback: onHoverableMousleave },
-                            { type: "blur", callback: onHoverableMousleave }
+                            { type: "click", callback: this.onButtonClick },
+                            { type: "mouseenter", callback: this.onHoverableMouseEnter },
+                            { type: "focus", callback: this.onHoverableMouseEnter },
+                            { type: "mouseleave", callback: this.onHoverableMouseLeave },
+                            { type: "blur", callback: this.onHoverableMouseLeave }
                         ]
                     },
                     {
                         element: document.querySelector("#headline-wrapper #work-button"),
                         listeners: [
-                            { type: "click", callback: onButtonClick },
-                            { type: "mouseenter", callback: onHoverableMouseEnter },
-                            { type: "focus", callback: onHoverableMouseEnter },
-                            { type: "mouseleave", callback: onHoverableMousleave },
-                            { type: "blur", callback: onHoverableMousleave }
+                            { type: "click", callback: this.onButtonClick },
+                            { type: "mouseenter", callback: this.onHoverableMouseEnter },
+                            { type: "focus", callback: this.onHoverableMouseEnter },
+                            { type: "mouseleave", callback: this.onHoverableMouseLeave },
+                            { type: "blur", callback: this.onHoverableMouseLeave }
                         ]
                     }
                 ]
@@ -181,11 +177,11 @@ class Wrapper extends Component {
                     {
                         element: document.querySelector("#message-wrapper .back-arrow"),
                         listeners: [
-                            { type: "mouseenter", callback: onHoverableMouseEnter },
-                            { type: "focus", callback: onHoverableMouseEnter },
-                            { type: "mouseleave", callback: onHoverableMousleave },
-                            { type: "blur", callback: onHoverableMousleave },
-                            { type: "click", callback: onButtonClick }
+                            { type: "mouseenter", callback: this.onHoverableMouseEnter },
+                            { type: "focus", callback: this.onHoverableMouseEnter },
+                            { type: "mouseleave", callback: this.onHoverableMouseLeave },
+                            { type: "blur", callback: this.onHoverableMouseLeave },
+                            { type: "click", callback: this.onButtonClick }
                         ]
                     }
                 ]
@@ -200,17 +196,17 @@ class Wrapper extends Component {
                     {
                         element: document.querySelector("#about-wrapper .back-arrow"),
                         listeners: [
-                            { type: "mouseenter", callback: onHoverableMouseEnter },
-                            { type: "focus", callback: onHoverableMouseEnter },
-                            { type: "mouseleave", callback: onHoverableMousleave },
-                            { type: "blur", callback: onHoverableMousleave },
-                            { type: "click", callback: onButtonClick }
+                            { type: "mouseenter", callback: this.onHoverableMouseEnter },
+                            { type: "focus", callback: this.onHoverableMouseEnter },
+                            { type: "mouseleave", callback: this.onHoverableMouseLeave },
+                            { type: "blur", callback: this.onHoverableMouseLeave },
+                            { type: "click", callback: this.onButtonClick }
                         ]
                     },
                     {
                         element: document.querySelector("#about-wrapper .message-button"),
                         listeners: [
-                            { type: "click", callback: onButtonClick }
+                            { type: "click", callback: this.onButtonClick }
                         ]
                     },
                     {
@@ -222,7 +218,7 @@ class Wrapper extends Component {
                     {
                         element: document.querySelector("#about-wrapper #privacy-policy-button"),
                         listeners: [
-                            { type: "click", callback: onButtonClick }
+                            { type: "click", callback: this.onButtonClick }
                         ]
                     }
                 ]
@@ -237,11 +233,11 @@ class Wrapper extends Component {
                     {
                         element: document.querySelector("#privacy-policy-wrapper .back-arrow"),
                         listeners: [
-                            { type: "mouseenter", callback: onHoverableMouseEnter },
-                            { type: "focus", callback: onHoverableMouseEnter },
-                            { type: "mouseleave", callback: onHoverableMousleave },
-                            { type: "blur", callback: onHoverableMousleave },
-                            { type: "click", callback: onButtonClick }
+                            { type: "mouseenter", callback: this.onHoverableMouseEnter },
+                            { type: "focus", callback: this.onHoverableMouseEnter },
+                            { type: "mouseleave", callback: this.onHoverableMouseLeave },
+                            { type: "blur", callback: this.onHoverableMouseLeave },
+                            { type: "click", callback: this.onButtonClick }
                         ]
                     }
                 ]
@@ -256,11 +252,11 @@ class Wrapper extends Component {
                     {
                         element: document.querySelector("#work-wrapper .back-arrow"),
                         listeners: [
-                            { type: "mouseenter", callback: onHoverableMouseEnter },
-                            { type: "focus", callback: onHoverableMouseEnter },
-                            { type: "mouseleave", callback: onHoverableMousleave },
-                            { type: "blur", callback: onHoverableMousleave },
-                            { type: "click", callback: onButtonClick }
+                            { type: "mouseenter", callback: this.onHoverableMouseEnter },
+                            { type: "focus", callback: this.onHoverableMouseEnter },
+                            { type: "mouseleave", callback: this.onHoverableMouseLeave },
+                            { type: "blur", callback: this.onHoverableMouseLeave },
+                            { type: "click", callback: this.onButtonClick }
                         ]
                     }
                 ]
@@ -269,11 +265,11 @@ class Wrapper extends Component {
         }
 
         wrappers.active = wrappers.headline
-        wrappers.active.buttons.forEach(button => {
-            button.listeners.forEach(listener => {
-                button.element.addEventListener(listener.type, listener.callback)
-            })
-        })
+        // wrappers.active.buttons.forEach(button => {
+        //     button.listeners.forEach(listener => {
+        //         button.element.addEventListener(listener.type, listener.callback)
+        //     })
+        // })
 
         let hasResizeAnimationEndListener = false
 
@@ -298,10 +294,42 @@ class Wrapper extends Component {
                 wrappers.headline.element.style.left = (distanceToLeft - width) + "px"
         }
 
-        window.addEventListener("resize", onResize)
+        // window.addEventListener("resize", onResize)
 
-        distanceToLeft = wrappers.headline.element.getBoundingClientRect().left
+        // distanceToLeft = wrappers.headline.element.getBoundingClientRect().left
         width = wrappers.headline.element.clientWidth
+    }
+
+    onHoverableMouseEnter(event) {
+        this.canvas.scene.startAnimation(event.currentTarget.dataset.animation, "hover")
+    }
+
+    onHoverableMouseLeave(event) {
+        this.canvas.scene.endAnimation(event.currentTarget.dataset.animation, "hover")
+    }
+
+    onMouseEnter() {
+        console.log("mouseEnter")
+    }
+    onMouseLeave() {
+        console.log("mouseLeave")
+    }
+
+    onButtonClick(event) {
+
+        // TODO: review how animation system works
+        this.canvas.scene.endAnimation(this.state.animation, "hover")
+        this.canvas.scene.endAnimation(this.state.animation, "click")
+
+        this.setState({ animation: event.currentTarget.dataset.animation })
+
+        // 3D animations
+        if (event.currentTarget.dataset.animation === "headline")
+            this.canvas.scene.endAllAnimations()
+        else {
+            this.canvas.scene.startAnimation(event.currentTarget.dataset.animation, "click")
+            this.canvas.scene.startAnimation(event.currentTarget.dataset.animation, "hover")
+        }
     }
 
     render() {
@@ -310,11 +338,35 @@ class Wrapper extends Component {
                 <Canvas onProgress={this.progressListener.bind(this)} ref={(element) => { this.canvas = element }} />
                 <Preloader progress={this.state.progress} />
                 <div id="wrapper">
-                    <Home />
-                    <Message />
-                    <About />
-                    <PrivacyPolicy />
-                    <Work />
+                    <BrowserRouter>
+                        <Switch>
+                            <Route path="/about">
+                                <About mouseEnterListener={this.onHoverableMouseEnter.bind(this)}
+                                    mouseLeaveListener={this.onHoverableMouseLeave.bind(this)}
+                                    clickListener={this.onButtonClick.bind(this)} />
+                            </Route>
+                            <Route path="/message">
+                                <Message mouseEnterListener={this.onHoverableMouseEnter.bind(this)}
+                                    mouseLeaveListener={this.onHoverableMouseLeave.bind(this)}
+                                    clickListener={this.onButtonClick.bind(this)} />
+                            </Route>
+                            <Route path="/privacypolicy">
+                                <PrivacyPolicy mouseEnterListener={this.onHoverableMouseEnter.bind(this)}
+                                    mouseLeaveListener={this.onHoverableMouseLeave.bind(this)}
+                                    clickListener={this.onButtonClick.bind(this)} />
+                            </Route>
+                            <Route path="/work">
+                                <Work mouseEnterListener={this.onHoverableMouseEnter.bind(this)}
+                                    mouseLeaveListener={this.onHoverableMouseLeave.bind(this)}
+                                    clickListener={this.onButtonClick.bind(this)} />
+                            </Route>
+                            <Route path="/">
+                                <Home mouseEnterListener={this.onHoverableMouseEnter.bind(this)}
+                                    mouseLeaveListener={this.onHoverableMouseLeave.bind(this)}
+                                    clickListener={this.onButtonClick.bind(this)} />
+                            </Route>
+                        </Switch>
+                    </BrowserRouter>
                 </div>
             </Fragment>
         );

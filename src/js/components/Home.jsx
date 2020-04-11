@@ -1,6 +1,29 @@
 import React, { Component } from "react";
+import { library, dom } from "@fortawesome/fontawesome-svg-core";
+import { faPaperPlane, faRobot, faRedoAlt, faLongArrowAltLeft, faLongArrowAltRight, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons"
+import { faLinkedinIn } from "@fortawesome/free-brands-svg-icons"
+import {
+    BrowserRouter,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
 
 class Home extends Component {
+
+    componentDidMount() {
+        library.add(
+            faPaperPlane,
+            faRobot,
+            faRedoAlt,
+            faLongArrowAltLeft,
+            faLongArrowAltRight,
+            faLinkedinIn,
+            faExclamationTriangle
+        )
+        dom.i2svg()
+    }
+
     render() {
         return (
             <div id="headline-wrapper" className="section-wrapper">
@@ -14,17 +37,33 @@ class Home extends Component {
                         className="separator">|</span><span>front-end development</span>
                 </p>
                 <div className="message-buttons">
-                    <button className="message-button animated" data-animation="message" tabIndex="1">
+                    {/* <Link to="/message"> */}
+                    <Link to="/message" className="button message-button animated" data-animation="message"
+                        tabIndex="1" onMouseEnter={this.props.mouseEnterListener}
+                        onMouseLeave={this.props.mouseLeaveListener} onFocus={this.props.mouseEnterListener}
+                        onBlur={this.props.mouseLeaveListener} onClick={this.props.clickListener}>
                         get in touch
-                    </button>
-                    <button className="linkedin-button animated" data-animation="linkedin" tabIndex="2">
+                    </Link>
+                    {/* </Link> */}
+                    <a className="button linkedin-button animated" data-animation="linkedin" tabIndex="2"
+                        onMouseEnter={this.props.mouseEnterListener} onMouseLeave={this.props.mouseLeaveListener}
+                        onFocus={this.props.mouseEnterListener} onBlur={this.props.onMouseLeaveListener}
+                        onClick={this.props.clickListener}>
                         <i className="fab fa-linkedin-in"></i>connect on LinkedIn
-                    </button>
+                    </a>
                 </div>
-                <a className="animated link-with-icon" id="about-button" data-animation="about" tabIndex="3" href="#"><i
-                    className="fas fa-long-arrow-alt-right"></i><span>learn more</span></a>
-                <a className="animated link-with-icon" id="work-button" data-animation="work" tabIndex="4" href="#"><i
-                    className="fas fa-long-arrow-alt-right"></i><span>work</span></a>
+                <Link to="/about" className="animated link-with-icon" id="about-button" data-animation="about"
+                    tabIndex="3" onMouseEnter={this.props.mouseEnterListener}
+                    onMouseLeave={this.props.mouseLeaveListener} onFocus={this.props.mouseEnterListener}
+                    onBlur={this.props.mouseLeaveListener} onClick={this.props.clickListener}>
+                    <i className="fas fa-long-arrow-alt-right"></i><span>learn more</span>
+                </Link>
+                <Link to="/work" className="animated link-with-icon" id="work-button" data-animation="work" tabIndex="4"
+                    onMouseEnter={this.props.mouseEnterListener} onMouseLeave={this.props.mouseLeaveListener}
+                    onFocus={this.props.mouseEnterListener} onBlur={this.props.mouseLeaveListener}
+                    onClick={this.props.clickListener}>
+                    <i className="fas fa-long-arrow-alt-right"></i><span>work</span>
+                </Link>
             </div>
         );
     }

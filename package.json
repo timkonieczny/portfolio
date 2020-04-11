@@ -52,6 +52,7 @@
         "gl-matrix": "^3.2.1",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
+        "react-router-dom": "^5.1.2",
         "stats-js": "^1.0.1"
     }
 }

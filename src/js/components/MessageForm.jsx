@@ -120,7 +120,7 @@ class MessageForm extends Component {
                         ref={(element) => { this.messageInput = element }}></textarea>
                 </div>
                 <div className={`field-wrapper ${this.state.errorType ? "hide" : ""}`} id="submit-button-wrapper">
-                    <button id="send-button" type="submit" tabIndex="6">
+                    <button className="button" id="send-button" type="submit" tabIndex="6">
                         <i className="fas fa-paper-plane"></i>
                     </button>
                 </div>

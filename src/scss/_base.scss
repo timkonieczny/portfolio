@@ -36,7 +36,8 @@ h3 {
     font-weight: 500;
 }
 
-button {
+.button {
+    display: inline-block;
     border: 0.2em solid $color-accent;
     color: $color-accent;
     background-color: transparent;
@@ -131,8 +132,9 @@ p {
             margin-right: 0;
         }
     }
-    button {
-        margin: 1em 0;
+    .button {
+        margin-top: 1em;
+        margin-bottom: 1em;
     }
     @media #{$l} {
         display: flex;
@@ -145,8 +147,8 @@ p {
     position: absolute;
     left: 10%;
     width: 80%;
-    opacity: 0;
-    visibility: hidden;
+    // opacity: 0;
+    // visibility: hidden;
     transition: left 0.5s, opacity 0.5s, visibility 0.5s;
     max-width: 520px;
     max-height: 90%;

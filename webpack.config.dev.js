@@ -17,7 +17,8 @@ module.exports = merge(baseConfig, {
     },
     devServer: {
         contentBase: path.join(__dirname, 'dist/dev'),
-        host: '0.0.0.0'
+        host: '0.0.0.0',
+        historyApiFallback: true
     },
     plugins: [
         new BundleAnalyzerPlugin({
