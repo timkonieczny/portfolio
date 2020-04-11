@@ -286,10 +286,14 @@ class Scene extends Loop {
     }
 
     startAnimation(name, type) {
-        console.log(`startAnimation ${name} ${type}`)
-        console.log(this.animation[name][type])
         this.animation[name][type].isDecreasing = false
         this.animation[name][type].isIncreasing = true
+    }
+
+    startAnimations(animations) {
+        animations.forEach(animation => {
+            this.startAnimation(animation.name, animation.type)
+        })
     }
 
     endAnimation(name, type) {
