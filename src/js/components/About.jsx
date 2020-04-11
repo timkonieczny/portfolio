@@ -2,24 +2,15 @@ import React, { Component } from "react";
 import { library, dom } from "@fortawesome/fontawesome-svg-core";
 import { faPaperPlane, faRobot, faRedoAlt, faLongArrowAltLeft, faLongArrowAltRight, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons"
 import { faLinkedinIn } from "@fortawesome/free-brands-svg-icons"
-import {
-    BrowserRouter,
-    Switch,
-    Route,
-    Link
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class About extends Component {
 
     componentDidMount() {
         library.add(
-            faPaperPlane,
-            faRobot,
-            faRedoAlt,
             faLongArrowAltLeft,
             faLongArrowAltRight,
             faLinkedinIn,
-            faExclamationTriangle
         )
         dom.i2svg()
     }
@@ -28,6 +19,7 @@ class About extends Component {
         return (
             <div id="about-wrapper" className="section-wrapper">
                 <div>
+                    {/* TODO: componentize back arrow */}
                     <Link to="/" className="back-arrow" data-animation="headline" tabIndex="1"
                         onMouseEnter={this.props.mouseEnterListener} onMouseLeave={this.props.mouseLeaveListener}
                         onFocus={this.props.mouseEnterListener} onBlur={this.props.mouseLeaveListener}

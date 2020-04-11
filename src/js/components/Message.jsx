@@ -4,12 +4,7 @@ import { faPaperPlane, faRobot, faRedoAlt, faLongArrowAltLeft, faLongArrowAltRig
 import { faLinkedinIn } from "@fortawesome/free-brands-svg-icons"
 import MessageForm from "./MessageForm";
 import MessageConfirmation from "./MessageConfirmation";
-import {
-    BrowserRouter,
-    Switch,
-    Route,
-    Link
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class Message extends Component {
 
@@ -28,8 +23,6 @@ class Message extends Component {
             faRobot,
             faRedoAlt,
             faLongArrowAltLeft,
-            faLongArrowAltRight,
-            faLinkedinIn,
             faExclamationTriangle
         )
         dom.i2svg()

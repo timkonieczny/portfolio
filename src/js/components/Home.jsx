@@ -2,24 +2,14 @@ import React, { Component } from "react";
 import { library, dom } from "@fortawesome/fontawesome-svg-core";
 import { faPaperPlane, faRobot, faRedoAlt, faLongArrowAltLeft, faLongArrowAltRight, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons"
 import { faLinkedinIn } from "@fortawesome/free-brands-svg-icons"
-import {
-    BrowserRouter,
-    Switch,
-    Route,
-    Link
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class Home extends Component {
 
     componentDidMount() {
         library.add(
-            faPaperPlane,
-            faRobot,
-            faRedoAlt,
-            faLongArrowAltLeft,
             faLongArrowAltRight,
-            faLinkedinIn,
-            faExclamationTriangle
+            faLinkedinIn
         )
         dom.i2svg()
     }
@@ -37,14 +27,12 @@ class Home extends Component {
                         className="separator">|</span><span>front-end development</span>
                 </p>
                 <div className="message-buttons">
-                    {/* <Link to="/message"> */}
                     <Link to="/message" className="button message-button animated" data-animation="message"
                         tabIndex="1" onMouseEnter={this.props.mouseEnterListener}
                         onMouseLeave={this.props.mouseLeaveListener} onFocus={this.props.mouseEnterListener}
                         onBlur={this.props.mouseLeaveListener} onClick={this.props.clickListener}>
                         get in touch
                     </Link>
-                    {/* </Link> */}
                     <a className="button linkedin-button animated" data-animation="linkedin" tabIndex="2"
                         onMouseEnter={this.props.mouseEnterListener} onMouseLeave={this.props.mouseLeaveListener}
                         onFocus={this.props.mouseEnterListener} onBlur={this.props.onMouseLeaveListener}

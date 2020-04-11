@@ -3,12 +3,7 @@ import * as Secret from "../../../secret"
 import { library, dom } from "@fortawesome/fontawesome-svg-core";
 import { faPaperPlane, faRobot, faRedoAlt, faLongArrowAltLeft, faLongArrowAltRight, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons"
 import { faLinkedinIn } from "@fortawesome/free-brands-svg-icons"
-import {
-    BrowserRouter,
-    Switch,
-    Route,
-    Link
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class PrivacyPolicy extends Component {
 
