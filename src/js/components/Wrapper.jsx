@@ -4,10 +4,10 @@ import Work from "./Work";
 import Message from "./Message";
 import About from "./About";
 import Home from "./Home";
-import "../../scss/index.scss"
 import Preloader from "./Preloader";
 import Canvas from "./Canvas";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 class Wrapper extends Component {
     constructor() {
@@ -30,7 +30,7 @@ class Wrapper extends Component {
                 break
             case "complete":
                 progress = event.progress
-                document.querySelector("#wrapper").style.opacity = 1;
+                document.querySelector("#wrapper").style.opacity = 1;   // TODO: use ref
                 break
         }
         this.setState({ progress: progress })
@@ -55,6 +55,7 @@ class Wrapper extends Component {
 
         // TODO: hook up external links
         // TODO: review how animation system works
+        // FIXME: animations aren't working properly
         this.canvas.scene.endAnimation(this.state.animation, "hover")
         this.canvas.scene.endAnimation(this.state.animation, "click")
 
@@ -69,42 +70,55 @@ class Wrapper extends Component {
         }
     }
 
+    // TODO: use BrowserHistory for back button and trigger appropriate animation
+    // https://stackoverflow.com/questions/30915173/react-router-go-back-a-page-how-do-you-configure-history
+    // https://github.com/ReactTraining/react-router/issues/1498
+
     render() {
         return (
             <Fragment>
                 <Canvas onProgress={this.progressListener.bind(this)} ref={(element) => { this.canvas = element }} />
                 <Preloader progress={this.state.progress} />
-                <div id="wrapper">
-                    <BrowserRouter>
-                        <Switch>
-                            <Route path="/about">
-                                <About mouseEnterListener={this.onHoverableMouseEnter.bind(this)}
-                                    mouseLeaveListener={this.onHoverableMouseLeave.bind(this)}
-                                    clickListener={this.onButtonClick.bind(this)} />
-                            </Route>
-                            <Route path="/message">
-                                <Message mouseEnterListener={this.onHoverableMouseEnter.bind(this)}
-                                    mouseLeaveListener={this.onHoverableMouseLeave.bind(this)}
-                                    clickListener={this.onButtonClick.bind(this)} />
-                            </Route>
-                            <Route path="/privacypolicy">
-                                <PrivacyPolicy mouseEnterListener={this.onHoverableMouseEnter.bind(this)}
-                                    mouseLeaveListener={this.onHoverableMouseLeave.bind(this)}
-                                    clickListener={this.onButtonClick.bind(this)} />
-                            </Route>
-                            <Route path="/work">
-                                <Work mouseEnterListener={this.onHoverableMouseEnter.bind(this)}
-                                    mouseLeaveListener={this.onHoverableMouseLeave.bind(this)}
-                                    clickListener={this.onButtonClick.bind(this)} />
-                            </Route>
-                            <Route path="/">
-                                <Home mouseEnterListener={this.onHoverableMouseEnter.bind(this)}
-                                    mouseLeaveListener={this.onHoverableMouseLeave.bind(this)}
-                                    clickListener={this.onButtonClick.bind(this)} />
-                            </Route>
-                        </Switch>
-                    </BrowserRouter>
-                </div>
+                {/* TODO: What's the difference between the different routers? */}
+                <BrowserRouter>
+                    <Route render={({ location }) => (
+                        <TransitionGroup id="wrapper">
+                            <CSSTransition
+                                key={location.key}
+                                timeout={3000}
+                                classNames="fade"
+                                appear={true}>
+                                <Switch location={location}>
+                                    <Route path="/about">
+                                        <About mouseEnterListener={this.onHoverableMouseEnter.bind(this)}
+                                            mouseLeaveListener={this.onHoverableMouseLeave.bind(this)}
+                                            clickListener={this.onButtonClick.bind(this)} />
+                                    </Route>
+                                    <Route path="/message">
+                                        <Message mouseEnterListener={this.onHoverableMouseEnter.bind(this)}
+                                            mouseLeaveListener={this.onHoverableMouseLeave.bind(this)}
+                                            clickListener={this.onButtonClick.bind(this)} />
+                                    </Route>
+                                    <Route path="/privacypolicy">
+                                        <PrivacyPolicy mouseEnterListener={this.onHoverableMouseEnter.bind(this)}
+                                            mouseLeaveListener={this.onHoverableMouseLeave.bind(this)}
+                                            clickListener={this.onButtonClick.bind(this)} />
+                                    </Route>
+                                    <Route path="/work">
+                                        <Work mouseEnterListener={this.onHoverableMouseEnter.bind(this)}
+                                            mouseLeaveListener={this.onHoverableMouseLeave.bind(this)}
+                                            clickListener={this.onButtonClick.bind(this)} />
+                                    </Route>
+                                    <Route path="/">
+                                        <Home mouseEnterListener={this.onHoverableMouseEnter.bind(this)}
+                                            mouseLeaveListener={this.onHoverableMouseLeave.bind(this)}
+                                            clickListener={this.onButtonClick.bind(this)} />
+                                    </Route>
+                                </Switch>
+                            </CSSTransition>
+                        </TransitionGroup>
+                    )} />
+                </BrowserRouter>
             </Fragment>
         );
     }

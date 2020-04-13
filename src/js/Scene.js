@@ -297,8 +297,10 @@ class Scene extends Loop {
     }
 
     endAnimation(name, type) {
-        this.animation[name][type].isDecreasing = true
-        this.animation[name][type].isIncreasing = false
+        if (this.animation[name][type]) {
+            this.animation[name][type].isDecreasing = true
+            this.animation[name][type].isIncreasing = false
+        }
     }
 
     endAllAnimations() {

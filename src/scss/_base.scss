@@ -145,11 +145,22 @@ p {
 
 .section-wrapper {
     position: absolute;
-    left: 10%;
+    left: -70%;
     width: 80%;
-    transition: left 0.5s, opacity 0.5s, visibility 0.5s;
+    // transition: left 0.5s, opacity 0.5s, visibility 0.5s;
     max-width: 520px;
     max-height: 90%;
+    transition: 3s ease left;
+    opacity: 1;
+    // TODO: clean up animation definitions
+    &.fade-enter-active,
+    &.fade-enter-done {
+        left: 10%;
+    }
+    &.fade-exit-active,
+    &.fade-exit-done {
+        left: 80%;
+    }
 }
 
 #preloader {

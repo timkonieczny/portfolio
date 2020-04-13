@@ -1,8 +1,7 @@
 import Wrapper from "./components/Wrapper.jsx";
 import ReactDOM from "react-dom";
 import React from "react";
-
-// TODO: Use React Router
+import "../scss/index.scss"
 
 window.addEventListener("load", _ => {
     const app = document.querySelector("#app");
