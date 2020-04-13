@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { library, dom } from "@fortawesome/fontawesome-svg-core";
-import { faPaperPlane, faRobot, faRedoAlt, faLongArrowAltLeft, faLongArrowAltRight, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons"
-import { faLinkedinIn } from "@fortawesome/free-brands-svg-icons"
+import { faPaperPlane, faRobot, faRedoAlt, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons"
 import MessageForm from "./MessageForm";
 import MessageConfirmation from "./MessageConfirmation";
-import { Link } from "react-router-dom";
+import BackButton from "./BackButton";
 
 class Message extends Component {
 
@@ -15,16 +14,11 @@ class Message extends Component {
             showConfirmation: false,
             isAnimationRunning: false
         }
+        // TODO: move icons to lowest components
+        library.add(faPaperPlane, faRobot, faRedoAlt, faExclamationTriangle)
     }
 
     componentDidMount() {
-        library.add(
-            faPaperPlane,
-            faRobot,
-            faRedoAlt,
-            faLongArrowAltLeft,
-            faExclamationTriangle
-        )
         dom.i2svg()
     }
 
@@ -40,12 +34,8 @@ class Message extends Component {
         return (
             <div id="message-wrapper" className="section-wrapper">
                 <div>
-                    <Link to="/" className="back-arrow" data-animation="headline" tabIndex="1"
-                        onMouseEnter={this.props.mouseEnterListener} onMouseLeave={this.props.mouseLeaveListener}
-                        onFocus={this.props.mouseEnterListener} onBlur={this.props.mouseLeaveListener}
-                        onClick={this.props.clickListener}>
-                        <i className="fas fa-long-arrow-alt-left"></i>
-                    </Link>
+                    <BackButton hasHistory={!this.props.isAppearing} mouseEnterListener={this.props.mouseEnterListener}
+                        mouseLeaveListener={this.props.mouseLeaveListener} clickListener={this.props.clickListener} />
                 </div>
                 <div id="message-form-wrapper"
                     style={!this.state.showConfirmation && this.state.isAnimationRunning ? { overflow: "visible" } : {}}>

@@ -1,16 +1,17 @@
 import React, { Component } from "react";
 import { library, dom } from "@fortawesome/fontawesome-svg-core";
-import { faPaperPlane, faRobot, faRedoAlt, faLongArrowAltLeft, faLongArrowAltRight, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons"
+import { faLongArrowAltRight } from "@fortawesome/free-solid-svg-icons"
 import { faLinkedinIn } from "@fortawesome/free-brands-svg-icons"
 import { Link } from "react-router-dom";
 
 class Home extends Component {
 
+    constructor() {
+        super()
+        library.add(faLongArrowAltRight, faLinkedinIn)
+    }
+
     componentDidMount() {
-        library.add(
-            faLongArrowAltRight,
-            faLinkedinIn
-        )
         dom.i2svg()
     }
 

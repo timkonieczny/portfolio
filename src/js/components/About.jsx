@@ -1,17 +1,18 @@
 import React, { Component } from "react";
 import { library, dom } from "@fortawesome/fontawesome-svg-core";
-import { faPaperPlane, faRobot, faRedoAlt, faLongArrowAltLeft, faLongArrowAltRight, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons"
+import { faLongArrowAltRight } from "@fortawesome/free-solid-svg-icons"
 import { faLinkedinIn } from "@fortawesome/free-brands-svg-icons"
 import { Link } from "react-router-dom";
+import BackButton from "./BackButton";
 
 class About extends Component {
 
+    constructor() {
+        super()
+        library.add(faLongArrowAltRight, faLinkedinIn)
+    }
+
     componentDidMount() {
-        library.add(
-            faLongArrowAltLeft,
-            faLongArrowAltRight,
-            faLinkedinIn,
-        )
         dom.i2svg()
     }
 
@@ -19,13 +20,8 @@ class About extends Component {
         return (
             <div id="about-wrapper" className="section-wrapper">
                 <div>
-                    {/* TODO: componentize back arrow */}
-                    <Link to="/" className="back-arrow" data-animation="headline" tabIndex="1"
-                        onMouseEnter={this.props.mouseEnterListener} onMouseLeave={this.props.mouseLeaveListener}
-                        onFocus={this.props.mouseEnterListener} onBlur={this.props.mouseLeaveListener}
-                        onClick={this.props.clickListener}>
-                        <i className="fas fa-long-arrow-alt-left"></i>
-                    </Link>
+                    <BackButton hasHistory={!this.props.isAppearing} mouseEnterListener={this.props.mouseEnterListener}
+                        mouseLeaveListener={this.props.mouseLeaveListener} clickListener={this.props.clickListener} />
                 </div>
                 <div id="about-content">
                     <h2>Tim Konieczny.</h2>

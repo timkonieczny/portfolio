@@ -15,7 +15,8 @@ class Wrapper extends Component {
 
         this.state = {
             progress: 0,
-            animation: "headline"
+            animation: "headline",
+            isAppearing: true
         }
     }
 
@@ -70,7 +71,7 @@ class Wrapper extends Component {
         }
     }
 
-    // TODO: use BrowserHistory for back button and trigger appropriate animation
+    // TODO: Trigger appropriate animation based on browser history
     // https://stackoverflow.com/questions/30915173/react-router-go-back-a-page-how-do-you-configure-history
     // https://github.com/ReactTraining/react-router/issues/1498
 
@@ -87,27 +88,34 @@ class Wrapper extends Component {
                                 key={location.key}
                                 timeout={3000}
                                 classNames="fade"
-                                appear={true}>
+                                appear={true}
+                                onEnter={(_, isAppearing) => {
+                                    this.setState({ isAppearing: isAppearing })
+                                }}>
                                 <Switch location={location}>
                                     <Route path="/about">
                                         <About mouseEnterListener={this.onHoverableMouseEnter.bind(this)}
                                             mouseLeaveListener={this.onHoverableMouseLeave.bind(this)}
-                                            clickListener={this.onButtonClick.bind(this)} />
+                                            clickListener={this.onButtonClick.bind(this)}
+                                            isAppearing={this.state.isAppearing} />
                                     </Route>
                                     <Route path="/message">
                                         <Message mouseEnterListener={this.onHoverableMouseEnter.bind(this)}
                                             mouseLeaveListener={this.onHoverableMouseLeave.bind(this)}
-                                            clickListener={this.onButtonClick.bind(this)} />
+                                            clickListener={this.onButtonClick.bind(this)}
+                                            isAppearing={this.state.isAppearing} />
                                     </Route>
                                     <Route path="/privacypolicy">
                                         <PrivacyPolicy mouseEnterListener={this.onHoverableMouseEnter.bind(this)}
                                             mouseLeaveListener={this.onHoverableMouseLeave.bind(this)}
-                                            clickListener={this.onButtonClick.bind(this)} />
+                                            clickListener={this.onButtonClick.bind(this)}
+                                            isAppearing={this.state.isAppearing} />
                                     </Route>
                                     <Route path="/work">
                                         <Work mouseEnterListener={this.onHoverableMouseEnter.bind(this)}
                                             mouseLeaveListener={this.onHoverableMouseLeave.bind(this)}
-                                            clickListener={this.onButtonClick.bind(this)} />
+                                            clickListener={this.onButtonClick.bind(this)}
+                                            isAppearing={this.state.isAppearing} />
                                     </Route>
                                     <Route path="/">
                                         <Home mouseEnterListener={this.onHoverableMouseEnter.bind(this)}
