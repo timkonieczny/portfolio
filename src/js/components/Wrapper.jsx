@@ -31,7 +31,6 @@ class Wrapper extends Component {
                 break
             case "complete":
                 progress = event.progress
-                document.querySelector("#wrapper").style.opacity = 1;   // TODO: use ref
                 break
         }
         this.setState({ progress: progress })
@@ -78,12 +77,12 @@ class Wrapper extends Component {
     render() {
         return (
             <Fragment>
-                <Canvas onProgress={this.progressListener.bind(this)} ref={(element) => { this.canvas = element }} />
+                <Canvas onProgress={this.progressListener.bind(this)} ref={element => { this.canvas = element }} />
                 <Preloader progress={this.state.progress} />
                 {/* TODO: What's the difference between the different routers? */}
                 <BrowserRouter>
                     <Route render={({ location }) => (
-                        <TransitionGroup id="wrapper">
+                        <TransitionGroup id="wrapper" ref={element => { this.wrapper = element }} style={this.state.progress === 100 ? { opacity: 1 } : {}}>
                             <CSSTransition
                                 key={location.key}
                                 timeout={3000}
