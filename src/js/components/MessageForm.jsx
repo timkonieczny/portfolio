@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { mailServerURL } from "../URLs"
+import { library, dom } from "@fortawesome/fontawesome-svg-core";
+import { faPaperPlane, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 
 class MessageForm extends Component {
 
@@ -14,9 +16,11 @@ class MessageForm extends Component {
         this.isFormDisabled = false
         this.isSendAnimationFinished = false
         this.isAnimationPending = true
+        library.add(faPaperPlane, faExclamationTriangle)
     }
 
     componentDidMount() {
+        dom.i2svg()
         this.timetrapStart = Date.now()
     }
 

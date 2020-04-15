@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import { library, dom } from "@fortawesome/fontawesome-svg-core";
-import { faPaperPlane, faRobot, faRedoAlt, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons"
 import MessageForm from "./MessageForm";
 import MessageConfirmation from "./MessageConfirmation";
 import BackButton from "./BackButton";
@@ -14,12 +12,6 @@ class Message extends Component {
             showConfirmation: false,
             isAnimationRunning: false
         }
-        // TODO: move icons to lowest components
-        library.add(faPaperPlane, faRobot, faRedoAlt, faExclamationTriangle)
-    }
-
-    componentDidMount() {
-        dom.i2svg()
     }
 
     onMessageSent(requestStatus) {

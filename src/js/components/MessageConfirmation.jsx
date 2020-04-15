@@ -1,6 +1,17 @@
 import React, { Component } from "react";
+import { library, dom } from "@fortawesome/fontawesome-svg-core";
+import { faPaperPlane, faRobot, faRedoAlt } from "@fortawesome/free-solid-svg-icons";
 
 class MessageConfirmation extends Component {
+    constructor() {
+        super()
+        library.add(faPaperPlane, faRobot, faRedoAlt)
+    }
+
+    componentDidMount() {
+        dom.i2svg()
+    }
+
     render() {
         return (
             <div id="message-confirmation" className={`${this.props.show ? "show" : ""}`}>
