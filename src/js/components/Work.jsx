@@ -2,6 +2,13 @@ import React, { Component } from "react";
 import { library, dom } from "@fortawesome/fontawesome-svg-core";
 import { faLongArrowAltRight } from "@fortawesome/free-solid-svg-icons"
 import BackButton from "./BackButton";
+import WorkItem from "./WorkItem";
+import image1 from "../../../assets/sample1.webp"
+import image2 from "../../../assets/sample2.webp"
+import image3 from "../../../assets/sample3.webp"
+import image4 from "../../../assets/sample4.webp"
+import image5 from "../../../assets/sample5.webp"
+import image6 from "../../../assets/sample6.webp"
 
 class Work extends Component {
 
@@ -17,7 +24,6 @@ class Work extends Component {
     render() {
         // TODO: add hyphens
         // TODO: add horizontal wheel scrolling
-        // TODO: componentize tiles
 
         return (
             <div id="work-wrapper" className="section-wrapper">
@@ -28,86 +34,24 @@ class Work extends Component {
                 <div id="work-content">
                     <h2>Work.</h2>
                     <div id="grid">
-                        <div id="project1" className="cell">
-                            <div className="image"></div>
-                            <div className="content">
-                                <h3>Project 1</h3>
-                                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
-                                    ut labore et dolore magna aliquyam</p>
-                                <a className="animated link-with-icon" href="#"><i
-                                    className="fas fa-long-arrow-alt-right"></i><span>browse</span></a>
-                                <p className="tags">
-                                    <span className="tag">tag1</span>
-                                    <span className="tag">tag2</span>
-                                    <span className="tag">tag3</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div id="project2" className="cell">
-                            <div className="image"></div>
-                            <div className="content">
-                                <h3>Project 2</h3>
-                                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
-                                    ut labore et dolore magna aliquyam</p>
-                                <p className="tags">
-                                    <span className="tag">tag1</span>
-                                    <span className="tag">tag2</span>
-                                    <span className="tag">tag3</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div id="project3" className="cell">
-                            <div className="image"></div>
-                            <div className="content">
-                                <h3>Project 3</h3>
-                                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
-                                    ut labore et dolore magna aliquyam</p>
-                                <p className="tags">
-                                    <span className="tag">tag1</span>
-                                    <span className="tag">tag2</span>
-                                    <span className="tag">tag3</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div id="project4" className="cell">
-                            <div className="image"></div>
-                            <div className="content">
-                                <h3>Project 4</h3>
-                                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
-                                    ut labore et dolore magna aliquyam</p>
-                                <p className="tags">
-                                    <span className="tag">tag1</span>
-                                    <span className="tag">tag2</span>
-                                    <span className="tag">tag3</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div id="project5" className="cell">
-                            <div className="image"></div>
-                            <div className="content">
-                                <h3>Project 5</h3>
-                                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
-                                    ut labore et dolore magna aliquyam</p>
-                                <p className="tags">
-                                    <span className="tag">tag1</span>
-                                    <span className="tag">tag2</span>
-                                    <span className="tag">tag3</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div id="project6" className="cell">
-                            <div className="image"></div>
-                            <div className="content">
-                                <h3>Project 6</h3>
-                                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
-                                    ut labore et dolore magna aliquyam</p>
-                                <p className="tags">
-                                    <span className="tag">tag1</span>
-                                    <span className="tag">tag2</span>
-                                    <span className="tag">tag3</span>
-                                </p>
-                            </div>
-                        </div>
+                        <WorkItem title="Project 1" description="Lorem ipsum dolor sit amet, consetetur sadipscing 
+                            elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam"
+                            tags={["tag1", "tag2", "tag3"]} large={true} image={image1} />
+                        <WorkItem title="Project 2" description="Lorem ipsum dolor sit amet, consetetur sadipscing 
+                            elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam"
+                            tags={["tag1", "tag2", "tag3"]} large={false} image={image2} />
+                        <WorkItem title="Project 3" description="Lorem ipsum dolor sit amet, consetetur sadipscing 
+                            elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam"
+                            tags={["tag1", "tag2", "tag3"]} large={false} image={image3} />
+                        <WorkItem title="Project 4" description="Lorem ipsum dolor sit amet, consetetur sadipscing 
+                            elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam"
+                            tags={["tag1", "tag2", "tag3"]} large={false} image={image4} />
+                        <WorkItem title="Project 5" description="Lorem ipsum dolor sit amet, consetetur sadipscing 
+                            elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam"
+                            tags={["tag1", "tag2", "tag3"]} large={false} image={image5} />
+                        <WorkItem title="Project 6" description="Lorem ipsum dolor sit amet, consetetur sadipscing 
+                            elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam"
+                            tags={["tag1", "tag2", "tag3"]} large={true} image={image6} />
                     </div>
                 </div>
             </div>

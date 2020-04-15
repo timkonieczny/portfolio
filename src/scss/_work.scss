@@ -78,39 +78,9 @@
                         }
                     }
                 }
-                &#project1 {
+                &.large {
                     grid-row-start: 1;
                     grid-row-end: 3;
-                    .image {
-                        background-image: url("../../assets/sample1.webp");
-                    }
-                }
-                &#project2 {
-                    .image {
-                        background-image: url("../../assets/sample2.webp");
-                    }
-                }
-                &#project3 {
-                    .image {
-                        background-image: url("../../assets/sample3.webp");
-                    }
-                }
-                &#project4 {
-                    .image {
-                        background-image: url("../../assets/sample4.webp");
-                    }
-                }
-                &#project5 {
-                    .image {
-                        background-image: url("../../assets/sample5.webp");
-                    }
-                }
-                &#project6 {
-                    grid-row-start: 1;
-                    grid-row-end: 3;
-                    .image {
-                        background-image: url("../../assets/sample6.webp");
-                    }
                 }
             }
         }
