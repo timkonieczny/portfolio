@@ -312,6 +312,10 @@ class Scene extends Loop {
         }, this)
     }
 
+    hasAnimation(name, type) {
+        return this.animation[name][type] && this.animation[name][type].isIncreasing
+    }
+
     addEventListener(type, listener) {
         switch (type) {
             case "progress":

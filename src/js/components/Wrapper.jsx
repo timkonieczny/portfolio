@@ -41,21 +41,14 @@ class Wrapper extends Component {
     }
 
     onHoverableMouseLeave(event) {
-        this.canvas.scene.endAnimation(event.currentTarget.dataset.animation, "hover")
-    }
-
-    onMouseEnter() {
-        console.log("mouseEnter")
-    }
-    onMouseLeave() {
-        console.log("mouseLeave")
+        if (!this.canvas.scene.hasAnimation(event.currentTarget.dataset.animation, "click"))
+            this.canvas.scene.endAnimation(event.currentTarget.dataset.animation, "hover")
     }
 
     onButtonClick(event) {
 
         // TODO: hook up external links
         // TODO: review how animation system works
-        // FIXME: animations aren't working properly
         this.canvas.scene.endAnimation(this.state.animation, "hover")
         this.canvas.scene.endAnimation(this.state.animation, "click")
 
