@@ -1,13 +1,8 @@
 import React, { Component, Fragment } from "react";
-import PrivacyPolicy from "./PrivacyPolicy";
-import Work from "./Work";
-import Message from "./Message";
-import About from "./About";
-import Home from "./Home";
 import Preloader from "./Preloader";
 import Canvas from "./Canvas";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { BrowserRouter, Route } from "react-router-dom";
+import AnimatedSwitch from "./AnimatedSwitch";
 
 class Wrapper extends Component {
     constructor() {
@@ -15,8 +10,7 @@ class Wrapper extends Component {
 
         this.state = {
             progress: 0,
-            animation: "headline",
-            isAppearing: true
+            animation: "headline"
         }
     }
 
@@ -63,10 +57,6 @@ class Wrapper extends Component {
         }
     }
 
-    // TODO: Trigger appropriate animation based on browser history
-    // https://stackoverflow.com/questions/30915173/react-router-go-back-a-page-how-do-you-configure-history
-    // https://github.com/ReactTraining/react-router/issues/1498
-
     render() {
         return (
             <Fragment>
@@ -75,48 +65,10 @@ class Wrapper extends Component {
                 {/* TODO: What's the difference between the different routers? */}
                 <BrowserRouter>
                     <Route render={({ location }) => (
-                        <TransitionGroup id="wrapper" ref={element => { this.wrapper = element }} style={this.state.progress === 100 ? { opacity: 1 } : {}}>
-                            <CSSTransition
-                                key={location.key}
-                                timeout={3000}
-                                classNames="fade"
-                                appear={true}
-                                onEnter={(_, isAppearing) => {
-                                    this.setState({ isAppearing: isAppearing })
-                                }}>
-                                <Switch location={location}>
-                                    <Route path="/about">
-                                        <About mouseEnterListener={this.onHoverableMouseEnter.bind(this)}
-                                            mouseLeaveListener={this.onHoverableMouseLeave.bind(this)}
-                                            clickListener={this.onButtonClick.bind(this)}
-                                            isAppearing={this.state.isAppearing} />
-                                    </Route>
-                                    <Route path="/message">
-                                        <Message mouseEnterListener={this.onHoverableMouseEnter.bind(this)}
-                                            mouseLeaveListener={this.onHoverableMouseLeave.bind(this)}
-                                            clickListener={this.onButtonClick.bind(this)}
-                                            isAppearing={this.state.isAppearing} />
-                                    </Route>
-                                    <Route path="/privacypolicy">
-                                        <PrivacyPolicy mouseEnterListener={this.onHoverableMouseEnter.bind(this)}
-                                            mouseLeaveListener={this.onHoverableMouseLeave.bind(this)}
-                                            clickListener={this.onButtonClick.bind(this)}
-                                            isAppearing={this.state.isAppearing} />
-                                    </Route>
-                                    <Route path="/work">
-                                        <Work mouseEnterListener={this.onHoverableMouseEnter.bind(this)}
-                                            mouseLeaveListener={this.onHoverableMouseLeave.bind(this)}
-                                            clickListener={this.onButtonClick.bind(this)}
-                                            isAppearing={this.state.isAppearing} />
-                                    </Route>
-                                    <Route path="/">
-                                        <Home mouseEnterListener={this.onHoverableMouseEnter.bind(this)}
-                                            mouseLeaveListener={this.onHoverableMouseLeave.bind(this)}
-                                            clickListener={this.onButtonClick.bind(this)} />
-                                    </Route>
-                                </Switch>
-                            </CSSTransition>
-                        </TransitionGroup>
+                        <AnimatedSwitch onHoverableMouseEnter={this.onHoverableMouseEnter.bind(this)}
+                            onHoverableMouseLeave={this.onHoverableMouseLeave.bind(this)}
+                            onButtonClick={this.onButtonClick.bind(this)} location={location}
+                            show={this.state.progress === 100} />
                     )} />
                 </BrowserRouter>
             </Fragment>
