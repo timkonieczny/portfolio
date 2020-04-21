@@ -67,7 +67,7 @@ class Wrapper extends Component {
                     <Route render={({ location }) => (
                         <AnimatedSwitch onHoverableMouseEnter={this.onHoverableMouseEnter.bind(this)}
                             onHoverableMouseLeave={this.onHoverableMouseLeave.bind(this)}
-                            onButtonClick={this.onButtonClick.bind(this)} location={location}
+                            onButtonClick={this.onButtonClick.bind(this)} immutableLocation={location}
                             show={this.state.progress === 100} />
                     )} />
                 </BrowserRouter>

@@ -145,22 +145,40 @@ p {
 
 .section-wrapper {
     position: absolute;
-    left: -70%;
+    &.push-enter {
+        left: 80%;
+    }
+    &.push-enter-active {
+        left: 10%;
+        transition: 3s ease left;
+    }
+    &.push-exit {
+        left: 10%;
+    }
+    &.push-exit-active {
+        left: -70%;
+        transition: 3s ease left;
+    }
+    &.pop-enter {
+        left: -70%;
+    }
+    &.pop-enter-active {
+        left: 10%;
+        transition: 3s ease left;
+    }
+    &.pop-exit {
+        left: 10%;
+    }
+    &.pop-exit-active {
+        left: 80%;
+        transition: 3s ease left;
+    }
     width: 80%;
     // transition: left 0.5s, opacity 0.5s, visibility 0.5s;
     max-width: 520px;
     max-height: 90%;
-    transition: 3s ease left;
     opacity: 1;
     // TODO: clean up animation definitions
-    &.fade-enter-active,
-    &.fade-enter-done {
-        left: 10%;
-    }
-    &.fade-exit-active,
-    &.fade-exit-done {
-        left: 80%;
-    }
 }
 
 #preloader {

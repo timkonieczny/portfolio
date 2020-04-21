@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, withRouter } from "react-router-dom";
 import About from "./About";
 import Message from "./Message";
 import PrivacyPolicy from "./PrivacyPolicy";
@@ -18,18 +18,15 @@ class AnimatedSwitch extends Component {
     }
 
     render() {
-
-        // TODO: Trigger appropriate animation based on browser history
-        // https://stackoverflow.com/questions/30915173/react-router-go-back-a-page-how-do-you-configure-history
-        // https://github.com/ReactTraining/react-router/issues/1498
-
         return (
             <TransitionGroup id="wrapper" ref={element => { this.wrapper = element }}
-                style={this.props.show ? { opacity: 1 } : {}}>
+                style={this.props.show ? { opacity: 1 } : {}}
+                childFactory={child => React.cloneElement(child,    // FIXME: history forward is pop as well
+                    { classNames: `${this.props.history.action === "PUSH" ? "push" : "pop"}` })}>
                 <CSSTransition
                     key={this.props.location.key}
                     timeout={3000}
-                    classNames="fade"
+                    classNames={`${this.props.immutableLocation.action === "PUSH" ? "push" : "pop"}`}
                     appear={true}
                     onEnter={(_, isAppearing) => {
                         this.setState({ isAppearing: isAppearing })
@@ -71,4 +68,4 @@ class AnimatedSwitch extends Component {
     }
 }
 
-export default AnimatedSwitch
+export default withRouter(AnimatedSwitch)
