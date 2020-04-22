@@ -143,42 +143,50 @@ p {
     }
 }
 
+$slide-transition: 500ms cubic-bezier(0.33, 1, 0.68, 1) left,
+    500ms cubic-bezier(0.33, 1, 0.68, 1) opacity;
+
 .section-wrapper {
     position: absolute;
+    width: 80%;
+    max-width: 520px;
+    max-height: 90%;
     &.push-enter {
-        left: 80%;
+        left: 90%;
+        opacity: 0;
     }
     &.push-enter-active {
         left: 10%;
-        transition: 3s ease left;
+        opacity: 1;
+        transition: $slide-transition;
     }
     &.push-exit {
         left: 10%;
+        opacity: 1;
     }
     &.push-exit-active {
         left: -70%;
-        transition: 3s ease left;
+        opacity: 0;
+        transition: $slide-transition;
     }
     &.pop-enter {
         left: -70%;
+        opacity: 0;
     }
     &.pop-enter-active {
         left: 10%;
-        transition: 3s ease left;
+        opacity: 1;
+        transition: $slide-transition;
     }
     &.pop-exit {
         left: 10%;
+        opacity: 1;
     }
     &.pop-exit-active {
-        left: 80%;
-        transition: 3s ease left;
+        left: 90%;
+        opacity: 0;
+        transition: $slide-transition;
     }
-    width: 80%;
-    // transition: left 0.5s, opacity 0.5s, visibility 0.5s;
-    max-width: 520px;
-    max-height: 90%;
-    opacity: 1;
-    // TODO: clean up animation definitions
 }
 
 #preloader {

@@ -17,15 +17,17 @@ class AnimatedSwitch extends Component {
         }
     }
 
+    // FIXME: during history forward history.action === "POP" -> wrong animation
+    // FIXME: back button click when there is no history triggers wrong animation
     render() {
         return (
             <TransitionGroup id="wrapper" ref={element => { this.wrapper = element }}
                 style={this.props.show ? { opacity: 1 } : {}}
-                childFactory={child => React.cloneElement(child,    // FIXME: history forward is pop as well
+                childFactory={child => React.cloneElement(child,
                     { classNames: `${this.props.history.action === "PUSH" ? "push" : "pop"}` })}>
                 <CSSTransition
                     key={this.props.location.key}
-                    timeout={3000}
+                    timeout={500}
                     classNames={`${this.props.immutableLocation.action === "PUSH" ? "push" : "pop"}`}
                     appear={true}
                     onEnter={(_, isAppearing) => {
