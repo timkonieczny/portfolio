@@ -112,12 +112,12 @@ class Scene extends Loop {
         const privacyPolicyHoverUp = vec3.create()
         vec3.set(privacyPolicyHoverUp, 0, 0, 1)
 
-        const workHoverPosition = vec3.create()     // TODO: Add new animation parameters for work section
-        vec3.set(workHoverPosition, 0, 40, 0)
+        const workHoverPosition = vec3.create()
+        vec3.set(workHoverPosition, 0, 15, 40)
         const workHoverLookAt = vec3.create()
-        vec3.set(workHoverLookAt, 0, 0, 0)
+        vec3.set(workHoverLookAt, 0, -10, 0)
         const workHoverUp = vec3.create()
-        vec3.set(workHoverUp, 0, 0, 1)
+        vec3.set(workHoverUp, -1, 0, 0)
 
         const makeGeometry = _ => {
             return new Promise((resolve) => {
