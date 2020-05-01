@@ -62,7 +62,6 @@ class Wrapper extends Component {
             <Fragment>
                 <Canvas onProgress={this.progressListener.bind(this)} ref={element => { this.canvas = element }} />
                 <Preloader progress={this.state.progress} />
-                {/* TODO: What's the difference between the different routers? */}
                 <BrowserRouter>
                     <Route render={({ location }) => (
                         <AnimatedSwitch onHoverableMouseEnter={this.onHoverableMouseEnter.bind(this)}
