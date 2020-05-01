@@ -38,7 +38,7 @@ class AnimatedSwitch extends Component {
                         console.log(isAppearing)
                         this.setState({ isAppearing: isAppearing })
                     }}
-                    onEntered={(_, isAppearing) => {
+                    onEntered={_ => {
                         this.setState({ enableWebGLAnimations: true })
                     }}
                     onExit={_ => {

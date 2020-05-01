@@ -3,14 +3,23 @@ import { Scene } from "../Scene.js"
 
 class Canvas extends Component {
 
-    async componentDidMount() {
-        // TODO: Best place to to init canvas?
+    constructor() {
+        super()
+        this.state = {
+            isRendering: false
+        }
+    }
 
-        this.scene = new Scene()
-        this.scene.addEventListener("progress", this.props.onProgress)
-        this.scene.addEventListener("initComplete", this.props.onProgress)
-        await this.scene.initialize(canvas)
-        this.scene.render()
+    async componentDidMount() {
+        if (!this.state.isRendering) {
+            this.setState({ isRendering: true })
+
+            this.scene = new Scene()
+            this.scene.addEventListener("progress", this.props.onProgress)
+            this.scene.addEventListener("initComplete", this.props.onProgress)
+            await this.scene.initialize(canvas)
+            this.scene.render()
+        }
     }
 
     render() {

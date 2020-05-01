@@ -62,7 +62,8 @@ class About extends Component {
                         </Link>
                         <a className="button linkedin-button" data-animation="linkedin" tabIndex="3"
                             onMouseEnter={this.props.mouseEnterListener} onMouseLeave={this.props.mouseLeaveListener}
-                            onFocus={this.props.mouseEnterListener} onBlur={this.props.mouseLeaveListener}>
+                            onFocus={this.props.mouseEnterListener} onBlur={this.props.mouseLeaveListener}
+                            href="https://www.linkedin.com/in/tim-konieczny/">
                             <i className="fab fa-linkedin-in"></i>connect on LinkedIn
                         </a>
                     </div>

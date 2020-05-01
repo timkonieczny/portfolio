@@ -19,7 +19,6 @@ class BackButton extends Component {
     }
 
     render() {
-        // TODO: set up WebGL animation correctly
         if (this.props.hasHistory)
             return (
                 <a className="back-arrow" data-animation="headline" tabIndex="1"

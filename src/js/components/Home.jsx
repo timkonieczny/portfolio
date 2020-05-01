@@ -37,7 +37,7 @@ class Home extends Component {
                     <a className="button linkedin-button animated" data-animation="linkedin" tabIndex="2"
                         onMouseEnter={this.props.mouseEnterListener} onMouseLeave={this.props.mouseLeaveListener}
                         onFocus={this.props.mouseEnterListener} onBlur={this.props.onMouseLeaveListener}
-                        onClick={this.props.clickListener}>
+                        onClick={this.props.clickListener} href="https://www.linkedin.com/in/tim-konieczny/">
                         <i className="fab fa-linkedin-in"></i>connect on LinkedIn
                     </a>
                 </div>
