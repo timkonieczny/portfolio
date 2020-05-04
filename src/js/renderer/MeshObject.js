@@ -17,6 +17,13 @@ class MeshObject {
         /** @type {Light} */ light,
         /** @type {UniformManager} */ uniformManager) {
 
+        this.worldMatrix = mat4.create()
+        this.identityMatrix = mat4.create()
+        this.translationVector = vec3.set(vec3.create(), 0, -2, 0)
+        this.normalMatrix = mat3.create()
+        this.normalMatrix2 = mat4.create()
+        this.normalMatrix3 = mat4.create()
+
         this.listeners = {
             update: []
         }
@@ -142,21 +149,16 @@ class MeshObject {
     update(time) {
         this.listeners.update.forEach(listener => { listener(time.tslf, this) })
 
-        let worldMatrix = mat4.create()
-        const identityMatrix = mat4.create()
-        const translationVector = vec3.create()
-        vec3.set(translationVector, 0, -2, 0)
-        mat4.translate(worldMatrix, identityMatrix, translationVector)
+        mat4.identity(this.worldMatrix)
+        mat4.translate(this.worldMatrix, this.identityMatrix, this.translationVector)
 
-        let normalMatrix = mat3.create()
-        let normalMatrix2 = mat4.create()
-        let normalMatrix3 = mat4.create()
-        mat4.invert(normalMatrix2, worldMatrix)
-        mat4.transpose(normalMatrix3, normalMatrix2)
-        mat3.fromMat4(normalMatrix, normalMatrix3)
 
-        this.matWorldUniform.update(worldMatrix)
-        this.matNormUniform.update(normalMatrix)
+        mat4.invert(this.normalMatrix2, this.worldMatrix)
+        mat4.transpose(this.normalMatrix3, this.normalMatrix2)
+        mat3.fromMat4(this.normalMatrix, this.normalMatrix3)
+
+        this.matWorldUniform.update(this.worldMatrix)
+        this.matNormUniform.update(this.normalMatrix)
     }
 
     render(/** @type {WebGLRenderingContext} */ gl) {
