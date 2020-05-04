@@ -22,8 +22,6 @@ class AnimatedSwitch extends Component {
     // FIXME: back button click when there is no history triggers wrong animation
     // FIXME: WebGL animation doesn't consider initial route
     render() {
-        const onMouseEnter = event => { if (this.state.enableWebGLAnimations) this.props.onHoverableMouseEnter(event) }
-        const onMouseLeave = event => { if (this.state.enableWebGLAnimations) this.props.onHoverableMouseLeave(event) }
         return (
             <TransitionGroup id="wrapper" ref={element => { this.wrapper = element }}
                 style={this.props.show ? { opacity: 1 } : {}}
@@ -31,7 +29,7 @@ class AnimatedSwitch extends Component {
                     { classNames: `${this.props.history.action === "POP" ? "pop" : "push"}` })}>
                 <CSSTransition
                     key={this.props.location.key}
-                    timeout={500}
+                    timeout={1000}
                     classNames={`${this.props.immutableLocation.action === "POP" ? "pop" : "push"}`}
                     appear={true}
                     onEnter={(_, isAppearing) => {
@@ -46,33 +44,23 @@ class AnimatedSwitch extends Component {
                     }}>
                     <Switch location={this.props.location}>
                         <Route path="/about">
-                            <About mouseEnterListener={onMouseEnter}
-                                mouseLeaveListener={onMouseLeave}
-                                clickListener={this.props.onButtonClick}
+                            <About clickListener={this.props.onButtonClick}
                                 isAppearing={this.state.isAppearing} />
                         </Route>
                         <Route path="/message">
-                            <Message mouseEnterListener={onMouseEnter}
-                                mouseLeaveListener={onMouseLeave}
-                                clickListener={this.props.onButtonClick}
+                            <Message clickListener={this.props.onButtonClick}
                                 isAppearing={this.state.isAppearing} />
                         </Route>
                         <Route path="/privacypolicy">
-                            <PrivacyPolicy mouseEnterListener={onMouseEnter}
-                                mouseLeaveListener={onMouseLeave}
-                                clickListener={this.props.onButtonClick}
+                            <PrivacyPolicy clickListener={this.props.onButtonClick}
                                 isAppearing={this.state.isAppearing} />
                         </Route>
                         <Route path="/work">
-                            <Work mouseEnterListener={onMouseEnter}
-                                mouseLeaveListener={onMouseLeave}
-                                clickListener={this.props.onButtonClick}
+                            <Work clickListener={this.props.onButtonClick}
                                 isAppearing={this.state.isAppearing} />
                         </Route>
                         <Route path="/">
-                            <Home mouseEnterListener={onMouseEnter}
-                                mouseLeaveListener={onMouseLeave}
-                                clickListener={this.props.onButtonClick} />
+                            <Home clickListener={this.props.onButtonClick} />
                         </Route>
                     </Switch>
                 </CSSTransition>

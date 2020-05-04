@@ -6,11 +6,11 @@ import AnimatedSwitch from "./AnimatedSwitch";
 
 class Wrapper extends Component {
     constructor() {
-        super();
+        super()
 
         this.state = {
             progress: 0,
-            animation: "headline"
+            animations: ["headline"]
         }
     }
 
@@ -30,31 +30,21 @@ class Wrapper extends Component {
         this.setState({ progress: progress })
     }
 
-    onHoverableMouseEnter(event) {
-        this.canvas.scene.startAnimation(event.currentTarget.dataset.animation, "hover")
-    }
-
-    onHoverableMouseLeave(event) {
-        if (!this.canvas.scene.hasAnimation(event.currentTarget.dataset.animation, "click"))
-            this.canvas.scene.endAnimation(event.currentTarget.dataset.animation, "hover")
-    }
-
     onButtonClick(event) {
-
-        // TODO: hook up external links
-        // TODO: review how animation system works
-        this.canvas.scene.endAnimation(this.state.animation, "hover")
-        this.canvas.scene.endAnimation(this.state.animation, "click")
-
-        this.setState({ animation: event.currentTarget.dataset.animation })
-
-        // 3D animations
-        if (event.currentTarget.dataset.animation === "headline")
-            this.canvas.scene.endAllAnimations()
-        else {
-            this.canvas.scene.startAnimation(event.currentTarget.dataset.animation, "click")
-            this.canvas.scene.startAnimation(event.currentTarget.dataset.animation, "hover")
+        let animation
+        if (event.currentTarget.dataset.animation === "back") {
+            this.state.animations.pop()
+            animation = this.state.animations[this.state.animations.length - 1]
+            this.setState({
+                animations: this.state.animations
+            })
+        } else {
+            this.setState({
+                animations: [...this.state.animations, event.currentTarget.dataset.animation]
+            })
+            animation = event.currentTarget.dataset.animation
         }
+        this.canvas.scene.startAnimation(animation)
     }
 
     render() {
@@ -64,9 +54,7 @@ class Wrapper extends Component {
                 <Preloader progress={this.state.progress} />
                 <BrowserRouter>
                     <Route render={({ location }) => (
-                        <AnimatedSwitch onHoverableMouseEnter={this.onHoverableMouseEnter.bind(this)}
-                            onHoverableMouseLeave={this.onHoverableMouseLeave.bind(this)}
-                            onButtonClick={this.onButtonClick.bind(this)} immutableLocation={location}
+                        <AnimatedSwitch onButtonClick={this.onButtonClick.bind(this)} immutableLocation={location}
                             show={this.state.progress === 100} />
                     )} />
                 </BrowserRouter>

@@ -8,8 +8,7 @@ class PrivacyPolicy extends Component {
         return (
             <div id="privacy-policy-wrapper" className="section-wrapper">
                 <div>
-                    <BackButton hasHistory={!this.props.isAppearing} mouseEnterListener={this.props.mouseEnterListener}
-                        mouseLeaveListener={this.props.mouseLeaveListener} clickListener={this.props.clickListener} />
+                    <BackButton hasHistory={!this.props.isAppearing} clickListener={this.props.clickListener} />
                 </div>
                 <div id="privacy-policy-content">
                     <h2>About this website.</h2>

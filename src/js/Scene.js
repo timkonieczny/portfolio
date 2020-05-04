@@ -1,10 +1,8 @@
 import { MeshObject } from "./renderer/MeshObject.js"
 import { Camera } from "./renderer/Camera.js";
 import { Light } from "./renderer/Light.js";
-import { InterpolatorInOut } from "./renderer/InterpolatorInOut.js";
-import { InterpolatorIn } from "./renderer/InterpolatorIn.js";
 import { UniformManager } from "./renderer/UniformManager.js";
-import { mat4, mat3, vec3, glMatrix } from "gl-matrix"
+import { mat4, vec3, glMatrix } from "gl-matrix"
 import vertexShaderSource from "../glsl/vertex.glsl"
 import fragmentShaderSource from "../glsl/fragment.glsl"
 import Worker from './renderer/HexagonGrid.worker.js'
@@ -31,7 +29,7 @@ class Scene extends Loop {
             this.gl = canvas.getContext("experimental-webgl")
             if (this.gl && !this.gl.getExtension("OES_element_index_uint")) {
                 console.error("Your browser doesn't support the OES_element_index_uint extension")
-                return
+                turn
             }
         }
         if (!this.gl) {
@@ -73,51 +71,7 @@ class Scene extends Loop {
 
         const program = this.gl.createProgram()
         const uniformManager = new UniformManager(this.gl, program)
-        const lightPosition = vec3.create()
-        vec3.set(lightPosition, 30, 10, -10)
-        const light = new Light(lightPosition)
-
-        const position = vec3.create()
-        vec3.set(position, -50, 20, 50)
-        const lookAt = vec3.create()
-        vec3.set(lookAt, 0, -20, 0)
-        const up = vec3.create()
-        vec3.set(up, 0, 1, 0)
-
-        const messageHoverPosition = vec3.create()
-        vec3.set(messageHoverPosition, 20, -25, 60)
-        const messageHoverLookAt = vec3.create()
-        vec3.set(messageHoverLookAt, 0, 0, 0)
-        const messageHoverUp = vec3.create()
-        vec3.set(messageHoverUp, 0, 1, 0)
-
-        const linkedinHoverPosition = vec3.create()
-        vec3.set(linkedinHoverPosition, 0, -40, 0)
-        const linkedinHoverLookAt = vec3.create()
-        vec3.set(linkedinHoverLookAt, 0, 0, 0)
-        const linkedinHoverUp = vec3.create()
-        vec3.set(linkedinHoverUp, 1, 0, 0)
-
-        const aboutHoverPosition = vec3.create()
-        vec3.set(aboutHoverPosition, 60, 20, 10)
-        const aboutHoverLookAt = vec3.create()
-        vec3.set(aboutHoverLookAt, -40, -10, -30)
-        const aboutHoverUp = vec3.create()
-        vec3.set(aboutHoverUp, 0, 1, 0)
-
-        const privacyPolicyHoverPosition = vec3.create()
-        vec3.set(privacyPolicyHoverPosition, 0, 40, 0)
-        const privacyPolicyHoverLookAt = vec3.create()
-        vec3.set(privacyPolicyHoverLookAt, 0, 0, 0)
-        const privacyPolicyHoverUp = vec3.create()
-        vec3.set(privacyPolicyHoverUp, 0, 0, 1)
-
-        const workHoverPosition = vec3.create()
-        vec3.set(workHoverPosition, 0, 15, 40)
-        const workHoverLookAt = vec3.create()
-        vec3.set(workHoverLookAt, 0, -10, 0)
-        const workHoverUp = vec3.create()
-        vec3.set(workHoverUp, -1, 0, 0)
+        const light = new Light(vec3.set(vec3.create(), 30, 10, -10))
 
         const makeGeometry = _ => {
             return new Promise((resolve) => {
@@ -140,134 +94,18 @@ class Scene extends Loop {
 
         this.hexGrid = new MeshObject(this.gl, geometry, vertexShaderSource, fragmentShaderSource, light, uniformManager)
 
-        const camera = new Camera(position, lookAt, up, uniformManager)
-
-        this.animation = {
-            headline: {
-                hover: new InterpolatorInOut(1000, 2000, camera.originalPosition, camera.originalLookAt, camera.originalUp),
-            },
-            message: {
-                hover: new InterpolatorInOut(1000, 1000, messageHoverPosition, messageHoverLookAt, messageHoverUp),
-                click: new InterpolatorInOut(2000, 2000, null, null, null)
-            },
-            linkedin: {
-                hover: new InterpolatorInOut(1000, 1000, linkedinHoverPosition, linkedinHoverLookAt, linkedinHoverUp),
-                click: new InterpolatorInOut(2000, 2000, null, null, null)
-            },
-            about: {
-                hover: new InterpolatorInOut(1000, 1000, aboutHoverPosition, aboutHoverLookAt, aboutHoverUp),
-                click: new InterpolatorInOut(2000, 2000, null, null, null)
-            },
-            privacyPolicy: {
-                hover: new InterpolatorInOut(1000, 1000, privacyPolicyHoverPosition, privacyPolicyHoverLookAt, privacyPolicyHoverUp),
-                click: new InterpolatorInOut(2000, 2000, null, null, null)
-            },
-            work: {
-                hover: new InterpolatorInOut(1000, 1000, workHoverPosition, workHoverLookAt, workHoverUp),
-                click: new InterpolatorInOut(2000, 2000, null, null, null)
-            },
-            start: new InterpolatorIn(3000, 2000)
-        }
-
-        this.hexGrid.update = time => {
-            let worldMatrix = mat4.create()
-            const identityMatrix = mat4.create()
-            const translationVector = vec3.create()
-            vec3.set(translationVector, 0, -2, 0)
-            mat4.translate(worldMatrix, identityMatrix, translationVector)
-
-            let normalMatrix = mat3.create()
-            let normalMatrix2 = mat4.create()
-            let normalMatrix3 = mat4.create()
-            mat4.invert(normalMatrix2, worldMatrix)
-            mat4.transpose(normalMatrix3, normalMatrix2)
-            mat3.fromMat4(normalMatrix, normalMatrix3)
-
-            this.animation.message.hover.update(time.tslf)
-            this.animation.message.click.update(time.tslf)
-            this.animation.linkedin.hover.update(time.tslf)
-            this.animation.linkedin.click.update(time.tslf)
-            this.animation.about.hover.update(time.tslf)
-            this.animation.about.click.update(time.tslf)
-            this.animation.privacyPolicy.hover.update(time.tslf)
-            this.animation.privacyPolicy.click.update(time.tslf)
-            this.animation.work.hover.update(time.tslf)
-            this.animation.work.click.update(time.tslf)
-            this.animation.start.update(time.tslf)
-            this.animation.headline.hover.update(time.tslf) // 0.5 to 1
-
-            let messageParams = this.animation.message.hover.getInterpolatedDeltaCameraParameters(camera)
-            let linkedinParams = this.animation.linkedin.hover.getInterpolatedDeltaCameraParameters(camera)
-            let aboutParams = this.animation.about.hover.getInterpolatedDeltaCameraParameters(camera)
-            let privacyPolicyParams = this.animation.privacyPolicy.hover.getInterpolatedDeltaCameraParameters(camera)
-            let workParams = this.animation.work.hover.getInterpolatedDeltaCameraParameters(camera)
-
-            let accumulatedPosition = vec3.create()
-            let accumulatedLookAt = vec3.create()
-            let accumulatedUp = vec3.create()
-
-            vec3.add(accumulatedPosition, messageParams.position, linkedinParams.position)
-            vec3.add(accumulatedPosition, accumulatedPosition, aboutParams.position)
-            vec3.add(accumulatedPosition, accumulatedPosition, privacyPolicyParams.position)
-            vec3.add(accumulatedPosition, accumulatedPosition, workParams.position)
-            vec3.add(accumulatedPosition, accumulatedPosition, camera.originalPosition)
-
-            vec3.add(accumulatedLookAt, messageParams.lookAt, linkedinParams.lookAt)
-            vec3.add(accumulatedLookAt, accumulatedLookAt, aboutParams.lookAt)
-            vec3.add(accumulatedLookAt, accumulatedLookAt, privacyPolicyParams.lookAt)
-            vec3.add(accumulatedLookAt, accumulatedLookAt, workParams.lookAt)
-            vec3.add(accumulatedLookAt, accumulatedLookAt, camera.originalLookAt)
-
-            vec3.add(accumulatedUp, messageParams.up, linkedinParams.up)
-            vec3.add(accumulatedUp, accumulatedUp, aboutParams.up)
-            vec3.add(accumulatedUp, accumulatedUp, privacyPolicyParams.up)
-            vec3.add(accumulatedUp, accumulatedUp, workParams.up)
-            vec3.add(accumulatedUp, accumulatedUp, camera.originalUp)
-
-            let negatedAccumulatedPosition = vec3.create()
-            vec3.negate(negatedAccumulatedPosition, accumulatedPosition)
-            let negatedAccumulatedLookAt = vec3.create()
-            vec3.negate(negatedAccumulatedLookAt, accumulatedLookAt)
-            let negatedAccumulatedUp = vec3.create()
-            vec3.negate(negatedAccumulatedUp, accumulatedUp)
-
-            vec3.set(accumulatedPosition,
-                accumulatedPosition[0] * (1 - this.animation.headline.hover.interpolator) + camera.originalPosition[0] * this.animation.headline.hover.interpolator,
-                accumulatedPosition[1] * (1 - this.animation.headline.hover.interpolator) + camera.originalPosition[1] * this.animation.headline.hover.interpolator,
-                accumulatedPosition[2] * (1 - this.animation.headline.hover.interpolator) + camera.originalPosition[2] * this.animation.headline.hover.interpolator,
-            )
-
-            vec3.set(accumulatedLookAt,
-                accumulatedLookAt[0] * (1 - this.animation.headline.hover.interpolator) + camera.originalLookAt[0] * this.animation.headline.hover.interpolator,
-                accumulatedLookAt[1] * (1 - this.animation.headline.hover.interpolator) + camera.originalLookAt[1] * this.animation.headline.hover.interpolator,
-                accumulatedLookAt[2] * (1 - this.animation.headline.hover.interpolator) + camera.originalLookAt[2] * this.animation.headline.hover.interpolator,
-            )
-
-            vec3.set(accumulatedUp,
-                accumulatedUp[0] * (1 - this.animation.headline.hover.interpolator) + camera.originalUp[0] * this.animation.headline.hover.interpolator,
-                accumulatedUp[1] * (1 - this.animation.headline.hover.interpolator) + camera.originalUp[1] * this.animation.headline.hover.interpolator,
-                accumulatedUp[2] * (1 - this.animation.headline.hover.interpolator) + camera.originalUp[2] * this.animation.headline.hover.interpolator,
-            )
-
-            camera.update(accumulatedPosition, accumulatedLookAt, accumulatedUp)
-            this.hexGrid.matWorldUniform.update(worldMatrix)
-            this.hexGrid.matNormUniform.update(normalMatrix)
-            this.hexGrid.timeUniform.update(time.elapsed * 0.001)
-            this.hexGrid.displacementY0Uniform.update(this.animation.message.click.interpolator)
-            this.hexGrid.displacementY1Uniform.update(this.animation.linkedin.click.interpolator)
-            this.hexGrid.displacementY2Uniform.update(this.animation.about.click.interpolator)
-            this.hexGrid.displacementY3Uniform.update(this.animation.privacyPolicy.click.interpolator)
-            this.hexGrid.displacementY3Uniform.update(this.animation.work.click.interpolator)
-            this.hexGrid.explosionUniform.update(this.animation.start.interpolator)
-            this.hexGrid.doubleExplosionUniform.update(this.animation.headline.hover.interpolator)
-        }
+        this.camera = new Camera(
+            vec3.set(vec3.create(), -50, 20, 50),
+            vec3.set(vec3.create(), 0, -20, 0),
+            vec3.set(vec3.create(), 0, 1, 0),
+            uniformManager)
 
         const resize = () => {
             canvas.width = canvas.clientWidth * window.devicePixelRatio
             canvas.height = canvas.clientHeight * window.devicePixelRatio
             this.gl.viewport(0, 0, canvas.width, canvas.height)
-            mat4.perspective(camera.projMatrix, glMatrix.toRadian(45), canvas.width / canvas.height, 0.1, 1000.0)
-            this.hexGrid.resize(camera.projMatrix)
+            mat4.perspective(this.camera.projMatrix, glMatrix.toRadian(45), canvas.width / canvas.height, 0.1, 1000.0)
+            this.hexGrid.resize(this.camera.projMatrix)
         }
         window.addEventListener("resize", resize)
         resize()
@@ -278,6 +116,7 @@ class Scene extends Loop {
     tick(time) {
         this.time.update(time)
         this.hexGrid.update(this.time)
+        this.camera.update(this.time)
         this.hexGrid.render(this.gl)
         if (this.firstFrame) {
             this.firstFrame = false
@@ -285,35 +124,22 @@ class Scene extends Loop {
         }
     }
 
-    startAnimation(name, type) {
-        this.animation[name][type].isDecreasing = false
-        this.animation[name][type].isIncreasing = true
-    }
+    startAnimation(name) {
+        this.camera.listeners.update = []
 
-    startAnimations(animations) {
-        animations.forEach(animation => {
-            this.startAnimation(animation.name, animation.type)
-        })
-    }
+        this.camera.removeEventListener("update", this.camera.animation.headlineIn.callbackBound)
+        this.camera.removeEventListener("update", this.camera.animation.messageIn.callbackBound)
+        this.camera.removeEventListener("update", this.camera.animation.aboutIn.callbackBound)
+        this.camera.removeEventListener("update", this.camera.animation.privacyPolicyIn.callbackBound)
+        this.camera.removeEventListener("update", this.camera.animation.workIn.callbackBound)
+        this.camera.removeEventListener("update", this.camera.animation.linkedInIn.callbackBound)
+        this.camera.removeEventListener("update", this.camera.animation.out.callbackBound)
 
-    endAnimation(name, type) {
-        if (this.animation[name][type]) {
-            this.animation[name][type].isDecreasing = true
-            this.animation[name][type].isIncreasing = false
-        }
-    }
-
-    endAllAnimations() {
-        Object.keys(this.animation).forEach(name => {
-            Object.keys(this.animation[name]).forEach(type => {
-                if (name != "start")
-                    this.endAnimation(name, type)
-            }, this)
-        }, this)
-    }
-
-    hasAnimation(name, type) {
-        return this.animation[name][type] && this.animation[name][type].isIncreasing
+        this.camera.animation.out.init(this.camera.position, this.camera.lookAt, this.camera.up)
+        this.camera.addEventListener("update", this.camera.animation.out.callbackBound)
+        this.camera.animation[`${name}In`].init()
+        this.camera.addEventListener("update", this.camera.animation[`${name}In`].callbackBound)
+        this.hexGrid.addEventListener("update", this.hexGrid.animation[name].callbackBound)
     }
 
     addEventListener(type, listener) {

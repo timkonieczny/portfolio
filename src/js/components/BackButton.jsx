@@ -21,16 +21,12 @@ class BackButton extends Component {
     render() {
         if (this.props.hasHistory)
             return (
-                <a className="back-arrow" data-animation="headline" tabIndex="1"
-                    onMouseEnter={this.props.mouseEnterListener} onMouseLeave={this.props.mouseLeaveListener}
-                    onFocus={this.props.mouseEnterListener} onBlur={this.props.mouseLeaveListener}
+                <a className="back-arrow" data-animation="back" tabIndex="1"
                     onClick={event => { this.props.clickListener(event); this.props.history.goBack() }}>
                     <i className="fas fa-long-arrow-alt-left"></i>
                 </a>)
         else return (
             <Link to="/" className="back-arrow" data-animation="headline" tabIndex="1"
-                onMouseEnter={this.props.mouseEnterListener} onMouseLeave={this.props.mouseLeaveListener}
-                onFocus={this.props.mouseEnterListener} onBlur={this.props.mouseLeaveListener}
                 onClick={this.props.clickListener}>
                 <i className="fas fa-long-arrow-alt-left"></i>
             </Link>)

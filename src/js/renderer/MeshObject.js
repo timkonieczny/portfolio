@@ -5,6 +5,9 @@ import { UniformFloat } from "./UniformFloat.js";
 import { UniformMatrix4f } from "./UniformMatrix4f.js";
 import { UniformMatrix3f } from "./UniformMatrix3f.js";
 import { Uniform3f } from "./Uniform3f.js";
+import CameraAnimation from "./CameraAnimation.js";
+import { vec3, mat4, mat3 } from "gl-matrix";
+import UniformAnimation from "./UniformAnimation.js";
 
 class MeshObject {
     constructor(
@@ -14,6 +17,10 @@ class MeshObject {
         /** @type {string} */ fragmentShaderSource,
         /** @type {Light} */ light,
         /** @type {UniformManager} */ uniformManager) {
+
+        this.listeners = {
+            update: []
+        }
 
         this.indices = mesh.indices
         this.uniformManager = uniformManager
@@ -113,6 +120,52 @@ class MeshObject {
         gl.vertexAttribPointer(this.interleaved.attribLocation.displacementY3, 1, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 15)
         gl.vertexAttribPointer(this.interleaved.attribLocation.startPosition, 3, gl.FLOAT, gl.FALSE, this.interleaved.bytesPerElement * this.interleaved.numberOfElements, this.interleaved.bytesPerElement * 16)
         // TODO: startposition: y component unnecessary
+
+        this.animation = {
+            start: new UniformAnimation(this.explosionUniform),
+            message: new UniformAnimation(this.displacementY0Uniform),
+            about: new UniformAnimation(this.displacementY1Uniform),
+            headline: new UniformAnimation(this.displacementY2Uniform),
+            privacyPolicy: new UniformAnimation(this.displacementY3Uniform),
+            work: new UniformAnimation(this.displacementY3Uniform),         // FIXME: eiter remove redundant uniforms or add new one for work
+            wave: new UniformAnimation(this.timeUniform)
+        }
+        this.animation.start.time.total = 5000
+        const interpolationFunction = interpolator => {
+            return Math.sin(interpolator * Math.PI)
+        }
+        this.animation.message.time.function = interpolationFunction
+        this.animation.about.time.function = interpolationFunction
+        this.animation.headline.time.function = interpolationFunction
+        this.animation.privacyPolicy.time.function = interpolationFunction
+        this.animation.work.time.function = interpolationFunction
+
+        this.animation.wave.callback = (tslf, mesh) => {
+            const animation = this.animation.wave
+            animation.time.elapsed += tslf
+            animation.uniform.update(animation.time.elapsed * 0.001)
+        }
+        this.animation.wave.callbackBound = this.animation.wave.callback.bind(this.animation.wave)
+    }
+
+    update(time) {
+        this.listeners.update.forEach(listener => { listener(time.tslf, this) })
+
+        let worldMatrix = mat4.create()
+        const identityMatrix = mat4.create()
+        const translationVector = vec3.create()
+        vec3.set(translationVector, 0, -2, 0)
+        mat4.translate(worldMatrix, identityMatrix, translationVector)
+
+        let normalMatrix = mat3.create()
+        let normalMatrix2 = mat4.create()
+        let normalMatrix3 = mat4.create()
+        mat4.invert(normalMatrix2, worldMatrix)
+        mat4.transpose(normalMatrix3, normalMatrix2)
+        mat3.fromMat4(normalMatrix, normalMatrix3)
+
+        this.matWorldUniform.update(worldMatrix)
+        this.matNormUniform.update(normalMatrix)
     }
 
     render(/** @type {WebGLRenderingContext} */ gl) {
@@ -123,6 +176,24 @@ class MeshObject {
 
     resize(projMatrix) {
         this.matProjUniform.update(projMatrix)
+    }
+
+    addEventListener(type, listener) {
+        if (!this.hasEventListener(type, listener)) {
+            this.listeners[type].push(listener)
+        }
+    }
+
+    removeEventListener(type, listener) {
+        if (this.hasEventListener(type, listener)) {
+            const index = this.listeners[type].indexOf(listener)
+            this.listeners[type].splice(index, 1)
+        }
+    }
+
+    hasEventListener(type, listener) {
+        const index = this.listeners[type].indexOf(listener)
+        return index !== -1
     }
 
 }

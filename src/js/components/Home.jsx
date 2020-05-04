@@ -29,27 +29,19 @@ class Home extends Component {
                 </p>
                 <div className="message-buttons">
                     <Link to="/message" className="button message-button animated" data-animation="message"
-                        tabIndex="1" onMouseEnter={this.props.mouseEnterListener}
-                        onMouseLeave={this.props.mouseLeaveListener} onFocus={this.props.mouseEnterListener}
-                        onBlur={this.props.mouseLeaveListener} onClick={this.props.clickListener}>
+                        tabIndex="1" onClick={this.props.clickListener}>
                         get in touch
                     </Link>
-                    <a className="button linkedin-button animated" data-animation="linkedin" tabIndex="2"
-                        onMouseEnter={this.props.mouseEnterListener} onMouseLeave={this.props.mouseLeaveListener}
-                        onFocus={this.props.mouseEnterListener} onBlur={this.props.onMouseLeaveListener}
+                    <a className="button linkedin-button animated" data-animation="linkedIn" tabIndex="2"
                         onClick={this.props.clickListener} href="https://www.linkedin.com/in/tim-konieczny/">
                         <i className="fab fa-linkedin-in"></i>connect on LinkedIn
                     </a>
                 </div>
                 <Link to="/about" className="animated link-with-icon" id="about-button" data-animation="about"
-                    tabIndex="3" onMouseEnter={this.props.mouseEnterListener}
-                    onMouseLeave={this.props.mouseLeaveListener} onFocus={this.props.mouseEnterListener}
-                    onBlur={this.props.mouseLeaveListener} onClick={this.props.clickListener}>
+                    tabIndex="3" onClick={this.props.clickListener}>
                     <i className="fas fa-long-arrow-alt-right"></i><span>learn more</span>
                 </Link>
                 <Link to="/work" className="animated link-with-icon" id="work-button" data-animation="work" tabIndex="4"
-                    onMouseEnter={this.props.mouseEnterListener} onMouseLeave={this.props.mouseLeaveListener}
-                    onFocus={this.props.mouseEnterListener} onBlur={this.props.mouseLeaveListener}
                     onClick={this.props.clickListener}>
                     <i className="fas fa-long-arrow-alt-right"></i><span>work</span>
                 </Link>

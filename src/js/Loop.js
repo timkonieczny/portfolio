@@ -1,19 +1,21 @@
-class Loop{
-    constructor(){
+class Loop {
+    constructor() {
 
     }
 
-    loop(time){
+    loop(time) {
         this.tick(time)
         requestAnimationFrame(this.loop.bind(this))
     }
 
-    tick(){}
+    tick() { }
 
     render() {
+        this.hexGrid.addEventListener("update", this.hexGrid.animation.start.callbackBound)
+        this.hexGrid.addEventListener("update", this.hexGrid.animation.wave.callbackBound)
         requestAnimationFrame(this.loop.bind(this))
     }
 
 }
 
-export {Loop}
+export { Loop }

@@ -143,8 +143,7 @@ p {
     }
 }
 
-$slide-transition: 500ms cubic-bezier(0.33, 1, 0.68, 1) left,
-    500ms cubic-bezier(0.33, 1, 0.68, 1) opacity;
+$slide-transition: 1s cubic-bezier(0.33, 1, 0.68, 1) left, 1s cubic-bezier(0.33, 1, 0.68, 1) opacity;
 
 .section-wrapper {
     position: absolute;

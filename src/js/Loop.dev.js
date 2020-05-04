@@ -1,7 +1,7 @@
 import Stats from "stats-js"
 
-class Loop{
-    constructor(){
+class Loop {
+    constructor() {
         this.stats = new Stats()
         this.stats.showPanel(0)
         this.stats.dom.style.left = ""
@@ -9,21 +9,23 @@ class Loop{
         document.body.appendChild(this.stats.dom)
     }
 
-    loop(time){
+    loop(time) {
         this.stats.begin();
         this.tick(time)
         this.stats.end();
         requestAnimationFrame(this.loop.bind(this))
     }
 
-    tick(){}
+    tick() { }
 
     render() {
         this.printInfo()
+        this.hexGrid.addEventListener("update", this.hexGrid.animation.start.callbackBound)
+        this.hexGrid.addEventListener("update", this.hexGrid.animation.wave.callbackBound)
         requestAnimationFrame(this.loop.bind(this))
     }
 
-    printInfo(){
+    printInfo() {
         const ext = this.gl.getExtension("WEBGL_debug_renderer_info");
         let info =
             "WebGL version:\t\t\t" + this.gl.getParameter(this.gl.VERSION) +
@@ -42,4 +44,4 @@ class Loop{
     }
 }
 
-export {Loop}
+export { Loop }

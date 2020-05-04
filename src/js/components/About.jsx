@@ -56,21 +56,16 @@ class About extends Component {
                     </p>
                     <div className="message-buttons">
                         <Link to="/message" className="button message-button" data-animation="message" tabIndex="2"
-                            onMouseEnter={this.props.mouseEnterListener} onMouseLeave={this.props.mouseLeaveListener}
-                            onFocus={this.props.mouseEnterListener} onBlur={this.props.mouseLeaveListener}>
+                            onClick={this.props.clickListener}>
                             get in touch
                         </Link>
-                        <a className="button linkedin-button" data-animation="linkedin" tabIndex="3"
-                            onMouseEnter={this.props.mouseEnterListener} onMouseLeave={this.props.mouseLeaveListener}
-                            onFocus={this.props.mouseEnterListener} onBlur={this.props.mouseLeaveListener}
+                        <a className="button linkedin-button" data-animation="linkedIn" tabIndex="3"
                             href="https://www.linkedin.com/in/tim-konieczny/">
                             <i className="fab fa-linkedin-in"></i>connect on LinkedIn
                         </a>
                     </div>
                     <Link to="/privacypolicy" id="privacy-policy-button" className="animated link-with-icon"
-                        data-animation="privacyPolicy" tabIndex="4" onMouseEnter={this.props.mouseEnterListener}
-                        onMouseLeave={this.props.mouseLeaveListener} onFocus={this.props.mouseEnterListener}
-                        onBlur={this.props.mouseLeaveListener} onClick={this.props.clickListener}>
+                        data-animation="privacyPolicy" tabIndex="4" onClick={this.props.clickListener}>
                         <i className="fas fa-long-arrow-alt-right"></i>
                         <span>privacy policy and legal information</span>
                     </Link>

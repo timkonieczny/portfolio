@@ -26,8 +26,7 @@ class Message extends Component {
         return (
             <div id="message-wrapper" className="section-wrapper">
                 <div>
-                    <BackButton hasHistory={!this.props.isAppearing} mouseEnterListener={this.props.mouseEnterListener}
-                        mouseLeaveListener={this.props.mouseLeaveListener} clickListener={this.props.clickListener} />
+                    <BackButton hasHistory={!this.props.isAppearing} clickListener={this.props.clickListener} />
                 </div>
                 <div id="message-form-wrapper"
                     style={!this.state.showConfirmation && this.state.isAnimationRunning ? { overflow: "visible" } : {}}>
