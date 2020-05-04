@@ -1,4 +1,4 @@
-import { Uniform } from "./Uniform.js";
+import Uniform from "./Uniform";
 import { mat4 } from "gl-matrix";
 
 class UniformMatrix4f extends Uniform {
@@ -21,4 +21,4 @@ class UniformMatrix4f extends Uniform {
 
 }
 
-export { UniformMatrix4f }
+export default UniformMatrix4f 

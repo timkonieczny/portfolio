@@ -44,4 +44,4 @@ class Mesh {
     }
 }
 
-export { Mesh }
+export default Mesh

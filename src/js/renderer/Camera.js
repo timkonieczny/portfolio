@@ -1,7 +1,7 @@
 import { mat4, vec3 } from "gl-matrix"
-import { UniformMatrix4f } from "./UniformMatrix4f.js";
-import { UniformManager } from "./UniformManager.js";
-import CameraAnimation from "./CameraAnimation.js";
+import UniformMatrix4f from "./UniformMatrix4f";
+import UniformManager from "./UniformManager";
+import CameraAnimation from "./CameraAnimation";
 
 class Camera {
     constructor(
@@ -110,4 +110,4 @@ class Camera {
     }
 }
 
-export { Camera }
+export default Camera

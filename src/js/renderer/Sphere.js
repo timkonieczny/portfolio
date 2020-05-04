@@ -1,4 +1,4 @@
-import { Mesh } from "./Mesh.js";
+import Mesh from "./Mesh";
 
 class Sphere extends Mesh {
     constructor() {

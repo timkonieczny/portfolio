@@ -18,4 +18,4 @@ class Loop {
 
 }
 
-export { Loop }
+export default Loop

@@ -1,5 +1,5 @@
-import { Mesh } from "./Mesh.js";
-import { OctagonalPrismMesh } from "./OctagonalPrismMesh.js"
+import Mesh from "./Mesh";
+import OctagonalPrismMesh from "./OctagonalPrismMesh"
 import { mat4, vec3 } from "gl-matrix"
 
 class HexagonGrid extends Mesh {
@@ -93,4 +93,4 @@ class HexagonGrid extends Mesh {
     }
 }
 
-export { HexagonGrid }
+export default HexagonGrid

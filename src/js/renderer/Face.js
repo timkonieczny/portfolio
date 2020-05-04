@@ -16,4 +16,4 @@ class Face {
     }
 }
 
-export { Face }
+export default Face

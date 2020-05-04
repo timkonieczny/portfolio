@@ -1,4 +1,4 @@
-import { Uniform } from "./Uniform.js";
+import Uniform from "./Uniform";
 
 class Uniform3f extends Uniform {
     constructor(shaderString, manager) {
@@ -10,4 +10,4 @@ class Uniform3f extends Uniform {
     }
 }
 
-export { Uniform3f }
+export default Uniform3f

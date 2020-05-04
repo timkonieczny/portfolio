@@ -1,12 +1,12 @@
-import { Mesh } from "./Mesh.js"
-import { Light } from "./Light.js"
-import { UniformManager } from "./UniformManager.js";
-import { UniformFloat } from "./UniformFloat.js";
-import { UniformMatrix4f } from "./UniformMatrix4f.js";
-import { UniformMatrix3f } from "./UniformMatrix3f.js";
-import { Uniform3f } from "./Uniform3f.js";
+import Mesh from "./Mesh"
+import Light from "./Light"
+import UniformManager from "./UniformManager";
+import UniformFloat from "./UniformFloat";
+import UniformMatrix4f from "./UniformMatrix4f";
+import UniformMatrix3f from "./UniformMatrix3f";
+import Uniform3f from "./Uniform3f";
 import { vec3, mat4, mat3 } from "gl-matrix";
-import UniformAnimation from "./UniformAnimation.js";
+import UniformAnimation from "./UniformAnimation";
 
 class MeshObject {
     constructor(

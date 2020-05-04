@@ -1,7 +1,7 @@
-import { Mesh } from "./Mesh.js"
-import { vec3, mat4 } from "gl-matrix";
-import { Face4 } from "./Face4.js"
-import { Face6 } from "./Face6.js"
+import Mesh from "./Mesh"
+import { vec3, mat4 } from "gl-matrix"
+import Face4 from "./Face4"
+import Face6 from "./Face6"
 
 class OctagonalPrismMesh extends Mesh {
     constructor(matrix) {
@@ -110,4 +110,4 @@ class OctagonalPrismMesh extends Mesh {
     }
 }
 
-export { OctagonalPrismMesh }
+export default OctagonalPrismMesh

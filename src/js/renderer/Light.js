@@ -5,4 +5,4 @@ class Light {
     }
 }
 
-export { Light }
+export default Light

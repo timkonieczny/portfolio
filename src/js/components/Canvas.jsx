@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Scene } from "../Scene.js"
+import Scene from "../Scene"
 
 class Canvas extends Component {
 

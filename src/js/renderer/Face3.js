@@ -1,5 +1,6 @@
 import { vec3 } from "gl-matrix"
-import { Face } from "./Face.js";
+import Face from "./Face"
+
 class Face3 extends Face {
     constructor(
         /** @type {vec3} */ a,
@@ -15,4 +16,4 @@ class Face3 extends Face {
             ...c, ...this.normal, ...center, ...color)
     }
 }
-export { Face3 }
+export default Face3

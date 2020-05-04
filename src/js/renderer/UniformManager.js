@@ -17,4 +17,4 @@ class UniformManager {
     }
 }
 
-export { UniformManager }
+export default UniformManager

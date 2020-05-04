@@ -1,13 +1,13 @@
-import { MeshObject } from "./renderer/MeshObject.js"
-import { Camera } from "./renderer/Camera.js";
-import { Light } from "./renderer/Light.js";
-import { UniformManager } from "./renderer/UniformManager.js";
+import { MeshObject } from "./renderer/MeshObject"
+import Camera from "./renderer/Camera";
+import Light from "./renderer/Light";
+import UniformManager from "./renderer/UniformManager";
 import { mat4, vec3, glMatrix } from "gl-matrix"
 import vertexShaderSource from "../glsl/vertex.glsl"
 import fragmentShaderSource from "../glsl/fragment.glsl"
-import Worker from './renderer/HexagonGrid.worker.js'
-import { Time } from "./renderer/Time.js"
-import { Loop } from "Loop"
+import Worker from "./renderer/HexagonGrid.worker.js"
+import Time from "./renderer/Time"
+import Loop from "Loop"
 
 class Scene extends Loop {
     constructor() {
@@ -91,10 +91,8 @@ class Scene extends Loop {
         }
 
         const geometry = await makeGeometry()
-        console.log(geometry)
 
         this.hexGrid = new MeshObject(this.gl, geometry, vertexShaderSource, fragmentShaderSource, light, uniformManager)
-
 
         this.camera = new Camera(
             vec3.set(vec3.create(), -50, 20, 50),
@@ -171,4 +169,4 @@ class Scene extends Loop {
     }
 }
 
-export { Scene }
+export default Scene

@@ -1,4 +1,4 @@
-import { Mesh } from "./Mesh.js"
+import Mesh from "./Mesh"
 
 class BoxMesh extends Mesh {
     constructor() {
@@ -117,4 +117,4 @@ class BoxMesh extends Mesh {
 
 }
 
-export { BoxMesh }
+export default BoxMesh

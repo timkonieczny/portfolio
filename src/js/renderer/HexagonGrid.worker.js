@@ -1,4 +1,4 @@
-import { HexagonGrid } from "./HexagonGrid.js"
+import HexagonGrid from "./HexagonGrid"
 
 const progressListener = event => {
     postMessage({
