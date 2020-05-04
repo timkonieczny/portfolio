@@ -4,11 +4,7 @@ import UniformManager from "./UniformManager";
 import CameraAnimation from "./CameraAnimation";
 
 class Camera {
-    constructor(
-        /** @type {glMatrix.vec3} */ position,
-        /** @type {glMatrix.vec3} */ lookAt,
-        /** @type {glMatrix.vec3} */ up,
-        /** @type {UniformManager} */ uniformManager) {
+    constructor(/** @type {UniformManager} */ uniformManager) {
 
         this.listeners = {
             update: []
@@ -18,16 +14,9 @@ class Camera {
 
         this.viewMatrix = mat4.create()
 
-        this.originalPosition = position
-        this.originalLookAt = lookAt
-        this.originalUp = up
         this.uniformManager = uniformManager
 
         this.matViewUniform = new UniformMatrix4f("uView", uniformManager)
-        this.position = position
-        this.lookAt = lookAt
-        this.up = up
-        this.update(position, lookAt, up)
 
         this.animation = {
             headlineIn: new CameraAnimation(),
@@ -39,34 +28,23 @@ class Camera {
             out: new CameraAnimation()
         }
 
-
-        // TODO: test and add other animations. create animation system that takes into account which page is active
-        // TODO: add + test in and out animations
-
-        vec3.copy(this.animation.headlineIn.to.position, this.position)
-        vec3.copy(this.animation.headlineIn.to.lookAt, this.lookAt)
-        vec3.copy(this.animation.headlineIn.to.up, this.up)
-        // this.animation.headlineIn.reset()
+        vec3.set(this.animation.headlineIn.to.position, -50, 20, 50)
+        vec3.set(this.animation.headlineIn.to.lookAt, 0, -20, 0)
 
         vec3.set(this.animation.messageIn.to.position, 20, -25, 60)
-        // this.animation.messageIn.reset()
 
         vec3.set(this.animation.aboutIn.to.position, 60, 20, 10)
         vec3.set(this.animation.aboutIn.to.lookAt, -40, -10, -30)
-        // this.animation.aboutIn.reset()
 
         vec3.set(this.animation.privacyPolicyIn.to.position, 0, 40, 0)
         vec3.set(this.animation.privacyPolicyIn.to.up, 0, 0, 1)
-        // this.animation.privacyPolicyIn.reset()
 
         vec3.set(this.animation.workIn.to.position, 0, 15, 40)
         vec3.set(this.animation.workIn.to.lookAt, 0, -10, 0)
         vec3.set(this.animation.workIn.to.up, -1, 0, 0)
-        // this.animation.workIn.reset()
 
         vec3.set(this.animation.linkedInIn.to.position, 0, -40, 0)
         vec3.set(this.animation.linkedInIn.to.up, 1, 0, 0)
-        // this.animation.linkedInIn.reset()
 
         this.animation.out.init = (position, lookAt, up) => {
             const animation = this.animation.out
@@ -79,6 +57,33 @@ class Camera {
             vec3.copy(animation.last.lookAt, animation.from.lookAt)
             vec3.copy(animation.last.up, animation.from.up)
         }
+
+        console.log(`${window.location.pathname.replace(new RegExp("/", 'g'), "")}In`)
+
+        let startAnimation
+        switch (window.location.pathname) {
+            case "/message":
+                startAnimation = this.animation.messageIn
+                break
+            case "/about":
+                startAnimation = this.animation.aboutIn
+                break
+            case "/privacypolicy":
+                startAnimation = this.animation.privacyPolicyIn
+                break
+            case "/work":
+                startAnimation = this.animation.workIn
+                break
+            default:
+                startAnimation = this.animation.headlineIn
+                break
+        }
+
+        this.position = vec3.copy(vec3.create(), startAnimation.to.position)
+        this.lookAt = vec3.copy(vec3.create(), startAnimation.to.lookAt)
+        this.up = vec3.copy(vec3.create(), startAnimation.to.up)
+
+        this.update(this.position, this.lookAt, this.up)
     }
 
     resize(width, height) {

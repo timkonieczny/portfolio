@@ -94,11 +94,7 @@ class Scene extends Loop {
 
         this.hexGrid = new MeshObject(this.gl, geometry, vertexShaderSource, fragmentShaderSource, light, uniformManager)
 
-        this.camera = new Camera(
-            vec3.set(vec3.create(), -50, 20, 50),
-            vec3.set(vec3.create(), 0, -20, 0),
-            vec3.set(vec3.create(), 0, 1, 0),
-            uniformManager)
+        this.camera = new Camera(uniformManager)
 
         const resize = () => {
             canvas.width = canvas.clientWidth * window.devicePixelRatio
