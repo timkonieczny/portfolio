@@ -5,7 +5,7 @@ attribute vec3 aPosition;
 attribute vec3 aColor;
 attribute vec3 aNormal;
 attribute vec3 aCenter;
-attribute float aDisplacementY0;
+attribute float aDisplacementY;
 attribute vec3 aStartPosition;
 
 varying vec3 vColor;
@@ -20,7 +20,7 @@ uniform mat4 uView;
 uniform mat4 uProjection;
 uniform mat3 uNormal;
 uniform float uTime;
-uniform float uDisplacementY0;
+uniform float uDisplacementY;
 uniform float uExplosion;
 uniform vec3 uLightPosition;
 
@@ -37,9 +37,9 @@ void main() {
     position.y = position.y + (uExplosion) * (
         sin(uTime + aCenter.x * waveLengthX) * waveHeightX - waveHeightX
         + cos(uTime + aCenter.z * waveLengthZ) * waveHeightZ - waveHeightZ
-        + uDisplacementY0 * aDisplacementY0 * 20.0)
-        + sin(uExplosion * pi) * aDisplacementY0 * 20.0
-        + sin((1.0) * pi) * aDisplacementY0 * 20.0;
+        + uDisplacementY * aDisplacementY * 20.0)
+        + sin(uExplosion * pi) * aDisplacementY * 20.0
+        + sin((1.0) * pi) * aDisplacementY * 20.0;
 
     position.x = (1.0 - uExplosion ) * aStartPosition.x
         + (uExplosion) * aPosition.x;

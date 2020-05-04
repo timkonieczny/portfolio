@@ -71,13 +71,13 @@ class MeshObject {
         const attribLocationColor = gl.getAttribLocation(this.uniformManager.program, "aColor")
         const attribLocationNormal = gl.getAttribLocation(this.uniformManager.program, "aNormal")
         const attribLocationCenter = gl.getAttribLocation(this.uniformManager.program, "aCenter")
-        const attribLocationDisplacementY0 = gl.getAttribLocation(this.uniformManager.program, "aDisplacementY0")
+        const attribLocationDisplacementY = gl.getAttribLocation(this.uniformManager.program, "aDisplacementY")
         const attribLocationStartPosition = gl.getAttribLocation(this.uniformManager.program, "aStartPosition")
         gl.enableVertexAttribArray(attribLocationPosition)
         gl.enableVertexAttribArray(attribLocationColor)
         gl.enableVertexAttribArray(attribLocationNormal)
         gl.enableVertexAttribArray(attribLocationCenter)
-        gl.enableVertexAttribArray(attribLocationDisplacementY0)
+        gl.enableVertexAttribArray(attribLocationDisplacementY)
         gl.enableVertexAttribArray(attribLocationStartPosition)
         this.interleaved = {
             buffer: buffer,
@@ -86,7 +86,7 @@ class MeshObject {
                 color: attribLocationColor,
                 normal: attribLocationNormal,
                 center: attribLocationCenter,
-                displacementY0: attribLocationDisplacementY0,
+                displacementY: attribLocationDisplacementY,
                 startPosition: attribLocationStartPosition
             },
             numberOfElements: 16,
@@ -94,7 +94,7 @@ class MeshObject {
         }
 
         this.timeUniform = new UniformFloat("uTime", this.uniformManager)
-        this.displacementY0Uniform = new UniformFloat("uDisplacementY0", this.uniformManager)
+        this.displacementYUniform = new UniformFloat("uDisplacementY", this.uniformManager)
         this.explosionUniform = new UniformFloat("uExplosion", this.uniformManager)
         this.matWorldUniform = new UniformMatrix4f("uWorld", this.uniformManager)
         this.matProjUniform = new UniformMatrix4f("uProjection", this.uniformManager)
@@ -112,7 +112,7 @@ class MeshObject {
             3, gl.FLOAT, gl.FALSE, stride, this.interleaved.bytesPerElement * 6)
         gl.vertexAttribPointer(this.interleaved.attribLocation.color,
             3, gl.FLOAT, gl.FALSE, stride, this.interleaved.bytesPerElement * 9)
-        gl.vertexAttribPointer(this.interleaved.attribLocation.displacementY0,
+        gl.vertexAttribPointer(this.interleaved.attribLocation.displacementY,
             1, gl.FLOAT, gl.FALSE, stride, this.interleaved.bytesPerElement * 12)
         gl.vertexAttribPointer(this.interleaved.attribLocation.startPosition,
             3, gl.FLOAT, gl.FALSE, stride, this.interleaved.bytesPerElement * 13)
@@ -121,11 +121,11 @@ class MeshObject {
 
         this.animation = {
             start: new UniformAnimation(this.explosionUniform),
-            message: new UniformAnimation(this.displacementY0Uniform),
-            about: new UniformAnimation(this.displacementY0Uniform),
-            headline: new UniformAnimation(this.displacementY0Uniform),
-            privacyPolicy: new UniformAnimation(this.displacementY0Uniform),
-            work: new UniformAnimation(this.displacementY0Uniform),
+            message: new UniformAnimation(this.displacementYUniform),
+            about: new UniformAnimation(this.displacementYUniform),
+            headline: new UniformAnimation(this.displacementYUniform),
+            privacyPolicy: new UniformAnimation(this.displacementYUniform),
+            work: new UniformAnimation(this.displacementYUniform),
             wave: new UniformAnimation(this.timeUniform)
         }
         this.animation.start.time.total = 5000
