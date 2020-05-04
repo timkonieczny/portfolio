@@ -91,8 +91,10 @@ class Scene extends Loop {
         }
 
         const geometry = await makeGeometry()
+        console.log(geometry)
 
         this.hexGrid = new MeshObject(this.gl, geometry, vertexShaderSource, fragmentShaderSource, light, uniformManager)
+
 
         this.camera = new Camera(
             vec3.set(vec3.create(), -50, 20, 50),
