@@ -38,7 +38,10 @@ class CameraAnimation {
 
         this.time = {
             total: 5000,
-            elapsed: 0
+            elapsed: 0,
+            function: interpolator => {
+                return interpolator
+            }
         }
 
         this.callbackBound = this.callback.bind(this)
@@ -56,9 +59,9 @@ class CameraAnimation {
         const interpolator = Math.min(1, this.time.elapsed / this.time.total)
 
 
-        vec3.lerp(this.current.position, this.from.position, this.to.position, interpolator)
-        vec3.lerp(this.current.lookAt, this.from.lookAt, this.to.lookAt, interpolator)
-        vec3.lerp(this.current.up, this.from.up, this.to.up, interpolator)
+        vec3.lerp(this.current.position, this.from.position, this.to.position, this.time.function(interpolator))
+        vec3.lerp(this.current.lookAt, this.from.lookAt, this.to.lookAt, this.time.function(interpolator))
+        vec3.lerp(this.current.up, this.from.up, this.to.up, this.time.function(interpolator))
 
         vec3.sub(this.delta.position, this.current.position, this.last.position)
         vec3.sub(this.delta.lookAt, this.current.lookAt, this.last.lookAt)

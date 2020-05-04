@@ -34,17 +34,17 @@ const float ambientStrength = 0.1;
 void main() {
     vec3 position = aPosition;
 
-    position.y = position.y + (uExplosion) * (
+    float easeOut=sin(uExplosion * pi / 2.0);
+    float easeInOut=(cos(pi + uExplosion * pi) + 1.0) / 2.0;
+
+    position.y = position.y + easeInOut * (
         sin(uTime + aCenter.x * waveLengthX) * waveHeightX - waveHeightX
         + cos(uTime + aCenter.z * waveLengthZ) * waveHeightZ - waveHeightZ
         + uDisplacementY * aDisplacementY * 20.0)
-        + sin(uExplosion * pi) * aDisplacementY * 20.0
-        + sin((1.0) * pi) * aDisplacementY * 20.0;
+        + (cos(pi + uExplosion * pi * 2.0) + 1.0) / 2.0 * aDisplacementY * 20.0;
 
-    position.x = (1.0 - uExplosion ) * aStartPosition.x
-        + (uExplosion) * aPosition.x;
-    position.z = (1.0 - uExplosion ) * aStartPosition.z
-        + (uExplosion) * aPosition.z;
+    position.x = (1.0 - easeOut ) * aStartPosition.x + easeOut * aPosition.x;
+    position.z = (1.0 - easeOut ) * aStartPosition.z + easeOut * aPosition.z;
 
     vColor = aColor;
     vPosition = (uView * vec4((uWorld * vec4(position, 1.0)).xyz, 1.0)).xyz;

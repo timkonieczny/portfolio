@@ -2,6 +2,7 @@ import { mat4, vec3 } from "gl-matrix"
 import UniformMatrix4f from "./UniformMatrix4f";
 import UniformManager from "./UniformManager";
 import CameraAnimation from "./CameraAnimation";
+import Easing from "easing-functions"
 
 class Camera {
     constructor(/** @type {UniformManager} */ uniformManager) {
@@ -30,21 +31,29 @@ class Camera {
 
         vec3.set(this.animation.headlineIn.to.position, -50, 20, 50)
         vec3.set(this.animation.headlineIn.to.lookAt, 0, -20, 0)
+        this.animation.headlineIn.time.function = Easing.Sinusoidal.InOut
 
         vec3.set(this.animation.messageIn.to.position, 20, -25, 60)
+        this.animation.messageIn.time.function = Easing.Sinusoidal.InOut
 
         vec3.set(this.animation.aboutIn.to.position, 60, 20, 10)
         vec3.set(this.animation.aboutIn.to.lookAt, -40, -10, -30)
+        this.animation.aboutIn.time.function = Easing.Sinusoidal.InOut
 
         vec3.set(this.animation.privacyPolicyIn.to.position, 0, 40, 0)
         vec3.set(this.animation.privacyPolicyIn.to.up, 0, 0, 1)
+        this.animation.privacyPolicyIn.time.function = Easing.Sinusoidal.InOut
 
         vec3.set(this.animation.workIn.to.position, 0, 15, 40)
         vec3.set(this.animation.workIn.to.lookAt, 0, -10, 0)
         vec3.set(this.animation.workIn.to.up, -1, 0, 0)
+        this.animation.workIn.time.function = Easing.Sinusoidal.InOut
 
         vec3.set(this.animation.linkedInIn.to.position, 0, -40, 0)
         vec3.set(this.animation.linkedInIn.to.up, 1, 0, 0)
+        this.animation.linkedInIn.time.function = Easing.Sinusoidal.InOut
+
+        this.animation.out.time.function = Easing.Sinusoidal.InOut
 
         this.animation.out.init = (position, lookAt, up) => {
             const animation = this.animation.out

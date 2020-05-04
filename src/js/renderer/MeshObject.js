@@ -7,6 +7,7 @@ import UniformMatrix3f from "./UniformMatrix3f";
 import Uniform3f from "./Uniform3f";
 import { vec3, mat4, mat3 } from "gl-matrix";
 import UniformAnimation from "./UniformAnimation";
+import Easing from "easing-functions"
 
 class MeshObject {
     constructor(
@@ -130,8 +131,12 @@ class MeshObject {
         }
         this.animation.start.time.total = 5000
         const interpolationFunction = interpolator => {
-            return Math.sin(interpolator * Math.PI)
+            return (Math.cos(Math.PI + interpolator * 2 * Math.PI) + 1) / 2
         }
+
+        // TODO: add camera panning to explosion
+        // TODO: delay explosion
+
         this.animation.message.time.function = interpolationFunction
         this.animation.about.time.function = interpolationFunction
         this.animation.headline.time.function = interpolationFunction
