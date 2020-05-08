@@ -1,32 +1,41 @@
-import { vec3 } from "gl-matrix";
+import { vec3 } from "gl-matrix"
+import Camera from "./Camera"
 
 class CameraAnimation {
+    from: { position: vec3; lookAt: vec3; up: vec3 }
+    to: { position: vec3; lookAt: vec3; up: vec3 }
+    last: { position: vec3; lookAt: vec3; up: vec3 }
+    current: { position: vec3; lookAt: vec3; up: vec3 }
+    delta: { position: vec3; lookAt: vec3; up: vec3 }
+    time: { total: number; elapsed: number; function: (interpolator: number) => number }
+    callbackBound: (tslf: number, camera: Camera) => void
+
     constructor() {
         this.from = {
             position: vec3.create(),
             lookAt: vec3.create(),
-            up: vec3.create()
+            up: vec3.create(),
         }
 
         this.to = {
             position: vec3.create(),
             lookAt: vec3.create(),
-            up: vec3.create()
+            up: vec3.create(),
         }
         this.last = {
             position: vec3.create(),
             lookAt: vec3.create(),
-            up: vec3.create()
+            up: vec3.create(),
         }
         this.current = {
             position: vec3.create(),
             lookAt: vec3.create(),
-            up: vec3.create()
+            up: vec3.create(),
         }
         this.delta = {
             position: vec3.create(),
             lookAt: vec3.create(),
-            up: vec3.create()
+            up: vec3.create(),
         }
 
         const defaultUp = vec3.set(vec3.create(), 0, 1, 0)
@@ -34,33 +43,40 @@ class CameraAnimation {
         vec3.copy(this.to.up, defaultUp)
         vec3.copy(this.last.up, defaultUp)
 
-
-
         this.time = {
             total: 5000,
             elapsed: 0,
-            function: interpolator => {
+            function: (interpolator) => {
                 return interpolator
-            }
+            },
         }
 
         this.callbackBound = this.callback.bind(this)
     }
 
-    init(_, _b, _c) {
+    init(..._args: any[]) {
         this.time.elapsed = 0
         vec3.copy(this.last.position, this.from.position)
         vec3.copy(this.last.lookAt, this.from.lookAt)
         vec3.copy(this.last.up, this.from.up)
     }
 
-    callback(tslf, camera) {
+    callback(tslf: number, camera: Camera) {
         this.time.elapsed += tslf
         const interpolator = Math.min(1, this.time.elapsed / this.time.total)
 
-
-        vec3.lerp(this.current.position, this.from.position, this.to.position, this.time.function(interpolator))
-        vec3.lerp(this.current.lookAt, this.from.lookAt, this.to.lookAt, this.time.function(interpolator))
+        vec3.lerp(
+            this.current.position,
+            this.from.position,
+            this.to.position,
+            this.time.function(interpolator)
+        )
+        vec3.lerp(
+            this.current.lookAt,
+            this.from.lookAt,
+            this.to.lookAt,
+            this.time.function(interpolator)
+        )
         vec3.lerp(this.current.up, this.from.up, this.to.up, this.time.function(interpolator))
 
         vec3.sub(this.delta.position, this.current.position, this.last.position)
@@ -75,8 +91,7 @@ class CameraAnimation {
         vec3.copy(this.last.lookAt, this.current.lookAt)
         vec3.copy(this.last.up, this.current.up)
 
-        if (interpolator === 1)
-            camera.removeEventListener("update", this.callbackBound)
+        if (interpolator === 1) camera.removeEventListener("update", this.callbackBound)
     }
 }
 

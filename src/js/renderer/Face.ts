@@ -1,11 +1,9 @@
-import { vec3 } from "gl-matrix";
+import { vec3 } from "gl-matrix"
 
 class Face {
-    constructor(
-        /** @type {vec3} */ a,
-        /** @type {vec3} */ b,
-        /** @type {vec3} */ c
-    ) {
+    normal: vec3
+    interleavedArray: number[]
+    constructor(a: vec3, b: vec3, c: vec3) {
         const ab = vec3.create()
         vec3.sub(ab, b, a)
         const ac = vec3.create()
