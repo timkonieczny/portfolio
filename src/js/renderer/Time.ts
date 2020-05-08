@@ -1,10 +1,15 @@
 class Time {
+    elapsed: number
+    offset: number
+    firstFrame: boolean
+    tslf: number
+
     constructor() {
-        this.elapsed = null
-        this.offset = null
+        this.elapsed = 0
+        this.offset = 0
         this.firstFrame = true
     }
-    update(time) {
+    update(time: number) {
         if (this.firstFrame) {
             this.tslf = 0
             this.elapsed = 0

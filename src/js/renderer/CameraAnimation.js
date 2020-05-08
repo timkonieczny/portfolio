@@ -47,7 +47,7 @@ class CameraAnimation {
         this.callbackBound = this.callback.bind(this)
     }
 
-    init() {
+    init(_, _b, _c) {
         this.time.elapsed = 0
         vec3.copy(this.last.position, this.from.position)
         vec3.copy(this.last.lookAt, this.from.lookAt)

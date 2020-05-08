@@ -1,14 +1,30 @@
-import { mat4, vec3 } from "gl-matrix"
-import UniformMatrix4f from "./UniformMatrix4f";
-import UniformManager from "./UniformManager";
-import CameraAnimation from "./CameraAnimation";
+import { mat4, vec3, glMatrix } from "gl-matrix"
+import UniformMatrix4f from "./UniformMatrix4f"
+import UniformManager from "./UniformManager"
+import CameraAnimation from "./CameraAnimation"
 import Easing from "easing-functions"
 
 class Camera {
-    constructor(/** @type {UniformManager} */ uniformManager) {
-
+    listeners: { update: { (tslf: number, camera: Camera): void }[] }
+    projMatrix: mat4
+    viewMatrix: mat4
+    uniformManager: UniformManager
+    matViewUniform: UniformMatrix4f
+    animation: {
+        headlineIn: CameraAnimation
+        messageIn: CameraAnimation
+        aboutIn: CameraAnimation
+        privacyPolicyIn: CameraAnimation
+        workIn: CameraAnimation
+        linkedInIn: CameraAnimation
+        out: CameraAnimation
+    }
+    position: vec3
+    lookAt: vec3
+    up: vec3
+    constructor(uniformManager: UniformManager) {
         this.listeners = {
-            update: []
+            update: [],
         }
 
         this.projMatrix = mat4.create()
@@ -26,7 +42,7 @@ class Camera {
             privacyPolicyIn: new CameraAnimation(),
             workIn: new CameraAnimation(),
             linkedInIn: new CameraAnimation(),
-            out: new CameraAnimation()
+            out: new CameraAnimation(),
         }
 
         vec3.set(this.animation.headlineIn.to.position, -50, 20, 50)
@@ -67,9 +83,9 @@ class Camera {
             vec3.copy(animation.last.up, animation.from.up)
         }
 
-        console.log(`${window.location.pathname.replace(new RegExp("/", 'g'), "")}In`)
+        console.log(`${window.location.pathname.replace(new RegExp("/", "g"), "")}In`)
 
-        let startAnimation
+        let startAnimation: CameraAnimation
         switch (window.location.pathname) {
             case "/message":
                 startAnimation = this.animation.messageIn
@@ -92,15 +108,15 @@ class Camera {
         this.lookAt = vec3.copy(vec3.create(), startAnimation.to.lookAt)
         this.up = vec3.copy(vec3.create(), startAnimation.to.up)
 
-        this.update(this.position, this.lookAt, this.up)
+        // this.update(this.position, this.lookAt, this.up)
     }
 
     resize(width, height) {
-        mat4.perspective(this.projMatrix, glMatrix.toRadians(45), width, height, 0.1, 100.0)
+        mat4.perspective(this.projMatrix, glMatrix.toRadian(45), width / height, 0.1, 100.0)
     }
 
     update(time) {
-        this.listeners.update.forEach(listener => listener(time.tslf, this))
+        this.listeners.update.forEach((listener) => listener(time.tslf, this))
         mat4.lookAt(this.viewMatrix, this.position, this.lookAt, this.up)
         this.matViewUniform.update(this.viewMatrix)
     }

@@ -9,7 +9,7 @@ const Secret = require("./secret.js")
 module.exports = {
     entry: ["babel-polyfill", "./src/js/index.js"],
     resolve: {
-        extensions: ['.jsx', '.js']
+        extensions: ['.jsx', '.js', '.ts']
     },
     module: {
         rules: [
@@ -27,7 +27,7 @@ module.exports = {
                 loader: "webpack-glsl-loader"
             },
             {
-                test: /\.(js|jsx)$/,
+                test: /\.(js|jsx|ts)$/,
                 exclude: /node_modules/,
                 loader: "babel-loader"
             },
