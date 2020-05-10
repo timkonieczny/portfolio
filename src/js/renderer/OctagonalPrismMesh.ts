@@ -4,7 +4,7 @@ import Face4 from "./Face4"
 import Face6 from "./Face6"
 
 class OctagonalPrismMesh extends Mesh {
-    constructor(matrix) {
+    constructor(matrix: mat4) {
         super()
 
         const sides = []
@@ -24,16 +24,15 @@ class OctagonalPrismMesh extends Mesh {
         const invertedMatrix = mat4.create()
         mat4.invert(invertedMatrix, matrix)
 
-        const displacementY = Math.random() - .5
+        const displacementY = Math.random() - 0.5
 
         const y0 = -1
         const y1 = 1
         for (let i = 0; i < 6; i++) {
-
-            let x0 = Math.sin(i * 1 / 6 * Math.PI * 2)
-            let x1 = Math.sin((i + 1) * 1 / 6 * Math.PI * 2)
-            let z0 = Math.cos(i * 1 / 6 * Math.PI * 2)
-            let z1 = Math.cos((i + 1) * 1 / 6 * Math.PI * 2)
+            let x0 = Math.sin(((i * 1) / 6) * Math.PI * 2)
+            let x1 = Math.sin((((i + 1) * 1) / 6) * Math.PI * 2)
+            let z0 = Math.cos(((i * 1) / 6) * Math.PI * 2)
+            let z1 = Math.cos((((i + 1) * 1) / 6) * Math.PI * 2)
 
             vec3.set(startPositionA, x0, y0, z0)
             vec3.transformMat4(a, startPositionA, matrix)
@@ -47,16 +46,22 @@ class OctagonalPrismMesh extends Mesh {
             vec3.set(startPositionD, x0, y1, z0)
             vec3.transformMat4(d, startPositionD, matrix)
 
-            sides.push(new Face4(a, b, c, d, color, center, displacementY, [Array.from(startPositionA), Array.from(startPositionB), Array.from(startPositionC), Array.from(startPositionD)]))
+            sides.push(
+                new Face4(a, b, c, d, color, center, displacementY, [
+                    Array.from(startPositionA),
+                    Array.from(startPositionB),
+                    Array.from(startPositionC),
+                    Array.from(startPositionD),
+                ])
+            )
         }
         const topVertices = []
         const bottomVertices = []
         const bottomStartPosition = []
         const topStartPosition = []
         for (let i = 0; i < 6; i++) {
-
-            let x = Math.sin(i * 1 / 6 * Math.PI * 2)
-            let z = Math.cos(i * 1 / 6 * Math.PI * 2)
+            let x = Math.sin(((i * 1) / 6) * Math.PI * 2)
+            let z = Math.cos(((i * 1) / 6) * Math.PI * 2)
 
             let startVertex = vec3.create()
             vec3.set(startVertex, x, 1, z)
@@ -65,7 +70,7 @@ class OctagonalPrismMesh extends Mesh {
             vec3.transformMat4(vertex, startVertex, matrix)
             topVertices.push(vertex)
 
-            startVertex = vec3.create()  // TODO: y is always the same and can be ignored. in face add attributes x and z. ignore y
+            startVertex = vec3.create() // TODO: y is always the same and can be ignored. in face add attributes x and z. ignore y
             vec3.set(startVertex, x, -1, z)
             bottomStartPosition.push(startVertex)
             vertex = vec3.create()
@@ -78,11 +83,17 @@ class OctagonalPrismMesh extends Mesh {
         })
 
         const top = new Face6(
-            ...topVertices,
+            topVertices[0],
+            topVertices[1],
+            topVertices[2],
+            topVertices[3],
+            topVertices[4],
+            topVertices[5],
             color,
             center,
             displacementY,
-            topStartPosition2)
+            topStartPosition2
+        )
 
         const bottomStartPosition2 = bottomStartPosition.map((value) => {
             return Array.from(value).reverse()
@@ -90,11 +101,17 @@ class OctagonalPrismMesh extends Mesh {
         bottomStartPosition2.reverse()
 
         const bottom = new Face6(
-            ...bottomVertices.reverse(),
+            bottomVertices[5],
+            bottomVertices[4],
+            bottomVertices[3],
+            bottomVertices[2],
+            bottomVertices[1],
+            bottomVertices[0],
             color,
             center,
             displacementY,
-            bottomStartPosition2)
+            bottomStartPosition2
+        )
 
         const geometry = this.mergeGeometries(top, bottom, ...sides)
 

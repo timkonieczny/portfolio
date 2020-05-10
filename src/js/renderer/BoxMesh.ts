@@ -4,6 +4,7 @@ class BoxMesh extends Mesh {
     vertices: number[]
     normals: number[]
     colors: number[]
+    indices: number[]
     constructor() {
         super()
         this.vertices = [

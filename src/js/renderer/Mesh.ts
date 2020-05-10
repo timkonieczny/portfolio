@@ -1,16 +1,21 @@
+import OctagonalPrismMesh from "./OctagonalPrismMesh"
+
 class Mesh {
+    indices: number[]
+    interleavedArray: number[]
+    progressEventListeners: { ({ progress: number, task: string }): void }[]
     constructor() {
         this.indices = []
         this.interleavedArray = []
         this.progressEventListeners = []
     }
 
-    mergeGeometries(...geometries) {
+    mergeGeometries(...geometries: OctagonalPrismMesh[]) {
         let startTime = Date.now()
         const interleavedArray = []
         const output = new Mesh()
         geometries.forEach((geometry, i) => {
-            const newIndices = geometry.indices.map(index => {
+            const newIndices = geometry.indices.map((index) => {
                 return index + interleavedArray.length / 16
             })
             output.indices.push(...newIndices)
@@ -19,10 +24,10 @@ class Mesh {
             const now = Date.now()
             if (now - startTime >= 200) {
                 startTime = now
-                this.progressEventListeners.forEach(listener => {
+                this.progressEventListeners.forEach((listener) => {
                     listener({
-                        progress: i / geometries.length * 100,
-                        task: "merge"
+                        progress: (i / geometries.length) * 100,
+                        task: "merge",
                     })
                 })
             }
@@ -31,14 +36,13 @@ class Mesh {
         return output
     }
 
-    addEventListener(type, listener) {
-        if (type == "progress")
-            this.progressEventListeners.push(listener)
+    addEventListener(type: string, listener: { ({ progress: number, task: string }): void }) {
+        if (type == "progress") this.progressEventListeners.push(listener)
     }
 
-    removeEventListener(type, listener) {
+    removeEventListener(type: string, listener: { ({ progress: number, task: string }): void }) {
         if (type == "progress")
-            this.progressEventListeners = this.progressEventListeners.filter(activeListener => {
+            this.progressEventListeners = this.progressEventListeners.filter((activeListener) => {
                 return activeListener === listener
             })
     }

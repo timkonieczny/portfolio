@@ -1,9 +1,19 @@
-import Mesh from "./Mesh";
+import Mesh from "./Mesh"
 import OctagonalPrismMesh from "./OctagonalPrismMesh"
 import { mat4, vec3 } from "gl-matrix"
 
 class HexagonGrid extends Mesh {
-    constructor(rings, gap, scaleY) {
+    rings: number
+    gap: number
+    scaleY: number
+    geometries: OctagonalPrismMesh[]
+    progressTotalElements: number
+    progressCurrentElement: number
+    startTime: number
+    indices: any
+    interleavedArray: any
+    progressEventListeners: any
+    constructor(rings: number, gap: number, scaleY: number) {
         super()
         this.rings = rings
         this.gap = gap
@@ -18,16 +28,16 @@ class HexagonGrid extends Mesh {
         this.progressCurrentElement = 0
 
         this.startTime = Date.now()
-        this.makeGrid(this.geometries)
+        this.makeGrid()
         time = Date.now()
 
-        const hexGridGeometry = this.mergeGeometries(...this.geometries)
+        const hexGridGeometry = super.mergeGeometries(...this.geometries)
 
         this.indices = hexGridGeometry.indices
         this.interleavedArray = hexGridGeometry.interleavedArray
     }
 
-    makeRing(level) {
+    makeRing(level: number) {
         const identity = mat4.create()
         const pi2 = Math.PI * 2
         const edgeDiameter = Math.sqrt(3)
@@ -36,15 +46,19 @@ class HexagonGrid extends Mesh {
             let vertex2 = vec3.create()
             let betweenVector = vec3.create()
 
-            vec3.set(vertex1,
-                level * (edgeDiameter * this.gap) * Math.sin(i / 6 * pi2 + 1 / 12 * pi2),
+            vec3.set(
+                vertex1,
+                level * (edgeDiameter * this.gap) * Math.sin((i / 6) * pi2 + (1 / 12) * pi2),
                 0,
-                level * (edgeDiameter * this.gap) * Math.cos(i / 6 * pi2 + 1 / 12 * pi2))
+                level * (edgeDiameter * this.gap) * Math.cos((i / 6) * pi2 + (1 / 12) * pi2)
+            )
 
-            vec3.set(vertex2,
-                level * (edgeDiameter * this.gap) * Math.sin((i + 1) / 6 * pi2 + 1 / 12 * pi2),
+            vec3.set(
+                vertex2,
+                level * (edgeDiameter * this.gap) * Math.sin(((i + 1) / 6) * pi2 + (1 / 12) * pi2),
                 0,
-                level * (edgeDiameter * this.gap) * Math.cos((i + 1) / 6 * pi2 + 1 / 12 * pi2))
+                level * (edgeDiameter * this.gap) * Math.cos(((i + 1) / 6) * pi2 + (1 / 12) * pi2)
+            )
 
             vec3.sub(betweenVector, vertex2, vertex1)
 
@@ -65,10 +79,11 @@ class HexagonGrid extends Mesh {
                 this.progressCurrentElement++
                 if (now - this.startTime >= 200) {
                     this.startTime = now
-                    this.progressEventListeners.forEach(listener => {
+                    this.progressEventListeners.forEach((listener) => {
                         listener({
-                            progress: this.progressCurrentElement / this.progressTotalElements * 100,
-                            task: "generate"
+                            progress:
+                                (this.progressCurrentElement / this.progressTotalElements) * 100,
+                            task: "generate",
                         })
                     })
                 }
@@ -84,8 +99,7 @@ class HexagonGrid extends Mesh {
         mat4.scale(matrix, matrix, vector)
         this.geometries.push(new OctagonalPrismMesh(matrix))
         // rings
-        for (let i = 1; i <= this.rings; i++)
-            this.makeRing(i)
+        for (let i = 1; i <= this.rings; i++) this.makeRing(i)
     }
 
     getData() {
