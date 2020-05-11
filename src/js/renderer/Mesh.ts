@@ -40,7 +40,7 @@ class Mesh {
         if (type == "progress") this.progressEventListeners.push(listener)
     }
 
-    removeEventListener(type: string, listener: { ({ progress: number, task: string }): void }) {
+    removeEventListener(type: string, listener: (...args: any[]) => void) {
         if (type == "progress")
             this.progressEventListeners = this.progressEventListeners.filter((activeListener) => {
                 return activeListener === listener

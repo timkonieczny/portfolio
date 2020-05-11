@@ -1,16 +1,20 @@
-import { vec3 } from "gl-matrix";
+import Uniform from "./Uniform"
+import Mesh from "./Mesh"
 
 class UniformAnimation {
-    constructor(uniform) {
+    uniform: Uniform
+    time: { total: number; elapsed: number; function: (interpolator: number) => number }
+    callbackBound: (tslf: number, mesh: Mesh) => void
 
+    constructor(uniform: Uniform) {
         this.uniform = uniform
 
         this.time = {
             total: 5000,
             elapsed: 0,
-            function: interpolator => {
+            function: (interpolator) => {
                 return interpolator
-            }
+            },
         }
 
         this.callbackBound = this.callback.bind(this)
@@ -20,7 +24,7 @@ class UniformAnimation {
         this.time.elapsed = 0
     }
 
-    callback(tslf, mesh) {
+    callback(tslf: number, mesh: Mesh) {
         this.time.elapsed += tslf
         const interpolator = Math.min(1, this.time.elapsed / this.time.total)
 

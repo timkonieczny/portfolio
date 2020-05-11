@@ -3,12 +3,6 @@ import Mesh from "./Mesh";
 class Sphere extends Mesh {
     constructor() {
         super()
-        // for(let i = 0; i<5; i++){
-        //     for(let j = 0; j<5; j++){
-        //         this.vertices.push(Math.sin(j * Math.PI * 2), Math.sin(i/5 * Math.PI), Math.cos(j * Math.PI * 2))
-
-        //     }
-        // }
         this.createIco()
     }
 

@@ -1,7 +1,8 @@
-import Uniform from "./Uniform";
+import Uniform from "./Uniform"
+import UniformManager from "./UniformManager"
 
 class Uniform3f extends Uniform {
-    constructor(shaderString, manager) {
+    constructor(shaderString: string, manager: UniformManager) {
         super(shaderString, manager)
     }
 
