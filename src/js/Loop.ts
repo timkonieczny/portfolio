@@ -1,21 +1,23 @@
+import Time from "./renderer/Time"
+import { MeshObject } from "./renderer/MeshObject"
+
 class Loop {
-    constructor() {
+    hexGrid: MeshObject
 
-    }
+    constructor() {}
 
-    loop(time) {
+    loop(time: Time) {
         this.tick(time)
         requestAnimationFrame(this.loop.bind(this))
     }
 
-    tick() { }
+    tick(..._args: any[]) {}
 
     render() {
         this.hexGrid.addEventListener("update", this.hexGrid.animation.start.callbackBound)
         this.hexGrid.addEventListener("update", this.hexGrid.animation.wave.callbackBound)
         requestAnimationFrame(this.loop.bind(this))
     }
-
 }
 
 export default Loop

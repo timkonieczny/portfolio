@@ -9,7 +9,7 @@ const Secret = require("./secret.js")
 module.exports = {
     entry: ["babel-polyfill", "./src/js/index.tsx"],
     resolve: {
-        extensions: ['.jsx', '.js', '.ts', '.tsx']
+        extensions: ['.jsx', '.js', '.ts', '.tsx', '.glsl']
     },
     module: {
         rules: [

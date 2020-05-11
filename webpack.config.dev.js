@@ -7,7 +7,7 @@ module.exports = merge(baseConfig, {
     mode: "development",
     resolve: {
         alias: {
-            Loop: path.resolve(__dirname, "src/js/Loop.dev.js"),
+            Loop: path.resolve(__dirname, "src/js/Loop.dev.ts"),
             URLs: path.resolve(__dirname, "src/js/URLs.dev.js")
         }
     },

@@ -9,7 +9,7 @@ module.exports = merge(baseConfig, {
     mode: "production",
     resolve: {
         alias: {
-            Loop: path.resolve(__dirname, "src/js/Loop.js"),
+            Loop: path.resolve(__dirname, "src/js/Loop.ts"),
             URLs: path.resolve(__dirname, "src/js/URLs.js")
         }
     },

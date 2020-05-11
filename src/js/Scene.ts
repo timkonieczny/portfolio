@@ -3,13 +3,27 @@ import Camera from "./renderer/Camera";
 import Light from "./renderer/Light";
 import UniformManager from "./renderer/UniformManager";
 import { mat4, vec3, glMatrix } from "gl-matrix"
-import vertexShaderSource from "../glsl/vertex.glsl"
-import fragmentShaderSource from "../glsl/fragment.glsl"
+import vertexShaderSource from "../glsl/vertex"
+import fragmentShaderSource from "../glsl/fragment"
 import Worker from "worker-loader!./renderer/HexagonGrid.worker";
 import Time from "./renderer/Time"
-import Loop from "Loop"
+import Loop from "./Loop"
+import Mesh from "./renderer/Mesh";
 
 class Scene extends Loop {
+    progressEventListeners: any[];
+    initCompleteEventListeners: any[];
+    gl: WebGLRenderingContext | WebGL2RenderingContext;
+    floatPrecisionVertexHigh: number;
+    floatPrecisionFragmentHigh: number;
+    floatPrecisionVertexMedium: number;
+    floatPrecisionFragmentMedium: number;
+    floatPrecisionVertexLow: number;
+    floatPrecisionFragmentLow: number;
+    hexGrid: MeshObject;
+    camera: Camera;
+    time: Time;
+    firstFrame: boolean;
     constructor() {
         super()
         this.progressEventListeners = []
@@ -29,7 +43,7 @@ class Scene extends Loop {
             this.gl = canvas.getContext("experimental-webgl")
             if (this.gl && !this.gl.getExtension("OES_element_index_uint")) {
                 console.error("Your browser doesn't support the OES_element_index_uint extension")
-                turn
+                return
             }
         }
         if (!this.gl) {
@@ -44,14 +58,16 @@ class Scene extends Loop {
         this.floatPrecisionVertexLow = this.gl.getShaderPrecisionFormat(this.gl.VERTEX_SHADER, this.gl.LOW_FLOAT).precision
         this.floatPrecisionFragmentLow = this.gl.getShaderPrecisionFormat(this.gl.FRAGMENT_SHADER, this.gl.LOW_FLOAT).precision
 
-        if (this.floatPrecisionVertexHigh != this.floatPrecisionVertexMedium != this.floatPrecisionVertexLow) {
+        if (this.floatPrecisionVertexHigh !== this.floatPrecisionVertexMedium
+            && this.floatPrecisionVertexMedium !== this.floatPrecisionVertexLow) {
             if (this.floatPrecisionVertexLow >= 23) {
                 vertexShaderSource.replace("precision highp float;", "precision lowp float;")
             } else if (this.floatPrecisionVertexMedium >= 23) {
                 vertexShaderSource.replace("precision highp float;", "precision mediump float;")
             }
         }
-        if (this.floatPrecisionFragmentHigh != this.floatPrecisionFragmentMedium != this.floatPrecisionFragmentLow) {
+        if (this.floatPrecisionFragmentHigh !== this.floatPrecisionFragmentMedium
+            && this.floatPrecisionFragmentMedium !== this.floatPrecisionFragmentLow) {
             if (this.floatPrecisionFragmentLow >= 23) {
                 fragmentShaderSource.replace("precision highp float;", "precision lowp float;")
             } else if (this.floatPrecisionFragmentMedium >= 23) {
@@ -73,11 +89,11 @@ class Scene extends Loop {
         const uniformManager = new UniformManager(this.gl, program)
         const light = new Light(vec3.set(vec3.create(), 30, 10, -10))
 
-        const makeGeometry = _ => {
-            return new Promise((resolve) => {
+        const makeGeometry = () => {
+            return new Promise<Mesh>(resolve => {
                 const worker = new Worker();
 
-                worker.addEventListener("message", event => {
+                worker.addEventListener("message", (event: any) => {
                     switch (event.data.type) {
                         case "geometry":
                             resolve(event.data.data)
@@ -109,7 +125,7 @@ class Scene extends Loop {
         this.firstFrame = true
     }
 
-    tick(time) {
+    tick(time: number) {
         this.time.update(time)
         this.hexGrid.update(this.time)
         this.camera.update(this.time)
@@ -120,7 +136,7 @@ class Scene extends Loop {
         }
     }
 
-    startAnimation(name) {
+    startAnimation(name: string) {
         this.camera.listeners.update = []
 
         this.camera.removeEventListener("update", this.camera.animation.headlineIn.callbackBound)
@@ -138,7 +154,7 @@ class Scene extends Loop {
         this.hexGrid.addEventListener("update", this.hexGrid.animation[name].callbackBound)
     }
 
-    addEventListener(type, listener) {
+    addEventListener(type: string, listener: { (...args: any[]): void }) {
         switch (type) {
             case "progress":
                 this.progressEventListeners.push(listener)
@@ -149,7 +165,7 @@ class Scene extends Loop {
         }
     }
 
-    removeEventListener(type, listener) {
+    removeEventListener(type: string, listener: { (...args: any[]): void }) {
         switch (type) {
             case "progress":
                 this.progressEventListeners = this.progressEventListeners.filter(activeListener => {

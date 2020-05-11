@@ -2,10 +2,10 @@ import Uniform from "./Uniform"
 
 class UniformManager {
     dirtyUniforms: Uniform[]
-    gl: WebGL2RenderingContext
+    gl: WebGLRenderingContextBase
     program: WebGLProgram
 
-    constructor(gl: WebGL2RenderingContext, program: WebGLProgram) {
+    constructor(gl: WebGLRenderingContextBase, program: WebGLProgram) {
         this.dirtyUniforms = []
         this.gl = gl
         this.program = program

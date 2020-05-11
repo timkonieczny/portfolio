@@ -49,7 +49,7 @@ class MeshObject {
         wave: UniformAnimation
     }
     constructor(
-        gl: WebGL2RenderingContext,
+        gl: WebGLRenderingContext | WebGL2RenderingContext,
         mesh: Mesh,
         vertexShaderSource: string,
         fragmentShaderSource: string,
@@ -254,7 +254,7 @@ class MeshObject {
         this.matNormUniform.update(this.normalMatrix)
     }
 
-    render(gl: WebGLRenderingContext) {
+    render(gl: WebGLRenderingContextBase) {
         this.uniformManager.sendDirtyUniformsToShader()
         gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT)
         gl.drawElements(gl.TRIANGLES, this.indices.length, gl.UNSIGNED_INT, 0)
