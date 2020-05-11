@@ -7,9 +7,9 @@ const Secret = require("./secret.js")
 // TODO: Insert head nodes via React Helmet? https://css-tricks.com/its-all-in-the-head-managing-the-document-head-of-a-react-powered-site-with-react-helmet/
 
 module.exports = {
-    entry: ["babel-polyfill", "./src/js/index.js"],
+    entry: ["babel-polyfill", "./src/js/index.tsx"],
     resolve: {
-        extensions: ['.jsx', '.js', '.ts']
+        extensions: ['.jsx', '.js', '.ts', '.tsx']
     },
     module: {
         rules: [
@@ -27,7 +27,7 @@ module.exports = {
                 loader: "webpack-glsl-loader"
             },
             {
-                test: /\.(js|jsx|ts)$/,
+                test: /\.(js|jsx|ts|tsx)$/,
                 exclude: /node_modules/,
                 loader: "babel-loader"
             },
