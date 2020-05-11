@@ -5,7 +5,7 @@ import UniformManager from "./renderer/UniformManager";
 import { mat4, vec3, glMatrix } from "gl-matrix"
 import vertexShaderSource from "../glsl/vertex.glsl"
 import fragmentShaderSource from "../glsl/fragment.glsl"
-import Worker from "./renderer/HexagonGrid.worker.js"
+import Worker from "worker-loader!./renderer/HexagonGrid.worker";
 import Time from "./renderer/Time"
 import Loop from "Loop"
 
