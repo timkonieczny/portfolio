@@ -59,13 +59,13 @@ class About extends Component {
                             onClick={this.props.clickListener}>
                             get in touch
                         </Link>
-                        <a className="button linkedin-button" data-animation="linkedIn" tabIndex="3"
+                        <a className="button linkedin-button" data-animation="linkedin" tabIndex="3"
                             href="https://www.linkedin.com/in/tim-konieczny/">
                             <i className="fab fa-linkedin-in"></i>connect on LinkedIn
                         </a>
                     </div>
                     <Link to="/privacypolicy" id="privacy-policy-button" className="animated link-with-icon"
-                        data-animation="privacyPolicy" tabIndex="4" onClick={this.props.clickListener}>
+                        data-animation="privacypolicy" tabIndex="4" onClick={this.props.clickListener}>
                         <i className="fas fa-long-arrow-alt-right"></i>
                         <span>privacy policy and legal information</span>
                     </Link>

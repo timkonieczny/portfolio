@@ -3,8 +3,8 @@ import Camera from "./renderer/Camera";
 import Light from "./renderer/Light";
 import UniformManager from "./renderer/UniformManager";
 import { mat4, vec3, glMatrix } from "gl-matrix"
-import vertexShaderSource from "../glsl/vertex"
-import fragmentShaderSource from "../glsl/fragment"
+import vertexShaderSource from "../glsl/vertex.glsl"
+import fragmentShaderSource from "../glsl/fragment.glsl"
 import Worker from "worker-loader!./renderer/HexagonGrid.worker";
 import Time from "./renderer/Time"
 import Loop from "./Loop"
@@ -30,17 +30,10 @@ class Scene extends Loop {
         this.initCompleteEventListeners = []
     }
 
-    async initialize(canvas) {
+    async initialize(canvas: HTMLCanvasElement) {
         this.gl = canvas.getContext("webgl2")
         if (!this.gl) {
             this.gl = canvas.getContext("webgl")
-            if (this.gl && !this.gl.getExtension("OES_element_index_uint")) {
-                console.error("Your browser doesn't support the OES_element_index_uint extension")
-                return
-            }
-        }
-        if (!this.gl) {
-            this.gl = canvas.getContext("experimental-webgl")
             if (this.gl && !this.gl.getExtension("OES_element_index_uint")) {
                 console.error("Your browser doesn't support the OES_element_index_uint extension")
                 return
@@ -137,7 +130,6 @@ class Scene extends Loop {
     }
 
     startAnimation(name: string) {
-        this.camera.listeners.update = []
 
         this.camera.removeEventListener("update", this.camera.animation.headlineIn.callbackBound)
         this.camera.removeEventListener("update", this.camera.animation.messageIn.callbackBound)
@@ -149,9 +141,10 @@ class Scene extends Loop {
 
         this.camera.animation.out.init(this.camera.position, this.camera.lookAt, this.camera.up)
         this.camera.addEventListener("update", this.camera.animation.out.callbackBound)
-        this.camera.animation[`${name}In`].init()
-        this.camera.addEventListener("update", this.camera.animation[`${name}In`].callbackBound)
-        this.hexGrid.addEventListener("update", this.hexGrid.animation[name].callbackBound)
+
+        this.camera.getAnimation(name).init()
+        this.camera.addEventListener("update", this.camera.getAnimation(name).callbackBound)
+        this.hexGrid.addEventListener("update", this.hexGrid.getAnimation(name).callbackBound)
     }
 
     addEventListener(type: string, listener: { (...args: any[]): void }) {

@@ -1,5 +1,6 @@
 import Uniform from "./Uniform"
 import Mesh from "./Mesh"
+import { MeshObject } from "./MeshObject"
 
 class UniformAnimation {
     uniform: Uniform
@@ -24,7 +25,7 @@ class UniformAnimation {
         this.time.elapsed = 0
     }
 
-    callback(tslf: number, mesh: Mesh) {
+    callback(tslf: number, mesh: MeshObject) {
         this.time.elapsed += tslf
         const interpolator = Math.min(1, this.time.elapsed / this.time.total)
 

@@ -16,7 +16,6 @@ class MeshObject {
     normalMatrix: mat3
     normalMatrix2: mat4
     normalMatrix3: mat4
-    listeners: { update: { (tslf: number, object: MeshObject): void }[] }
     indices: number[]
     uniformManager: UniformManager
     interleaved: {
@@ -48,6 +47,7 @@ class MeshObject {
         work: UniformAnimation
         wave: UniformAnimation
     }
+    listeners: Map<string, ((...args: any[]) => void)[]>
     constructor(
         gl: WebGLRenderingContext | WebGL2RenderingContext,
         mesh: Mesh,
@@ -63,9 +63,8 @@ class MeshObject {
         this.normalMatrix2 = mat4.create()
         this.normalMatrix3 = mat4.create()
 
-        this.listeners = {
-            update: [],
-        }
+        this.listeners = new Map()
+        this.listeners.set("update", [])
 
         this.indices = mesh.indices
         this.uniformManager = uniformManager
@@ -217,7 +216,7 @@ class MeshObject {
             wave: new UniformAnimation(this.timeUniform),
         }
         this.animation.start.time.total = 5000
-        const interpolationFunction = (interpolator) => {
+        const interpolationFunction = (interpolator: number) => {
             return (Math.cos(Math.PI + interpolator * 2 * Math.PI) + 1) / 2
         }
 
@@ -238,10 +237,27 @@ class MeshObject {
         this.animation.wave.callbackBound = this.animation.wave.callback.bind(this.animation.wave)
     }
 
+    getAnimation(key: string): UniformAnimation {
+        switch (key.toLowerCase()) {
+            case "start":
+                return this.animation.start
+            case "headline":
+                return this.animation.headline
+            case "message":
+                return this.animation.message
+            case "about":
+                return this.animation.about
+            case "privacypolicy":
+                return this.animation.privacyPolicy
+            case "work":
+                return this.animation.work
+            default:
+                return this.animation.wave
+        }
+    }
+
     update(time: Time) {
-        this.listeners.update.forEach((listener) => {
-            listener(time.tslf, this)
-        })
+        this.listeners.get("update").forEach(listener => listener(time.tslf, this))
 
         mat4.identity(this.worldMatrix)
         mat4.translate(this.worldMatrix, this.identityMatrix, this.translationVector)
@@ -254,7 +270,7 @@ class MeshObject {
         this.matNormUniform.update(this.normalMatrix)
     }
 
-    render(gl: WebGLRenderingContextBase) {
+    render(gl: WebGLRenderingContext | WebGL2RenderingContext) {
         this.uniformManager.sendDirtyUniformsToShader()
         gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT)
         gl.drawElements(gl.TRIANGLES, this.indices.length, gl.UNSIGNED_INT, 0)
@@ -266,20 +282,23 @@ class MeshObject {
 
     addEventListener(type: string, listener: { (...args: any[]): void }) {
         if (!this.hasEventListener(type, listener)) {
-            this.listeners[type].push(listener)
+            this.listeners.get(type).push(listener)
         }
     }
 
     removeEventListener(type: string, listener: { (...args: any[]): void }) {
         if (this.hasEventListener(type, listener)) {
-            const index = this.listeners[type].indexOf(listener)
-            this.listeners[type].splice(index, 1)
+            const listeners = this.listeners.get(type)
+            listeners.splice(listeners.indexOf(listener), 1)
         }
     }
 
-    hasEventListener(type: string, listener: { (...args: any[]): void }) {
-        const index = this.listeners[type].indexOf(listener)
-        return index !== -1
+    hasEventListener(type: string, listener: { (...args: any[]): void }): boolean {
+        const listeners = this.listeners.get(type)
+        if (listeners) {
+            const index = listeners.indexOf(listener)
+            return index !== -1
+        } else return false
     }
 }
 

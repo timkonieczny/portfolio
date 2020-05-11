@@ -31,8 +31,8 @@ class Loop {
 
     render() {
         this.printInfo()
-        this.hexGrid.addEventListener("update", this.hexGrid.animation.start.callbackBound)
-        this.hexGrid.addEventListener("update", this.hexGrid.animation.wave.callbackBound)
+        this.hexGrid.addEventListener("update", this.hexGrid.getAnimation("start").callbackBound)
+        this.hexGrid.addEventListener("update", this.hexGrid.getAnimation("wave").callbackBound)
         requestAnimationFrame(this.loop.bind(this))
     }
 

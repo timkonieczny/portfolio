@@ -32,7 +32,7 @@ class Home extends Component {
                         tabIndex="1" onClick={this.props.clickListener}>
                         get in touch
                     </Link>
-                    <a className="button linkedin-button animated" data-animation="linkedIn" tabIndex="2"
+                    <a className="button linkedin-button animated" data-animation="linkedin" tabIndex="2"
                         onClick={this.props.clickListener} href="https://www.linkedin.com/in/tim-konieczny/">
                         <i className="fab fa-linkedin-in"></i>connect on LinkedIn
                     </a>

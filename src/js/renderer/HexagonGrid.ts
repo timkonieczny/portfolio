@@ -12,7 +12,6 @@ class HexagonGrid extends Mesh {
     startTime: number
     indices: any
     interleavedArray: any
-    progressEventListeners: any
     constructor(rings: number, gap: number, scaleY: number) {
         super()
         this.rings = rings

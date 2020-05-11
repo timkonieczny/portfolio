@@ -1,11 +1,11 @@
-import { mat4, vec3, glMatrix } from "gl-matrix"
+import { mat4, glMatrix, vec3 } from "gl-matrix"
 import UniformMatrix4f from "./UniformMatrix4f"
 import UniformManager from "./UniformManager"
 import CameraAnimation from "./CameraAnimation"
 import Easing from "easing-functions"
+import Time from "./Time"
 
 class Camera {
-    listeners: { update: { (tslf: number, camera: Camera): void }[] }
     projMatrix: mat4
     viewMatrix: mat4
     uniformManager: UniformManager
@@ -22,10 +22,10 @@ class Camera {
     position: vec3
     lookAt: vec3
     up: vec3
+    listeners: Map<string, ((...args: any[]) => void)[]>
     constructor(uniformManager: UniformManager) {
-        this.listeners = {
-            update: [],
-        }
+        this.listeners = new Map()
+        this.listeners.set("update", [])
 
         this.projMatrix = mat4.create()
 
@@ -83,60 +83,62 @@ class Camera {
             vec3.copy(animation.last.up, animation.from.up)
         }
 
-        console.log(`${window.location.pathname.replace(new RegExp("/", "g"), "")}In`)
-
-        let startAnimation: CameraAnimation
-        switch (window.location.pathname) {
-            case "/message":
-                startAnimation = this.animation.messageIn
-                break
-            case "/about":
-                startAnimation = this.animation.aboutIn
-                break
-            case "/privacypolicy":
-                startAnimation = this.animation.privacyPolicyIn
-                break
-            case "/work":
-                startAnimation = this.animation.workIn
-                break
-            default:
-                startAnimation = this.animation.headlineIn
-                break
-        }
+        const key = window.location.pathname.replace(new RegExp("/", "g"), "")
+        const startAnimation = this.getAnimation(key)
 
         this.position = vec3.copy(vec3.create(), startAnimation.to.position)
         this.lookAt = vec3.copy(vec3.create(), startAnimation.to.lookAt)
         this.up = vec3.copy(vec3.create(), startAnimation.to.up)
-
-        // this.update(this.position, this.lookAt, this.up)
     }
 
-    resize(width, height) {
+    getAnimation(key: string): CameraAnimation {
+        switch (key.toLowerCase()) {
+            case "headline":
+                return this.animation.headlineIn
+            case "message":
+                return this.animation.messageIn
+            case "about":
+                return this.animation.aboutIn
+            case "privacypolicy":
+                return this.animation.privacyPolicyIn
+            case "work":
+                return this.animation.workIn
+            case "linkedin":
+                return this.animation.workIn
+            default:
+                return this.animation.out
+        }
+    }
+
+    resize(width: number, height: number) {
         mat4.perspective(this.projMatrix, glMatrix.toRadian(45), width / height, 0.1, 100.0)
     }
 
-    update(time) {
-        this.listeners.update.forEach((listener) => listener(time.tslf, this))
+    update(time: Time) {
+        this.listeners.get("update").forEach(listener => listener(time.tslf, this))
         mat4.lookAt(this.viewMatrix, this.position, this.lookAt, this.up)
         this.matViewUniform.update(this.viewMatrix)
     }
 
-    addEventListener(type, listener) {
+    addEventListener(type: string, listener: { (...args: any[]): void }) {
         if (!this.hasEventListener(type, listener)) {
-            this.listeners[type].push(listener)
+            this.listeners.get(type).push(listener)
         }
     }
 
-    removeEventListener(type, listener) {
+    removeEventListener(type: string, listener: { (...args: any[]): void }) {
         if (this.hasEventListener(type, listener)) {
-            const index = this.listeners[type].indexOf(listener)
-            this.listeners[type].splice(index, 1)
+            const listeners = this.listeners.get(type)
+            listeners.splice(listeners.indexOf(listener), 1)
         }
     }
 
-    hasEventListener(type, listener) {
-        const index = this.listeners[type].indexOf(listener)
-        return index !== -1
+    hasEventListener(type: string, listener: { (...args: any[]): void }): boolean {
+        const listeners = this.listeners.get(type)
+        if (listeners) {
+            const index = listeners.indexOf(listener)
+            return index !== -1
+        } else return false
     }
 }
 

@@ -1,21 +1,21 @@
-import OctagonalPrismMesh from "./OctagonalPrismMesh"
+import Face from "./Face"
 
 class Mesh {
     indices: number[]
     interleavedArray: number[]
-    progressEventListeners: { ({ progress: number, task: string }): void }[]
+    progressEventListeners: { ({ progress, task }: { progress: number, task: string }): void; }[]
     constructor() {
         this.indices = []
         this.interleavedArray = []
         this.progressEventListeners = []
     }
 
-    mergeGeometries(...geometries: OctagonalPrismMesh[]) {
+    mergeGeometries(...geometries: Face[] | Mesh[]) {
         let startTime = Date.now()
-        const interleavedArray = []
+        const interleavedArray: number[] = []
         const output = new Mesh()
-        geometries.forEach((geometry, i) => {
-            const newIndices = geometry.indices.map((index) => {
+        geometries.forEach((geometry: Face | Mesh, i: number) => {
+            const newIndices = geometry.indices.map((index: number) => {
                 return index + interleavedArray.length / 16
             })
             output.indices.push(...newIndices)
@@ -36,11 +36,11 @@ class Mesh {
         return output
     }
 
-    addEventListener(type: string, listener: { ({ progress: number, task: string }): void }) {
+    addEventListener(type: string, listener: ({ progress, task }: { progress: number, task: string }) => void) {
         if (type == "progress") this.progressEventListeners.push(listener)
     }
 
-    removeEventListener(type: string, listener: (...args: any[]) => void) {
+    removeEventListener(type: string, listener: ({ progress, task }: { progress: number, task: string }) => void) {
         if (type == "progress")
             this.progressEventListeners = this.progressEventListeners.filter((activeListener) => {
                 return activeListener === listener

@@ -15,6 +15,7 @@ module.exports = merge(baseConfig, {
         filename: "bundle.js",
         path: path.resolve(__dirname, "dist/dev")
     },
+    devtool: 'inline-source-map',
     devServer: {
         contentBase: path.join(__dirname, 'dist/dev'),
         host: '0.0.0.0',

@@ -2,7 +2,6 @@ import { vec3 } from "gl-matrix"
 import Face from "./Face"
 
 class Face6 extends Face {
-    indices: number[]
     constructor(
         a: vec3,
         b: vec3,
