@@ -1,27 +1,18 @@
 import React, { Component } from "react";
-import { library, dom } from "@fortawesome/fontawesome-svg-core";
-import { faPaperPlane, faRobot, faRedoAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class MessageConfirmation extends Component {
-    constructor() {
-        super()
-        library.add(faPaperPlane, faRobot, faRedoAlt)
-    }
-
-    componentDidMount() {
-        dom.i2svg()
-    }
 
     render() {
         return (
             <div id="message-confirmation" className={`${this.props.show ? "show" : ""}`}>
                 <div id="message-success" className={`${this.props.status === 200 ? "show" : ""}`}>
-                    <i className="fas fa-paper-plane"></i>
+                    <FontAwesomeIcon icon="paper-plane" />
                     <h3>Thank you for your message.</h3>
                     <p>I'll get back to you as soon as possible!</p>
                 </div>
                 <div id="message-client-error" className={`${this.props.status === 400 ? "show" : ""}`}>
-                    <i className="fas fa-robot"></i>
+                    <FontAwesomeIcon icon="robot" />
                     <h3>400 (Bad Request)</h3>
                     <p>
                         The server has rejected the data you entered.<br />Please try again
@@ -29,7 +20,7 @@ class MessageConfirmation extends Component {
                             </p>
                 </div>
                 <div id="message-server-error" className={`${this.props.status === 500 ? "show" : ""}`}>
-                    <i className="fas fa-redo-alt"></i>
+                    <FontAwesomeIcon icon="redo-alt" />
                     <h3>500 (Internal Server Error)</h3>
                     <p>
                         Uh. Oh. Something went wrong.<br />Please try again later.<br />Sorry
@@ -39,7 +30,7 @@ class MessageConfirmation extends Component {
                 <div id="message-unknown-error"
                     className={`${this.props.status !== null && this.props.status !== 200
                         && this.props.status !== 400 && this.props.status !== 500 ? "show" : ""}`}>
-                    <i className="fas fa-redo-alt"></i>
+                    <FontAwesomeIcon icon="redo-alt" />
                     <h3>Uh. Oh. Something went wrong.</h3>
                     <p>Please try again later.<br />Sorry for the inconvenience.</p>
                 </div>

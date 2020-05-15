@@ -1,19 +1,8 @@
 import React, { Component } from "react";
-import { library, dom } from "@fortawesome/fontawesome-svg-core";
-import { faLongArrowAltRight } from "@fortawesome/free-solid-svg-icons"
-import { faLinkedinIn } from "@fortawesome/free-brands-svg-icons"
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class Home extends Component {
-
-    constructor() {
-        super()
-        library.add(faLongArrowAltRight, faLinkedinIn)
-    }
-
-    componentDidMount() {
-        dom.i2svg()
-    }
 
     render() {
         return (
@@ -34,16 +23,18 @@ class Home extends Component {
                     </Link>
                     <a className="button linkedin-button animated" data-animation="linkedin" tabIndex="2"
                         onClick={this.props.clickListener} href="https://www.linkedin.com/in/tim-konieczny/">
-                        <i className="fab fa-linkedin-in"></i>connect on LinkedIn
+                        <FontAwesomeIcon icon={["fab", "linkedin-in"]} />connect on LinkedIn
+
                     </a>
                 </div>
                 <Link to="/about" className="animated link-with-icon" id="about-button" data-animation="about"
                     tabIndex="3" onClick={this.props.clickListener}>
-                    <i className="fas fa-long-arrow-alt-right"></i><span>learn more</span>
+                    <FontAwesomeIcon icon="long-arrow-alt-right" /><span>learn more</span>
+
                 </Link>
                 <Link to="/work" className="animated link-with-icon" id="work-button" data-animation="work" tabIndex="4"
                     onClick={this.props.clickListener}>
-                    <i className="fas fa-long-arrow-alt-right"></i><span>work</span>
+                    <FontAwesomeIcon icon="long-arrow-alt-right" /><span>work</span>
                 </Link>
             </div>
         );

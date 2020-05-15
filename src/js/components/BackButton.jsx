@@ -1,34 +1,20 @@
 import React, { Component } from "react";
-import { faLongArrowAltLeft } from "@fortawesome/free-solid-svg-icons";
-import { library, dom } from "@fortawesome/fontawesome-svg-core";
 import { withRouter, Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class BackButton extends Component {
-
-    constructor() {
-        super()
-        library.add(faLongArrowAltLeft)
-    }
-
-    componentDidMount() {
-        dom.i2svg()
-    }
-
-    componentDidUpdate() {
-        dom.i2svg()
-    }
 
     render() {
         if (this.props.hasHistory)
             return (
                 <a className="back-arrow" data-animation="back" tabIndex="1"
                     onClick={event => { this.props.clickListener(event); this.props.history.goBack() }}>
-                    <i className="fas fa-long-arrow-alt-left"></i>
+                    <FontAwesomeIcon icon="long-arrow-alt-left" />
                 </a>)
         else return (
             <Link to="/" className="back-arrow" data-animation="headline" tabIndex="1"
                 onClick={this.props.clickListener}>
-                <i className="fas fa-long-arrow-alt-left"></i>
+                <FontAwesomeIcon icon="long-arrow-alt-left" />
             </Link>)
     }
 }

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { mailServerURL } from "../URLs"
-import { library, dom } from "@fortawesome/fontawesome-svg-core";
-import { faPaperPlane, faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class MessageForm extends Component {
 
@@ -16,11 +15,9 @@ class MessageForm extends Component {
         this.isFormDisabled = false
         this.isSendAnimationFinished = false
         this.isAnimationPending = true
-        library.add(faPaperPlane, faExclamationTriangle)
     }
 
     componentDidMount() {
-        dom.i2svg()
         this.timetrapStart = Date.now()
     }
 
@@ -125,11 +122,11 @@ class MessageForm extends Component {
                 </div>
                 <div className={`field-wrapper ${this.state.errorType ? "hide" : ""}`} id="submit-button-wrapper">
                     <button className="button" id="send-button" type="submit" tabIndex="6">
-                        <i className="fas fa-paper-plane"></i>
+                        <FontAwesomeIcon icon="paper-plane" />
                     </button>
                 </div>
                 <div className={`field-wrapper ${this.state.errorType ? "" : "hide"}`} id="invalid-input-wrapper">
-                    <i className="fas fa-exclamation-triangle"></i>
+                    <FontAwesomeIcon icon="exclamation-triangle" />
                     <p>{this.state.errorMessage}</p>
                 </div>
                 <input className="honey" placeholder="Phone" name="phone" tabIndex="-1" autoComplete="no" type="tel" />

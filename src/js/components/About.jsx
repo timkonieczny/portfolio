@@ -1,20 +1,9 @@
 import React, { Component } from "react";
-import { library, dom } from "@fortawesome/fontawesome-svg-core";
-import { faLongArrowAltRight } from "@fortawesome/free-solid-svg-icons"
-import { faLinkedinIn } from "@fortawesome/free-brands-svg-icons"
 import { Link } from "react-router-dom";
 import BackButton from "./BackButton";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class About extends Component {
-
-    constructor() {
-        super()
-        library.add(faLongArrowAltRight, faLinkedinIn)
-    }
-
-    componentDidMount() {
-        dom.i2svg()
-    }
 
     render() {
         return (
@@ -61,12 +50,12 @@ class About extends Component {
                         </Link>
                         <a className="button linkedin-button" data-animation="linkedin" tabIndex="3"
                             href="https://www.linkedin.com/in/tim-konieczny/">
-                            <i className="fab fa-linkedin-in"></i>connect on LinkedIn
+                            <FontAwesomeIcon icon={["fab", "linkedin-in"]} />connect on LinkedIn
                         </a>
                     </div>
                     <Link to="/privacypolicy" id="privacy-policy-button" className="animated link-with-icon"
                         data-animation="privacypolicy" tabIndex="4" onClick={this.props.clickListener}>
-                        <i className="fas fa-long-arrow-alt-right"></i>
+                        <FontAwesomeIcon icon="long-arrow-alt-right" />
                         <span>privacy policy and legal information</span>
                     </Link>
                 </div>
