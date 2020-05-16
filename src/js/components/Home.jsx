@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import strings from "../strings";
 
 class Home extends Component {
 
@@ -19,22 +20,22 @@ class Home extends Component {
                 <div className="message-buttons">
                     <Link to="/message" className="button message-button animated" data-animation="message"
                         tabIndex="1" onClick={this.props.clickListener}>
-                        get in touch
+                        {strings.message}
                     </Link>
                     <a className="button linkedin-button animated" data-animation="linkedin" tabIndex="2"
                         onClick={this.props.clickListener} href="https://www.linkedin.com/in/tim-konieczny/">
-                        <FontAwesomeIcon icon={["fab", "linkedin-in"]} />connect on LinkedIn
+                        <FontAwesomeIcon icon={["fab", "linkedin-in"]} />{strings.linkedin}
 
                     </a>
                 </div>
                 <Link to="/about" className="animated link-with-icon" id="about-button" data-animation="about"
                     tabIndex="3" onClick={this.props.clickListener}>
-                    <FontAwesomeIcon icon="long-arrow-alt-right" /><span>learn more</span>
+                    <FontAwesomeIcon icon="long-arrow-alt-right" /><span>{strings.services}</span>
 
                 </Link>
                 <Link to="/work" className="animated link-with-icon" id="work-button" data-animation="work" tabIndex="4"
                     onClick={this.props.clickListener}>
-                    <FontAwesomeIcon icon="long-arrow-alt-right" /><span>work</span>
+                    <FontAwesomeIcon icon="long-arrow-alt-right" /><span>{strings.work}</span>
                 </Link>
             </div>
         );
