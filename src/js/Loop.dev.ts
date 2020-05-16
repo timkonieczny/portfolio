@@ -1,4 +1,4 @@
-import Stats from "stats-js"
+import Stats from "stats.js"
 import Time from "./renderer/Time"
 import { MeshObject } from "./renderer/MeshObject"
 class Loop {

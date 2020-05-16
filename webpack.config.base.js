@@ -63,11 +63,13 @@ module.exports = {
         ]
     },
     plugins: [
-        new CopyPlugin([
-            { from: 'src/php/credentials.php', to: 'credentials.php' },
-            { from: 'src/.htaccess', to: '' },
-            { from: 'assets/card.png', to: '' }
-        ]),
+        new CopyPlugin({
+            patterns: [
+                { from: 'src/php/credentials.php' },
+                { from: 'src/.htaccess' },
+                { from: 'assets/card.png' }
+            ]
+        }),
         new HtmlWebpackPlugin({
             template: '!!ejs-webpack-loader!./src/ejs/index.ejs',
             inject: "head",
