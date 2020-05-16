@@ -20,7 +20,7 @@ class AnimatedSwitch extends Component {
 
     // FIXME: during history forward history.action === "POP" -> wrong animation
     // FIXME: back button click when there is no history triggers wrong animation
-    // FIXME: WebGL animation doesn't consider initial route
+
     render() {
         return (
             <TransitionGroup id="wrapper" ref={element => { this.wrapper = element }}

@@ -106,7 +106,7 @@ class Camera {
             case "linkedin":
                 return this.animation.workIn
             default:
-                return this.animation.out
+                return this.animation.headlineIn
         }
     }
 

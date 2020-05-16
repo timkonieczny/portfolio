@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import { library, dom } from "@fortawesome/fontawesome-svg-core";
-import { faLongArrowAltRight } from "@fortawesome/free-solid-svg-icons"
 import BackButton from "./BackButton";
 import WorkItem from "./WorkItem";
 import image1 from "../../../assets/sample1.webp"
@@ -11,15 +9,6 @@ import image5 from "../../../assets/sample5.webp"
 import image6 from "../../../assets/sample6.webp"
 
 class Work extends Component {
-
-    constructor() {
-        super()
-        library.add(faLongArrowAltRight)
-    }
-
-    componentDidMount() {
-        dom.i2svg()
-    }
 
     render() {
         // TODO: add hyphens
