@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
-import { Switch, Route, withRouter } from "react-router-dom";
-import About from "./About";
-import Message from "./Message";
-import PrivacyPolicy from "./PrivacyPolicy";
-import Work from "./Work";
-import Home from "./Home";
+import React, { Component } from "react"
+import { TransitionGroup, CSSTransition } from "react-transition-group"
+import { Switch, Route, withRouter } from "react-router-dom"
+import About from "./About"
+import Message from "./Message"
+import PrivacyPolicy from "./PrivacyPolicy"
+import Work from "./Work"
+import Home from "./Home"
 
 class AnimatedSwitch extends Component {
 
@@ -60,6 +60,9 @@ class AnimatedSwitch extends Component {
                                 isAppearing={this.state.isAppearing} />
                         </Route>
                         <Route path="/">
+                            <Home clickListener={this.props.onButtonClick} />
+                        </Route>
+                        <Route >
                             <Home clickListener={this.props.onButtonClick} />
                         </Route>
                     </Switch>

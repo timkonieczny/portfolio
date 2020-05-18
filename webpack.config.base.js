@@ -1,5 +1,5 @@
-const CopyPlugin = require('copy-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 const Secret = require("./secret.js")
 
@@ -8,6 +8,9 @@ const Secret = require("./secret.js")
 
 module.exports = {
     entry: ["./src/js/index.tsx"],
+    output: {
+        publicPath: '/'
+    },
     resolve: {
         extensions: ['.jsx', '.js', '.ts', '.tsx']
     },
@@ -119,4 +122,4 @@ module.exports = {
             }
         })
     ],
-};
+}
