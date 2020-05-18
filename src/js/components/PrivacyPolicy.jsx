@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import * as Secret from "../../../secret"
 import BackButton from "./BackButton"
 import ReactGA from "react-ga"
+import strings from "../strings"
 
 class PrivacyPolicy extends Component {
 
@@ -16,8 +17,8 @@ class PrivacyPolicy extends Component {
                     <BackButton hasHistory={!this.props.isAppearing} clickListener={this.props.clickListener} />
                 </div>
                 <div id="privacy-policy-content">
-                    <h2>About this website.</h2>
-                    <h3>Privacy policy</h3>
+                    <h2>{strings.privacy}</h2>
+                    <h3>{strings.privacyStatement}</h3>
                     <p lang="en">
                         This website uses Google Analytics, a service which transmits website
                         traffic data to Google servers. This instance of Google Analytics does not
@@ -27,7 +28,7 @@ class PrivacyPolicy extends Component {
                         tracking at any time by activating the “Do Not Track” setting in your
                         browser.
                     </p>
-                    <h3>Legal information</h3>
+                    <h3>{strings.legalInfo}</h3>
                     <p lang="en">
                         Tim Konieczny<br />
                         <span className="reverse">{Secret.street}</span><br />

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import BackButton from "./BackButton"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ReactGA from "react-ga"
+import strings from "../strings"
 
 class About extends Component {
 
@@ -18,7 +19,7 @@ class About extends Component {
                         mouseLeaveListener={this.props.mouseLeaveListener} clickListener={this.props.clickListener} />
                 </div>
                 <div id="about-content">
-                    <h2>Tim Konieczny.</h2>
+                    <h2>{strings.services}.</h2>
                     <p lang="en">
                         My main areas of expertise are <b>computer graphics</b>,
                         <b>digital experiences</b> and <b>front-end development</b>.
@@ -51,17 +52,17 @@ class About extends Component {
                     <div className="message-buttons">
                         <Link to="/message" className="button message-button" data-animation="message" tabIndex="2"
                             onClick={this.props.clickListener}>
-                            get in touch
+                            {strings.message}
                         </Link>
                         <a className="button linkedin-button" data-animation="linkedin" tabIndex="3"
                             href="https://www.linkedin.com/in/tim-konieczny/">
-                            <FontAwesomeIcon icon={["fab", "linkedin-in"]} />connect on LinkedIn
+                            <FontAwesomeIcon icon={["fab", "linkedin-in"]} />{strings.linkedin}
                         </a>
                     </div>
                     <Link to="/privacypolicy" id="privacy-policy-button" className="animated link-with-icon"
                         data-animation="privacypolicy" tabIndex="4" onClick={this.props.clickListener}>
                         <FontAwesomeIcon icon="long-arrow-alt-right" />
-                        <span>privacy policy and legal information</span>
+                        <span>{strings.privacy}</span>
                     </Link>
                 </div>
             </div>
