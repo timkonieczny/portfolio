@@ -131,7 +131,7 @@ class Scene extends Loop {
 
     startAnimation(name: string) {
 
-        this.camera.removeEventListener("update", this.camera.animation.headlineIn.callbackBound)
+        this.camera.removeEventListener("update", this.camera.animation.homeIn.callbackBound)
         this.camera.removeEventListener("update", this.camera.animation.messageIn.callbackBound)
         this.camera.removeEventListener("update", this.camera.animation.aboutIn.callbackBound)
         this.camera.removeEventListener("update", this.camera.animation.privacyPolicyIn.callbackBound)

@@ -1,4 +1,4 @@
-#headline-wrapper {
+#home-wrapper {
     opacity: 1;
     visibility: visible;
     overflow: auto;
@@ -10,7 +10,7 @@
                 margin: 0.2em 0;
             }
         }
-        .separator{
+        .separator {
             @media #{$l} {
                 display: none;
             }

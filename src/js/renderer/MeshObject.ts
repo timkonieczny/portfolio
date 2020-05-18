@@ -42,7 +42,7 @@ class MeshObject {
         start: UniformAnimation
         message: UniformAnimation
         about: UniformAnimation
-        headline: UniformAnimation
+        home: UniformAnimation
         privacyPolicy: UniformAnimation
         work: UniformAnimation
         wave: UniformAnimation
@@ -210,7 +210,7 @@ class MeshObject {
             start: new UniformAnimation(this.explosionUniform),
             message: new UniformAnimation(this.displacementYUniform),
             about: new UniformAnimation(this.displacementYUniform),
-            headline: new UniformAnimation(this.displacementYUniform),
+            home: new UniformAnimation(this.displacementYUniform),
             privacyPolicy: new UniformAnimation(this.displacementYUniform),
             work: new UniformAnimation(this.displacementYUniform),
             wave: new UniformAnimation(this.timeUniform),
@@ -225,7 +225,7 @@ class MeshObject {
 
         this.animation.message.time.function = interpolationFunction
         this.animation.about.time.function = interpolationFunction
-        this.animation.headline.time.function = interpolationFunction
+        this.animation.home.time.function = interpolationFunction
         this.animation.privacyPolicy.time.function = interpolationFunction
         this.animation.work.time.function = interpolationFunction
 
@@ -241,8 +241,8 @@ class MeshObject {
         switch (key.toLowerCase()) {
             case "start":
                 return this.animation.start
-            case "headline":
-                return this.animation.headline
+            case "home":
+                return this.animation.home
             case "message":
                 return this.animation.message
             case "about":

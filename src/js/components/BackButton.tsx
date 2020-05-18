@@ -18,7 +18,7 @@ class BackButton extends Component<Props> {
                     <FontAwesomeIcon icon="long-arrow-alt-left" />
                 </a>)
         else return (
-            <Link to="/" className="back-arrow" data-animation="headline" tabIndex={1}
+            <Link to="/" className="back-arrow" data-animation="home" tabIndex={1}
                 onClick={this.props.clickListener}>
                 <FontAwesomeIcon icon="long-arrow-alt-left" />
             </Link>)

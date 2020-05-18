@@ -11,7 +11,7 @@ class Camera {
     uniformManager: UniformManager
     matViewUniform: UniformMatrix4f
     animation: {
-        headlineIn: CameraAnimation
+        homeIn: CameraAnimation
         messageIn: CameraAnimation
         aboutIn: CameraAnimation
         privacyPolicyIn: CameraAnimation
@@ -36,7 +36,7 @@ class Camera {
         this.matViewUniform = new UniformMatrix4f("uView", uniformManager)
 
         this.animation = {
-            headlineIn: new CameraAnimation(),
+            homeIn: new CameraAnimation(),
             messageIn: new CameraAnimation(),
             aboutIn: new CameraAnimation(),
             privacyPolicyIn: new CameraAnimation(),
@@ -45,9 +45,9 @@ class Camera {
             out: new CameraAnimation(),
         }
 
-        vec3.set(this.animation.headlineIn.to.position, -50, 20, 50)
-        vec3.set(this.animation.headlineIn.to.lookAt, 0, -20, 0)
-        this.animation.headlineIn.time.function = Easing.Sinusoidal.InOut
+        vec3.set(this.animation.homeIn.to.position, -50, 20, 50)
+        vec3.set(this.animation.homeIn.to.lookAt, 0, -20, 0)
+        this.animation.homeIn.time.function = Easing.Sinusoidal.InOut
 
         vec3.set(this.animation.messageIn.to.position, 20, -25, 60)
         this.animation.messageIn.time.function = Easing.Sinusoidal.InOut
@@ -93,8 +93,8 @@ class Camera {
 
     getAnimation(key: string): CameraAnimation {
         switch (key.toLowerCase()) {
-            case "headline":
-                return this.animation.headlineIn
+            case "home":
+                return this.animation.homeIn
             case "message":
                 return this.animation.messageIn
             case "about":
@@ -106,7 +106,7 @@ class Camera {
             case "linkedin":
                 return this.animation.workIn
             default:
-                return this.animation.headlineIn
+                return this.animation.homeIn
         }
     }
 

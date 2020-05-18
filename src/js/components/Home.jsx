@@ -12,7 +12,7 @@ class Home extends Component {
 
     render() {
         return (
-            <div id="headline-wrapper" className="section-wrapper">
+            <div id="home-wrapper" className="section-wrapper">
                 <h1>
                     Hello,<br />
                     I'm Tim,<br />

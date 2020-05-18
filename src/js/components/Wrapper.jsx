@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from "react";
-import Preloader from "./Preloader";
-import Canvas from "./Canvas";
-import { BrowserRouter, Route } from "react-router-dom";
-import AnimatedSwitch from "./AnimatedSwitch";
+import React, { Component, Fragment } from "react"
+import Preloader from "./Preloader"
+import Canvas from "./Canvas"
+import { BrowserRouter, Route } from "react-router-dom"
+import AnimatedSwitch from "./AnimatedSwitch"
 
 class Wrapper extends Component {
     constructor() {
@@ -10,12 +10,12 @@ class Wrapper extends Component {
 
         this.state = {
             progress: 0,
-            animations: ["headline"]
+            animations: ["home"]
         }
     }
 
     progressListener(event) {
-        let progress;
+        let progress
         switch (event.task) {
             case "generate":
                 progress = event.progress * .85
@@ -59,8 +59,8 @@ class Wrapper extends Component {
                     )} />
                 </BrowserRouter>
             </Fragment>
-        );
+        )
     }
 }
 
-export default Wrapper;
+export default Wrapper
