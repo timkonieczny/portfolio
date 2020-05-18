@@ -3,6 +3,11 @@ import ReactDOM from "react-dom"
 import React from "react"
 import "../scss/index.scss"
 import initIcons from "./icons"
+import ReactGA from "react-ga"
+import secret from "../../secret"
+
+ReactGA.initialize(secret.analytics.google);
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 initIcons()
 

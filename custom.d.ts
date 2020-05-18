@@ -15,3 +15,8 @@ declare module "worker-loader!*" {
 
     export default WebpackWorker;
 }
+
+declare module "easing-functions" {
+    const content: any;
+    export default content
+}

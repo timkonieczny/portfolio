@@ -27,14 +27,6 @@ module.exports = merge(baseConfig, {
             analyzerMode: "static",
             reportFilename: "../report.prod.html",
             openAnalyzer: false
-        }),
-        new HtmlWebpackPartialsPlugin([{
-            path: './src/google-tag-manager.html',
-            location: 'head',
-            priority: 'high',
-            options: {
-                gtm_id: Secret.analytics.google,
-            }
-        }])
+        })
     ],
 });
