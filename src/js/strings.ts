@@ -1,6 +1,6 @@
 import LocalizedStrings from "react-localization"
 
-const strings = new LocalizedStrings({
+export default new LocalizedStrings({
     en: {
         message: "get in touch",
         work: "work",
@@ -13,5 +13,3 @@ const strings = new LocalizedStrings({
         linkedin: "linkedin",
     }
 })
-
-export default strings
