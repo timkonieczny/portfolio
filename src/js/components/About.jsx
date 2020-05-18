@@ -1,9 +1,14 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import BackButton from "./BackButton";
+import React, { Component } from "react"
+import { Link } from "react-router-dom"
+import BackButton from "./BackButton"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import ReactGA from "react-ga"
 
 class About extends Component {
+
+    componentDidMount() {
+        ReactGA.pageview(window.location.pathname + window.location.search)
+    }
 
     render() {
         return (
@@ -60,8 +65,8 @@ class About extends Component {
                     </Link>
                 </div>
             </div>
-        );
+        )
     }
 }
 
-export default About;
+export default About

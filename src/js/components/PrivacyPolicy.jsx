@@ -1,8 +1,13 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 import * as Secret from "../../../secret"
-import BackButton from "./BackButton";
+import BackButton from "./BackButton"
+import ReactGA from "react-ga"
 
 class PrivacyPolicy extends Component {
+
+    componentDidMount() {
+        ReactGA.pageview(window.location.pathname + window.location.search)
+    }
 
     render() {
         return (
@@ -33,8 +38,8 @@ class PrivacyPolicy extends Component {
                     </p>
                 </div>
             </div>
-        );
+        )
     }
 }
 
-export default PrivacyPolicy;
+export default PrivacyPolicy

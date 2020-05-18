@@ -1,9 +1,14 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from "react"
+import { Link } from "react-router-dom"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import strings from "../strings";
+import strings from "../strings"
+import ReactGA from "react-ga"
 
 class Home extends Component {
+
+    componentDidMount() {
+        ReactGA.pageview(window.location.pathname + window.location.search)
+    }
 
     render() {
         return (
@@ -38,8 +43,8 @@ class Home extends Component {
                     <FontAwesomeIcon icon="long-arrow-alt-right" /><span>{strings.work}</span>
                 </Link>
             </div>
-        );
+        )
     }
 }
 
-export default Home;
+export default Home

@@ -1,14 +1,19 @@
-import React, { Component } from "react";
-import BackButton from "./BackButton";
-import WorkItem from "./WorkItem";
+import React, { Component } from "react"
+import BackButton from "./BackButton"
+import WorkItem from "./WorkItem"
 import image1 from "../../../assets/sample1.webp"
 import image2 from "../../../assets/sample2.webp"
 import image3 from "../../../assets/sample3.webp"
 import image4 from "../../../assets/sample4.webp"
 import image5 from "../../../assets/sample5.webp"
 import image6 from "../../../assets/sample6.webp"
+import ReactGA from "react-ga"
 
 class Work extends Component {
+
+    componentDidMount() {
+        ReactGA.pageview(window.location.pathname + window.location.search)
+    }
 
     render() {
         // TODO: add hyphens
@@ -43,8 +48,8 @@ class Work extends Component {
                     </div>
                 </div>
             </div>
-        );
+        )
     }
 }
 
-export default Work;
+export default Work

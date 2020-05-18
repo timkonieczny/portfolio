@@ -1,7 +1,8 @@
-import React, { Component } from "react";
-import MessageForm from "./MessageForm";
-import MessageConfirmation from "./MessageConfirmation";
-import BackButton from "./BackButton";
+import React, { Component } from "react"
+import MessageForm from "./MessageForm"
+import MessageConfirmation from "./MessageConfirmation"
+import BackButton from "./BackButton"
+import ReactGA from "react-ga"
 
 class Message extends Component {
 
@@ -12,6 +13,10 @@ class Message extends Component {
             showConfirmation: false,
             isAnimationRunning: false
         }
+    }
+
+    componentDidMount() {
+        ReactGA.pageview(window.location.pathname + window.location.search)
     }
 
     onMessageSent(requestStatus) {
@@ -36,8 +41,8 @@ class Message extends Component {
                     <MessageConfirmation show={this.state.showConfirmation} status={this.state.status} />
                 </div>
             </div>
-        );
+        )
     }
 }
 
-export default Message;
+export default Message
