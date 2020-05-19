@@ -12,13 +12,22 @@ import strings from "../strings"
 
 class Work extends Component {
 
+    onScroll(event) {
+        if (event.deltaX === 0)
+            event.currentTarget.scrollLeft += event.deltaY
+    }
+
     componentDidMount() {
         ReactGA.pageview(window.location.pathname + window.location.search)
+        this.grid.addEventListener("wheel", this.onScroll)
+    }
+
+    componentWillUnmount() {
+        this.grid.removeEventListener("wheel", this.onScroll)
     }
 
     render() {
         // TODO: add hyphens
-        // TODO: add horizontal wheel scrolling
 
         return (
             <div id="work-wrapper" className="section-wrapper">
@@ -27,7 +36,7 @@ class Work extends Component {
                 </div>
                 <div id="work-content">
                     <h2>{strings.work}.</h2>
-                    <div id="grid">
+                    <div id="grid" ref={element => this.grid = element}>
                         <WorkItem title="Project 1" description="Lorem ipsum dolor sit amet, consetetur sadipscing 
                             elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam"
                             tags={["tag1", "tag2", "tag3"]} large={true} image={image1} />
