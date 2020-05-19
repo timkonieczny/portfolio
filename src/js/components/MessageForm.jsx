@@ -1,6 +1,7 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 import { mailServerURL } from "../URLs"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import strings from "../strings"
 
 class MessageForm extends Component {
 
@@ -38,7 +39,7 @@ class MessageForm extends Component {
     }
 
     validateEmail(input, errorMessage) {
-        const regex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+        const regex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
         if (!input.value || !regex.test(input.value)) {
             this.setState({ errorMessage: errorMessage, errorType: input.name })
             input.onInvalidInputFocus = this.onInvalidInputFocus.bind(this)
@@ -62,7 +63,7 @@ class MessageForm extends Component {
                 return
             }
 
-            const request = new XMLHttpRequest();
+            const request = new XMLHttpRequest()
             let requestStatus = null
             request.addEventListener("readystatechange", event => {
                 const done = _ => {
@@ -87,8 +88,8 @@ class MessageForm extends Component {
                 }
             })
 
-            request.open("POST", mailServerURL);
-            request.send(new FormData(this.messageForm));
+            request.open("POST", mailServerURL)
+            request.send(new FormData(this.messageForm))
         }
     }
 
@@ -111,12 +112,12 @@ class MessageForm extends Component {
                     </span>
                 </div>
                 <div className="field-wrapper">
-                    <input placeholder="Subject" name="subject" autoComplete="off" tabIndex="4"
+                    <input placeholder={strings.subject} name="subject" autoComplete="off" tabIndex="4"
                         id="subject-input" className={`${this.state.errorType === "subject" ? "invalid" : ""}`}
                         ref={(element) => { this.subjectInput = element }} />
                 </div>
                 <div className="field-wrapper" id="textarea-wrapper">
-                    <textarea placeholder="Message" name="message" autoComplete="off" tabIndex="5"
+                    <textarea placeholder={strings.messageText} name="message" autoComplete="off" tabIndex="5"
                         id="message-input" className={`${this.state.errorType === "message" ? "invalid" : ""}`}
                         ref={(element) => { this.messageInput = element }}></textarea>
                 </div>
@@ -133,8 +134,8 @@ class MessageForm extends Component {
                 <input className="honey" placeholder="Website" name="website" tabIndex="-1" autoComplete="no" type="url" />
                 <input className="honey" placeholder="Email" name="email" tabIndex="-1" autoComplete="no" type="email" />
             </form>
-        );
+        )
     }
 }
 
-export default MessageForm;
+export default MessageForm

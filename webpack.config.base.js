@@ -84,7 +84,7 @@ module.exports = {
                 minifyJS: true,
                 useShortDoctype: true
             },
-            title: "Tim Konieczny | Freelance Developer",
+            title: "Tim Konieczny. Freelance Software Engineer.",
             type: "website",
             locale: "en_US",
             description: "I specialize in computer graphics, digital experiences and front-end development.",
@@ -92,7 +92,7 @@ module.exports = {
             imageType: "image/png",
             imageWidth: "1366",
             imageHeight: "715",
-            imageAlt: "A 3D scene. The headline reads: Hello, I'm Tim, Freelance Developer.",
+            imageAlt: "A 3D scene. The headline reads: Tim Konieczny. Freelance Software Engineer.",
             url: "https://timkonieczny.com/",
             twitter: "@timkonieczny",
             twitterCard: "summary_large_image",

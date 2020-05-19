@@ -59,11 +59,6 @@ class About extends Component {
                             <FontAwesomeIcon icon={["fab", "linkedin-in"]} />{strings.linkedin}
                         </a>
                     </div>
-                    <Link to="/privacypolicy" id="privacy-policy-button" className="animated link-with-icon"
-                        data-animation="privacypolicy" tabIndex="4" onClick={this.props.clickListener}>
-                        <FontAwesomeIcon icon="long-arrow-alt-right" />
-                        <span>{strings.privacy}</span>
-                    </Link>
                 </div>
             </div>
         )
