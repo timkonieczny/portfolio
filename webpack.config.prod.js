@@ -1,9 +1,7 @@
-const path = require("path");
-const merge = require('webpack-merge');
-const baseConfig = require('./webpack.config.base.js');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const HtmlWebpackPartialsPlugin = require('html-webpack-partials-plugin');
-const Secret = require("./secret.js");
+const path = require("path")
+const merge = require('webpack-merge')
+const baseConfig = require('./webpack.config.base.js')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = merge(baseConfig, {
     mode: "production",
@@ -20,7 +18,8 @@ module.exports = merge(baseConfig, {
     },
     devServer: {
         contentBase: path.join(__dirname, 'dist/prod'),
-        host: '0.0.0.0'
+        host: '0.0.0.0',
+        historyApiFallback: true
     },
     plugins: [
         new BundleAnalyzerPlugin({
@@ -29,4 +28,4 @@ module.exports = merge(baseConfig, {
             openAnalyzer: false
         })
     ],
-});
+})

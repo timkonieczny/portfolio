@@ -13,7 +13,8 @@ module.exports = merge(baseConfig, {
     },
     output: {
         filename: "bundle.js",
-        path: path.resolve(__dirname, "dist/dev")
+        path: path.resolve(__dirname, "dist/dev"),
+        publicPath: '/'
     },
     devtool: 'inline-source-map',
     devServer: {
