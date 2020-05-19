@@ -1,9 +1,8 @@
 import React, { Component } from "react"
-import { Link } from "react-router-dom"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import strings from "../strings"
 import ReactGA from "react-ga"
 import ArrowLink from "./ArrowLink"
+import MessageButtons from "./MessageButtons"
 
 class Home extends Component {
 
@@ -24,22 +23,13 @@ class Home extends Component {
                     <span className="tag">front-end</span>
                     <span className="tag">experiential</span>
                 </p>
-                <div className="message-buttons">
-                    <Link to="/message" className="button message-button animated" data-animation="message"
-                        tabIndex="1" onClick={this.props.clickListener}>
-                        {strings.message}
-                    </Link>
-                    <a className="button linkedin-button animated" data-animation="linkedin" tabIndex="2"
-                        onClick={this.props.clickListener} href="https://www.linkedin.com/in/tim-konieczny/">
-                        <FontAwesomeIcon icon={["fab", "linkedin-in"]} />{strings.linkedin}
-                    </a>
-                </div>
-                <ArrowLink to="/work" id="work-button" animation="work" tabIndex="3"
+                <MessageButtons clickListener={this.props.clickListener} startTabIndex={1} />
+                <ArrowLink to="/work" id="work-button" animation="work" tabIndex="4"
                     clickListener={this.props.clickListener} text={strings.work} />
                 <ArrowLink to="/about" id="about-button" animation="about"
-                    tabIndex="4" clickListener={this.props.clickListener} text={strings.services} />
+                    tabIndex="5" clickListener={this.props.clickListener} text={strings.services} />
                 <br />
-                <ArrowLink to="/privacypolicy" id="privacy-policy-button" animation="privacypolicy" tabIndex="5"
+                <ArrowLink to="/privacypolicy" id="privacy-policy-button" animation="privacypolicy" tabIndex="6"
                     clickListener={this.props.clickListener} text={strings.privacy} />
             </div>
         )

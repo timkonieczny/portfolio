@@ -9,13 +9,13 @@ import {
     faLongArrowAltLeft, faLongArrowAltRight, faPaperPlane,
     faRobot, faRedoAlt, faExclamationTriangle
 } from "@fortawesome/free-solid-svg-icons"
-import { faLinkedinIn } from "@fortawesome/free-brands-svg-icons"
+import { faXing, faLinkedin } from "@fortawesome/free-brands-svg-icons"
 
 
 
 ReactGA.initialize(secret.analytics.google);
 
-library.add(faLongArrowAltLeft, faLongArrowAltRight, faLinkedinIn,
+library.add(faLongArrowAltLeft, faLongArrowAltRight, faLinkedin, faXing,
     faPaperPlane, faExclamationTriangle, faRobot, faRedoAlt)
 
 window.addEventListener("load", (_) => {

@@ -16,7 +16,6 @@ class Camera {
         aboutIn: CameraAnimation
         privacyPolicyIn: CameraAnimation
         workIn: CameraAnimation
-        linkedInIn: CameraAnimation
         out: CameraAnimation
     }
     position: vec3
@@ -41,7 +40,6 @@ class Camera {
             aboutIn: new CameraAnimation(),
             privacyPolicyIn: new CameraAnimation(),
             workIn: new CameraAnimation(),
-            linkedInIn: new CameraAnimation(),
             out: new CameraAnimation(),
         }
 
@@ -65,9 +63,8 @@ class Camera {
         vec3.set(this.animation.workIn.to.up, -1, 0, 0)
         this.animation.workIn.time.function = Easing.Sinusoidal.InOut
 
-        vec3.set(this.animation.linkedInIn.to.position, 0, -40, 0)
-        vec3.set(this.animation.linkedInIn.to.up, 1, 0, 0)
-        this.animation.linkedInIn.time.function = Easing.Sinusoidal.InOut
+        // vec3.set(this.animation.linkedInIn.to.position, 0, -40, 0)
+        // vec3.set(this.animation.linkedInIn.to.up, 1, 0, 0)
 
         this.animation.out.time.function = Easing.Sinusoidal.InOut
 

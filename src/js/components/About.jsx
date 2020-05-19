@@ -1,9 +1,8 @@
 import React, { Component } from "react"
-import { Link } from "react-router-dom"
 import BackButton from "./BackButton"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ReactGA from "react-ga"
 import strings from "../strings"
+import MessageButtons from "./MessageButtons"
 
 class About extends Component {
 
@@ -49,16 +48,7 @@ class About extends Component {
                         <b>I’m always excited to tackle interesting projects and collaborate with
                         great people. Sounds good? Let’s have a chat!</b>
                     </p>
-                    <div className="message-buttons">
-                        <Link to="/message" className="button message-button" data-animation="message" tabIndex="2"
-                            onClick={this.props.clickListener}>
-                            {strings.message}
-                        </Link>
-                        <a className="button linkedin-button" data-animation="linkedin" tabIndex="3"
-                            href="https://www.linkedin.com/in/tim-konieczny/">
-                            <FontAwesomeIcon icon={["fab", "linkedin-in"]} />{strings.linkedin}
-                        </a>
-                    </div>
+                    <MessageButtons clickListener={this.props.clickListener} startTabIndex={1} />
                 </div>
             </div>
         )

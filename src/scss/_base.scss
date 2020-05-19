@@ -48,7 +48,7 @@ h3 {
     font-weight: 700;
     font-size: 0.8em;
     transition: background-color 0.5s, color 0.5s;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.2em;
     user-select: none;
     cursor: pointer;
     &:hover,
@@ -56,11 +56,23 @@ h3 {
         color: #ffffff;
         background-color: $color-accent;
     }
-    svg {
-        margin: 0 1em 0 0;
-    }
     @media #{$l} {
         padding: 1em;
+    }
+}
+
+.icon-button {
+    display: inline-block;
+    padding: 1em 0;
+    margin: 0 1em;
+    color: $color-accent;
+    font-size: 1.3em;
+    transition: color 0.5s;
+    user-select: none;
+    cursor: pointer;
+    &:hover,
+    &:focus {
+        color: #ffffff;
     }
 }
 
@@ -127,19 +139,14 @@ p {
 
 .message-buttons {
     padding: 1em 0;
-    .message-button {
-        margin-right: 1em;
-        @media #{$l} {
-            margin-right: 0;
-        }
-    }
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
     .button {
-        margin-top: 1em;
-        margin-bottom: 1em;
+        margin: 1em 1em 1em 0;
     }
     @media #{$l} {
-        display: flex;
-        flex-direction: column;
         padding: 0 0 1em 0;
     }
 }
