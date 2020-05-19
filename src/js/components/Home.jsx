@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import strings from "../strings"
 import ReactGA from "react-ga"
+import ArrowLink from "./ArrowLink"
 
 class Home extends Component {
 
@@ -30,23 +31,15 @@ class Home extends Component {
                     <a className="button linkedin-button animated" data-animation="linkedin" tabIndex="2"
                         onClick={this.props.clickListener} href="https://www.linkedin.com/in/tim-konieczny/">
                         <FontAwesomeIcon icon={["fab", "linkedin-in"]} />{strings.linkedin}
-
                     </a>
                 </div>
-                <Link to="/work" className="animated link-with-icon" id="work-button" data-animation="work" tabIndex="4"
-                    onClick={this.props.clickListener}>
-                    <FontAwesomeIcon icon="long-arrow-alt-right" /><span>{strings.work}</span>
-                </Link>
-                <Link to="/about" className="animated link-with-icon" id="about-button" data-animation="about"
-                    tabIndex="3" onClick={this.props.clickListener}>
-                    <FontAwesomeIcon icon="long-arrow-alt-right" /><span>{strings.services}</span>
-                </Link>
+                <ArrowLink to="/work" id="work-button" animation="work" tabIndex="3"
+                    clickListener={this.props.clickListener} text={strings.work} />
+                <ArrowLink to="/about" id="about-button" animation="about"
+                    tabIndex="4" clickListener={this.props.clickListener} text={strings.services} />
                 <br />
-                <Link to="/privacypolicy" id="privacy-policy-button" className="animated link-with-icon"
-                    data-animation="privacypolicy" tabIndex="4" onClick={this.props.clickListener}>
-                    <FontAwesomeIcon icon="long-arrow-alt-right" />
-                    <span>{strings.privacy}</span>
-                </Link>
+                <ArrowLink to="/privacypolicy" id="privacy-policy-button" animation="privacypolicy" tabIndex="5"
+                    clickListener={this.props.clickListener} text={strings.privacy} />
             </div>
         )
     }
