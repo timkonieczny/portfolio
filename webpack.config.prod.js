@@ -14,7 +14,6 @@ module.exports = merge(baseConfig, {
     output: {
         filename: "bundle.js",
         path: path.resolve(__dirname, "dist/prod"),
-        publicPath: '/'
     },
     devServer: {
         contentBase: path.join(__dirname, 'dist/prod'),

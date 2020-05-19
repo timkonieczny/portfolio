@@ -33,7 +33,6 @@ class AnimatedSwitch extends Component {
                     classNames={`${this.props.immutableLocation.action === "POP" ? "pop" : "push"}`}
                     appear={true}
                     onEnter={(_, isAppearing) => {
-                        console.log(isAppearing)
                         this.setState({ isAppearing: isAppearing })
                     }}
                     onEntered={_ => {

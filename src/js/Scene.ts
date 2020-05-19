@@ -7,7 +7,7 @@ import vertexShaderSource from "../glsl/vertex.glsl"
 import fragmentShaderSource from "../glsl/fragment.glsl"
 import Worker from "worker-loader!./renderer/HexagonGrid.worker";
 import Time from "./renderer/Time"
-import Loop from "./Loop"
+import Loop from "Loop"
 import Mesh from "./renderer/Mesh";
 
 class Scene extends Loop {

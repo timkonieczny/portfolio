@@ -20,3 +20,8 @@ declare module "easing-functions" {
     const content: any;
     export default content
 }
+
+declare module "Loop" {
+    const content: any;
+    export default content
+}

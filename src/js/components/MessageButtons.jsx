@@ -5,7 +5,6 @@ import strings from "../strings"
 
 class MessageButtons extends Component {
     render() {
-        console.log(this.props.startTabIndex)
         return (
             <div className="message-buttons">
                 <Link to="/message" className="button message-button animated" data-animation="message"

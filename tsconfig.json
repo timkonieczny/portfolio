@@ -9,6 +9,12 @@
         "sourceMap": true,
         "allowSyntheticDefaultImports": true,
         "downlevelIteration": true,
-        "moduleResolution": "node"
+        "moduleResolution": "node",
+        "baseUrl": "./",
+        // "paths": {
+        //     "Loop": [
+        //         "src/js/Loop.dev.ts"
+        //     ]
+        // }
     }
 }
