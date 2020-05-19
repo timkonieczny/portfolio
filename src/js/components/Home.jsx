@@ -20,8 +20,9 @@ class Home extends Component {
                     <span>Software Engineer.</span><br />
                 </h1>
                 <p id="subtitle">
-                    <span>3D</span><span className="separator">/</span><span>front-end</span><span
-                        className="separator">/</span><span>experiential</span>
+                    <span className="tag">3D</span>
+                    <span className="tag">front-end</span>
+                    <span className="tag">experiential</span>
                 </p>
                 <div className="message-buttons">
                     <Link to="/message" className="button message-button animated" data-animation="message"

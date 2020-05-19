@@ -4,20 +4,10 @@
     overflow: auto;
     #subtitle {
         margin: 1em 0;
-        span {
-            margin: 0 1em 0 0;
-            @media #{$l} {
-                margin: 0.2em 0;
-            }
-        }
-        .separator {
-            @media #{$l} {
-                display: none;
-            }
-        }
-        @media #{$l} {
-            display: flex;
-            flex-direction: column;
+        display: inline-block;
+        .tag {
+            font-size: 0.9em;
+            margin: 0 0.8em 0.8em 0;
         }
     }
 }

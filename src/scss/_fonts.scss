@@ -1,7 +1,7 @@
 @mixin font-face($font-family, $font-weight, $font-style, $src) {
     @font-face {
         font-family: $font-family;
-        src: url("../../assets/fonts/"+$src) format("truetype");
+        src: url("../../assets/fonts/" + $src) format("truetype");
         font-weight: $font-weight;
         font-style: $font-weight;
     }
@@ -14,6 +14,7 @@
 @include font-face("Montserrat", 500, normal, "Montserrat-Medium.ttf");
 // @include font-face("Montserrat", 600, normal, "Montserrat-SemiBold.ttf");
 @include font-face("Montserrat", 700, normal, "Montserrat-Bold.ttf");
+
 // @include font-face("Montserrat", 800, normal, "Montserrat-ExtraBold.ttf");
 // @include font-face("Montserrat", 900, normal, "Montserrat-Black.ttf");
 // @include font-face("Montserrat", 100, italic, "Montserrat-ThinItalic.ttf");
@@ -25,3 +26,10 @@
 // @include font-face("Montserrat", 700, italic, "Montserrat-BoldItalic.ttf");
 // @include font-face("Montserrat", 800, italic, "Montserrat-ExtraBoldItalic.ttf");
 // @include font-face("Montserrat", 900, italic, "Montserrat-BlackItalic.ttf");
+
+@include font-face("DM Mono", 300, normal, "DMMono-Light.ttf");
+// @include font-face("DM Mono", 300, italic, "DMMono-LightItalic.ttf");
+// @include font-face("DM Mono", 400, normal, "DMMono-Regular.ttf");
+// @include font-face("DM Mono", 400, italic, "DMMono-Italic.ttf");
+// @include font-face("DM Mono", 500, normal, "DMMono-Medium.ttf");
+// @include font-face("DM Mono", 500, italic, "DMMono-MediumItalic.ttf");

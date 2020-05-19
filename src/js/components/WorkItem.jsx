@@ -1,7 +1,8 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 
 class WorkItem extends Component {
     render() {
+        console.log(this.props.tags)
         return <div className={`cell ${this.props.large ? "large" : ""}`}>
             <div className="image" style={{ backgroundImage: `url(${this.props.image})` }}></div>
             <div className="content">
@@ -10,8 +11,8 @@ class WorkItem extends Component {
                 <a className="animated link-with-icon" href="#"><i
                     className="fas fa-long-arrow-alt-right"></i><span>browse</span></a>
                 <p className="tags">
-                    {this.props.tags.forEach(tag => {
-                        <span className="tag">{tag}</span>
+                    {this.props.tags.map((tag, i) => {
+                        return <span key={i} className="tag">{tag}</span>
                     })}
                 </p>
             </div>
