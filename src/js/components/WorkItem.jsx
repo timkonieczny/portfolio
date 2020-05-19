@@ -2,7 +2,6 @@ import React, { Component } from "react"
 
 class WorkItem extends Component {
     render() {
-        console.log(this.props.tags)
         return <div className={`cell ${this.props.large ? "large" : ""}`}>
             <div className="image" style={{ backgroundImage: `url(${this.props.image})` }}></div>
             <div className="content">
