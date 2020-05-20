@@ -1,0 +1,32 @@
+#preloader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 3;
+    opacity: 1;
+    visibility: visible;
+    transition: visibility 0s $preloader-duration, top 3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: $color-background-secondary;
+    p {
+        font-family: "DM Mono";
+        font-size: 0.7em;
+        margin: 0 0 1em 0;
+    }
+    .track {
+        width: 15em;
+        max-width: 90%;
+        height: 0.1em;
+        background: $color-background-primary;
+        .bar {
+            transition: width 200ms linear;
+            height: 100%;
+            background: $color-accent;
+        }
+    }
+}
