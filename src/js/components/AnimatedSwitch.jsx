@@ -29,7 +29,7 @@ class AnimatedSwitch extends Component {
                     { classNames: `${this.props.history.action === "POP" ? "pop" : "push"}` })}>
                 <CSSTransition
                     key={this.props.location.key}
-                    timeout={1000}
+                    timeout={4000}
                     classNames={`${this.props.immutableLocation.action === "POP" ? "pop" : "push"}`}
                     appear={true}
                     onEnter={(_, isAppearing) => {

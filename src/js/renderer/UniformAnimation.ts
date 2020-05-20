@@ -11,7 +11,7 @@ class UniformAnimation {
         this.uniform = uniform
 
         this.time = {
-            total: 5000,
+            total: 4000,
             elapsed: 0,
             function: (interpolator) => {
                 return interpolator

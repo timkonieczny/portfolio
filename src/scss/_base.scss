@@ -180,7 +180,10 @@ p {
     font-family: "DM Mono";
 }
 
-$slide-transition: 1s cubic-bezier(0.33, 1, 0.68, 1) left, 1s cubic-bezier(0.33, 1, 0.68, 1) opacity;
+$slide-transition-enter: left 2s cubic-bezier(0.33, 1, 0.68, 1) 2s,
+    opacity 2s cubic-bezier(0.33, 1, 0.68, 1) 2s;
+$slide-transition-exit: left 2s cubic-bezier(0.33, 1, 0.68, 1),
+    opacity 2s cubic-bezier(0.33, 1, 0.68, 1);
 
 .section-wrapper {
     position: absolute;
@@ -194,7 +197,7 @@ $slide-transition: 1s cubic-bezier(0.33, 1, 0.68, 1) left, 1s cubic-bezier(0.33,
     &.push-enter-active {
         left: 10%;
         opacity: 1;
-        transition: $slide-transition;
+        transition: $slide-transition-enter;
     }
     &.push-exit {
         left: 10%;
@@ -203,7 +206,7 @@ $slide-transition: 1s cubic-bezier(0.33, 1, 0.68, 1) left, 1s cubic-bezier(0.33,
     &.push-exit-active {
         left: -70%;
         opacity: 0;
-        transition: $slide-transition;
+        transition: $slide-transition-exit;
     }
     &.pop-enter {
         left: -70%;
@@ -212,7 +215,7 @@ $slide-transition: 1s cubic-bezier(0.33, 1, 0.68, 1) left, 1s cubic-bezier(0.33,
     &.pop-enter-active {
         left: 10%;
         opacity: 1;
-        transition: $slide-transition;
+        transition: $slide-transition-enter;
     }
     &.pop-exit {
         left: 10%;
@@ -221,7 +224,7 @@ $slide-transition: 1s cubic-bezier(0.33, 1, 0.68, 1) left, 1s cubic-bezier(0.33,
     &.pop-exit-active {
         left: 90%;
         opacity: 0;
-        transition: $slide-transition;
+        transition: $slide-transition-exit;
     }
 }
 
