@@ -7,7 +7,7 @@ import secret from "../../secret"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import {
     faLongArrowAltLeft, faLongArrowAltRight, faPaperPlane,
-    faRobot, faRedoAlt, faExclamationTriangle
+    faRobot, faRedoAlt, faExclamationTriangle, faMapMarkerAlt
 } from "@fortawesome/free-solid-svg-icons"
 import { faXing, faLinkedin } from "@fortawesome/free-brands-svg-icons"
 
@@ -16,7 +16,7 @@ import { faXing, faLinkedin } from "@fortawesome/free-brands-svg-icons"
 ReactGA.initialize(secret.analytics.google);
 
 library.add(faLongArrowAltLeft, faLongArrowAltRight, faLinkedin, faXing,
-    faPaperPlane, faExclamationTriangle, faRobot, faRedoAlt)
+    faPaperPlane, faExclamationTriangle, faRobot, faRedoAlt, faMapMarkerAlt)
 
 window.addEventListener("load", (_) => {
     const app = document.querySelector("#app")

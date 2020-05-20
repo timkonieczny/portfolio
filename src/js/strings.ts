@@ -17,7 +17,8 @@ export default new LocalizedStrings({
         privacy: "Privacy statement and legal information",
         privacyStatement: "Privacy statement",
         privacyStatementText: "This website uses Google Analytics, a service which transmits website traffic data to Google servers. This instance of Google Analytics does not identify individual users or associate your IP address with any other data held by Google. Reports provided by Google Analytics are used to help understand website traffic and webpage usage. You may opt out of this tracking at any time by activating the \"Do Not Track\" setting in your browser.",
-        legalInfo: "Legal information"
+        legalInfo: "Legal information",
+        location: "Leipzig, Germany"
     },
     de: {
         message: "Projekt anfragen",
@@ -35,6 +36,7 @@ export default new LocalizedStrings({
         privacy: "Datenschutz und Impressum",
         privacyStatement: "Datenschutzhinweis",
         privacyStatementText: "Diese Website nutzt Google Analytics, ein Dienst, der Trafficdaten zur Analyse an Google-Server übermittelt. Diese Instanz von Google Analytics identifiziert keine individuellen Nutzer und assoziiert deine IP-Adresse nicht mit Daten, die Google über dich hält. Die Berichte, die von Google Analytics generiert werden, werden genutzt um den Traffic und die Nutzung dieser Website besser zu verstehen. Du können die Erfassung der Daten jederzeit beenden indem du die \"Do Not Track\"-Option deines Browsers aktivierst.",
-        legalInfo: "Impressum"
+        legalInfo: "Impressum",
+        location: "Leipzig"
     }
 })

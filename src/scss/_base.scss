@@ -178,6 +178,9 @@ p {
     margin: 0 0.2em;
     display: inline-block;
     font-family: "DM Mono";
+    svg {
+        margin: 0 0.8em 0 0;
+    }
 }
 
 $slide-transition-enter: left 2s cubic-bezier(0.33, 1, 0.68, 1) 2s,
