@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { TransitionGroup, CSSTransition } from "react-transition-group"
 import { Switch, Route, withRouter } from "react-router-dom"
-import About from "./About"
+import Services from "./Services"
 import Message from "./Message"
 import PrivacyPolicy from "./PrivacyPolicy"
 import Work from "./Work"
@@ -42,8 +42,8 @@ class AnimatedSwitch extends Component {
                         this.setState({ enableWebGLAnimations: false })
                     }}>
                     <Switch location={this.props.location}>
-                        <Route path="/about">
-                            <About clickListener={this.props.onButtonClick}
+                        <Route path="/services">
+                            <Services clickListener={this.props.onButtonClick}
                                 isAppearing={this.state.isAppearing} />
                         </Route>
                         <Route path="/message">

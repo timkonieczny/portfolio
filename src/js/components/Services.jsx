@@ -4,7 +4,7 @@ import ReactGA from "react-ga"
 import strings from "../strings"
 import MessageButtons from "./MessageButtons"
 
-class About extends Component {
+class Services extends Component {
 
     componentDidMount() {
         ReactGA.pageview(window.location.pathname + window.location.search)
@@ -12,12 +12,12 @@ class About extends Component {
 
     render() {
         return (
-            <div id="about-wrapper" className="section-wrapper">
+            <div id="services-wrapper" className="section-wrapper">
                 <div>
                     <BackButton hasHistory={!this.props.isAppearing} mouseEnterListener={this.props.mouseEnterListener}
                         mouseLeaveListener={this.props.mouseLeaveListener} clickListener={this.props.clickListener} />
                 </div>
-                <div id="about-content">
+                <div id="services-content">
                     <h2>{strings.services}.</h2>
                     <p lang="en">
                         {/* Ich helfe Ihnen gerne bei der Umsetzung von Webprojekten fürs 21. Jahrhundert! */}
@@ -89,4 +89,4 @@ class About extends Component {
     }
 }
 
-export default About
+export default Services

@@ -26,7 +26,7 @@ class Home extends Component {
                 <MessageButtons clickListener={this.props.clickListener} startTabIndex={1} />
                 <ArrowLink to="/work" id="work-button" animation="work" tabIndex="4"
                     clickListener={this.props.clickListener} text={strings.work} />
-                <ArrowLink to="/about" id="about-button" animation="about"
+                <ArrowLink to="/services" id="services-button" animation="services"
                     tabIndex="5" clickListener={this.props.clickListener} text={strings.services} />
                 <br />
                 <ArrowLink to="/privacypolicy" id="privacy-policy-button" animation="privacypolicy" tabIndex="6"
