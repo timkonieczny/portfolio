@@ -16,6 +16,7 @@ class Camera {
         servicesIn: CameraAnimation
         privacyPolicyIn: CameraAnimation
         workIn: CameraAnimation
+        aboutIn: CameraAnimation
         out: CameraAnimation
     }
     position: vec3
@@ -40,6 +41,7 @@ class Camera {
             servicesIn: new CameraAnimation(),
             privacyPolicyIn: new CameraAnimation(),
             workIn: new CameraAnimation(),
+            aboutIn: new CameraAnimation(),
             out: new CameraAnimation(),
         }
 
@@ -63,8 +65,9 @@ class Camera {
         vec3.set(this.animation.workIn.to.up, -1, 0, 0)
         this.animation.workIn.time.function = Easing.Sinusoidal.InOut
 
-        // vec3.set(this.animation.linkedInIn.to.position, 0, -40, 0)
-        // vec3.set(this.animation.linkedInIn.to.up, 1, 0, 0)
+        vec3.set(this.animation.aboutIn.to.position, 0, -40, 0)
+        vec3.set(this.animation.aboutIn.to.up, 1, 0, 0)
+        this.animation.aboutIn.time.function = Easing.Sinusoidal.InOut
 
         this.animation.out.time.function = Easing.Sinusoidal.InOut
 
@@ -100,8 +103,8 @@ class Camera {
                 return this.animation.privacyPolicyIn
             case "work":
                 return this.animation.workIn
-            case "linkedin":
-                return this.animation.workIn
+            case "about":
+                return this.animation.aboutIn
             default:
                 return this.animation.homeIn
         }

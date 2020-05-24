@@ -28,8 +28,10 @@ class Home extends Component {
                     clickListener={this.props.clickListener} text={strings.work} />
                 <ArrowLink to="/services" id="services-button" animation="services"
                     tabIndex="5" clickListener={this.props.clickListener} text={strings.services} />
+                <ArrowLink to="/about" id="about-button" animation="about"
+                    tabIndex="6" clickListener={this.props.clickListener} text={strings.about} />
                 <br />
-                <ArrowLink to="/privacypolicy" id="privacy-policy-button" animation="privacypolicy" tabIndex="6"
+                <ArrowLink to="/privacypolicy" id="privacy-policy-button" animation="privacypolicy" tabIndex="7"
                     clickListener={this.props.clickListener} text={strings.privacy} />
             </div>
         )

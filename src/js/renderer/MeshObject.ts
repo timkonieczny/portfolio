@@ -45,6 +45,7 @@ class MeshObject {
         home: UniformAnimation
         privacyPolicy: UniformAnimation
         work: UniformAnimation
+        about: UniformAnimation
         wave: UniformAnimation
     }
     listeners: Map<string, ((...args: any[]) => void)[]>
@@ -213,6 +214,7 @@ class MeshObject {
             home: new UniformAnimation(this.displacementYUniform),
             privacyPolicy: new UniformAnimation(this.displacementYUniform),
             work: new UniformAnimation(this.displacementYUniform),
+            about: new UniformAnimation(this.displacementYUniform),
             wave: new UniformAnimation(this.timeUniform),
         }
         this.animation.start.time.total = 5000
@@ -228,6 +230,7 @@ class MeshObject {
         this.animation.home.time.function = interpolationFunction
         this.animation.privacyPolicy.time.function = interpolationFunction
         this.animation.work.time.function = interpolationFunction
+        this.animation.about.time.function = interpolationFunction
 
         this.animation.wave.callback = (tslf) => {
             const animation = this.animation.wave

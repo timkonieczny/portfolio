@@ -6,6 +6,7 @@ import Message from "./Message"
 import PrivacyPolicy from "./PrivacyPolicy"
 import Work from "./Work"
 import Home from "./Home"
+import About from "./About"
 
 class AnimatedSwitch extends Component {
 
@@ -56,6 +57,10 @@ class AnimatedSwitch extends Component {
                         </Route>
                         <Route path="/work">
                             <Work clickListener={this.props.onButtonClick}
+                                isAppearing={this.state.isAppearing} />
+                        </Route>
+                        <Route path="/about">
+                            <About clickListener={this.props.onButtonClick}
                                 isAppearing={this.state.isAppearing} />
                         </Route>
                         <Route path="/">
