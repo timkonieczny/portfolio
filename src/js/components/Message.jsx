@@ -3,7 +3,7 @@ import MessageForm from "./MessageForm"
 import MessageConfirmation from "./MessageConfirmation"
 import BackButton from "./BackButton"
 import ReactGA from "react-ga"
-import strings from "../strings"
+import { message } from "../strings"
 
 class Message extends Component {
 
@@ -36,7 +36,7 @@ class Message extends Component {
                 </div>
                 <div id="message-form-wrapper"
                     style={!this.state.showConfirmation && this.state.isAnimationRunning ? { overflow: "visible" } : {}}>
-                    <h2>{strings.message}.</h2>
+                    <h2>{message.headline}.</h2>
                     <MessageForm onMessageSent={this.onMessageSent.bind(this)}
                         onAnimationStarted={this.onAnimationStarted.bind(this)} />
                     <MessageConfirmation show={this.state.showConfirmation} status={this.state.status} />

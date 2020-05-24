@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import * as Secret from "../../../secret"
 import BackButton from "./BackButton"
 import ReactGA from "react-ga"
-import strings from "../strings"
+import { privacy } from "../strings"
 
 class PrivacyPolicy extends Component {
 
@@ -17,10 +17,10 @@ class PrivacyPolicy extends Component {
                     <BackButton hasHistory={!this.props.isAppearing} clickListener={this.props.clickListener} />
                 </div>
                 <div id="privacy-policy-content">
-                    <h2>{strings.privacy}</h2>
-                    <h3>{strings.privacyStatement}</h3>
-                    <p lang="en">{strings.privacyStatementText}</p>
-                    <h3>{strings.legalInfo}</h3>
+                    <h2>{privacy.headline}</h2>
+                    <h3>{privacy.privacyStatement}</h3>
+                    <p lang="en">{privacy.privacyStatementText}</p>
+                    <h3>{privacy.legalInfo}</h3>
                     <p lang="en">
                         Tim Konieczny<br />
                         <span className="reverse">{Secret.street}</span><br />

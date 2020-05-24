@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { mailServerURL } from "../URLs"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import strings from "../strings"
+import { message } from "../strings"
 
 class MessageForm extends Component {
 
@@ -112,12 +112,12 @@ class MessageForm extends Component {
                     </span>
                 </div>
                 <div className="field-wrapper">
-                    <input placeholder={strings.subject} name="subject" autoComplete="off" tabIndex="4"
+                    <input placeholder={message.subject} name="subject" autoComplete="off" tabIndex="4"
                         id="subject-input" className={`${this.state.errorType === "subject" ? "invalid" : ""}`}
                         ref={(element) => { this.subjectInput = element }} />
                 </div>
                 <div className="field-wrapper" id="textarea-wrapper">
-                    <textarea placeholder={strings.messageText} name="message" autoComplete="off" tabIndex="5"
+                    <textarea placeholder={message.messageText} name="message" autoComplete="off" tabIndex="5"
                         id="message-input" className={`${this.state.errorType === "message" ? "invalid" : ""}`}
                         ref={(element) => { this.messageInput = element }}></textarea>
                 </div>

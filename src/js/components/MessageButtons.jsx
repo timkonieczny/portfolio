@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Link } from "react-router-dom"
-import strings from "../strings"
+import { home } from "../strings"
 
 class MessageButtons extends Component {
     render() {
@@ -9,7 +9,7 @@ class MessageButtons extends Component {
             <div className="message-buttons">
                 <Link to="/message" className="button message-button animated" data-animation="message"
                     tabIndex={this.props.startTabIndex} onClick={this.props.clickListener}>
-                    {strings.message}
+                    {home.message}
                 </Link>
                 <span>
                     <a className="icon-button animated" tabIndex={this.props.startTabIndex + 1}

@@ -8,7 +8,7 @@ import image4 from "../../../assets/sample4.webp"
 import image5 from "../../../assets/sample5.webp"
 import image6 from "../../../assets/sample6.webp"
 import ReactGA from "react-ga"
-import strings from "../strings"
+import { work } from "../strings"
 
 class Work extends Component {
 
@@ -35,7 +35,7 @@ class Work extends Component {
                     <BackButton hasHistory={!this.props.isAppearing} clickListener={this.props.clickListener} />
                 </div>
                 <div id="work-content">
-                    <h2>{strings.work}.</h2>
+                    <h2>{work.headline}.</h2>
                     <div id="grid" ref={element => this.grid = element}>
                         <WorkItem title="Project 1" description="Lorem ipsum dolor sit amet, consetetur sadipscing 
                             elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam"
