@@ -3,7 +3,12 @@ import BackButton from "./BackButton"
 import ReactGA from "react-ga"
 import { about } from "../strings"
 
-class About extends Component {
+type Props = {
+    isAppearing: boolean,
+    clickListener: (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void
+}
+
+class About extends Component<Props> {
 
     componentDidMount() {
         ReactGA.pageview(window.location.pathname + window.location.search)
