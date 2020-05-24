@@ -4,7 +4,7 @@ import BackButton from "./BackButton"
 import ReactGA from "react-ga"
 import { privacy } from "../strings"
 
-class PrivacyPolicy extends Component {
+class Privacy extends Component {
 
     componentDidMount() {
         ReactGA.pageview(window.location.pathname + window.location.search)
@@ -35,4 +35,4 @@ class PrivacyPolicy extends Component {
     }
 }
 
-export default PrivacyPolicy
+export default Privacy

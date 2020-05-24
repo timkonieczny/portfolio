@@ -14,7 +14,7 @@ class Camera {
         homeIn: CameraAnimation
         messageIn: CameraAnimation
         servicesIn: CameraAnimation
-        privacyPolicyIn: CameraAnimation
+        privacyIn: CameraAnimation
         workIn: CameraAnimation
         aboutIn: CameraAnimation
         out: CameraAnimation
@@ -39,7 +39,7 @@ class Camera {
             homeIn: new CameraAnimation(),
             messageIn: new CameraAnimation(),
             servicesIn: new CameraAnimation(),
-            privacyPolicyIn: new CameraAnimation(),
+            privacyIn: new CameraAnimation(),
             workIn: new CameraAnimation(),
             aboutIn: new CameraAnimation(),
             out: new CameraAnimation(),
@@ -56,9 +56,9 @@ class Camera {
         vec3.set(this.animation.servicesIn.to.lookAt, -40, -10, -30)
         this.animation.servicesIn.time.function = Easing.Sinusoidal.InOut
 
-        vec3.set(this.animation.privacyPolicyIn.to.position, 0, 40, 0)
-        vec3.set(this.animation.privacyPolicyIn.to.up, 0, 0, 1)
-        this.animation.privacyPolicyIn.time.function = Easing.Sinusoidal.InOut
+        vec3.set(this.animation.privacyIn.to.position, 0, 40, 0)
+        vec3.set(this.animation.privacyIn.to.up, 0, 0, 1)
+        this.animation.privacyIn.time.function = Easing.Sinusoidal.InOut
 
         vec3.set(this.animation.workIn.to.position, 0, 15, 40)
         vec3.set(this.animation.workIn.to.lookAt, 0, -10, 0)
@@ -99,8 +99,8 @@ class Camera {
                 return this.animation.messageIn
             case "services":
                 return this.animation.servicesIn
-            case "privacypolicy":
-                return this.animation.privacyPolicyIn
+            case "privacy":
+                return this.animation.privacyIn
             case "work":
                 return this.animation.workIn
             case "about":

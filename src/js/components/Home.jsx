@@ -31,7 +31,7 @@ class Home extends Component {
                 <ArrowLink to="/about" id="about-button" animation="about"
                     tabIndex="6" clickListener={this.props.clickListener} text={home.about} />
                 <br />
-                <ArrowLink to="/privacypolicy" id="privacy-policy-button" animation="privacypolicy" tabIndex="7"
+                <ArrowLink to="/privacy" id="privacy-policy-button" animation="privacy" tabIndex="7"
                     clickListener={this.props.clickListener} text={home.privacy} />
             </div>
         )

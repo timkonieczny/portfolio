@@ -43,7 +43,7 @@ class MeshObject {
         message: UniformAnimation
         services: UniformAnimation
         home: UniformAnimation
-        privacyPolicy: UniformAnimation
+        privacy: UniformAnimation
         work: UniformAnimation
         about: UniformAnimation
         wave: UniformAnimation
@@ -212,7 +212,7 @@ class MeshObject {
             message: new UniformAnimation(this.displacementYUniform),
             services: new UniformAnimation(this.displacementYUniform),
             home: new UniformAnimation(this.displacementYUniform),
-            privacyPolicy: new UniformAnimation(this.displacementYUniform),
+            privacy: new UniformAnimation(this.displacementYUniform),
             work: new UniformAnimation(this.displacementYUniform),
             about: new UniformAnimation(this.displacementYUniform),
             wave: new UniformAnimation(this.timeUniform),
@@ -228,7 +228,7 @@ class MeshObject {
         this.animation.message.time.function = interpolationFunction
         this.animation.services.time.function = interpolationFunction
         this.animation.home.time.function = interpolationFunction
-        this.animation.privacyPolicy.time.function = interpolationFunction
+        this.animation.privacy.time.function = interpolationFunction
         this.animation.work.time.function = interpolationFunction
         this.animation.about.time.function = interpolationFunction
 
@@ -250,8 +250,8 @@ class MeshObject {
                 return this.animation.message
             case "services":
                 return this.animation.services
-            case "privacypolicy":
-                return this.animation.privacyPolicy
+            case "privacy":
+                return this.animation.privacy
             case "work":
                 return this.animation.work
             default:

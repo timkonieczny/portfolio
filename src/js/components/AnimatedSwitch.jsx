@@ -3,7 +3,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group"
 import { Switch, Route, withRouter } from "react-router-dom"
 import Services from "./Services"
 import Message from "./Message"
-import PrivacyPolicy from "./PrivacyPolicy"
+import Privacy from "./Privacy"
 import Work from "./Work"
 import Home from "./Home"
 import About from "./About"
@@ -51,8 +51,8 @@ class AnimatedSwitch extends Component {
                             <Message clickListener={this.props.onButtonClick}
                                 isAppearing={this.state.isAppearing} />
                         </Route>
-                        <Route path="/privacypolicy">
-                            <PrivacyPolicy clickListener={this.props.onButtonClick}
+                        <Route path="/privacy">
+                            <Privacy clickListener={this.props.onButtonClick}
                                 isAppearing={this.state.isAppearing} />
                         </Route>
                         <Route path="/work">
