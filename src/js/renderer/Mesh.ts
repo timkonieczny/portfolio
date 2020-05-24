@@ -22,7 +22,7 @@ class Mesh {
             interleavedArray.push(...geometry.interleavedArray)
 
             const now = Date.now()
-            if (now - startTime >= 200) {
+            if (now - startTime >= 50) {
                 startTime = now
                 this.progressEventListeners.forEach((listener) => {
                     listener({

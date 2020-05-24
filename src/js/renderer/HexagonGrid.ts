@@ -76,7 +76,7 @@ class HexagonGrid extends Mesh {
 
                 const now = Date.now()
                 this.progressCurrentElement++
-                if (now - this.startTime >= 200) {
+                if (now - this.startTime >= 50) {
                     this.startTime = now
                     this.progressEventListeners.forEach((listener) => {
                         listener({
