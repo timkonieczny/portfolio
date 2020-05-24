@@ -11,14 +11,16 @@ class MessageButtons extends Component {
                     tabIndex={this.props.startTabIndex} onClick={this.props.clickListener}>
                     {strings.message}
                 </Link>
-                <a className="icon-button animated" tabIndex={this.props.startTabIndex + 1}
-                    href="https://www.linkedin.com/in/tim-konieczny/">
-                    <FontAwesomeIcon icon={["fab", "linkedin"]} />
-                </a>
-                <a className="icon-button animated" tabIndex={this.props.startTabIndex + 2}
-                    href="https://www.xing.com/profile/Tim_Konieczny/">
-                    <FontAwesomeIcon icon={["fab", "xing"]} />
-                </a>
+                <span>
+                    <a className="icon-button animated" tabIndex={this.props.startTabIndex + 1}
+                        href="https://www.linkedin.com/in/tim-konieczny/">
+                        <FontAwesomeIcon icon={["fab", "linkedin"]} />
+                    </a>
+                    <a className="icon-button animated" tabIndex={this.props.startTabIndex + 2}
+                        href="https://www.xing.com/profile/Tim_Konieczny/">
+                        <FontAwesomeIcon icon={["fab", "xing"]} />
+                    </a>
+                </span>
             </div>
         )
     }

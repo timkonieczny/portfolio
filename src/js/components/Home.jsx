@@ -22,7 +22,6 @@ class Home extends Component {
                     <span className="tag"><FontAwesomeIcon icon="map-marker-alt" />{strings.location}</span>
                     <span className="tag">3D</span>
                     <span className="tag">front-end</span>
-                    <span className="tag">experiential</span>
                 </p>
                 <MessageButtons clickListener={this.props.clickListener} startTabIndex={1} />
                 <ArrowLink to="/work" id="work-button" animation="work" tabIndex="4"
