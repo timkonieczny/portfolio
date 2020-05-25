@@ -40,7 +40,7 @@ module.exports = {
                 ]
             },
             {
-                test: /\.webp$/,
+                test: /\.(webp|jpg)$/,
                 use: [
                     'file-loader'
                 ]

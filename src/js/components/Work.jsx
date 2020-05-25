@@ -1,12 +1,18 @@
 import React, { Component } from "react"
 import BackButton from "./BackButton"
 import WorkItem from "./WorkItem"
-import image1 from "../../../assets/sample1.webp"
-import image2 from "../../../assets/sample2.webp"
-import image3 from "../../../assets/sample3.webp"
-import image4 from "../../../assets/sample4.webp"
-import image5 from "../../../assets/sample5.webp"
-import image6 from "../../../assets/sample6.webp"
+import webp1 from "../../../assets/sample1.webp"
+import webp2 from "../../../assets/sample2.webp"
+import webp3 from "../../../assets/sample3.webp"
+import webp4 from "../../../assets/sample4.webp"
+import webp5 from "../../../assets/sample5.webp"
+import webp6 from "../../../assets/sample6.webp"
+import jpg1 from "../../../assets/sample1.jpg"
+import jpg2 from "../../../assets/sample2.jpg"
+import jpg3 from "../../../assets/sample3.jpg"
+import jpg4 from "../../../assets/sample4.jpg"
+import jpg5 from "../../../assets/sample5.jpg"
+import jpg6 from "../../../assets/sample6.jpg"
 import ReactGA from "react-ga"
 import { work } from "../strings"
 
@@ -39,22 +45,22 @@ class Work extends Component {
                     <div id="grid" ref={element => this.grid = element}>
                         <WorkItem title="Project 1" description="Lorem ipsum dolor sit amet, consetetur sadipscing 
                             elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam"
-                            tags={["tag1", "tag2", "tag3"]} large={true} image={image1} />
+                            tags={["tag1", "tag2", "tag3"]} large={true} webp={webp1} jpg={jpg1} />
                         <WorkItem title="Project 2" description="Lorem ipsum dolor sit amet, consetetur sadipscing 
                             elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam"
-                            tags={["tag1", "tag2", "tag3"]} large={false} image={image2} />
+                            tags={["tag1", "tag2", "tag3"]} large={false} webp={webp2} jpg={jpg2} />
                         <WorkItem title="Project 3" description="Lorem ipsum dolor sit amet, consetetur sadipscing 
                             elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam"
-                            tags={["tag1", "tag2", "tag3"]} large={false} image={image3} />
+                            tags={["tag1", "tag2", "tag3"]} large={false} webp={webp3} jpg={jpg3} />
                         <WorkItem title="Project 4" description="Lorem ipsum dolor sit amet, consetetur sadipscing 
                             elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam"
-                            tags={["tag1", "tag2", "tag3"]} large={false} image={image4} />
+                            tags={["tag1", "tag2", "tag3"]} large={false} webp={webp4} jpg={jpg4} />
                         <WorkItem title="Project 5" description="Lorem ipsum dolor sit amet, consetetur sadipscing 
                             elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam"
-                            tags={["tag1", "tag2", "tag3"]} large={false} image={image5} />
+                            tags={["tag1", "tag2", "tag3"]} large={false} webp={webp5} jpg={jpg5} />
                         <WorkItem title="Project 6" description="Lorem ipsum dolor sit amet, consetetur sadipscing 
                             elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam"
-                            tags={["tag1", "tag2", "tag3"]} large={true} image={image6} />
+                            tags={["tag1", "tag2", "tag3"]} large={true} webp={webp6} jpg={jpg6} />
                     </div>
                 </div>
             </div>

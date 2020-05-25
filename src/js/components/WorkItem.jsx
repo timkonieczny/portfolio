@@ -3,7 +3,10 @@ import React, { Component } from "react"
 class WorkItem extends Component {
     render() {
         return <div className={`cell ${this.props.large ? "large" : ""}`}>
-            <div className="image" style={{ backgroundImage: `url(${this.props.image})` }}></div>
+            <picture>
+                <source srcSet={this.props.webp} type="image/webp" />
+                <img src={this.props.jpg} />
+            </picture>
             <div className="content">
                 <h3>{this.props.title}</h3>
                 <p>{this.props.description}</p>
