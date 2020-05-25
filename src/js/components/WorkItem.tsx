@@ -1,7 +1,16 @@
 import React, { Component } from "react"
 import ArrowLinkExt from "./ArrowLinkExt"
 
-class WorkItem extends Component {
+type Props = {
+    large: boolean,
+    webp: string,
+    jpg: string,
+    tags: string[],
+    title: string,
+    description: string
+}
+
+class WorkItem extends Component<Props> {
     render() {
         return <div className={`cell ${this.props.large ? "large" : ""}`}>
             <picture>
