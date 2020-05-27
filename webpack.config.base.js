@@ -1,12 +1,14 @@
 const CopyPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
+const path = require('path')
 
 // TODO: Add Hot Component Replacement Plugin
 // TODO: Insert head nodes via React Helmet? https://css-tricks.com/its-all-in-the-head-managing-the-document-head-of-a-react-powered-site-with-react-helmet/
 
 module.exports = {
     entry: ["./src/js/index.tsx"],
+    context: path.resolve(__dirname, "."),
     output: {
         publicPath: '/'
     },
