@@ -1,10 +1,20 @@
 import React, { Component } from "react";
 import Scene from "../Scene"
 
-class Canvas extends Component {
+type Props = {
+    onProgress: (...args: any[]) => void
+}
 
-    constructor() {
-        super()
+type State = {
+    isRendering: boolean
+}
+
+class Canvas extends Component<Props, State> {
+    scene: Scene;
+    canvas: HTMLCanvasElement;
+
+    constructor(props: Props) {
+        super(props)
         this.state = {
             isRendering: false
         }
@@ -17,13 +27,13 @@ class Canvas extends Component {
             this.scene = new Scene()
             this.scene.addEventListener("progress", this.props.onProgress)
             this.scene.addEventListener("initComplete", this.props.onProgress)
-            await this.scene.initialize(canvas)
+            await this.scene.initialize(this.canvas)
             this.scene.render()
         }
     }
 
     render() {
-        return <canvas id="canvas"></canvas>
+        return <canvas id="canvas" ref={element => { this.canvas = element }}></canvas>
     }
 }
 
