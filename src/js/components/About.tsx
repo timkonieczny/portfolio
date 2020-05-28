@@ -25,8 +25,7 @@ class About extends Component<Props> {
                 </div>
                 <div id="about-content">
                     <h2>{about.headline}.</h2>
-                    {/* TODO: switch lang tag based on language */}
-                    <p lang="en">{about.aboutText1}</p>
+                    <p>{about.aboutText1}</p>
                     <div className="picture-buttons">
                         <picture>
                             <source srcSet={webp} type="image/webp" />
@@ -34,9 +33,9 @@ class About extends Component<Props> {
                         </picture>
                         <MessageButtons clickListener={this.props.clickListener} startTabIndex={1} />
                     </div>
-                    <p lang="en">{about.aboutText2}</p>
-                    <p lang="en">{about.aboutText3}</p>
-                    <p lang="en">{about.aboutText4}</p>
+                    <p>{about.aboutText2}</p>
+                    <p>{about.aboutText3}</p>
+                    <p>{about.aboutText4}</p>
                 </div>
             </div>
         )

@@ -10,6 +10,7 @@ import {
     faRobot, faRedoAlt, faExclamationTriangle, faMapMarkerAlt
 } from "@fortawesome/free-solid-svg-icons"
 import { faXing, faLinkedin } from "@fortawesome/free-brands-svg-icons"
+import { home } from "./strings"
 
 
 
@@ -19,6 +20,7 @@ library.add(faLongArrowAltLeft, faLongArrowAltRight, faLinkedin, faXing,
     faPaperPlane, faExclamationTriangle, faRobot, faRedoAlt, faMapMarkerAlt)
 
 window.addEventListener("load", (_) => {
-    const app = document.querySelector("#app")
+    const app: HTMLElement = document.querySelector("#app")
+    app.lang = home.getLanguage()
     app ? ReactDOM.render(<Wrapper />, app) : false
 })

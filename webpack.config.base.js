@@ -114,7 +114,7 @@ module.exports = {
                 developerName: "Tim Konieczny",
                 developerURL: "Tim Konieczny",
                 dir: "auto",
-                lang: "en-US",
+                lang: "en",
                 background: "#1A1A1A",
                 theme_color: "#000",
                 appleStatusBarStyle: "black-translucent",

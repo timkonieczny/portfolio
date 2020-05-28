@@ -12,16 +12,16 @@ class Privacy extends Component {
 
     render() {
         return (
-            <div id="privacy-policy-wrapper" className="section-wrapper">
+            <div id="privacy-policy-wrapper" className="section-wrapper" >
                 <div>
                     <BackButton hasHistory={!this.props.isAppearing} clickListener={this.props.clickListener} />
                 </div>
                 <div id="privacy-policy-content">
                     <h2>{privacy.headline}</h2>
                     <h3>{privacy.privacyStatement}</h3>
-                    <p lang="en">{privacy.privacyStatementText}</p>
+                    <p>{privacy.privacyStatementText}</p>
                     <h3>{privacy.legalInfo}</h3>
-                    <p lang="en">
+                    <p>
                         Tim Konieczny<br />
                         <span className="reverse">{Secret.street}</span><br />
                         <span className="reverse">{Secret.city}</span><br />

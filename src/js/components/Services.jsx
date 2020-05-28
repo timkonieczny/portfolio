@@ -19,10 +19,10 @@ class Services extends Component {
                 </div>
                 <div id="services-content">
                     <h2>{services.headline}.</h2>
-                    <p lang="en">{services.intro}</p>
+                    <p>{services.intro}</p>
                     <MessageButtons clickListener={this.props.clickListener} startTabIndex={1} />
                     <h3>{services.section1.headline}</h3>
-                    <p lang="en">{services.section1.intro}</p>
+                    <p>{services.section1.intro}</p>
                     <ul>
                         <li>{services.section1.ul.li1}</li>
                         <li>{services.section1.ul.li2}</li>
@@ -33,14 +33,14 @@ class Services extends Component {
                         <li>{services.section1.ul.li7}</li>
                         <li>{services.section1.ul.li8}</li>
                     </ul>
-                    <p lang="en">{services.technologies}</p>
+                    <p>{services.technologies}</p>
                     <span className="tag">Three.js</span>
                     <span className="tag">WebGL</span>
                     <span className="tag">GLSL / Shaders</span>
                     <span className="tag">GLTF</span>
                     <span className="tag">gl-matrix</span>
                     <h3>{services.section2.headline}</h3>
-                    <p lang="en">{services.section2.intro}</p>
+                    <p>{services.section2.intro}</p>
                     <ul>
                         <li>{services.section2.ul.li1}</li>
                         <li>{services.section2.ul.li2}</li>
@@ -50,7 +50,7 @@ class Services extends Component {
                         <li>{services.section2.ul.li6}</li>
                         <li>{services.section2.ul.li7}</li>
                     </ul>
-                    <p lang="en">{services.technologies}</p>
+                    <p>{services.technologies}</p>
                     <span className="tag">React</span>
                     <span className="tag">CSS / SASS</span>
                     <span className="tag">TypeScript</span>
