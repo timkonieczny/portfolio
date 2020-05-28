@@ -20,7 +20,7 @@ canvas {
 }
 
 ::-webkit-scrollbar-track {
-    background: $color-background-primary;
+    background-color: rgba($color: $color-background-primary, $alpha: 0.3);
     border-radius: 0.3em;
 }
 
@@ -150,7 +150,8 @@ li {
 h1,
 h2,
 h3,
-p {
+p,
+li {
     cursor: default;
     user-select: none;
 }

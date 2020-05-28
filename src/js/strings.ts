@@ -6,7 +6,7 @@ const home = new LocalizedStrings({
         work: "Work",
         services: "Services",
         about: "About",
-        privacy: "Privacy statement and legal information",
+        privacy: "Privacy statement and legal notice",
         location: "Leipzig, Germany"
     },
     de: {
@@ -30,10 +30,70 @@ const work = new LocalizedStrings({
 
 const services = new LocalizedStrings({
     en: {
-        headline: "Services"
+        headline: "Services",
+        intro: "Got ideas for the web of tomorrow? Let me help you turn them into reality!",
+        section1: {
+            headline: "3D on the web",
+            intro: "I can help you implement innovative 3D concepts - from prototype to finished product.",
+            ul: {
+                li1: "Consulting, conception and implementation",
+                li2: "Visualization of 3D models and scenes",
+                li3: "Interaction and animation",
+                li4: "3D data visualization",
+                li5: "Game development",
+                li6: "Virtual- und augmented reality",
+                li7: "360° content",
+                li8: "Visual effects and shader programming",
+            }
+        },
+        section2: {
+            headline: "Frontend development",
+            intro: "I can help you develop web apps and websites that represent you, your business or your product perfectly.",
+            ul: {
+                li1: "Consulting, conception and implementation",
+                li2: "Interactive web apps with a special focus on intuitivity und user experience",
+                li3: "One page applications",
+                li4: "Implementation of design templates",
+                li5: "Animations",
+                li6: "Responsive web design",
+                li7: "Digital experiences that push the boundaries of conventional websites"
+            }
+        },
+        technologies: "Here are some of my favorite technologies:"
     },
     de: {
         headline: "Leistungen",
+        intro: "Sie haben Ideen für das Internet von morgen? Ich helfe Ihnen gerne dabei, sie zur Realität zu machen!",
+        section1: {
+            headline: "3D im Web",
+            intro: "Ich helfe Ihnen, innovative 3D-Konzepte umzusetzen - vom Prototyp zum finalen Produkt.",
+            ul: {
+                li1: "Beratung, Konzeption und Umsetzung",
+                li2: "Darstellung von 3D-Modellen und -Szenen",
+                li3: "Interaktion und Animation",
+                li4: "3D-Datenvisualisierung",
+                li5: "Game Development",
+                li6: "Virtual- und Augmented Reality",
+                li7: "360°-Inhalte",
+                li8: "Visuelle Effekte und Shaderprogrammierung",
+            }
+        },
+        section2: {
+            headline: "Front-end-Entwicklung",
+            intro: "Ich helfe Ihnen bei der Entwicklung von Web Apps und Websites, die Sie, Ihr Unternehmen oder ihr Produkt perfekt repräsentieren.",
+            ul: {
+                li1: "Beratung, Konzeption und Umsetzung",
+                li2: "Interaktive Websites mit Fokus auf Intuitivität und User Experience",
+                li3: "One-Page-Applikationen",
+                li4: "Passgenaue Umsetzung von Designs",
+                li5: "Animationen",
+                li6: "Responsive Webdesign",
+                li7: "Digital experiences, die über konventionelle Websites hinausgehen"
+            }
+        },
+        technologies: "Mit diesen Technologien arbeite ich besonders gerne:"
+
+
     }
 })
 
