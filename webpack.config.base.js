@@ -6,6 +6,12 @@ const path = require('path')
 // TODO: Add Hot Component Replacement Plugin
 // TODO: Insert head nodes via React Helmet? https://css-tricks.com/its-all-in-the-head-managing-the-document-head-of-a-react-powered-site-with-react-helmet/
 
+const title = "Tim Konieczny. Freelance Software Engineer specializing in 3D and frontend development."
+const description = "Tim Konieczny, Freelance Software Engineer specializing in 3D and frontend development."
+const appName = "Tim Konieczny, Freelance Software Engineer"
+const appNameShort = "Tim Konieczny"
+const url = "https://timkonieczny.com/"
+
 module.exports = {
     entry: ["./src/js/index.tsx"],
     context: path.resolve(__dirname, "."),
@@ -86,16 +92,16 @@ module.exports = {
                 minifyJS: true,
                 useShortDoctype: true
             },
-            title: "Tim Konieczny. Freelance Software Engineer.",
+            title: title,
             type: "website",
             locale: "en_US",
-            description: "I specialize in computer graphics, digital experiences and front-end development.",
-            image: "https://timkonieczny.com/card.png",
+            description: description,
+            image: `${url}card.png`,
             imageType: "image/png",
             imageWidth: "1366",
             imageHeight: "715",
-            imageAlt: "A 3D scene. The headline reads: Tim Konieczny. Freelance Software Engineer.",
-            url: "https://timkonieczny.com/",
+            imageAlt: description,
+            url: url,
             twitter: "@timkonieczny",
             twitterCard: "summary_large_image",
             meta: {
@@ -108,11 +114,11 @@ module.exports = {
             publicPath: ".",
             prefix: "/",
             favicons: {
-                appName: "Tim Konieczny",
-                appShortName: "Tim Konieczny",
-                appDescription: "I specialize in computer graphics, digital experiences and front-end development.",
+                appName: appName,
+                appShortName: appNameShort,
+                appDescription: description,
                 developerName: "Tim Konieczny",
-                developerURL: "Tim Konieczny",
+                developerURL: url,
                 dir: "auto",
                 lang: "en",
                 background: "#1A1A1A",
