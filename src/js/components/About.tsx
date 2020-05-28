@@ -21,7 +21,7 @@ class About extends Component<Props> {
                     <BackButton hasHistory={!this.props.isAppearing} clickListener={this.props.clickListener} />
                 </div>
                 <div id="about-content">
-                    <h2>{about.headline}</h2>
+                    <h2>{about.headline}.</h2>
                     <p lang="en">{about.aboutText1}</p>
                     <p lang="en">{about.aboutText2}</p>
                     <p lang="en">{about.aboutText3}</p>

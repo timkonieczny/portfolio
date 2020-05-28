@@ -65,12 +65,16 @@ const message = new LocalizedStrings({
 const about = new LocalizedStrings({
     en: {
         headline: "About",
+        aboutText1: "Hi, I'm Tim Konieczny, Freelance Software Engineer specializing on 3D and frontend.",
+        aboutText2: "The internet has the power to democratize brand-new, innovative concepts and make them available to anyone. Over time I've developed a deep passion for ideas and technologies that push the boundaries of modern web development.",
+        aboutText3: "Freelancing allows me to work on projects in which I can convert this passion into reality. Through academic degrees (B.Sc Computer Science and Media and M.Sc Visual Computing) and years of experience in web projects, I've developed a deep understanding of 3D and frontend development, as well as wide-spread hands-on expertise.",
+        aboutText4: "When I'm not working I get inspired by things that allow me to leave my comfort zone and grow. I love visiting events, and to travel, diving head-first into foreign cultures."
     },
     de: {
         headline: "Über mich",
         aboutText1: "Hallo, ich bin Tim Konieczny, Freelance Software Engineer mit Fokus auf 3D und Frontend.",
-        aboutText2: "Das Internet hat die Kraft, neue, innovative Konzepte der breiten Masse zugänglich zu machen. Schon seit Langem interessiere ich mich für Ideen und Technologien, die den Rahmen konventioneller Webentwicklung sprengen.",
-        aboutText3: "Ich arbeite freiberuflich an Projekten, in denen ich diese Leidenschaft zum Beruf machen kann. Durch einen Masterabschluss (Medieninformatik, Visual Computing) und langjährige Erfahrung in der Webentwicklung, biete ich sowohl tiefgreifendes Verständnis im Bereich der 3D- und Frontend-Entwicklung, aber auch weitreichende praktische Expertise.",
+        aboutText2: "Das Internet hat die Kraft, neue, innovative Konzepte der breiten Masse zugänglich zu machen. Ich interessiere mich schon seit Langem für Ideen und Technologien, die den Rahmen konventioneller Webentwicklung sprengen.",
+        aboutText3: "Ich arbeite freiberuflich an Projekten, in denen ich diese Leidenschaft zum Beruf machen kann. Durch Studienabschlüsse in Medieninformatik (B.Sc) und Visual Computing (M.Sc), und langjährige Erfahrung in der Webentwicklung, biete ich sowohl tiefgreifendes Verständnis im Bereich der 3D- und Frontend-Entwicklung, aber auch weitreichende praktische Expertise.",
         aboutText4: "Neben meiner Arbeit inspirieren mich Dinge, die mich aus meiner Komfortzone herausholen und an denen ich wachsen kann. Ich liebe es, auf Veranstaltungen zu gehen und auf Reisen kopfüber in fremde Kulturen zu springen."
     }
 })
