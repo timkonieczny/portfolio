@@ -100,6 +100,7 @@ const services = new LocalizedStrings({
 const message = new LocalizedStrings({
     en: {
         headline: "Get in touch",
+        intro: "Want to work with me? Or just say hello? Drop me a line, I'll get back to you soon.",
         subject: "Subject",
         messageText: "Message",
         messageThankYou: "Thank you for your message.",
@@ -111,14 +112,15 @@ const message = new LocalizedStrings({
     },
     de: {
         headline: "Projekt anfragen",
+        intro: "Sie möchten mit mir zusammenarbeiten oder wollen einfach nur Hallo sagen? Schreiben Sie mir ein paar Zeilen, ich melde mich umgehend bei Ihnen.",
         subject: "Betreff",
         messageText: "Nachricht",
-        messageThankYou: "Vielen Dank für deine Nachricht.",
-        messageReply: "Ich werde dir schnellstmöglich antworten!",
-        messageSorry: "Entschuldige die Unannehmlichkeiten.",
+        messageThankYou: "Vielen Dank für Ihre Nachricht.",
+        messageReply: "Ich melde mich umgehend bei Ihnen.",
+        messageSorry: "Entschuldigen Sie die Störung.",
         messageErrorUnknown: "Oh. Da ist wohl etwas schiefgelaufen.",
-        messageError400: "Der Server hat deine Daten abgelehnt.",
-        messageErrorTryAgain: "Bitte versuche es später nochmal.",
+        messageError400: "Der Server hat Ihre Daten abgelehnt.",
+        messageErrorTryAgain: "Bitte versuchen Sie es später nochmal.",
     }
 })
 
@@ -149,7 +151,7 @@ const privacy = new LocalizedStrings({
     de: {
         headline: "Datenschutz und Impressum",
         privacyStatement: "Datenschutzhinweis",
-        privacyStatementText: "Diese Website nutzt Google Analytics, ein Dienst, der Trafficdaten zur Analyse an Google-Server übermittelt. Diese Instanz von Google Analytics identifiziert keine individuellen Nutzer und assoziiert deine IP-Adresse nicht mit Daten, die Google über dich hält. Die Berichte, die von Google Analytics generiert werden, werden genutzt um den Traffic und die Nutzung dieser Website besser zu verstehen. Du können die Erfassung der Daten jederzeit beenden indem du die \"Do Not Track\"-Option deines Browsers aktivierst.",
+        privacyStatementText: "Diese Website nutzt Google Analytics, ein Dienst, der Trafficdaten zur Analyse an Google-Server übermittelt. Diese Instanz von Google Analytics identifiziert keine individuellen Nutzer und assoziiert Ihre IP-Adresse nicht mit Daten, die Google über Sie hält. Die Berichte, die von Google Analytics generiert werden, werden genutzt um den Traffic und die Nutzung dieser Website besser zu verstehen. Sie können die Erfassung der Daten jederzeit beenden indem Sie die \"Do Not Track\"-Option Ihres Browsers aktivieren.",
         legalInfo: "Impressum"
     }
 })

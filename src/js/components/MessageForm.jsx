@@ -99,6 +99,7 @@ class MessageForm extends Component {
                 className={`${this.state.showForm ? "" : "sent"}`}
                 style={this.state.done ? { display: "none" } : {}}
                 ref={(element) => { this.messageForm = element }}>
+                <p className="intro">{message.intro}</p>
                 <div className="field-wrapper">
                     <span>
                         <input placeholder="Name" name="name" tabIndex="2" autoComplete="on" id="name-input"
