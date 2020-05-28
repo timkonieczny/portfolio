@@ -196,7 +196,7 @@ $slide-transition-exit: left 2s cubic-bezier(0.33, 1, 0.68, 1),
 .section-wrapper {
     position: absolute;
     width: 80%;
-    max-width: 520px;
+    max-width: 40em;
     max-height: 90%;
     &.push-enter {
         left: 90%;
