@@ -1,10 +1,11 @@
 import React, { Component } from "react"
 import BackButton from "./BackButton"
 import ReactGA from "react-ga"
-import { about } from "../strings"
+import { about, home } from "../strings"
 import webp from "../../../assets/profile.webp"
 import jpg from "../../../assets/profile.jpg"
 import MessageButtons from "./MessageButtons"
+import ArrowLink from "./ArrowLink"
 
 type Props = {
     isAppearing: boolean,
@@ -35,6 +36,8 @@ class About extends Component<Props> {
                     </div>
                     <p>{about.aboutText2}</p>
                     <p>{about.aboutText3}</p>
+                    <ArrowLink to="/services" animation="services" tabIndex={4} text={home.services}
+                        clickListener={this.props.clickListener} />
                     <p>{about.aboutText4}</p>
                 </div>
             </div>
