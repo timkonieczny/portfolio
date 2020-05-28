@@ -7,12 +7,13 @@
     z-index: 3;
     opacity: 1;
     visibility: visible;
-    transition: visibility 0s $preloader-duration, top 3s;
+    transition: visibility 0s $preloader-duration, top 3s, height 0s $preloader-duration;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background: $color-background-secondary;
+    overflow: hidden;
     p {
         font-family: "DM Mono";
         font-size: 0.7em;

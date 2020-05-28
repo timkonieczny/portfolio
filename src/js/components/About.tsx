@@ -25,6 +25,7 @@ class About extends Component<Props> {
                 </div>
                 <div id="about-content">
                     <h2>{about.headline}.</h2>
+                    {/* TODO: switch lang tag based on language */}
                     <p lang="en">{about.aboutText1}</p>
                     <div className="picture-buttons">
                         <picture>
