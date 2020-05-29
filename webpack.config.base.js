@@ -126,7 +126,10 @@ module.exports = {
                 appleStatusBarStyle: "black-translucent",
                 display: "standalone",
                 orientation: "any",
-                version: "1.0"
+                version: "1.0",
+                icons: {
+                    coast: { background: false }
+                }
             }
         })
     ],
