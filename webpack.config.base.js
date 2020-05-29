@@ -77,7 +77,8 @@ module.exports = {
             patterns: [
                 { from: 'src/php/credentials.php' },
                 { from: 'src/.htaccess' },
-                { from: 'assets/card.png' }
+                { from: 'assets/card.png' },
+                { from: 'src/sitemap.xml' }
             ]
         }),
         new HtmlWebpackPlugin({
