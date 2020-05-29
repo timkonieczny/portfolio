@@ -16,7 +16,7 @@ class Home extends Component {
             <div id="home-wrapper" className="section-wrapper">
                 <h1>
                     Tim Konieczny,<br />
-                    Freelance <span>Software Engineer.</span><br />
+                    <span>Freelance Software Engineer.</span><br />
                 </h1>
                 <p id="subtitle">
                     <span className="tag"><FontAwesomeIcon icon="map-marker-alt" />{home.location}</span>
