@@ -128,7 +128,8 @@ module.exports = {
                 orientation: "any",
                 version: "1.0",
                 icons: {
-                    coast: { background: false }
+                    coast: { background: false },
+                    appleIcon: { background: false }
                 }
             }
         })

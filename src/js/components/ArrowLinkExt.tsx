@@ -9,7 +9,7 @@ type Props = {
 class ArrowLinkExt extends Component<Props> {
     render() {
         return (
-            <a href={this.props.to} className="animated link-with-icon">
+            <a href={this.props.to} className="animated link-with-icon" target="_blank" rel="noopener noreferrer">
                 <FontAwesomeIcon icon="long-arrow-alt-right" />
                 <span>{this.props.text}</span>
             </a>)
