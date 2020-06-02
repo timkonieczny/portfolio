@@ -14,6 +14,56 @@ class Wrapper extends Component {
         }
     }
 
+    componentDidMount() {
+        window.onpopstate = () => {
+            const animation = this.getAnimationByLocation()
+            if (this.state.animations.length > 1 &&
+                animation === this.state.animations[this.state.animations.length - 2])
+                this.popAnimation()
+            else
+                this.pushAnimation(animation)
+        }
+    }
+
+    getAnimationByLocation() {
+        switch (window.location.pathname.toLowerCase()) {
+            case "/":
+                return "home"
+            case "/message":
+                return "message"
+            case "/services":
+                return "services"
+            case "/privacy":
+                return "privacy"
+            case "/work":
+                return "work"
+            case "/about":
+                return "about"
+            default:
+                return "home"
+        }
+    }
+
+    pushAnimation(animation) {
+        this.setState({
+            animations: [...this.state.animations, animation]
+        })
+        this.canvas.scene.startAnimation(animation)
+    }
+
+    popAnimation() {
+        this.state.animations.pop()
+        const animation = this.state.animations[this.state.animations.length - 1]
+        this.setState({
+            animations: this.state.animations
+        })
+        this.canvas.scene.startAnimation(animation)
+    }
+
+    onButtonClick(event) {
+        this.pushAnimation(event.currentTarget.dataset.animation)
+    }
+
     progressListener(event) {
         let progress
         switch (event.task) {
@@ -28,23 +78,6 @@ class Wrapper extends Component {
                 break
         }
         this.setState({ progress: progress })
-    }
-
-    onButtonClick(event) {
-        let animation
-        if (event.currentTarget.dataset.animation === "back") {
-            this.state.animations.pop()
-            animation = this.state.animations[this.state.animations.length - 1]
-            this.setState({
-                animations: this.state.animations
-            })
-        } else {
-            this.setState({
-                animations: [...this.state.animations, event.currentTarget.dataset.animation]
-            })
-            animation = event.currentTarget.dataset.animation
-        }
-        this.canvas.scene.startAnimation(animation)
     }
 
     render() {

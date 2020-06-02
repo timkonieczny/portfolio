@@ -14,7 +14,7 @@ class BackButton extends Component<Props> {
         if (this.props.hasHistory)
             return (
                 <a className="back-arrow" data-animation="back" tabIndex={1}
-                    onClick={event => { this.props.clickListener(event); this.props.history.goBack() }}>
+                    onClick={this.props.history.goBack}>
                     <FontAwesomeIcon icon="long-arrow-alt-left" />
                 </a>)
         else return (
