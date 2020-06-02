@@ -6,7 +6,7 @@ const path = require('path')
 // TODO: Add Hot Component Replacement Plugin
 // TODO: Insert head nodes via React Helmet? https://css-tricks.com/its-all-in-the-head-managing-the-document-head-of-a-react-powered-site-with-react-helmet/
 
-const title = "Tim Konieczny. Freelance Software Engineer specializing in 3D and front-end development."
+const title = "Tim Konieczny. Freelance Software Engineer. 3D and front-end development. Leipzig (Germany / Deutschland)."
 const description = "Tim Konieczny, Freelance Software Engineer specializing in 3D and front-end development."
 const appName = "Tim Konieczny, Freelance Software Engineer"
 const appNameShort = "Tim Konieczny"
