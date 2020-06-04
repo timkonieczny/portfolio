@@ -38,8 +38,6 @@ class Work extends Component {
     }
 
     render() {
-        // TODO: add hyphens
-
         return (
             <div id="work-wrapper" className="section-wrapper">
                 <div>
