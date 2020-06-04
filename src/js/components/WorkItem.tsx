@@ -16,11 +16,11 @@ type Props = {
 class WorkItem extends Component<Props> {
     render() {
         return <div className={`cell ${this.props.large ? "large" : ""}`}>
-            <picture className="main">
+            <picture className="main background">
                 <source srcSet={this.props.webp} type="image/webp" />
                 <img src={this.props.jpg} />
             </picture>
-            <picture>
+            <picture className="background">
                 <source srcSet={this.props.webpHover} type="image/webp" />
                 <img src={this.props.jpgHover} />
             </picture>

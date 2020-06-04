@@ -12,14 +12,10 @@ import lfw1Jpg from "../../../assets/lfw4.jpg"
 import lfw2 from "../../../assets/lfw6.webp"
 import lfw2Jpg from "../../../assets/lfw6.jpg"
 
-import meta1 from "../../../assets/meta1.webp"
-import meta1Jpg from "../../../assets/meta1.jpg"
-import meta2 from "../../../assets/meta2.webp"
-import meta2Jpg from "../../../assets/meta2.jpg"
-
 import ReactGA from "react-ga"
 import { work } from "../strings"
 import MessageButtons from "./MessageButtons"
+import WorkItemMeta from "./WorkItemMeta"
 
 class Work extends Component {
 
@@ -55,10 +51,7 @@ class Work extends Component {
                             interactive memorial" tags={["Three.js", "GLTF", "React", "SASS", "Webpack", "Babel"]}
                             large={true} webp={lfw1} jpg={lfw1Jpg} jpgHover={lfw2Jpg} webpHover={lfw2}
                             link="https://livingflowerwall.rnz.co.nz/" />
-                        <WorkItem title="Meta" description="Interested in how this site was built? Look at the project
-                            on GitHub!" tags={["WebGL", "Shader", "React", "SASS", "Webpack", "TypeScript"]}
-                            large={true} webp={meta1} jpg={meta1Jpg} jpgHover={meta2Jpg} webpHover={meta2}
-                            link="https://github.com/timkonieczny/portfolio" />
+                        <WorkItemMeta />
                         <div className="cell large">
                             <MessageButtons clickListener={this.props.clickListener} />
                         </div>
