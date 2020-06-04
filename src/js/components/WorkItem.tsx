@@ -5,6 +5,8 @@ type Props = {
     large: boolean,
     webp: string,
     jpg: string,
+    webpHover: string,
+    jpgHover: string,
     tags: string[],
     title: string,
     description: string
@@ -13,9 +15,13 @@ type Props = {
 class WorkItem extends Component<Props> {
     render() {
         return <div className={`cell ${this.props.large ? "large" : ""}`}>
-            <picture>
+            <picture className="main">
                 <source srcSet={this.props.webp} type="image/webp" />
                 <img src={this.props.jpg} />
+            </picture>
+            <picture>
+                <source srcSet={this.props.webpHover} type="image/webp" />
+                <img src={this.props.jpgHover} />
             </picture>
             <div className="content">
                 <h3>{this.props.title}</h3>
