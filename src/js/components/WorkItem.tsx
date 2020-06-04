@@ -9,7 +9,8 @@ type Props = {
     jpgHover: string,
     tags: string[],
     title: string,
-    description: string
+    description: string,
+    link: string
 }
 
 class WorkItem extends Component<Props> {
@@ -26,7 +27,7 @@ class WorkItem extends Component<Props> {
             <div className="content">
                 <h3>{this.props.title}</h3>
                 <p>{this.props.description}</p>
-                <ArrowLinkExt to="#" text="browse" />
+                <ArrowLinkExt to={this.props.link} text="browse" />
                 <p className="tags">
                     {this.props.tags.map((tag, i) => {
                         return <span key={i} className="tag">{tag}</span>
