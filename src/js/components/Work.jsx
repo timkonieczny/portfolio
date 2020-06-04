@@ -60,7 +60,7 @@ class Work extends Component {
                             large={true} webp={meta1} jpg={meta1Jpg} jpgHover={meta2Jpg} webpHover={meta2}
                             link="https://github.com/timkonieczny/portfolio" />
                         <div className="cell large">
-                            <MessageButtons clickListener={this.props.clickListener} startTabIndex={1} />
+                            <MessageButtons clickListener={this.props.clickListener} />
                         </div>
                     </div>
                 </div>

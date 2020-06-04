@@ -23,15 +23,15 @@ class Home extends Component {
                     <span className="tag">3D</span>
                     <span className="tag">front-end</span>
                 </p>
-                <MessageButtons clickListener={this.props.clickListener} startTabIndex={1} />
-                <ArrowLink to="/work" id="work-button" animation="work" tabIndex="4"
-                    clickListener={this.props.clickListener} text={home.work} />
+                <MessageButtons clickListener={this.props.clickListener} />
+                <ArrowLink to="/work" id="work-button" animation="work" clickListener={this.props.clickListener}
+                    text={home.work} />
                 <ArrowLink to="/services" id="services-button" animation="services"
-                    tabIndex="5" clickListener={this.props.clickListener} text={home.services} />
-                <ArrowLink to="/about" id="about-button" animation="about"
-                    tabIndex="6" clickListener={this.props.clickListener} text={home.about} />
+                    clickListener={this.props.clickListener} text={home.services} />
+                <ArrowLink to="/about" id="about-button" animation="about" clickListener={this.props.clickListener}
+                    text={home.about} />
                 <br />
-                <ArrowLink to="/privacy" id="privacy-policy-button" animation="privacy" tabIndex="7"
+                <ArrowLink to="/privacy" id="privacy-policy-button" animation="privacy"
                     clickListener={this.props.clickListener} text={home.privacy} />
             </div>
         )

@@ -102,28 +102,28 @@ class MessageForm extends Component {
                 <p className="intro">{message.intro}</p>
                 <div className="field-wrapper">
                     <span>
-                        <input placeholder="Name" name="name" tabIndex="2" autoComplete="on" id="name-input"
+                        <input placeholder="Name" name="name" autoComplete="on" id="name-input"
                             className={`${this.state.errorType === "name" ? "invalid" : ""}`}
                             ref={(element) => { this.nameInput = element }} />
                         <span></span>
-                        <input placeholder="Email" name="emailaddress" type="email" tabIndex="3"
+                        <input placeholder="Email" name="emailaddress" type="email"
                             autoComplete="on" id="emailaddress-input"
                             className={`${this.state.errorType === "emailaddress" ? "invalid" : ""}`}
                             ref={(element) => { this.emailInput = element }} />
                     </span>
                 </div>
                 <div className="field-wrapper">
-                    <input placeholder={message.subject} name="subject" autoComplete="off" tabIndex="4"
+                    <input placeholder={message.subject} name="subject" autoComplete="off"
                         id="subject-input" className={`${this.state.errorType === "subject" ? "invalid" : ""}`}
                         ref={(element) => { this.subjectInput = element }} />
                 </div>
                 <div className="field-wrapper" id="textarea-wrapper">
-                    <textarea placeholder={message.messageText} name="message" autoComplete="off" tabIndex="5"
+                    <textarea placeholder={message.messageText} name="message" autoComplete="off"
                         id="message-input" className={`${this.state.errorType === "message" ? "invalid" : ""}`}
                         ref={(element) => { this.messageInput = element }}></textarea>
                 </div>
                 <div className={`field-wrapper ${this.state.errorType ? "hide" : ""}`} id="submit-button-wrapper">
-                    <button className="button" id="send-button" type="submit" tabIndex="6">
+                    <button className="button" id="send-button" type="submit">
                         <FontAwesomeIcon icon="paper-plane" />
                     </button>
                 </div>

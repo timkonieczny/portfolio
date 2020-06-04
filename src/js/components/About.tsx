@@ -32,11 +32,11 @@ class About extends Component<Props> {
                             <source srcSet={webp} type="image/webp" />
                             <img src={jpg} />
                         </picture>
-                        <MessageButtons clickListener={this.props.clickListener} startTabIndex={1} />
+                        <MessageButtons clickListener={this.props.clickListener} />
                     </div>
                     <p>{about.aboutText2}</p>
                     <p>{about.aboutText3}</p>
-                    <ArrowLink to="/services" animation="services" tabIndex={4} text={home.services}
+                    <ArrowLink to="/services" animation="services" text={home.services}
                         clickListener={this.props.clickListener} />
                     <p>{about.aboutText4}</p>
                 </div>
