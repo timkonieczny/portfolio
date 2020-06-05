@@ -76,6 +76,7 @@ module.exports = {
         new CopyPlugin({
             patterns: [
                 { from: 'src/php/credentials.php' },
+                { from: 'src/php/vendor' },
                 { from: 'src/.htaccess' },
                 { from: 'assets/card.png' },
                 { from: 'src/sitemap.xml' }
