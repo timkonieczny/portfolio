@@ -8,7 +8,8 @@
         "build:dev": "webpack --env=dev",
         "build:prod": "webpack --env=prod",
         "start:dev": "webpack-dev-server --env=dev",
-        "start:prod": "webpack-dev-server --env=prod"
+        "start:prod": "webpack-dev-server --env=prod",
+        "install": "cd src/php && composer install"
     },
     "keywords": [],
     "author": "Tim Konieczny",
