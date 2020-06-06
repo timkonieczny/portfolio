@@ -21,10 +21,12 @@ const home = new LocalizedStrings({
 
 const work = new LocalizedStrings({
     en: {
-        headline: "Work"
+        headline: "Work",
+        intro: "Here's a selection projects I've recently worked on."
     },
     de: {
-        headline: "Portfolio"
+        headline: "Portfolio",
+        intro: "Hier finden Sie eine Auswahl meiner aktuellen Projekte."
     }
 })
 
