@@ -108,12 +108,15 @@
                     }
                     p {
                         font-size: 0.8em;
-                        text-align: justify;
+                        text-align: center;
                         hyphens: auto;
                     }
                     p,
                     a {
                         margin: 0.7em 0;
+                        svg {
+                            margin-left: 0;
+                        }
                     }
                     .tags {
                         text-align: center;

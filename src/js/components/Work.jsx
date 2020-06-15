@@ -43,13 +43,12 @@ class Work extends Component {
                     <h2>{work.headline}.</h2>
                     <p className="intro">{work.intro}</p>
                     <div id="grid" ref={element => this.grid = element}>
-                        <WorkItem title="Gumboot Friday" description="Throw your gumboot as far as you can in the name
-                            of raising money for youth mental health counselling."
+                        <WorkItem title="Gumboot Friday" description="3D game, 2020."
                             tags={["Game Development", "Three.js", "GLTF", "React", "SASS", "Webpack", "Babel"]} large={true} webp={gbf1}
                             jpg={gbf1Jpg} jpgHover={gbf2Jpg} webpHover={gbf2} link="https://www.gumbootfriday.nz/" />
-                        <WorkItem title="Living Flowerwall" description="Remembering the victims of the Christchurch
-                            terror attacks, 15 March 2019. Explore stories of unity, then add your own message to this
-                            interactive memorial" tags={["Three.js", "GLTF", "React", "SASS", "Webpack", "Babel"]}
+                        <WorkItem title="Living Flowerwall"
+                            description="3D digital experience / 3D landing page animation, 2020."
+                            tags={["Three.js", "GLTF", "React", "SASS", "Webpack", "Babel"]}
                             large={true} webp={lfw1} jpg={lfw1Jpg} jpgHover={lfw2Jpg} webpHover={lfw2}
                             link="https://livingflowerwall.rnz.co.nz/" />
                         <WorkItemMeta />
