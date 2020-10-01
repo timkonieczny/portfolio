@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import ArrowLinkExt from "./ArrowLinkExt"
+import { work } from "../strings"
 
 type Props = {
     large: boolean,
@@ -10,7 +11,9 @@ type Props = {
     tags: string[],
     title: string,
     description: string,
-    link: string
+    link: string,
+    client: string,
+    clientLink: string
 }
 
 class WorkItem extends Component<Props> {
@@ -26,7 +29,8 @@ class WorkItem extends Component<Props> {
             </picture>
             <div className="content">
                 <h3>{this.props.title}</h3>
-                <p>{this.props.description}</p>
+                <p>{this.props.description}
+                    <br />{work.collaboration} <a href={this.props.clientLink}>{this.props.client}</a></p>
                 <ArrowLinkExt to={this.props.link} text="browse" />
                 <p className="tags">
                     {this.props.tags.map((tag, i) => {

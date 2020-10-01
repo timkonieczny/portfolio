@@ -49,6 +49,8 @@ class Work extends Component {
     }
 
     render() {
+        const vanishingPoint = "Vanishing Point Studio"
+        const vanishingPointLink = "https://vanishingpoint.studio/"
         return (
             <div id="work-wrapper" className="section-wrapper">
                 <div>
@@ -61,24 +63,29 @@ class Work extends Component {
                         <WorkItem title="Mana Moana / Digital Ocean" description="3D digital experience, 2020."
                             tags={["Three.js", "GLTF", "React", "SASS", "Webpack", "Babel"]} large={true} webp={mm1}
                             jpg={mm1Jpg} jpgHover={mm2Jpg} webpHover={mm2}
-                            link="https://digitalocean.manamoana.co.nz/" />
+                            link="https://digitalocean.manamoana.co.nz/" client={vanishingPoint}
+                            clientLink={vanishingPointLink} />
                         <WorkItem title="Football Game / Game Change" description="3D game, 2020."
                             tags={["Game Development", "Three.js", "GLTF", "React", "SASS", "Webpack", "Babel"]}
                             large={true} webp={gcf1} jpg={gcf1Jpg} jpgHover={gcf2Jpg} webpHover={gcf2}
-                            link="https://gamechange.rnz.co.nz/gameplan/game/scene/3-1" />
+                            link="https://gamechange.rnz.co.nz/gameplan/game/scene/3-1" client={vanishingPoint}
+                            clientLink={vanishingPointLink} />
                         <WorkItem title="Puzzle Game / Game Change" description="3D game, 2020."
                             tags={["Game Development", "Three.js", "GLTF", "React", "SASS", "Webpack", "Babel"]}
                             large={true} webp={gcp1} jpg={gcp1Jpg} jpgHover={gcp2Jpg} webpHover={gcp2}
-                            link="https://gamechange.rnz.co.nz/gameplan/game/scene/4" />
+                            link="https://gamechange.rnz.co.nz/gameplan/game/scene/4" client={vanishingPoint}
+                            clientLink={vanishingPointLink} />
                         <WorkItem title="Gumboot Friday" description="3D game, 2020."
                             tags={["Game Development", "Three.js", "GLTF", "React", "SASS", "Webpack", "Babel"]}
                             large={true} webp={gbf1} jpg={gbf1Jpg} jpgHover={gbf2Jpg} webpHover={gbf2}
-                            link="https://www.gumbootfriday.nz/" />
+                            link="https://www.gumbootfriday.nz/" client={vanishingPoint}
+                            clientLink={vanishingPointLink} />
                         <WorkItem title="Living Flowerwall"
                             description="3D digital experience / 3D landing page animation, 2020."
                             tags={["Three.js", "GLTF", "React", "SASS", "Webpack", "Babel"]}
                             large={true} webp={lfw1} jpg={lfw1Jpg} jpgHover={lfw2Jpg} webpHover={lfw2}
-                            link="https://livingflowerwall.rnz.co.nz/" />
+                            link="https://livingflowerwall.rnz.co.nz/" client={vanishingPoint}
+                            clientLink={vanishingPointLink} />
                         <WorkItemMeta />
                         <div className="cell large">
                             <MessageButtons clickListener={this.props.clickListener} />
