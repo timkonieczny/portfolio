@@ -135,6 +135,12 @@ a {
             margin: 0 0.5em 0 0.5em;
         }
     }
+    &.inline {
+        font-weight: normal;
+        text-transform: none;
+        letter-spacing: normal;
+        font-size: 1em;
+    }
 }
 
 b {
