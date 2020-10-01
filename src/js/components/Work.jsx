@@ -12,6 +12,21 @@ import lfw1Jpg from "../../../assets/lfw4.jpg"
 import lfw2 from "../../../assets/lfw6.webp"
 import lfw2Jpg from "../../../assets/lfw6.jpg"
 
+import mm1 from "../../../assets/mm1.webp"
+import mm1Jpg from "../../../assets/mm1.jpg"
+import mm2 from "../../../assets/mm2.webp"
+import mm2Jpg from "../../../assets/mm2.jpg"
+
+import gcf1 from "../../../assets/gcf1.webp"
+import gcf1Jpg from "../../../assets/gcf1.jpg"
+import gcf2 from "../../../assets/gcf2.webp"
+import gcf2Jpg from "../../../assets/gcf2.jpg"
+
+import gcp1 from "../../../assets/gcp1.webp"
+import gcp1Jpg from "../../../assets/gcp1.jpg"
+import gcp2 from "../../../assets/gcp2.webp"
+import gcp2Jpg from "../../../assets/gcp2.jpg"
+
 import ReactGA from "react-ga"
 import { work } from "../strings"
 import MessageButtons from "./MessageButtons"
@@ -43,9 +58,22 @@ class Work extends Component {
                     <h2>{work.headline}.</h2>
                     <p className="intro">{work.intro}</p>
                     <div id="grid" ref={element => this.grid = element}>
+                        <WorkItem title="Mana Moana / Digital Ocean" description="3D digital experience, 2020."
+                            tags={["Three.js", "GLTF", "React", "SASS", "Webpack", "Babel"]} large={true} webp={mm1}
+                            jpg={mm1Jpg} jpgHover={mm2Jpg} webpHover={mm2}
+                            link="https://digitalocean.manamoana.co.nz/" />
+                        <WorkItem title="Football Game / Game Change" description="3D game, 2020."
+                            tags={["Game Development", "Three.js", "GLTF", "React", "SASS", "Webpack", "Babel"]}
+                            large={true} webp={gcf1} jpg={gcf1Jpg} jpgHover={gcf2Jpg} webpHover={gcf2}
+                            link="https://gamechange.rnz.co.nz/gameplan/game/scene/3-1" />
+                        <WorkItem title="Puzzle Game / Game Change" description="3D game, 2020."
+                            tags={["Game Development", "Three.js", "GLTF", "React", "SASS", "Webpack", "Babel"]}
+                            large={true} webp={gcp1} jpg={gcp1Jpg} jpgHover={gcp2Jpg} webpHover={gcp2}
+                            link="https://gamechange.rnz.co.nz/gameplan/game/scene/4" />
                         <WorkItem title="Gumboot Friday" description="3D game, 2020."
-                            tags={["Game Development", "Three.js", "GLTF", "React", "SASS", "Webpack", "Babel"]} large={true} webp={gbf1}
-                            jpg={gbf1Jpg} jpgHover={gbf2Jpg} webpHover={gbf2} link="https://www.gumbootfriday.nz/" />
+                            tags={["Game Development", "Three.js", "GLTF", "React", "SASS", "Webpack", "Babel"]}
+                            large={true} webp={gbf1} jpg={gbf1Jpg} jpgHover={gbf2Jpg} webpHover={gbf2}
+                            link="https://www.gumbootfriday.nz/" />
                         <WorkItem title="Living Flowerwall"
                             description="3D digital experience / 3D landing page animation, 2020."
                             tags={["Three.js", "GLTF", "React", "SASS", "Webpack", "Babel"]}

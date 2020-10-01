@@ -3,7 +3,7 @@ import ReactDOM from "react-dom"
 import React from "react"
 import "../scss/index.scss"
 import ReactGA from "react-ga"
-import secret from "../../secret"
+import * as Secret from "../../secret"
 import { library } from "@fortawesome/fontawesome-svg-core"
 import {
     faLongArrowAltLeft, faLongArrowAltRight, faPaperPlane,
@@ -14,7 +14,7 @@ import { home } from "./strings"
 
 
 
-ReactGA.initialize(secret.analytics.google);
+ReactGA.initialize(Secret.analytics.google);
 
 library.add(faLongArrowAltLeft, faLongArrowAltRight, faLinkedin, faXing,
     faPaperPlane, faExclamationTriangle, faRobot, faRedoAlt, faMapMarkerAlt)
