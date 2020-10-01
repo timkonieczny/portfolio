@@ -8,11 +8,6 @@
         p {
             hyphens: auto;
             text-align: justify;
-            .reverse {
-                unicode-bidi: bidi-override;
-                direction: rtl;
-                text-align: left;
-            }
         }
     }
 }

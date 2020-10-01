@@ -23,11 +23,11 @@ class Privacy extends Component {
                     <h3>{privacy.legalInfo}</h3>
                     <p>
                         Tim Konieczny<br />
-                        <span className="reverse">{Secret.street}</span><br />
-                        <span className="reverse">{Secret.city}</span><br />
-                        <span className="reverse">{Secret.country}</span><br />
-                        Phone: <span className="reverse">{Secret.phone}</span><br />
-                        Email: <span className="reverse">{Secret.email}</span>
+                        <span>{Secret.street}</span><br />
+                        <span>{Secret.city}</span><br />
+                        <span>{Secret.country}</span><br />
+                        Phone: <span>{Secret.phone}</span><br />
+                        Email: <span>{Secret.email}</span>
                     </p>
                 </div>
             </div>
