@@ -65,6 +65,11 @@ class Work extends Component {
                             jpg={mm1Jpg} jpgHover={mm2Jpg} webpHover={mm2}
                             link="https://digitalocean.manamoana.co.nz/" client={vanishingPoint}
                             clientLink={vanishingPointLink} />
+                        <WorkItem title="Gumboot Friday" description="3D game, 2020."
+                            tags={["Game Development", "Three.js", "GLTF", "React", "SASS", "Webpack", "Babel"]}
+                            large={true} webp={gbf1} jpg={gbf1Jpg} jpgHover={gbf2Jpg} webpHover={gbf2}
+                            link="https://www.gumbootfriday.nz/" client={vanishingPoint}
+                            clientLink={vanishingPointLink} />
                         <WorkItem title="Football Game / Game Change" description="3D game, 2020."
                             tags={["Game Development", "Three.js", "GLTF", "React", "SASS", "Webpack", "Babel"]}
                             large={true} webp={gcf1} jpg={gcf1Jpg} jpgHover={gcf2Jpg} webpHover={gcf2}
@@ -74,11 +79,6 @@ class Work extends Component {
                             tags={["Game Development", "Three.js", "GLTF", "React", "SASS", "Webpack", "Babel"]}
                             large={true} webp={gcp1} jpg={gcp1Jpg} jpgHover={gcp2Jpg} webpHover={gcp2}
                             link="https://gamechange.rnz.co.nz/gameplan/game/scene/4" client={vanishingPoint}
-                            clientLink={vanishingPointLink} />
-                        <WorkItem title="Gumboot Friday" description="3D game, 2020."
-                            tags={["Game Development", "Three.js", "GLTF", "React", "SASS", "Webpack", "Babel"]}
-                            large={true} webp={gbf1} jpg={gbf1Jpg} jpgHover={gbf2Jpg} webpHover={gbf2}
-                            link="https://www.gumbootfriday.nz/" client={vanishingPoint}
                             clientLink={vanishingPointLink} />
                         <WorkItem title="Living Flowerwall"
                             description="3D digital experience / 3D landing page animation, 2020."
