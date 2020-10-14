@@ -27,6 +27,11 @@ import gcp1Jpg from "../../../assets/gcp1.jpg"
 import gcp2 from "../../../assets/gcp2.webp"
 import gcp2Jpg from "../../../assets/gcp2.jpg"
 
+import uti1 from "../../../assets/uti1.webp"
+import uti1Jpg from "../../../assets/uti1.jpg"
+import uti2 from "../../../assets/uti2.webp"
+import uti2Jpg from "../../../assets/uti2.jpg"
+
 import ReactGA from "react-ga"
 import { work } from "../strings"
 import MessageButtons from "./MessageButtons"
@@ -79,6 +84,11 @@ class Work extends Component {
                             jpg={mm1Jpg} jpgHover={mm2Jpg} webpHover={mm2}
                             link="https://digitalocean.manamoana.co.nz/" client={vanishingPoint}
                             clientLink={vanishingPointLink} awards={manaMoanaAwards} />
+                        <WorkItem title="The Antarctic Ecosystem / Answers Under The Ice" description="3D digital experience, 2020."
+                            tags={["Three.js", "Shaders", "GLTF", "React", "SASS", "Webpack", "Babel"]} large={true} webp={uti1}
+                            jpg={uti1Jpg} jpgHover={uti2Jpg} webpHover={uti2}
+                            link="https://undertheice.tvnz.co.nz/playlist" client={vanishingPoint}
+                            clientLink={vanishingPointLink} awards={[]} />
                         <WorkItem title="Gumboot Friday" description="3D game, 2020."
                             tags={["Game Development", "Three.js", "GLTF", "React", "SASS", "Webpack", "Babel"]}
                             large={true} webp={gbf1} jpg={gbf1Jpg} jpgHover={gbf2Jpg} webpHover={gbf2}

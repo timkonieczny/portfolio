@@ -3,3 +3,4 @@ dist
 .vscode
 src/php/credentials.php
 secret.ts
+debug.log
