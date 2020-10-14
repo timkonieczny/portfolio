@@ -106,8 +106,7 @@ module.exports = {
             twitter: "@timkonieczny",
             twitterCard: "summary_large_image",
             meta: {
-                viewport: "width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no",
-                "format-detection": "telephone=no",
+                viewport: "width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no"
             }
         }),
         new FaviconsWebpackPlugin({

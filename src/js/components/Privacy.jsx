@@ -26,8 +26,8 @@ class Privacy extends Component {
                         <span>{Secret.street}</span><br />
                         <span>{Secret.city}</span><br />
                         <span>{Secret.country}</span><br />
-                        Phone: <span>{Secret.phone}</span><br />
-                        Email: <span>{Secret.email}</span>
+                        Phone: <span><a className="inline" href={`tel:${Secret.phone}`}>{Secret.phone}</a></span><br />
+                        Email: <span><a className="inline" href={`mailto:${Secret.email}`}>{Secret.email}</a></span>
                     </p>
                 </div>
             </div>

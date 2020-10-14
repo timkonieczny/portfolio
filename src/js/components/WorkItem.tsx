@@ -14,7 +14,8 @@ type Props = {
     description: string,
     link: string,
     client: string,
-    clientLink: string
+    clientLink: string,
+    awards: { name: string, link: string }[]
 }
 
 class WorkItem extends Component<Props> {
@@ -30,8 +31,12 @@ class WorkItem extends Component<Props> {
             </picture>
             <div className="content">
                 <h3>{this.props.title}</h3>
-                <p>{this.props.description}
-                    <br />{work.collaboration} <InlineLinkExt to={this.props.clientLink} text={this.props.client} />.</p>
+                <p className="description">
+                    {this.props.description}
+                    {this.props.awards.map(
+                        award => [<br />, <InlineLinkExt to={award.link} text={`🎉 ${award.name} 🎉`} />])}
+                    <br />{work.collaboration} <InlineLinkExt to={this.props.clientLink} text={this.props.client} />.
+                </p>
                 <ArrowLinkExt to={this.props.link} text="browse" />
                 <p className="tags">
                     {this.props.tags.map((tag, i) => {
