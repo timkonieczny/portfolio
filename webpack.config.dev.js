@@ -1,5 +1,5 @@
 const path = require("path")
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const baseConfig = require('./webpack.config.base.js')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
@@ -18,7 +18,6 @@ module.exports = merge(baseConfig, {
     },
     devtool: 'inline-source-map',
     devServer: {
-        contentBase: path.join(__dirname, 'dist/dev'),
         host: '0.0.0.0',
         historyApiFallback: true
     },
