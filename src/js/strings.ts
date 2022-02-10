@@ -7,7 +7,7 @@ const home = new LocalizedStrings({
         services: "Services",
         about: "About",
         privacy: "Privacy statement and legal notice",
-        location: "Leipzig, Germany"
+        location: "UTC"
     },
     de: {
         message: "Projekt anfragen",
@@ -15,7 +15,7 @@ const home = new LocalizedStrings({
         services: "Leistungen",
         about: "Über mich",
         privacy: "Datenschutz und Impressum",
-        location: "Leipzig"
+        location: "UTC"
     }
 })
 
