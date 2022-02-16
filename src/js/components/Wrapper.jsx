@@ -1,8 +1,13 @@
 import React, { Component, Fragment } from "react"
 import Preloader from "./Preloader"
 import Canvas from "./Canvas"
-import { BrowserRouter, Route } from "react-router-dom"
-import AnimatedSwitch from "./AnimatedSwitch"
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import Services from "./Services"
+import Message from "./Message"
+import Privacy from "./Privacy"
+import Work from "./Work"
+import About from "./About"
+import Home from "./Home"
 
 class Wrapper extends Component {
     constructor() {
@@ -10,7 +15,7 @@ class Wrapper extends Component {
 
         this.state = {
             progress: 0,
-            animations: ["home"]
+            animations: ["home"],
         }
     }
 
@@ -85,13 +90,19 @@ class Wrapper extends Component {
             <Fragment>
                 <Canvas onProgress={this.progressListener.bind(this)} ref={element => { this.canvas = element }} />
                 <Preloader progress={this.state.progress} />
-                <BrowserRouter>
-                    <Route render={({ location }) => (
-                        <AnimatedSwitch onButtonClick={this.onButtonClick.bind(this)} immutableLocation={location}
-                            show={this.state.progress === 100} />
-                    )} />
-                </BrowserRouter>
-            </Fragment>
+                <div id="wrapper" style={{ opacity: 1 }}>
+                    <BrowserRouter>
+                        <Routes>
+                            <Route path="/services" element={<Services clickListener={this.onButtonClick.bind(this)} />} />
+                            <Route path="/message" element={<Message clickListener={this.onButtonClick.bind(this)} />} />
+                            <Route path="/privacy" element={<Privacy clickListener={this.onButtonClick.bind(this)} />} />
+                            <Route path="/work" element={<Work clickListener={this.onButtonClick.bind(this)} />} />
+                            <Route path="/about" element={<About clickListener={this.onButtonClick.bind(this)} />} />
+                            <Route path="/" element={<Home clickListener={this.onButtonClick.bind(this)} />} />
+                        </Routes>
+                    </BrowserRouter>
+                </div>
+            </Fragment >
         )
     }
 }
