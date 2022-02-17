@@ -112,7 +112,7 @@ class Work extends Component {
                             clientLink={vanishingPointLink} awards={livingFlowerwallAwards} />
                         <WorkItemMeta />
                         <div className="cell large">
-                            <MessageButtons clickListener={this.props.clickListener} />
+                            <MessageButtons clickListener={this.props.clickListener} from="/work" />
                         </div>
                     </div>
                 </div>

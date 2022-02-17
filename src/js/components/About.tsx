@@ -22,7 +22,7 @@ class About extends Component<Props> {
         return (
             <div id="about-wrapper" className="section-wrapper">
                 <div>
-                    <BackButton hasHistory={!this.props.isAppearing} clickListener={this.props.clickListener} />
+                    <BackButton clickListener={this.props.clickListener} />
                 </div>
                 <div id="about-content">
                     <h2>{about.headline}.</h2>
@@ -32,11 +32,11 @@ class About extends Component<Props> {
                             <source srcSet={webp} type="image/webp" />
                             <img src={jpg} />
                         </picture>
-                        <MessageButtons clickListener={this.props.clickListener} />
+                        <MessageButtons clickListener={this.props.clickListener} from="/about" />
                     </div>
                     <p>{about.aboutText2}</p>
                     <p>{about.aboutText3}</p>
-                    <ArrowLink to="/services" animation="services" text={home.services}
+                    <ArrowLink from="/about" to="/services" animation="services" text={home.services}
                         clickListener={this.props.clickListener} />
                     <p>{about.aboutText4}</p>
                 </div>
