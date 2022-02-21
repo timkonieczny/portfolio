@@ -2,7 +2,7 @@ import React from "react"
 import { Link } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useDispatch } from "react-redux"
-import { pushPreviousPath } from "../actions"
+import { pushPreviousPath, setHistoryAction } from "../actions"
 import { useAppSelector } from "../hooks"
 import { getAnimationByLocation } from "../helpers"
 
@@ -20,6 +20,7 @@ const ArrowLink = ({ from, to, text }: Props) => {
 
     const onClick = () => {
         startAnimation(to)
+        dispatch(setHistoryAction("push"))
         dispatch(pushPreviousPath(from))
     }
     return (<Link

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { popPreviousPath } from "../actions";
-import { getAnimationByLocation } from "../helpers";
+import { setHistoryAction } from "../actions";
 
 const BackButton = () => {
 
@@ -15,6 +15,7 @@ const BackButton = () => {
 
     const onClick = () => {
         startAnimation(paths[paths.length - 1])
+        dispatch(setHistoryAction("pop"))
         dispatch(popPreviousPath())
     }
 

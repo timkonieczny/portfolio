@@ -5,6 +5,7 @@ import { home } from "../strings"
 import { useDispatch } from "react-redux"
 import { pushPreviousPath } from "../actions"
 import { useAppSelector } from "../hooks"
+import { setHistoryAction } from "../actions"
 
 const MessageButtons = (props) => {
 
@@ -14,6 +15,7 @@ const MessageButtons = (props) => {
 
     const onClick = _ => {
         startAnimation("/message")
+        dispatch(setHistoryAction("push"))
         dispatch(pushPreviousPath(props.from))
     }
 
