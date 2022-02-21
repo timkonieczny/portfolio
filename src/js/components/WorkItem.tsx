@@ -34,7 +34,7 @@ class WorkItem extends Component<Props> {
                 <p className="description">
                     {this.props.description}
                     {this.props.awards.map(
-                        award => [<br />, <InlineLinkExt to={award.link} text={`🎉 ${award.name} 🎉`} />])}
+                        (award, i) => [<br key={`${i}br`} />, <InlineLinkExt to={award.link} text={`🎉 ${award.name} 🎉`} key={i} />])}
                     <br />{work.collaboration} <InlineLinkExt to={this.props.clientLink} text={this.props.client} />.
                 </p>
                 <ArrowLinkExt to={this.props.link} text="browse" />
