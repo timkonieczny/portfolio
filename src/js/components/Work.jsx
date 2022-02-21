@@ -73,7 +73,7 @@ class Work extends Component {
         return (
             <div id="work-wrapper" className="section-wrapper">
                 <div>
-                    <BackButton hasHistory={!this.props.isAppearing} clickListener={this.props.clickListener} />
+                    <BackButton />
                 </div>
                 <div id="work-content">
                     <h2>{work.headline}.</h2>
@@ -112,7 +112,7 @@ class Work extends Component {
                             clientLink={vanishingPointLink} awards={livingFlowerwallAwards} />
                         <WorkItemMeta />
                         <div className="cell large">
-                            <MessageButtons clickListener={this.props.clickListener} from="/work" />
+                            <MessageButtons from="/work" />
                         </div>
                     </div>
                 </div>

@@ -23,18 +23,12 @@ class Home extends Component {
                     <span className="tag">3D</span>
                     <span className="tag">front-end</span>
                 </p>
-                <MessageButtons clickListener={this.props.clickListener} from="/" />
-                <ArrowLink from="/" to="/work" id="work-button" animation="work" clickListener={this.props.clickListener}
-                    text={home.work} />
-                <ArrowLink from="/" to="/services" id="services-button" animation="services"
-                    clickListener={this.props.clickListener} text={home.services} />
-                <ArrowLink from="/" to="/about" id="about-button" animation="about" clickListener={this.props.clickListener}
-                    text={home.about} />
+                <MessageButtons from="/" />
+                <ArrowLink from="/" to="/work" id="work-button" animation="work" text={home.work} />
+                <ArrowLink from="/" to="/services" id="services-button" animation="services" text={home.services} />
+                <ArrowLink from="/" to="/about" id="about-button" animation="about" text={home.about} />
                 <br />
-                <ArrowLink from="/" to="/privacy" id="privacy-policy-button" animation="privacy"
-                    clickListener={this.props.clickListener} text={home.privacy} />
-                <ArrowLink from="/" to="/message" id="privacy-policy-button2" animation="message"
-                    clickListener={this.props.clickListener} text={home.message} />
+                <ArrowLink from="/" to="/privacy" id="privacy-policy-button" animation="privacy" text={home.privacy} />
             </div>
         )
     }

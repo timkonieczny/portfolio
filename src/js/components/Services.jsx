@@ -14,13 +14,12 @@ class Services extends Component {
         return (
             <div id="services-wrapper" className="section-wrapper">
                 <div>
-                    <BackButton hasHistory={!this.props.isAppearing} mouseEnterListener={this.props.mouseEnterListener}
-                        mouseLeaveListener={this.props.mouseLeaveListener} clickListener={this.props.clickListener} />
+                    <BackButton />
                 </div>
                 <div id="services-content">
                     <h2>{services.headline}.</h2>
                     <p>{services.intro}</p>
-                    <MessageButtons clickListener={this.props.clickListener} from="/services" />
+                    <MessageButtons from="/services" />
                     <h3>{services.section1.headline}</h3>
                     <p>{services.section1.intro}</p>
                     <ul>

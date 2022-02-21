@@ -4,13 +4,16 @@ import { Link } from "react-router-dom"
 import { home } from "../strings"
 import { useDispatch } from "react-redux"
 import { pushPreviousPath } from "../actions"
+import { useAppSelector } from "../hooks"
 
 const MessageButtons = (props) => {
 
     const dispatch = useDispatch()
 
-    const onClick = event => {
-        props.clickListener(event)
+    const startAnimation = useAppSelector(state => state.webGLReducer.startAnimation)
+
+    const onClick = _ => {
+        startAnimation("message")
         dispatch(pushPreviousPath(props.from))
     }
 
@@ -19,7 +22,6 @@ const MessageButtons = (props) => {
             <Link
                 to="/message"
                 className="button message-button animated"
-                data-animation="message"
                 onClick={onClick}>
                 {home.message}
             </Link>

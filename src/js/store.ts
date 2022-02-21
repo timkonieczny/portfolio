@@ -1,9 +1,8 @@
 import { createStore } from "redux"
 import { composeWithDevTools } from '@redux-devtools/extension';
-import historyReducer from "./reducers/historyReducer.js"
+import { combinedReducer } from "./reducers/index.js";
 
-export const store = createStore(historyReducer, composeWithDevTools())
-
+export const store = createStore(combinedReducer, composeWithDevTools())
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch

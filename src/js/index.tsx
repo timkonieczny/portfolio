@@ -13,9 +13,9 @@ import { faXing, faLinkedin } from "@fortawesome/free-brands-svg-icons"
 import { home } from "./strings"
 
 import { createStore } from "redux"
-import historyReducer from "./reducers/historyReducer.js"
 import { Provider } from "react-redux"
 import { composeWithDevTools } from '@redux-devtools/extension';
+import { combinedReducer } from "./reducers/index.js"
 
 
 ReactGA.initialize(Secret.analytics.google);
@@ -32,7 +32,7 @@ library.add(
     faMapMarkerAlt as IconDefinition
 )
 
-const store = createStore(historyReducer, composeWithDevTools())
+const store = createStore(combinedReducer, composeWithDevTools())
 
 window.addEventListener("load", (_) => {
     const app: HTMLElement = document.querySelector("#app")

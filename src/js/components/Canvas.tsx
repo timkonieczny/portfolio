@@ -1,40 +1,43 @@
-import React, { Component } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { setProgress, setStartAnimation } from "../actions";
+import { useAppDispatch } from "../hooks";
 import Scene from "../Scene"
 
-type Props = {
-    onProgress: (...args: any[]) => void
-}
+const Canvas = () => {
+    let scene: Scene;
 
-type State = {
-    isRendering: boolean
-}
+    const [isRendering, setIsRendering] = useState(false)
 
-class Canvas extends Component<Props, State> {
-    scene: Scene;
-    canvas: HTMLCanvasElement;
+    const canvas = useRef(null)
 
-    constructor(props: Props) {
-        super(props)
-        this.state = {
-            isRendering: false
+    const dispatch = useAppDispatch()
+
+    const onProgress = (event: any) => {
+        dispatch(setProgress(event))
+
+    }
+    useEffect(() => {
+        if (!isRendering) {
+            setIsRendering(true)
+
+            scene = new Scene()
+            scene.addEventListener("progress", onProgress)
+            scene.addEventListener("initComplete", onProgress)
+            scene.initialize(canvas.current).then(
+                () => {
+                    scene.render.call(scene)
+                    dispatch(
+                        setStartAnimation(
+                            scene.startAnimation.bind(scene)
+                        )
+                    )
+                }
+
+            )
         }
-    }
+    })
 
-    async componentDidMount() {
-        if (!this.state.isRendering) {
-            this.setState({ isRendering: true })
-
-            this.scene = new Scene()
-            this.scene.addEventListener("progress", this.props.onProgress)
-            this.scene.addEventListener("initComplete", this.props.onProgress)
-            await this.scene.initialize(this.canvas)
-            this.scene.render()
-        }
-    }
-
-    render() {
-        return <canvas id="canvas" ref={element => { this.canvas = element }}></canvas>
-    }
+    return <canvas id="canvas" ref={canvas}></canvas>
 }
 
 export default Canvas;
