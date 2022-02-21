@@ -14,7 +14,7 @@ const BackButton = () => {
     const startAnimation = useAppSelector(state => state.webGLReducer.startAnimation)
 
     const onClick = () => {
-        startAnimation(getAnimationByLocation(paths[paths.length - 1]))
+        startAnimation(paths[paths.length - 1])
         dispatch(popPreviousPath())
     }
 

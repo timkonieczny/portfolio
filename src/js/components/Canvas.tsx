@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { setProgress, setStartAnimation } from "../actions";
+import { getAnimationByLocation } from "../helpers";
 import { useAppDispatch } from "../hooks";
 import Scene from "../Scene"
 
@@ -14,8 +15,10 @@ const Canvas = () => {
 
     const onProgress = (event: any) => {
         dispatch(setProgress(event))
-
     }
+
+    // TODO: move path to anim to startAnim
+
     useEffect(() => {
         if (!isRendering) {
             setIsRendering(true)
@@ -27,8 +30,10 @@ const Canvas = () => {
                 () => {
                     scene.render.call(scene)
                     dispatch(
-                        setStartAnimation(
-                            scene.startAnimation.bind(scene)
+                        setStartAnimation((path: string) => {
+                            scene.startAnimation.call(scene, getAnimationByLocation(path))
+                        }
+
                         )
                     )
                 }

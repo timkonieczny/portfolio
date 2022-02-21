@@ -36,7 +36,7 @@ class About extends Component<Props> {
                     </div>
                     <p>{about.aboutText2}</p>
                     <p>{about.aboutText3}</p>
-                    <ArrowLink from="/about" to="/services" animation="services" text={home.services} />
+                    <ArrowLink from="/about" to="/services" text={home.services} />
                     <p>{about.aboutText4}</p>
                 </div>
             </div>

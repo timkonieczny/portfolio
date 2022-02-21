@@ -13,7 +13,7 @@ const MessageButtons = (props) => {
     const startAnimation = useAppSelector(state => state.webGLReducer.startAnimation)
 
     const onClick = _ => {
-        startAnimation("message")
+        startAnimation("/message")
         dispatch(pushPreviousPath(props.from))
     }
 

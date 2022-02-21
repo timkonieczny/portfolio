@@ -24,11 +24,11 @@ class Home extends Component {
                     <span className="tag">front-end</span>
                 </p>
                 <MessageButtons from="/" />
-                <ArrowLink from="/" to="/work" id="work-button" animation="work" text={home.work} />
-                <ArrowLink from="/" to="/services" id="services-button" animation="services" text={home.services} />
-                <ArrowLink from="/" to="/about" id="about-button" animation="about" text={home.about} />
+                <ArrowLink from="/" to="/work" id="work-button" text={home.work} />
+                <ArrowLink from="/" to="/services" id="services-button" text={home.services} />
+                <ArrowLink from="/" to="/about" id="about-button" text={home.about} />
                 <br />
-                <ArrowLink from="/" to="/privacy" id="privacy-policy-button" animation="privacy" text={home.privacy} />
+                <ArrowLink from="/" to="/privacy" id="privacy-policy-button" text={home.privacy} />
             </div>
         )
     }
