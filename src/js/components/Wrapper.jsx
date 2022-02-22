@@ -1,15 +1,12 @@
 import React, { Fragment, useEffect } from "react"
 import Preloader from "./Preloader"
 import Canvas from "./Canvas"
-import { useAppSelector } from "../hooks"
 import AnimatedSwitch from "./AnimatedSwitch"
 import { CustomRouter } from "./CustomRouter"
 import history from "../history"
 import { useStore } from "react-redux"
 
 const Wrapper = () => {
-    const progress = useAppSelector(state => state.progress.progress)
-
     const store = useStore()
 
     useEffect(() => {
@@ -31,7 +28,7 @@ const Wrapper = () => {
     return (
         <Fragment>
             <Canvas />
-            <Preloader progress={progress} />
+            <Preloader />
             <CustomRouter history={history}>
                 <AnimatedSwitch />
             </CustomRouter>
