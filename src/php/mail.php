@@ -9,7 +9,7 @@ $name = $_POST["name"];
 
 // Check honeypot fields
 $isSpam = !empty($_POST["phone"]) || !empty($_POST["website"]) || !empty($_POST["email"]);
-if($isSpam){
+if ($isSpam) {
     http_response_code(400);
     die();
 }
@@ -29,11 +29,13 @@ if ($email) {
     // sanitize body
     $body = str_replace("\n.", "\n..", $body);
 
+    $body = $body . "\n\nSent via timkonieczny.com.";
+
     if (@mail($to, $subject, $body, "From: $name <$email>")) {
-        http_response_code (200); 
+        http_response_code(200);
     } else {
-        http_response_code (500);
+        http_response_code(500);
     }
 } else {
-    http_response_code (400); 
+    http_response_code(400);
 }
