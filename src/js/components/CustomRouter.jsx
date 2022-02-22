@@ -2,7 +2,7 @@ import React from "react"
 import { useLayoutEffect, useState } from "react"
 import { useStore } from "react-redux"
 import { Router } from "react-router-dom"
-import { pushHistoryLocation, setCurrentLocation, setHistoryAction } from "../actions"
+import { pushHistoryLocation, setCurrentLocation, setHistoryAnimation } from "../actions"
 import { useAppDispatch } from "../hooks"
 
 export const CustomRouter = ({ history, ...props }) => {
@@ -22,17 +22,16 @@ export const CustomRouter = ({ history, ...props }) => {
       const currentIndex = locations.indexOf(args.location.key)
 
       if (lastIndex === -1 && currentIndex === -1)  // When there is no history yet (on initial load) just dispatch a pop
-        dispatch(setHistoryAction(args.action)) // pop
+        dispatch(setHistoryAnimation(args.action)) // pop
       else {
         // Otherwise check if the back or the forward button was pressed
         if (lastIndex > currentIndex) //back
-          // TODO: rename actions
-          dispatch(setHistoryAction(args.action)) // pop
+          dispatch(setHistoryAnimation(args.action)) // pop
         else //forward
-          dispatch(setHistoryAction("PUSH"))  // push
+          dispatch(setHistoryAnimation("PUSH"))  // push
       }
     } else {
-      dispatch(setHistoryAction(args.action))
+      dispatch(setHistoryAnimation(args.action))
       dispatch(pushHistoryLocation(args.location.key, lastLocation))
     }
     dispatch(setCurrentLocation(args.location.key))

@@ -1,8 +1,8 @@
-import { PUSH_HISTORY_LOCATION, SET_CURRENT_LOCATION, SET_HISTORY_ACTION } from "../actionTypes"
+import { PUSH_HISTORY_LOCATION, SET_CURRENT_LOCATION, SET_HISTORY_ANIMATION } from "../actionTypes"
 
 export default (state = { historyAction: null, locations: [], currentLocation: null }, action) => {
     switch (action.type) {
-        case SET_HISTORY_ACTION:
+        case SET_HISTORY_ANIMATION:
             return { ...state, historyAction: action.payload.historyAction }
         case PUSH_HISTORY_LOCATION:
             const updatedLocations = [...state.locations]
