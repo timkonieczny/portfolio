@@ -8,6 +8,7 @@ import Work from "./Work"
 import About from "./About"
 import Home from "./Home"
 import { useAppSelector } from "../hooks"
+import Card from "./Card"
 
 const AnimatedSwitch = () => {
     const historyAction = useAppSelector(state => state.history.historyAction)
@@ -30,7 +31,7 @@ const AnimatedSwitch = () => {
                     <Route path="/privacy" element={<Privacy />} />
                     <Route path="/work" element={<Work />} />
                     <Route path="/about" element={<About />} />
-                    <Route exact path="/" element={<Home />} />
+                    <Route exact path="/" element={<Card />} />
                 </Switch>
             </CSSTransition>
         </TransitionGroup>
