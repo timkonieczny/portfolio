@@ -205,38 +205,38 @@ $slide-transition-exit: left 2s cubic-bezier(0.33, 1, 0.68, 1),
     width: 80%;
     max-width: 40em;
     max-height: 90%;
-    &.push-enter {
+    &.PUSH-enter {
         left: 90%;
         opacity: 0;
     }
-    &.push-enter-active {
+    &.PUSH-enter-active {
         left: 10%;
         opacity: 1;
         transition: $slide-transition-enter;
     }
-    &.push-exit {
+    &.PUSH-exit {
         left: 10%;
         opacity: 1;
     }
-    &.push-exit-active {
+    &.PUSH-exit-active {
         left: -70%;
         opacity: 0;
         transition: $slide-transition-exit;
     }
-    &.pop-enter {
+    &.POP-enter {
         left: -70%;
         opacity: 0;
     }
-    &.pop-enter-active {
+    &.POP-enter-active {
         left: 10%;
         opacity: 1;
         transition: $slide-transition-enter;
     }
-    &.pop-exit {
+    &.POP-exit {
         left: 10%;
         opacity: 1;
     }
-    &.pop-exit-active {
+    &.POP-exit-active {
         left: 90%;
         opacity: 0;
         transition: $slide-transition-exit;

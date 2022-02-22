@@ -13,7 +13,7 @@ export const CustomRouter = ({ history, ...props }) => {
   const dispatch = useAppDispatch()
 
   const onHistoryChange = (args) => {
-    dispatch(setHistoryAction((args.action === "POP") ? "pop" : "push"))
+    dispatch(setHistoryAction(args.action))
     setState(args)
   }
 

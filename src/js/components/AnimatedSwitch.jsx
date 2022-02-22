@@ -21,11 +21,11 @@ const AnimatedSwitch = () => {
         <TransitionGroup id="wrapper"
             style={progress === 100 ? { opacity: 1 } : {}}
             childFactory={child => React.cloneElement(child,
-                { classNames: historyAction ?? "push" })}>
+                { classNames: historyAction ?? "PUSH" })}>
             <CSSTransition
                 key={location.key}
                 timeout={4000}
-                classNames={historyAction ?? "push"}
+                classNames={historyAction ?? "PUSH"}
                 appear={true}>
                 <Switch location={location}>
                     <Route path="/services" element={<Services />} />

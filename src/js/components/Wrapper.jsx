@@ -4,7 +4,7 @@ import Canvas from "./Canvas"
 import { useAppSelector } from "../hooks"
 import AnimatedSwitch from "./AnimatedSwitch"
 import { CustomRouter } from "./CustomRouter"
-import history from "./history"
+import history from "../history"
 import { useStore } from "react-redux"
 
 const Wrapper = () => {
