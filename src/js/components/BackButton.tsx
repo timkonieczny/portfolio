@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const BackButton = () => {
 
     const navigate = useNavigate()
-    const historyAction = useAppSelector(state => state.historyReducer.historyAction)
+    const historyAction = useAppSelector(state => state.history.historyAction)
 
     const onClick = () => { navigate(-1) }
 

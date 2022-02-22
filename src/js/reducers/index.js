@@ -1,6 +1,6 @@
 import { combineReducers } from "redux"
-import historyReducer from "./historyReducer"
-import progressReducer from "./progressReducer"
-import webGLReducer from "./webglReducer"
+import history from "./history"
+import progress from "./progress"
+import webGL from "./webgl"
 
-export const combinedReducer = combineReducers({ historyReducer, progressReducer, webGLReducer })
+export const combinedReducer = combineReducers({ history, progress, webGL })

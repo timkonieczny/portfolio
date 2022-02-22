@@ -8,14 +8,14 @@ import history from "../history"
 import { useStore } from "react-redux"
 
 const Wrapper = () => {
-    const progress = useAppSelector(state => state.progressReducer.progress)
+    const progress = useAppSelector(state => state.progress.progress)
 
     const store = useStore()
 
     useEffect(() => {
         let cleanup
         const unsubscribe = store.subscribe(() => {
-            const startAnimation = store.getState().webGLReducer.startAnimation
+            const startAnimation = store.getState().webGL.startAnimation
             if (startAnimation) {
                 unsubscribe()
                 const unlisten = history.listen((history) => {

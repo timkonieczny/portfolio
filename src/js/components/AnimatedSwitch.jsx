@@ -10,8 +10,8 @@ import Home from "./Home"
 import { useAppSelector } from "../hooks"
 
 const AnimatedSwitch = () => {
-    const historyAction = useAppSelector(state => state.historyReducer.historyAction)
-    const progress = useAppSelector(state => state.progressReducer.progress)
+    const historyAction = useAppSelector(state => state.history.historyAction)
+    const progress = useAppSelector(state => state.progress.progress)
     const location = useLocation()
 
     // TODO: OVERALL
