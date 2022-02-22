@@ -19,7 +19,7 @@ class Services extends Component {
                 <div id="services-content">
                     <h2>{services.headline}.</h2>
                     <p>{services.intro}</p>
-                    <MessageButtons from="/services" />
+                    <MessageButtons />
                     <h3>{services.section1.headline}</h3>
                     <p>{services.section1.intro}</p>
                     <ul>

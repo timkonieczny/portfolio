@@ -112,7 +112,7 @@ class Work extends Component {
                             clientLink={vanishingPointLink} awards={livingFlowerwallAwards} />
                         <WorkItemMeta />
                         <div className="cell large">
-                            <MessageButtons from="/work" />
+                            <MessageButtons />
                         </div>
                     </div>
                 </div>
