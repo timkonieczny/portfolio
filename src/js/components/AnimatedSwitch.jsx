@@ -14,9 +14,6 @@ const AnimatedSwitch = () => {
     const progress = useAppSelector(state => state.progress.progress)
     const location = useLocation()
 
-    // TODO: OVERALL
-    // Click on about has no webgl transition?
-
     return (
         <TransitionGroup id="wrapper"
             style={progress === 100 ? { opacity: 1 } : {}}
