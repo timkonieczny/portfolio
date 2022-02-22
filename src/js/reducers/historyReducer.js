@@ -8,7 +8,7 @@ export default (state = { previousPaths: ["/"] }, action) => {
             return { ...state, previousPaths }
         case POP_PREVIOUS_PATH:
             const previousPaths = [...state.previousPaths]
-            previousPaths.pop()
+            if (previousPaths.length > 1) previousPaths.pop()
             return { ...state, previousPaths }
         case SET_HISTORY_ACTION:
             return { ...state, historyAction: action.payload.historyAction }

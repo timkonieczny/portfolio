@@ -13,8 +13,6 @@ const AnimatedSwitch = () => {
     const historyAction = useAppSelector(state => state.historyReducer.historyAction)
     const progress = useAppSelector(state => state.progressReducer.progress)
     const location = useLocation()
-    // TODO: what is this used for?
-    const [_isAppearing, setIsAppearing] = useState(true)
 
     // TODO: OVERALL
     // Click on about has no webgl transition?
@@ -30,15 +28,14 @@ const AnimatedSwitch = () => {
                 key={location.key}
                 timeout={4000}
                 classNames={historyAction}
-                appear={true}
-                onEnter={(_, isAppearing) => { setIsAppearing(isAppearing) }}>
+                appear={true}>
                 <Switch location={location}>
                     <Route path="/services" element={<Services />} />
                     <Route path="/message" element={<Message />} />
                     <Route path="/privacy" element={<Privacy />} />
                     <Route path="/work" element={<Work />} />
                     <Route path="/about" element={<About />} />
-                    <Route path="/" element={<Home />} />
+                    <Route exact path="/" element={<Home />} />
                 </Switch>
             </CSSTransition>
         </TransitionGroup>
