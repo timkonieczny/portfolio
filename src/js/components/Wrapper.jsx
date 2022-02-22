@@ -1,4 +1,4 @@
-import React, { Fragment } from "react"
+import React, { Fragment, useEffect } from "react"
 import Preloader from "./Preloader"
 import Canvas from "./Canvas"
 import { useAppSelector } from "../hooks"
