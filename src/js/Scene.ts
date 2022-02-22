@@ -106,8 +106,8 @@ class Scene extends Loop {
         this.camera = new Camera(uniformManager)
 
         const resize = () => {
-            canvas.width = canvas.clientWidth * window.devicePixelRatio
-            canvas.height = canvas.clientHeight * window.devicePixelRatio
+            canvas.width = canvas.clientWidth * Math.min(window.devicePixelRatio, 2)
+            canvas.height = canvas.clientHeight * Math.min(window.devicePixelRatio, 2)
             this.gl.viewport(0, 0, canvas.width, canvas.height)
             mat4.perspective(this.camera.projMatrix, glMatrix.toRadian(45), canvas.width / canvas.height, 0.1, 1000.0)
             this.hexGrid.resize(this.camera.projMatrix)
