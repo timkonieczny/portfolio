@@ -11,12 +11,10 @@ import { TransitionGroup, CSSTransition } from "react-transition-group"
 
 const AnimatedSwitch = () => {
     const historyAction = useAppSelector(state => state.historyReducer.historyAction)
+    const progress = useAppSelector(state => state.progressReducer.progress)
     const location = useLocation()
     // TODO: what is this used for?
     const [_isAppearing, setIsAppearing] = useState(true)
-
-    // TODO: how is this handled in old implementation? When is show set to true?
-    const show = true
 
     // TODO: OVERALL
     // Click on about has no webgl transition?
@@ -25,7 +23,7 @@ const AnimatedSwitch = () => {
 
     return (
         <TransitionGroup id="wrapper"
-            style={show ? { opacity: 1 } : {}}
+            style={progress === 100 ? { opacity: 1 } : {}}
             childFactory={child => React.cloneElement(child,
                 { classNames: historyAction })}>
             <CSSTransition
