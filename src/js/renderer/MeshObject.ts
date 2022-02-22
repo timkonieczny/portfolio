@@ -254,6 +254,8 @@ class MeshObject {
                 return this.animation.privacy
             case "work":
                 return this.animation.work
+            case "about":
+                return this.animation.about
             default:
                 return this.animation.wave
         }
