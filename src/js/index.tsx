@@ -14,7 +14,7 @@ import { home } from "./strings"
 
 import { createStore } from "redux"
 import { Provider } from "react-redux"
-import { composeWithDevTools } from '@redux-devtools/extension';
+import { composeWithDevToolsDevelopmentOnly } from '@redux-devtools/extension';
 import { combinedReducer } from "./reducers/index.js"
 
 
@@ -32,7 +32,7 @@ library.add(
     faMapMarkerAlt as IconDefinition
 )
 
-const store = createStore(combinedReducer, composeWithDevTools())
+const store = createStore(combinedReducer, composeWithDevToolsDevelopmentOnly())
 
 window.addEventListener("load", (_) => {
     const app: HTMLElement = document.querySelector("#app")
