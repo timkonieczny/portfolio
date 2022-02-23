@@ -8,7 +8,7 @@ const Preloader = () => {
         <div id="preloader" style={isComplete ? { visibility: "hidden", top: "100%", height: 0 } : {}}>
             <p>{String(Math.round(progress)).padStart(3, '0')}</p>
             <div className="track">
-                <div className="bar" style={{ transform: `scale(${progress / 100}, 1)` }}></div>
+                <div className="bar" style={{ width: `${progress}%` }}></div>
             </div>
         </div>
     )

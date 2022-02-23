@@ -25,9 +25,7 @@
         height: 0.1em;
         background: $color-background-primary;
         .bar {
-            transform-origin: left center;
-            transition: transform 50ms linear;
-            width: "100%";
+            transition: width 50ms linear;
             height: 100%;
             background: $color-accent;
         }
